@@ -1,0 +1,132 @@
+/*------------------------------------*\
+    # Variables
+\*------------------------------------*/
+
+// site colors
+$primary: #f2bcbd !default;
+$secondary: #8372da !default;
+
+$primary-extra-light: #b6c7ff;
+$primary-light: #f6dada;
+
+$secondary-extra-light: #c2b6ff;
+
+$black: #000000 !default;
+$white: #ffffff !default;
+$yellow: #ffda00 !default;
+$gold-light: #e2bc1a !default;
+$gold: #d1a11c !default;
+$gold-dark: #c78c00 !default;
+$lightblue: #09a0db !default;
+$lightgreen: #e4efdb !default;
+$purple: #957bb6 !default;
+$purple-light: #b2c2e5;
+$purple-lighter: #d0d6e3;
+$green: #7bb657;
+//another variables
+$lila: #f1d3f0;
+$lila-lighter: #fbeaf5;
+$gray: #9c9b9c;
+$gray-lighter: #f2f2f2;
+$text-color: #393338;
+
+$header-height-scroll: 64px;
+$plan-padding: 1em;
+$plan-margin: 1em;
+$title-background: #f3f3f3;
+$title-size: 1.45em;
+$price-size: 1.35em;
+$text-size: 100;
+$feature-size: 1em;
+
+// Green
+$green-ca: #cadfbb !default;
+$green-e4: #e4efdb !default;
+$green-c4: #c4ff8e !default;
+$green-94: #94df4f !default;
+$green-59: #59a316 !default;
+$green-4a: #4a6f28 !default;
+
+// Red
+$red-ff: #ff0b0b !default;
+$red-f5: #f56c6a !default;
+$red-dd: #dd2e2c !default;
+$red-9a: #9a1e1d !default;
+$red-74: #74100e !default;
+
+// Gray
+$gray-aa: #aaaaaa !default;
+$gray-b4: #b4b4b4 !default;
+$gray-c4: #c4c4c4 !default;
+$gray-d4: #d4d4d4 !default;
+$gray-d8: #d8d8d8 !default;
+$gray-ed: #ededed !default;
+$gray-6d: #6d6d6d !default;
+$gray-5c: #5c5c5c !default;
+$gray-30: #303030 !default;
+$gray-41: #414141 !default;
+$gray-97: #979797 !default;
+$gray-2a: #2a2a2a !default;
+$gray-9d: #9d9d9d !default;
+$gray-9e: #f2f2f2 !default;
+
+$primary-disabled: lighten($primary, 5%) !default;
+$primary-dark: darken($primary, 5%);
+$secondary-dark: darken($secondary, 5%);
+
+$background-color: $white;
+$font-color: $black;
+$overlay: rgba(0, 0, 0, 0.5);
+$dark-overlay: rgba(0, 0, 0, 0.8);
+
+// Screen sizes
+
+// No media query for `xs` since this app is Mobile first
+// Small devices (landscape phones, 576px and up)
+
+$mobile-sm: 320px !default;
+$mobile-md: 375px !default;
+$mobile-lg: 425px !default;
+
+$screen-sm: 576px !default;
+$screen-md: 768px !default;
+$screen-lg: 992px !default;
+$screen-xl: 1200px !default;
+$screen-xxl: 1800px !default;
+
+// Border
+$border-radius-xs: 5px;
+$border-radius-sm: 9px;
+$border-radius: 20px;
+$border-radius-lg: 30px;
+
+//Header sizes
+$header-height: 97px !default;
+$header-height-md: 65px !default;
+$header-height-searchbar: 158px !default;
+$header-height-searchbar-sm: 124px !default;
+
+// Border color
+$gray-border: 1px solid $gray-5c;
+
+// Container sizes
+$container: 1080px !default;
+
+// Box shadow
+$box-shadow: 0 2px 5px $gray-d8;
+$box-shadow-hover: 0 4px 10px $gray-d8;
+$box-shadow-primary: 0 3px 6px 2px rgba(53, 124, 227, 0.25);
+$box-shadow-coin-container: rgba(0, 0, 0, 0.25);
+//imgpath
+$imgpath: '../../assets/';
+//Z-indexes
+$plant-inactive-z-index: 100 !default;
+$plant-z-index: 200 !default;
+$overlay-z-index: 1000 !default;
+$side-actions-z-index: 1500 !default;
+$action-blur-index: 2000 !default;
+$focus-z-index: 2500 !default;
+$modal-z-index: 4000 !default;
+$help-z-index: 9000 !default;
+$observer-z-index: 9500 !default;
+$menu-z-index: 9800 !default;

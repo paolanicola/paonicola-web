@@ -1,0 +1,169 @@
+/*------------------------------------*\
+    #PAGE Layout
+\*------------------------------------*/
+
+/**
+ * 1. ensure the page is always at least the height of the viewport
+ * 2. ensure OSX fonts will look more consistent with other OSes that do not
+ *    utilize sub-pixel anti-aliasing.
+ * 3. changing this value will potentially break inline-block based layout
+ * 4. ensure browsers will not automatically zoom fonts.
+ * 5. ensure all pages, regardless of the height of thier content, have a right-
+ *    hand scrollbar to prevent visual jittering between pages.
+ */
+
+html {
+  min-height: 100%; /* [1] */
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  -moz-osx-font-smoothing: grayscale; /* [2] */
+  -webkit-font-smoothing: antialiased; /* [2] */
+  letter-spacing: normal; /* [3] */
+  text-size-adjust: 100%; /* [4] */
+  background-color: $background-color;
+  overflow-y: scroll; /* [5] */
+  scroll-behavior: smooth;
+
+  @media (min-width: 1200px) {
+    font-size: 0.75rem; // 12px
+  }
+
+  @media (min-width: 1300px) {
+    font-size: 0.812rem; // 13px
+  }
+
+  @media (min-width: 1400px) {
+    font-size: $font-size-base; // 14px
+  }
+}
+
+body {
+  margin: 0;
+  color: $text-color;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+}
+
+// Base input styles
+
+input {
+  @include font-size(16px);
+
+  font-family: $font-family-base;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+textarea {
+  @include font-size(16px);
+  font-family: $font-family-base;
+  border: 0;
+  outline: none;
+}
+
+// Headers
+h1,
+.h1 {
+  @include font-size(30px);
+  margin: 0;
+}
+
+h2,
+.h2 {
+  @include font-size(24px);
+  margin: 0;
+  font-weight: $font-weight-normal;
+}
+
+h3,
+.h3 {
+  @include font-size(20px);
+  // color: $dark-gray;
+  margin: 0;
+  font-weight: $font-weight-normal;
+}
+
+h4,
+.h4 {
+  @include font-size(18px);
+  margin: 0;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  color: $black;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  text-decoration: none;
+}
+
+span,
+p {
+  color: $black;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  text-align: left;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// Containers
+
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.container-lg {
+  margin: 0 auto;
+  max-width: 950px;
+}
+
+.container-md {
+  max-width: 870px;
+}
+
+.container-sm {
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  @media (min-width: $screen-lg) {
+    padding: 0;
+  }
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-start {
+  align-items: flex-start;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  width: 100%;
+}

@@ -1,0 +1,11 @@
+.primary-button {
+  @extend %btn;
+  @extend %btn-primary;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  &:hover,
+  &:focus {
+    background: $primary-light;
+    border-color: $primary-light;
+  }
+}

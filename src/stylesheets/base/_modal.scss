@@ -1,0 +1,66 @@
+/*------------------------------------*\
+    # Modal
+\*------------------------------------*/
+
+$modal-backdrop-bg: rgba($black, 0.5) !default;
+
+.modal {
+    position: fixed;
+    top: 10%;
+    left: 5%;
+    z-index: 1500;
+    padding: 1.5rem;
+    width: 90%;
+    background-color: $white;
+    border-radius: 20px;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+    max-height: calc(100vh - 20%);
+
+    @media (min-width: $screen-xxl) {
+        top: 20%;
+        max-height: calc(100vh - 40%);
+    }
+
+    @media(min-width: $screen-md) {
+        padding: 2.5rem;
+    }
+}
+
+.modal--default {
+    padding: 2rem;
+}
+
+@media (min-width: 600px) {
+    .modal {
+        left: calc(50% - 250px);
+        width: 500px;
+    }
+}
+
+.modal__body {
+    max-height: calc(100vh - 30vh);
+    overflow: auto;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1499;
+    width: 100%;
+    height: 100%;
+    background-color: $modal-backdrop-bg;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    svg {
+        @include font-size(20px);
+        color: $gray-5c;
+    }
+
+}

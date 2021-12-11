@@ -1,0 +1,20 @@
+.label {
+    @include font-size(16px);
+
+    color: $font-color;
+    font-weight: $font-weight-bold;
+
+    @media(min-width: $screen-md) {
+        @include font-size(20px);
+    }
+}
+
+.label__required {
+    @include font-size(16px);
+
+    color: $secondary;
+
+    @media(min-width: $screen-md) {
+        @include font-size(20px);
+    }
+}

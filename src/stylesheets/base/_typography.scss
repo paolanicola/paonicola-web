@@ -1,0 +1,122 @@
+/*------------------------------------*\
+    # Typography
+\*------------------------------------*/
+
+@charset 'utf-8';
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+
+$font-family-base: 'Nunito', sans-serif;
+
+// Sizes
+$font-size-base: 0.875rem; // 14px
+$lead-font-size: 1.5rem;
+
+// Weights
+
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+// Text alignment
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+// Text colors
+
+.text-primary {
+  color: $primary !important;
+}
+
+.text-black {
+  color: $black !important;
+}
+
+.text-white {
+  color: $white !important;
+}
+
+.text-gray {
+  color: $gray-5c !important;
+}
+
+// Fonts
+
+.font-roboto {
+  font-family: $font-family-base;
+}
+
+// Text sizes
+
+.text-xs {
+  font-size: 0.8rem;
+}
+
+// Text boldness
+.text-normal {
+  font-weight: $font-weight-normal !important;
+}
+
+.text-bold {
+  font-weight: $font-weight-bold !important;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+// Font sizes
+
+.text-sm {
+  @include font-size(16px);
+}
+
+.text-lg {
+  @include font-size(20px);
+}
+
+// Titles
+.primary-title,
+%primary-title {
+  @include font-size(25px);
+
+  margin-bottom: 2rem;
+  color: $primary;
+  font-weight: $font-weight-bold;
+
+  @media (min-width: $screen-md) {
+    @include font-size(36px);
+
+    margin-bottom: 3rem;
+  }
+}
+
+.seconday-title,
+%secondary-title {
+  @include font-size(20px);
+
+  margin-left: 1rem;
+  font-weight: $font-weight-bold;
+
+  @media (min-width: $screen-md) {
+    @include font-size(30px);
+  }
+}
+
+.text-black-shadow,
+%text-black-shadow {
+  color: $white;
+  font-weight: $font-weight-black;
+  letter-spacing: -0.1rem;
+  -moz-text-fill-color: $white;
+  -webkit-text-fill-color: $white;
+  -moz-text-stroke-color: $black;
+  -webkit-text-stroke-color: $black;
+  -moz-text-stroke-width: 1px;
+  -webkit-text-stroke-width: 2px;
+}

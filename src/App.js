@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { NavBar, Products, SectionFooter, Footer, Header } from './components';
+import { NavBar, Products, SectionFooter, Footer, Header, HeaderTitle } from './components';
 import './stylesheets/application.scss';
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
     <Router>
       <div className='container'>
         <Header />
+        <HeaderTitle />
         <Routes>
           <Route path='/' element={<Products />} />
           <Route path='/carrito' />

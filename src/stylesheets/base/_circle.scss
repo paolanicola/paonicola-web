@@ -1,0 +1,27 @@
+.circle, %circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.circle-md {
+    @include font-size(16px);
+    width: 32px;
+    height: 32px;
+    color: $white;
+
+    @media(min-width: $screen-md) {
+        @include font-size(32px);
+        width: 64px;
+        height: 64px;
+    }
+}
+
+.circle-primary {
+    background-color: $primary;
+}
+
+.circle-secondary {
+    background-color: $secondary;
+}

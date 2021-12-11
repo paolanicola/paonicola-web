@@ -1,0 +1,78 @@
+.footer {
+  width: 100%;
+  text-align: center;
+  text-align: center;
+  padding-bottom: 10px;
+  background: $text-color;
+  color: white;
+  padding: 2rem 0 0;
+}
+.footer-container-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+}
+.footer-logo-container {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 300;
+  p {
+    //esto se debe arreglar
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: white;
+    text-align: center;
+  }
+}
+
+.footer-container-menu {
+  justify-content: center;
+}
+.footer__link {
+  display: block;
+  text-decoration: none;
+  color: white;
+  padding: 1rem;
+  font-weight: 300;
+  &:hover,
+  &:focus {
+    opacity: 0.7;
+  }
+}
+.footer-menu-redes {
+  display: flex;
+  a {
+    padding: 1rem 0.5rem;
+  }
+}
+
+.footer-container-botton {
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #fff9f5;
+  text-align: center;
+  color: #666666;
+  font-weight: 300;
+}
+.rayo {
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+.felipe {
+  margin-left: 0.5rem;
+
+  a {
+    font-weight: 700;
+    color: #333;
+    font-size: 1rem;
+  }
+}
