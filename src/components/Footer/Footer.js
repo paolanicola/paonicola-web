@@ -3,6 +3,7 @@ import { ReactComponent as PaolaSvg } from '../../assets/images/footer/paola-nic
 import { ReactComponent as MailSvg } from '../../assets/images/footer/mail-footer.svg';
 import { ReactComponent as WhatsappSvg } from '../../assets/images/footer/whatsapp-footer.svg';
 import { ReactComponent as InstagramSvg } from '../../assets/images/footer/instagram-footer.svg';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -18,24 +19,24 @@ export default function Footer() {
           <div className='footer-container-menu'>
             <ul>
               <li>
-                <a className='footer__link' href=''>
+                <Link to='/' className='footer__link' href=''>
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a className='footer__link' href='/cambios-reales'>
+                <Link to='/changes' className='footer__link' href='/cambios-reales'>
                   Cambios reales
-                </a>
+                </Link>
               </li>
               <li>
-                <a className='footer__link' href='/faq'>
+                <Link to='/Faq' className='footer__link' href='/faq'>
                   FAQ
-                </a>
+                </Link>
               </li>
               <li>
-                <a className='footer__link' href='/contacto'>
+                <Link to='/contact' className='footer__link' href='/contacto'>
                   Contacto
-                </a>
+                </Link>
               </li>
               <li>
                 <a className='footer__link'>Solicitar turno</a>

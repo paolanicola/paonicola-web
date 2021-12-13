@@ -1,5 +1,16 @@
 .logo {
+  position: absolute;
+  top: 0;
+  padding: 0;
 }
 .logo__img {
-  height: 97px;
+  border-radius: 50%;
+  height: 140px;
+  padding-top: 10px;
+  transition: all 0.3s ease;
+}
+.sizeChange {
+  /*height: 97px;
+  padding-top: 0px;
+  transition: all 0.3s ease;*/
 }

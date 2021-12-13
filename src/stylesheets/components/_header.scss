@@ -1,19 +1,39 @@
 .header {
+  position: sticky;
+  top: 0;
   max-height: $header-height;
   display: flex;
   justify-content: space-between;
+  background-color: white;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
+  z-index: 5;
+}
+.header--resize {
+  background-color: yellow;
+  max-height: 64px;
+  transition: all 0.3s ease;
+  .header__right {
+    height: 64px;
+  }
+  .header__logo {
+    height: 64px;
+  }
+  .header_left {
+    height: 64px;
+  }
 }
 .header__logo {
   align-items: center;
   justify-content: center;
 }
 .header__logo__img {
+  margin: 0 auto;
   height: 100%;
   width: 100%;
 }
 
 .header_left {
+  height: $header-height;
 }
 .header__right {
   cursor: pointer;
