@@ -10,10 +10,12 @@ import { ReactComponent as PaolaLogo } from '../../assets/images/header/logo.svg
 import LogoWebp from '../../assets/images/header/paola_logo.webp';
 
 import { Link, NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function Header() {
   const [size, setSize] = useState(false);
 
+  const { cartTotalQuantity } = useSelector((state) => state.cart);
   const changeNavbarSize = () => {
     if (window.scrollY >= 60) {
       setSize(true);
@@ -86,6 +88,7 @@ export default function Header() {
 
         <div className='navBar__icon__svg'>
           <ShoppingBag className='' />
+          <span>{cartTotalQuantity}</span>
         </div>
       </div>
     </>

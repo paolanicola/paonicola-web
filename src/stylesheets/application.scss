@@ -13,9 +13,9 @@
 @import 'base/flexbox';
 @import 'base/wrapper';
 @import 'base/buttons';
+@import 'base/inputs';
 /*
 @import 'base/labels';
-@import 'base/inputs';
 @import 'base/form';
 @import 'base/modal';
 @import 'base/circle';*/
@@ -29,3 +29,6 @@
 @import 'components/footer';
 @import 'components/products';
 @import 'components/header-title';
+@import 'components/product';
+@import 'components/filters';
+@import 'components/cart';
