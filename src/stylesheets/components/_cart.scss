@@ -183,3 +183,14 @@
     font-size: 1.5rem;
   }
 }
+
+@media screen and (max-width: 575px) {
+  .carrito-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 575px;
+  }
+  .carrito-cards {
+  }
+}
