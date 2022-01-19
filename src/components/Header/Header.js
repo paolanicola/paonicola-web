@@ -9,11 +9,12 @@ import { ReactComponent as NavClose } from '../../assets/images/header/nav-close
 import { ReactComponent as PaolaLogo } from '../../assets/images/header/logo.svg';
 import LogoWebp from '../../assets/images/header/paola_logo.webp';
 
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function Header() {
   const [size, setSize] = useState(false);
+  const navigate = useNavigate();
 
   const { cartTotalQuantity } = useSelector((state) => state.cart);
   const changeNavbarSize = () => {
@@ -23,6 +24,16 @@ export default function Header() {
       setSize(false);
     }
   };
+  const [sidebar, setSidebar] = useState(false);
+
+  const showSidebar = () => setSidebar(!sidebar);
+
+  const closeSidebar = () => setSidebar(!sidebar);
+
+  const handleMoveToCart = () => {
+    navigate('/cart');
+  };
+
   useEffect(() => {
     window.addEventListener('scroll', changeNavbarSize);
     return () => {
@@ -30,11 +41,6 @@ export default function Header() {
     };
   });
 
-  const [sidebar, setSidebar] = useState(false);
-
-  const showSidebar = () => setSidebar(!sidebar);
-
-  const closeSidebar = () => setSidebar(!sidebar);
   return (
     <>
       <div className={size ? 'navBar header--resize' : 'navBar'}>
@@ -86,9 +92,9 @@ export default function Header() {
           </div>
         </div>
 
-        <div className='navBar__icon__svg'>
+        <div onClick={() => handleMoveToCart()} className='navBar__icon__svg'>
+          <div className='nro-carrito'>{cartTotalQuantity}</div>
           <ShoppingBag className='' />
-          <span>{cartTotalQuantity}</span>
         </div>
       </div>
     </>

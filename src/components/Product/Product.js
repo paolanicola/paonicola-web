@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import { ReactComponent as AddToCart } from '../../assets/images/tienda/add-to-cart.svg';
 import { ReactComponent as View } from '../../assets/images/tienda/view.svg';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
-import { addToCart } from '../../features/cart/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, getTotals } from '../../features/cart/cartSlice';
 
 function Product({ product }) {
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
-    navigate('/cart');
+    //navigate('/cart');
   };
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
 
   return (
     <>
@@ -29,9 +34,8 @@ function Product({ product }) {
             <div className='botonn1'>
               <PrimaryButton size='md' href='/' actionText='Vista rapida' />
             </div>
-            <div className='botonn'>
+            <div onClick={() => handleAddToCart(product)} className='botonn'>
               <PrimaryButton href='/' actionText='Añadir al carrito' />
-              <button onClick={() => handleAddToCart(product)}>add to cart</button>
             </div>
           </div>
         </div>
@@ -52,9 +56,9 @@ function Product({ product }) {
           <Link to='' class='botones-mobile-view' title='Vista rápida'>
             <View />
           </Link>
-          <Link to='' class='botones-mobile-addToCart' title='Añadir al carrito'>
+          <button onClick={() => handleAddToCart(product)} class='botones-mobile-addToCart' title='Añadir al carrito'>
             <AddToCart />
-          </Link>
+          </button>
         </div>
       </div>
     </>
