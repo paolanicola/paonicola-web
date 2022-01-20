@@ -8,6 +8,7 @@ import { getAllProducts } from '../../features/products/productSlice';
 
 import Product from '../Product/Product';
 import { addToCart, decreaseCart, getAllProductsCart, getTotals, removeFromCart } from '../../features/cart/cartSlice';
+import ProductCart from '../ProductCart/ProductCart';
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
@@ -28,57 +29,7 @@ function Cart() {
   };
 
   let renderProducts = '';
-  renderProducts =
-    products.length > 0 ? (
-      products.map((product) => (
-        <div className='carrito-card'>
-          <div className='carrito-img'>
-            <img className='img-source' src={product.displayThumbnail} alt='' />
-          </div>
-          <div className='carrito-content'>
-            <div className='content-title'>
-              <Link className='' to='/'>
-                <p className='content-title__h6'>{product.name}</p>
-              </Link>
-              <button onClick={() => handleRemoveFromCart(product)} className='content-delete'>
-                <FontAwesomeIcon className='delete-icon' icon={faTrashAlt} />
-              </button>
-            </div>
-            <div className='content-description'>
-              <p className='content-descripcion-corta-carrito'>{product.description}</p>
-            </div>
-
-            <div class='content-precio-botton'>
-              <div class='input-group inline-group quantity-selector'>
-                <button onClick={() => handleDecreaseCart(product)} class='btn-quantity btn-minus'>
-                  <FontAwesomeIcon icon={faMinus} />
-                </button>
-
-                <input className='quantity' min='0' name='quantity' value={product.cartQuantity} type='number' />
-
-                <button onClick={() => handleIncreaseCart(product)} class='btn-quantity btn-plus'>
-                  <FontAwesomeIcon icon={faPlus} />
-                </button>
-              </div>
-              <div className='content-precio'>
-                <p class=''>
-                  {product.promo ? (
-                    <span className=' card-product-price__tachado '>
-                      {product.currency} {product.price}
-                    </span>
-                  ) : (
-                    ''
-                  )}{' '}
-                  {product.currency} {product.promoPrice}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))
-    ) : (
-      <div>Error</div>
-    );
+  renderProducts = products.length > 0 ? products.map((product) => <ProductCart product={product} />) : <div>Error</div>;
   return (
     <div className='carrito-container1'>
       {cart.cartItems.length === 0 ? (

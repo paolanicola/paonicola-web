@@ -8,3 +8,4 @@ export { default as SectionFooter } from './SectionFooter';
 export { default as HeaderTitle } from './HeaderTitle';
 export { default as Filters } from './Filters';
 export { default as Cart } from './Cart';
+export { default as ProductCart } from './ProductCart';

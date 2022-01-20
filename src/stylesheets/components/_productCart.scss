@@ -1,0 +1,125 @@
+.carrito-container {
+  display: flex;
+  width: 90%;
+  margin-top: -9rem;
+}
+
+.carrito-cards {
+  background-color: white;
+  z-index: 4;
+}
+
+.carrito-card {
+  display: flex;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  min-height: 260px;
+  border: solid 1px $gray-lighter;
+}
+.carrito-img {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 30%;
+}
+.img-source {
+  width: 70px;
+  height: 70px;
+  max-width: 100%;
+}
+.carrito-content {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.content-title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.content-title__h6 {
+  font-weight: 700;
+  margin: 0;
+  padding-right: 1rem;
+  font-size: 16px;
+  color: $primary;
+}
+
+.content-delete {
+  background-color: transparent;
+  border: none;
+  width: 14px;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  justify-content: end;
+  padding-right: 0.5rem;
+  align-items: center;
+  font-size: 20px;
+  height: 44px;
+  width: 10%;
+  cursor: pointer;
+  .delete-icon {
+    color: #dc3545;
+  }
+}
+
+.content-description {
+}
+
+.content-descripcion-corta-carrito {
+  font-size: 14px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.content-botton-precio {
+  display: flex;
+  justify-content: space-between;
+  height: 42px;
+}
+.content-quantity-selector {
+  padding: 0;
+  height: 100%;
+  display: flex;
+}
+.quantity {
+  width: 20px;
+  padding: 0.5rem;
+  border: solid 1px $gray;
+  text-align: center;
+  &[type='number']::-webkit-inner-spin-button,
+  &[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+.btn-quantity {
+  border: solid 1px $gray;
+  background: white;
+  padding: 0.5rem;
+  color: $gray;
+  cursor: pointer;
+}
+
+.content-precio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  p {
+    padding: 0;
+    margin: 0;
+    font-weight: 700;
+    font-size: 20px;
+    padding-left: 8px;
+  }
+  .card-product-price__tachado {
+    font-size: 14px;
+  }
+}
