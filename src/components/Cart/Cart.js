@@ -41,12 +41,12 @@ function Cart() {
           <div className='carrito-total'>
             <h5 class='carrito-total-titulo'>Total del carrito</h5>
 
-            <table class='cuenta'>
+            <table class='carrito-total-cuenta' cellpadding='0' cellspacing='0'>
               {products.length > 0 ? (
                 products.map((product) => (
                   <tr>
-                    <td>{product.name}</td>
-                    <td class='black text-right'>
+                    <td className='carrito-total-td'>{product.name}</td>
+                    <td className='carrito-total-td text-right'>
                       {product.promo ? (
                         <span className=' card-product-price__tachado '>
                           {product.currency} {product.price}
@@ -62,16 +62,13 @@ function Cart() {
               ) : (
                 <p>no hay nada</p>
               )}
+
               <tr>
-                <td>Recetario 1</td>
-                <td class='black text-right'>$2050</td>
+                <td className='carrito-total-td'></td>
               </tr>
-              <tr>
-                <td></td>
-              </tr>
-              <tr class='td-total'>
-                <td class='black'>Total</td>
-                <td class='black text-right'>{cart.cartTotalAmount}</td>
+              <tr className='carrito-total-price-title'>
+                <td className='carrito-total-price'>Total</td>
+                <td className='carrito-total-price text-right'> ${cart.cartTotalAmount}</td>
               </tr>
             </table>
 

@@ -1,5 +1,8 @@
-.carrito-container1 {
+.carrito-container {
+  display: flex;
+  flex-direction: column;
   padding-bottom: 8rem;
+  margin: auto;
 }
 
 .next1 {
@@ -29,16 +32,16 @@
   border-radius: 3px;
   padding: 1.2rem 0rem;
   background: white;
-  height: 100%;
-  h5 {
+
+  .carrito-total-titulo {
     margin: 0;
     padding: 0 1.2rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
-  .cuenta {
+  .carrito-total-cuenta {
     width: 100%;
-    td {
-      border-bottom: 1px solid $gray-lighter;
+    .carrito-total-td {
+      //border-bottom: 1px solid $gray-lighter;
       font-size: 1.2rem;
       font-weight: bold;
       padding: 0.5rem 1.2rem;
@@ -48,36 +51,25 @@
       &:first-child {
         font-size: 1.1rem;
       }
-      &.text-right {
-        text-align: right;
-      }
-    }
-    .td-total {
-      background: $lila-lighter;
-      td {
-        padding: 1rem 1.2rem;
-        color: $text-color;
-        font-size: 1.5rem;
-      }
     }
   }
-  .next {
-    margin: 1rem 1.2rem 0;
-    display: flex;
-    align-items: center;
-    .btn {
-      width: 100%;
-    }
-  }
-}
 
-@media screen and (max-width: 575px) {
-  .carrito-container {
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    max-width: 575px;
+  .carrito-total-price-title {
+    .carrito-total-price {
+      padding: 1rem 1.2rem;
+      color: $text-color;
+      font-weight: bold;
+      background-color: $lila-lighter;
+      font-size: 1.5rem;
+    }
   }
-  .carrito-cards {
+
+  .text-right {
+    text-align: right;
+  }
+  .card-product-price__tachado {
+    display: flex;
+    justify-content: end;
+    font-size: 0.8rem;
   }
 }
