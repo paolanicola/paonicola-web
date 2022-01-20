@@ -47,13 +47,6 @@ function Cart() {
                   <tr>
                     <td className='carrito-total-td'>{product.name}</td>
                     <td className='carrito-total-td text-right'>
-                      {product.promo ? (
-                        <span className=' card-product-price__tachado '>
-                          {product.currency} {product.price}
-                        </span>
-                      ) : (
-                        ''
-                      )}
                       {product.currency}
                       {product.promoPrice}
                     </td>
@@ -73,7 +66,7 @@ function Cart() {
             </table>
 
             <div class='next1'>
-              <Link to='checkout' className='  carrito-finalizar '>
+              <Link to='/checkout' className='  carrito-finalizar '>
                 Finalizar compra
               </Link>
               <div class='wizard-footer' style={{ display: 'none' }}>

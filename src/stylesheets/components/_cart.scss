@@ -9,10 +9,10 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 93%;
+  width: 100%;
   background-color: white;
   margin: 0;
-  padding: 1rem;
+
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
   z-index: 4;
 
@@ -23,6 +23,7 @@
     display: flex;
     justify-content: center;
     font-size: 1.4rem;
+    margin: 1rem;
   }
 }
 //Total carrito
@@ -71,5 +72,17 @@
     display: flex;
     justify-content: end;
     font-size: 0.8rem;
+  }
+}
+
+@media screen and (min-width: 575px) {
+  .next1 {
+    position: static;
+    width: 100%;
+    background-color: white;
+    padding: 0;
+    box-shadow: none;
+    .carrito-finalizar {
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { NavBar, Products, SectionFooter, Footer, Header, HeaderTitle, Cart } from './components';
+import { NavBar, Products, SectionFooter, Footer, Header, HeaderTitle, Cart, Checkout } from './components';
 import About from './pages/About';
 import Changes from './pages/changes';
 import Faq from './pages/faq';
@@ -21,6 +21,7 @@ function App() {
           <Route path='/faq' element={<Faq />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/checkout' element={<Checkout />} />
         </Routes>
         <SectionFooter />
         <Footer />
