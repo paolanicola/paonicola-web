@@ -1,7 +1,7 @@
 .carrito-container {
   display: flex;
   width: 90%;
-  margin-top: -9rem;
+  margin-top: -7.5rem;
 }
 
 .carrito-cards {
@@ -13,7 +13,7 @@
   display: flex;
   padding: 1rem;
   margin-bottom: 2rem;
-  min-height: 260px;
+  min-height: 270px;
   border: solid 1px $gray-lighter;
 }
 .carrito-img {
@@ -41,7 +41,7 @@
 }
 
 .content-title__h6 {
-  font-weight: 700;
+  font-weight: 800;
   margin: 0;
   padding-right: 1rem;
   font-size: 16px;
@@ -71,10 +71,11 @@
 }
 
 .content-descripcion-corta-carrito {
-  font-size: 14px;
+  font-size: 1rem;
+  color: $gray;
   overflow: hidden;
-  display: -webkit-box;
   -webkit-box-orient: vertical;
+  display: -webkit-box;
   -webkit-line-clamp: 4;
 }
 
@@ -120,6 +121,6 @@
     padding-left: 8px;
   }
   .card-product-price__tachado {
-    font-size: 14px;
+    font-size: 1rem;
   }
 }

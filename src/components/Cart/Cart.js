@@ -75,8 +75,8 @@ function Cart() {
               </tr>
             </table>
 
-            <div class='next text-center'>
-              <Link to='checkout' className='btn btn-primary btn-md carrito-finalizar '>
+            <div class='next1'>
+              <Link to='checkout' className='  carrito-finalizar '>
                 Finalizar compra
               </Link>
               <div class='wizard-footer' style={{ display: 'none' }}>

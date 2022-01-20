@@ -68,7 +68,7 @@ function ProductCart({ product }) {
             ) : (
               ''
             )}
-            <p class=''>
+            <p class='content-precio-text'>
               {product.currency} {product.promoPrice}
             </p>
           </div>
