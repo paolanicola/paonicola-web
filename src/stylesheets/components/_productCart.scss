@@ -20,18 +20,21 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  width: 30%;
+  width: 90px;
+  height: 90px;
 }
 .img-source {
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   max-width: 100%;
+  object-fit: contain; //magic
 }
 .carrito-content {
   width: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-left: 1rem;
 }
 
 .content-title {
@@ -122,5 +125,70 @@
   }
   .card-product-price__tachado {
     font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 478px) {
+  .carrito-card {
+    min-height: 190px;
+  }
+}
+@media screen and (min-width: 678px) {
+  .carrito-cards {
+    background-color: transparent;
+  }
+
+  .carrito-card {
+    width: 70%;
+    margin: auto;
+    margin-bottom: 2rem;
+    background-color: white;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .carrito-cards {
+  }
+
+  .carrito-card {
+    width: 85%;
+  }
+  .carrito-img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .img-source {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media screen and (min-width: 978px) {
+  .carrito-container {
+    width: 80%;
+    margin-top: -8rem;
+  }
+  .carrito-cards {
+    max-width: 70%;
+  }
+
+  .carrito-card {
+    width: 90%;
+    margin: auto;
+    margin-bottom: 2rem;
+    background-color: white;
+    min-height: 120px;
+  }
+  .carrito-content {
+    width: 80%;
+  }
+
+  .content-title__h6 {
+    font-size: 21px;
+  }
+
+  .content-descripcion-corta-carrito {
+    -webkit-line-clamp: 3;
   }
 }

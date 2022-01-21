@@ -75,14 +75,39 @@
   }
 }
 
-@media screen and (min-width: 575px) {
+@media screen and (min-width: 478px) {
+}
+@media screen and (min-width: 678px) {
+  .carrito-total {
+    width: 75%;
+    margin: auto;
+  }
+}
+@media screen and (min-width: 768px) {
+  .carrito-container {
+    flex-direction: row;
+  }
+
+  .carrito-total {
+    margin: 0;
+    z-index: 4;
+    height: 100%;
+  }
+
   .next1 {
     position: static;
     width: 100%;
     background-color: white;
     padding: 0;
     box-shadow: none;
+
     .carrito-finalizar {
     }
+  }
+}
+
+@media screen and (min-width: 978px) {
+  .carrito-total {
+    width: 30%;
   }
 }
