@@ -41,23 +41,27 @@ function Product({ product }) {
         </div>
         <div className='card-product-text'>
           <h4 className='card-product-text__name'>{product.name}</h4>
-          <h4 className='card-product-text__price'>
+          <div className='card-product-text__price'>
             {product.promo ? (
-              <span className=' card-product-price__tachado '>
+              <h4 className=' card-product-price__tachado '>
                 {product.currency} {product.price}
-              </span>
+              </h4>
             ) : (
               ''
             )}
-            {product.currency} {product.promoPrice}
-          </h4>
+            <h4>
+              {product.currency} {product.promoPrice}
+            </h4>
+          </div>
         </div>
-        <div class='botones-mobile'>
-          <Link to='' class='botones-mobile-view' title='Vista rápida'>
-            <View />
+        <div className='botones-mobile'>
+          <Link to='' className='botones-mobile-view' title='Vista rápida'>
+            {/* <View /> */}
+            Ver
           </Link>
-          <button onClick={() => handleAddToCart(product)} class='botones-mobile-addToCart' title='Añadir al carrito'>
-            <AddToCart />
+          <button onClick={() => handleAddToCart(product)} className='botones-mobile-addToCart' title='Añadir al carrito'>
+            {/* <AddToCart /> */}
+            Añadir al Carrito
           </button>
         </div>
       </div>
