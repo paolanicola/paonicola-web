@@ -1,0 +1,133 @@
+.react-calendar {
+  width: 80%;
+}
+.react-calendar__navigation {
+  background-color: $primary;
+  display: flex;
+}
+
+.react-calendar__month-view__weekdays {
+  background-color: $primary;
+}
+
+.react-calendar__tile--active {
+  background-color: $primary;
+}
+// estilos
+
+.first-section {
+}
+.first-section-checkout {
+  padding-top: 0;
+  width: 1328px;
+  max-width: 100%;
+  margin: auto;
+  margin-top: -8rem;
+  margin-bottom: 4rem;
+}
+.container-checkout {
+  width: 80%;
+  margin: auto;
+}
+
+.row-checkout {
+  display: flex;
+  flex-direction: column;
+}
+
+//wizard body start
+.wizard-body {
+  min-height: 415px;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.68, -0.3, 0.37, 0.6);
+  .step {
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: -100%;
+    opacity: 0;
+  }
+  .step.initial {
+    position: relative;
+  }
+  .step.off {
+    opacity: 0 !important;
+    right: 100% !important;
+  }
+  .step.active {
+    right: 0;
+    margin-left: 0;
+    margin-top: 0;
+    opacity: 1;
+    transition: all 0.4s linear;
+    transition-delay: 0.1s;
+  }
+  .medio-pago {
+    margin-bottom: 1.5rem;
+    position: relative;
+    .label-pago {
+      position: relative;
+      padding: 1.5rem 1.5rem 1.5rem 3rem;
+      border: 1px $gray-lighter solid;
+      border-radius: 3px;
+      transition: ease all 0.3s;
+      display: block;
+      width: 100%;
+      &.activelabel {
+        border: solid 1px $primary;
+      }
+    }
+    > input {
+      position: absolute;
+      left: 1rem;
+      top: 1.7rem;
+      width: auto;
+      z-index: 2;
+    }
+    p {
+      margin-bottom: 0;
+    }
+    h6 {
+      font-size: 1.1rem;
+    }
+    .medios-cash {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      li {
+        padding: 0 1.5rem 1rem 0;
+        label {
+          display: flex;
+          align-items: center;
+          color: $gray;
+          line-height: 1.2;
+          input {
+            width: auto;
+          }
+        }
+        img {
+          height: 28px;
+          margin: 0 5px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 678px) {
+  .row-body {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 978px) {
+}
+
+@media screen and (min-width: 1400px) {
+  .container-checkout {
+    width: 100%;
+  }
+}

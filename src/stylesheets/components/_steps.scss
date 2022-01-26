@@ -1,0 +1,82 @@
+//wizard header start
+.wizard {
+  overflow: hidden;
+}
+.wizard-header {
+  margin-bottom: 2rem;
+  .steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    &:before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 2px;
+      position: absolute;
+      top: 20px;
+      left: 0;
+      background: $primary;
+    }
+    .wizard-step {
+      .icon-stepper {
+        width: 40px !important;
+        height: 40px;
+        border-radius: 50%;
+        transition: all 0.8s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: $gray-lighter;
+        line-height: 40px;
+        width: 33.3%;
+        position: relative;
+        z-index: 1;
+        margin: 0;
+      }
+      &.active {
+        .icon-stepper {
+          background: $primary;
+        }
+      }
+      .text-stepper {
+        text-align: left;
+        p {
+          font-size: 0.9rem;
+          font-weight: 700;
+          line-height: 1.2;
+        }
+        small {
+          color: $gray;
+          font-size: 0.8rem;
+        }
+      }
+      & .wizard-step-01 {
+        p {
+          text-align: left !important;
+        }
+      }
+      &.wizard-step-02,
+      &.wizard-step-03 {
+        display: flex;
+        flex-direction: column;
+      }
+      &.wizard-step-02 {
+        .text-stepper {
+          text-align: center;
+        }
+        align-items: center;
+        padding: 0 16px;
+      }
+      &.wizard-step-03 {
+        align-items: flex-end;
+        p {
+          text-align: right !important;
+        }
+      }
+    }
+  }
+}
+
+//end wizard header

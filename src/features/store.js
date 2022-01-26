@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cartReducer, { getTotals } from './cart/cartSlice';
 import productsReducer from './products/productSlice';
+import stepReducer from './stepsCheckout/stepsSlice';
 
 export const store = configureStore({
-  reducer: { products: productsReducer, cart: cartReducer },
+  reducer: { products: productsReducer, cart: cartReducer, step: stepReducer },
 });

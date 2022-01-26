@@ -10,3 +10,8 @@ export { default as Filters } from './Filters';
 export { default as Cart } from './Cart';
 export { default as ProductCart } from './ProductCart';
 export { default as Checkout } from './checkout';
+export { default as Steps } from './Steps';
+export { default as CalendarCheckout } from './CalendarCheckout';
+export { default as CartTotal } from './CartTotal';
+export { default as FormPatientOrder } from './FormPatientOrder';
+export { default as PaymentMethods } from './PaymentMethods';

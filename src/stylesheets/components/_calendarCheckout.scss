@@ -1,0 +1,10 @@
+.wizard-body {
+  border: 1px solid $primary;
+  width: 100%;
+}
+
+@media screen and (min-width: 678px) {
+  .wizard-body {
+    width: 65%;
+  }
+}

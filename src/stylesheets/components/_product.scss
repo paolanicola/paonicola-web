@@ -129,7 +129,7 @@
   //@extend %btn-primary;
   @extend %btn;
   background-color: $primary;
-  border: solid 3px $primary;
+  //border: solid 3px $primary;
   color: white;
   border-radius: 5px;
   width: 40%;
@@ -138,6 +138,9 @@
   align-items: center;
   justify-content: center;
   font-size: 1rem;
+  &:hover {
+    background-color: $primary-light;
+  }
 }
 
 .card-product-price__tachado {

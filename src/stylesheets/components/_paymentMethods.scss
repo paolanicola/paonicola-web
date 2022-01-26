@@ -1,0 +1,39 @@
+.payment-container {
+  width: 100%;
+  display: flex;
+  margin-bottom: 4rem;
+  flex-direction: column;
+}
+input {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0px;
+  box-sizing: border-box;
+  display: block;
+}
+
+.medio-pago {
+  margin-bottom: 1.5rem;
+  position: relative;
+  .label-pago {
+    position: relative;
+    //padding: 1.5rem 1.5rem 1.5rem 3rem;
+    border: 1px $gray-lighter solid;
+    border-radius: 3px;
+    transition: ease all 0.3s;
+    display: block;
+    width: 100%;
+    &.activelabel {
+      border: solid 1px $primary;
+    }
+  }
+}
+@media screen and (min-width: 678px) {
+  .payment-container {
+    width: 65%;
+  }
+
+  .label-pago {
+    padding: 0;
+  }
+}
