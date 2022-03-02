@@ -1,4 +1,4 @@
-# DEPRECATED
+# DEPRECATED, USE https://github.com/paolanicola/paonicola-web (NEED TO ASK FOR ACCESS)
 ----------------------------------------------------------------------------------------------------
 # Getting Started with Create React App
 
