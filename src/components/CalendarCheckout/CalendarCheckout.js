@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import DateTimePicker from 'react-datetime-picker';
 import Select, { components, DropdownIndicator, DropdownIndicatorProps } from 'react-select';
 import 'react-datetime-picker/dist/DateTimePicker.css';
@@ -9,31 +9,36 @@ import 'react-clock/dist/Clock.css';
 import moment from 'moment';
 import 'moment/locale/es';
 import { getAllAppointments } from '../../features/appointments/appointmentsSlice';
+import { getFecha, updateFecha, updateTest } from '../../features/cartState/cartStateSlice';
 
 moment.locale('es');
 let tomorrow = moment().add(1, 'days').startOf('day');
 tomorrow = tomorrow.toDate();
 
 function CalendarCheckout() {
-  const [value, setValue] = useState(tomorrow);
+  const { fecha } = useSelector((state) => state.cartState);
+  //fechas
+  const appointments = useSelector(getAllAppointments);
+  const dates = appointments.map((appointment) => moment(appointment.fecha));
+
+  const [dateCalendar, setDateCalendar] = useState(fecha ? new Date(fecha) : dates[0].toDate()); //primer dia disponible. asumimos que vienen ordenados
   const [month, setMonth] = useState(tomorrow);
   const [year, setYear] = useState(tomorrow);
   const [render1, setRender1] = useState('');
   let stringdate = moment(tomorrow).format('YYYY-MM-DD');
   var mydate = new Date(stringdate + 'T03:00:00Z');
-  console.log(mydate);
-  //fechas
-  const appointments = useSelector(getAllAppointments);
-  const dates = appointments.map((appointment) => moment(appointment.fecha));
+  //console.log(mydate);
+
+  const dispatch = useDispatch();
+  // console.log(cartState);
+
   const meses = new Map();
 
   dates.map((d) => meses.set(d.format('MMMM'), d.toDate()));
-  //console.log(meses);
   const iterator1 = meses[Symbol.iterator]();
   let arrai = [];
   let index = 0;
   for (const item of iterator1) {
-    // console.log(item);
     arrai[index++] = {
       value: item[1],
       label: item[0],
@@ -42,11 +47,9 @@ function CalendarCheckout() {
   index = 0;
   const anios = new Map();
   dates.map((d) => anios.set(d.format('YYYY'), d.toDate()));
-  console.log(anios);
   const iterator2 = anios[Symbol.iterator]();
   let arrai2 = [];
   for (const item of iterator2) {
-    console.log(item);
     arrai2[index++] = {
       value: item[1],
       label: item[0],
@@ -55,15 +58,17 @@ function CalendarCheckout() {
 
   const startOfMonth = moment().month(3).clone().startOf('month').format('YYYY-MM-DD');
 
-  const optionsMonth = arrai.map((d) => ({
+  const optionsMontht = arrai.map((d) => ({
     value: d.value,
     label: d.label,
   }));
-
-  const optionsYear = arrai2.map((d) => ({
+  const optionsMonth = optionsMontht;
+  const [selectedOption, setSelectedOption] = useState(optionsMonth[0]);
+  const optionsYeary = arrai2.map((d) => ({
     value: d.value,
     label: d.label,
   }));
+  const optionsYear = optionsYeary;
 
   const customStyles = {
     control: () => ({
@@ -73,12 +78,23 @@ function CalendarCheckout() {
 
   const updateCalendar = () => {
     const moonLanding = new Date(year.getFullYear(), month.getMonth(), 1);
-    setValue(moonLanding);
+    //console.log(moonLanding);
+    setDateCalendar(moonLanding);
+  };
+  const updateSelects = (e) => {
+    console.log('actualizar selects');
+    var mesletra = moment(e);
+    var mes = optionsMontht.filter((date) => date.label === mesletra.format('MMMM')).map((date) => date);
+    //console.log(mesletra.format('MMMM'));
+    //console.log(JSON.stringify(mes[0]) + 'actualizando selects');
+    setSelectedOption(mes[0]);
   };
 
   const handleMonthTest = (selectedOption) => {
     setMonth(selectedOption.value);
-    updateCalendar();
+    setSelectedOption(selectedOption);
+    const moonLanding = new Date(year.getFullYear(), month.getMonth(), 1);
+    setDateCalendar(moonLanding);
   };
 
   const handleYearTest = (e) => {
@@ -87,10 +103,13 @@ function CalendarCheckout() {
   };
 
   useEffect(() => {
-    renderizar(tomorrow);
-    console.log('renderizo');
-    //handleDateChange(tomorrow);
-  }, []);
+    // console.log('renderizo');
+    // const moonLanding = new Date(year.getFullYear(), month.getMonth(), 1);
+    // setValue(moonLanding);
+    //console.log(dateCalendar + 'soy el date calendar');
+    //dispatch(updateTest());
+    renderizar(dateCalendar);
+  }, [dispatch, dateCalendar]);
 
   const renderizar = (appoint) => {
     let fecha = appoint.toISOString().split('T')[0];
@@ -108,14 +127,16 @@ function CalendarCheckout() {
   };
 
   const handleDateChange = (e) => {
-    console.log(e.toISOString().split('T')[0]);
+    //console.log(e.toISOString().split('T')[0]);
     let fechaTemp = e.toISOString().split('T')[0];
     let temp = false;
     dates.map((appoint) => (appoint.isSame(fechaTemp) ? (temp = appoint) : ''));
     temp ? renderizar(temp) : setRender1(<div className='time-select'>Sin horas Disponibles</div>);
     setMonth(e);
     setYear(e);
-    setValue(e);
+    updateSelects(e);
+    dispatch(updateFecha(e));
+    setDateCalendar(e);
   };
 
   function isSameDay(a, b) {
@@ -144,7 +165,8 @@ function CalendarCheckout() {
                 className='react-select-containerC'
                 classNamePrefix='react-selectC'
                 options={optionsMonth}
-                defaultValue={optionsMonth[0]}
+                //defaultValue={optionsMontht[0]}
+                value={selectedOption}
                 onChange={handleMonthTest}
               />
               <Select
@@ -160,10 +182,10 @@ function CalendarCheckout() {
               locale
               className=''
               tileDisabled={tileDisabled}
+              value={dateCalendar}
               onChange={handleDateChange}
               minDate={tomorrow}
-              //maxDate={new Date(2022, 0, 31)}
-              value={value}
+              //maxDate={new Date(2022, 1, 28)}
             />
           </div>
           <div className='calendar-time-container'>

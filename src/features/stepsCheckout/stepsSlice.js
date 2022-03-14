@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   step: localStorage.getItem('stepCurrent') ? JSON.parse(localStorage.getItem('stepCurrent')) : 0,
+  fecha: localStorage.getItem('fechaCurrent') ? JSON.parse(localStorage.getItem('fechaCurrent')) : 0,
 };
 
 const stepSlice = createSlice({
@@ -24,9 +25,13 @@ const stepSlice = createSlice({
 
       localStorage.setItem('stepCurrent', state.step);
     },
+    setFecha(state, action) {
+      localStorage.setItem('fechaCurrent', state.fecha);
+    },
   },
 });
 
-export const { nextStep, backStep } = stepSlice.actions;
+export const { nextStep, backStep, setFecha } = stepSlice.actions;
 export const getStateStep = (state) => state.stepCurrent.step;
+export const getStateFecha = (state) => state.stepCurrent.fecha;
 export default stepSlice.reducer;
