@@ -53,6 +53,7 @@
 
 .react-selectC__indicator {
   //background: url(../../assets/images/tienda/loupe.svg) no-repeat 80% center;
+  display: none;
 }
 
 .react-selectC__menu {
@@ -106,7 +107,7 @@
   cursor: pointer;
 }
 .react-calendar__navigation {
-  display: none; // flex
+  //display: none; // flex
   height: 44px;
   margin-bottom: 1em;
 }

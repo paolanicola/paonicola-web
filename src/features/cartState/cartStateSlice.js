@@ -13,12 +13,9 @@ const cartStateSlice = createSlice({
       state.fecha = action.payload;
       localStorage.setItem('fecha', JSON.stringify(action.payload));
     },
-    updateTest(state, action) {
-      updateFecha(state, action);
-    },
   },
 });
 
-export const { updateFecha, updateTest } = cartStateSlice.actions;
+export const { updateFecha } = cartStateSlice.actions;
 export const getFecha = (state) => state.cartState.fecha;
 export default cartStateSlice.reducer;
