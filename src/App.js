@@ -1,22 +1,30 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Products, SectionFooter, Footer, Header, HeaderTitle } from './components';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { NavBar, Products, SectionFooter, Footer, Header, HeaderTitle } from './components';
+import About from './pages/About';
+import Changes from './pages/changes';
+import Faq from './pages/faq';
+import Contact from './pages/contact';
 import './stylesheets/application.scss';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
+      <ScrollToTop />
       <div className='container'>
         <Header />
         <HeaderTitle />
         <Routes>
-          <Route path='/' element={<Products />} />
-          <Route path='/carrito' />
-          <Route path='/checkout' />
+          <Route exact path='/' element={<Products />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/changes' element={<Changes />} />
+          <Route path='/faq' element={<Faq />} />
+          <Route path='/contact' element={<Contact />} />
         </Routes>
         <SectionFooter />
         <Footer />
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 

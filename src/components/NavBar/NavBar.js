@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
@@ -28,24 +28,24 @@ export default function NavBar() {
             </Link>
           </li>
           <li className='menu__item'>
-            <a href='#' className='menu__link'>
+            <Link to='/about' onClick={closeSidebar} className='menu__link'>
               Sobre mi
-            </a>
+            </Link>
           </li>
           <li className='menu__item'>
-            <a href='#' className='menu__link'>
+            <Link to='/changes' className='menu__link'>
               Cambios Reales
-            </a>
+            </Link>
           </li>
           <li className='menu__item'>
-            <a href='#' className='menu__link'>
+            <Link to='/faq' className='menu__link'>
               FAQ
-            </a>
+            </Link>
           </li>
           <li className='menu__item'>
-            <a href='#' className='menu__link'>
+            <Link to='/contact' className='menu__link'>
               Contacto
-            </a>
+            </Link>
           </li>
           <li className='menu__item'>
             <div href='#' className='menu__link'>

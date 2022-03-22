@@ -1,6 +1,6 @@
 .nav-bar {
   background-color: $primary;
-  height: 97px;
+  height: 100%;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -17,6 +17,7 @@
   transition: all 0.3s ease;
   border-right: 1px solid #ccc;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  z-index: 4;
 }
 
 .nav-menu__items {
