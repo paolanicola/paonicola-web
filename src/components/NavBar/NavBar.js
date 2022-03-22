@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import * as GoIcons from 'react-icons/go';
+import { NavLink, Link } from 'react-router-dom';
 import { PrimaryButton } from '..';
+
+import { ReactComponent as InstagramBrand } from '../../assets/images/header/instagram-brands.svg';
+import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg';
+import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg';
+import { ReactComponent as NavOpen } from '../../assets/images/header/nav-open.svg';
+import { ReactComponent as NavClose } from '../../assets/images/header/nav-close.svg';
+import { ReactComponent as PaolaLogo } from '../../assets/images/header/logo.svg';
+
 export default function NavBar() {
   const [sidebar, setSidebar] = useState(false);
 
@@ -13,62 +18,46 @@ export default function NavBar() {
 
   return (
     <>
-      <div className='nav-bar '>
-        <div className='nav-bar__icon-open' onClick={showSidebar}>
-          <Link to='#' className='menu-bars'>
-            <FaIcons.FaBars onClick={showSidebar} />
-          </Link>
+      <div className={sidebar ? 'navBar__menu navBar__menu--active' : 'navBar__menu'}>
+        <div className='menu__left'>
+          <div className='pepe '>
+            <div className='container__icon__close' onClick={closeSidebar}>
+              <NavClose className='icon__svg__close' />
+            </div>
+          </div>
+          <NavLink className='menu__item menu__link' to='/about' onClick={closeSidebar}>
+            <p>Sobre Mi</p>
+          </NavLink>
+          <NavLink className='menu__item menu__link' to='/changes' onClick={closeSidebar}>
+            <p>Cambios Reales</p>
+          </NavLink>
+          <NavLink className='menu__item menu__link' to='/faq' onClick={closeSidebar}>
+            <p>FAQ</p>
+          </NavLink>
+          <NavLink className='menu__item menu__link' to='/contact' onClick={closeSidebar}>
+            <p>Contacto</p>
+          </NavLink>
+        </div>
+
+        <div className='menu__right'>
+          <div className='menu__item menu__link'>
+            <div className='menu__redes '>
+              <Link to='#' className='menu__redes__link'>
+                <InstagramBrand className='menu__redes__icono' />
+              </Link>
+              <Link to='#' className='menu__redes__link'>
+                <MailBrand className='menu__redes__icono' />
+              </Link>
+              <Link to='#' className='menu__redes__link'>
+                <WhatsappBrand className='menu__redes__icono' />
+              </Link>
+            </div>
+          </div>
+          <div className='menu__item menu__link'>
+            <PrimaryButton actionText='/' hreff='hola' />
+          </div>
         </div>
       </div>
-      <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-        <ul className='nav-menu__items'>
-          <li className='nav-menu__icon-close' onClick={closeSidebar}>
-            <Link to='#' className='menu-bars'>
-              <AiIcons.AiOutlineClose className='nav-menu__icon' />
-            </Link>
-          </li>
-          <li className='menu__item'>
-            <Link to='/about' onClick={closeSidebar} className='menu__link'>
-              Sobre mi
-            </Link>
-          </li>
-          <li className='menu__item'>
-            <Link to='/changes' className='menu__link'>
-              Cambios Reales
-            </Link>
-          </li>
-          <li className='menu__item'>
-            <Link to='/faq' className='menu__link'>
-              FAQ
-            </Link>
-          </li>
-          <li className='menu__item'>
-            <Link to='/contact' className='menu__link'>
-              Contacto
-            </Link>
-          </li>
-          <li className='menu__item'>
-            <div href='#' className='menu__link'>
-              <div className='menu__redes'>
-                <Link to='#' className='menu__redes__link'>
-                  <FaIcons.FaInstagram className='menu__redes__icono ' />
-                </Link>
-                <Link to='#' className='menu__redes__link'>
-                  <GoIcons.GoMail className='menu__redes__icono' />
-                </Link>
-                <Link to='#' className='menu__redes__link'>
-                  <FaIcons.FaWhatsapp className='menu__redes__icono' />
-                </Link>
-              </div>
-            </div>
-          </li>
-          <li className='menu__item'>
-            <div href='#' className='menu__link'>
-              <PrimaryButton actionText='Tienda Online' />
-            </div>
-          </li>
-        </ul>
-      </nav>
     </>
   );
 }

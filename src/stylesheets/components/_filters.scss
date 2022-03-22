@@ -1,0 +1,130 @@
+input:not(.quantity):not([type='submit']),
+select {
+  width: 100%;
+  border-radius: 3px;
+  border: solid 2px $primary;
+  padding: 0.75rem 1rem;
+}
+
+[type='search'] {
+  outline-offset: 0;
+  -webkit-appearance: textfield;
+}
+
+.filtros {
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: 0;
+  margin-top: -5rem;
+}
+
+.search {
+  background: url(../../assets/images/tienda/loupe.svg) no-repeat 97% center;
+  background-size: 25px;
+}
+
+.container2 {
+}
+
+.row {
+  display: flex;
+  padding: 1rem 1px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.container-search {
+  width: 40%;
+  padding: 0 16px;
+}
+
+.container-categorias {
+  width: 30%;
+  padding: 0 16px;
+}
+
+.container-order {
+  width: 20%;
+  padding: 0 16px;
+}
+//----------------css To Select custom
+
+.react-select-container {
+  width: 100%;
+  z-index: 4;
+}
+.react-select__control {
+  display: flex;
+  border: solid 2px $primary;
+}
+.react-select__control--is--focused {
+}
+
+.react-select__indicator-separator {
+  display: none;
+}
+.react-select__value-container {
+  font-size: 1em;
+  font-weight: 400;
+
+  .react-select__input-container {
+  }
+}
+
+.react-select__input {
+  background-color: tomato;
+}
+
+.react-select__indicators {
+  background-color: white;
+}
+
+.react-select__indicator {
+  //background: url(../../assets/images/tienda/loupe.svg) no-repeat 80% center;
+  width: 2.5rem;
+}
+
+.react-select__menu {
+  background-color: violet;
+  width: 100px;
+  margin: 0;
+  padding: 0;
+}
+
+.react-select__menu-list {
+  background-color: white;
+  border-radius: 3px;
+  border: solid 2px $primary;
+  margin-top: -0.9rem;
+}
+
+.react-select__option {
+  border-top: solid 2px $primary;
+  padding: 0.75rem 1rem;
+}
+//----------------------fin select custom
+
+//queryes------------------------------------------------------------------------
+@media screen and (min-width: 370px) {
+  .container-buscadores {
+  }
+}
+
+@media screen and (min-width: 575px) {
+  .container-buscadores {
+  }
+}
+@media screen and (min-width: 680px) {
+  .container-buscadores {
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container-buscadores {
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .container-buscadores {
+  }
+}

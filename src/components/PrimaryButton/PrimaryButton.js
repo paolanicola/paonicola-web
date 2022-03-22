@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function PrimaryButton({ actionText, onClick }) {
+export default function PrimaryButton({ actionText, href }) {
   return (
-    <button className="primary-button" onClick={onClick}>
+    <Link to={href} className='primary-button'>
       {actionText}
-    </button>
+    </Link>
   );
 }

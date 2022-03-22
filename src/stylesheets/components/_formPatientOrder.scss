@@ -1,0 +1,45 @@
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4rem;
+}
+
+.caja {
+}
+
+.form {
+  label {
+    color: $gray;
+  }
+}
+.form-input {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0px;
+  box-sizing: border-box;
+  display: block;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.form-row-name {
+  width: 48%;
+}
+
+.form-row-lastName {
+  width: 48%;
+}
+
+.form-control {
+  padding: 0.25em 0.5em;
+}
+@media screen and (min-width: 678px) {
+  .form-container {
+    width: 65%;
+  }
+}

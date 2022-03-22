@@ -45,11 +45,14 @@
 
 .btn-secondary,
 %btn-secondary {
-  color: $white;
-  background-color: $secondary;
-
-  &:hover {
-    background-color: $secondary-dark;
+  background: white;
+  color: $primary !important;
+  border-color: white;
+  :hover,
+  :focus {
+    background: white;
+    color: $primary !important;
+    border-color: white;
   }
 }
 
@@ -73,8 +76,10 @@
   padding: 0.5rem;
 }
 
-.btn-md {
-  padding: 1rem;
+.btn-md,
+%btn-md {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .btn-lg {

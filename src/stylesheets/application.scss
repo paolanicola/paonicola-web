@@ -13,10 +13,10 @@
 @import 'base/flexbox';
 @import 'base/wrapper';
 @import 'base/buttons';
-/*
-@import 'base/labels';
 @import 'base/inputs';
 @import 'base/form';
+/*
+@import 'base/labels';
 @import 'base/modal';
 @import 'base/circle';*/
 
@@ -29,3 +29,13 @@
 @import 'components/footer';
 @import 'components/products';
 @import 'components/header-title';
+@import 'components/product';
+@import 'components/filters';
+@import 'components/cart';
+@import 'components/productCart';
+@import 'components/checkout';
+@import 'components/steps';
+@import 'components/calendarCheckout';
+@import 'components/cartTotal';
+@import 'components/formPatientOrder';
+@import 'components/paymentMethods';

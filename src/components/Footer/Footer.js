@@ -17,7 +17,7 @@ export default function Footer() {
             </div>
           </div>
           <div className='footer-container-menu'>
-            <ul>
+            <ul className='footer-container-menu-ul'>
               <li>
                 <Link to='/' className='footer__link' href=''>
                   Home
@@ -34,12 +34,14 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to='/contact' className='footer__link' href='/contacto'>
+                <Link to='/contact' className='footer__link'>
                   Contacto
                 </Link>
               </li>
               <li>
-                <a className='footer__link'>Solicitar turno</a>
+                <Link to='/contact' className='footer__link'>
+                  Solicitar turno
+                </Link>
               </li>
               <li>
                 <ul class='footer-menu-redes'>
@@ -70,19 +72,19 @@ export default function Footer() {
         </div>
 
         <div className='footer-container-botton'>
-          <div>
+          <div className='footer-container-botton-left'>
             <p className='rayo'>
               Diseño y maquetado:
               <a href='https://rayoestudio.com/' target='_blank' rel='noopener'></a>
             </p>
           </div>
-          <div>
-            <p className='felipe'>
-              Desarrollo:
-              <a href='https://www.linkedin.com/in/felipe-arana-37782071/' target='_blank' rel='noopener'>
-                Felipe Arana
-              </a>
-            </p>
+          <div className='footer-container-botton-right'>
+            <h3>|</h3>
+            <p className='felipe'>Desarrollo: </p>
+
+            <a href='https://www.linkedin.com/in/felipe-arana-37782071/' target='_blank' rel='noopener'>
+              Felipe Arana
+            </a>
           </div>
         </div>
       </div>

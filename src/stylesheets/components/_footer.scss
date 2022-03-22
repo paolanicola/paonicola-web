@@ -31,13 +31,14 @@
 
 .footer-container-menu {
   justify-content: center;
+  padding: 0.5rem;
 }
 .footer__link {
-  display: block;
+  display: inline-block;
   text-decoration: none;
   color: white;
-  padding: 1rem;
   font-weight: 300;
+  padding: 0.3rem;
   &:hover,
   &:focus {
     opacity: 0.7;
@@ -45,6 +46,7 @@
 }
 .footer-menu-redes {
   display: flex;
+  align-items: center;
   a {
     padding: 1rem 0.5rem;
   }
@@ -62,6 +64,16 @@
   color: #666666;
   font-weight: 300;
 }
+
+.footer-container-botton-right {
+  display: flex;
+  align-items: baseline;
+
+  a {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+}
 .rayo {
   margin-right: 0.5rem;
   display: flex;
@@ -74,5 +86,32 @@
     font-weight: 700;
     color: #333;
     font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .footer-container-top {
+    justify-content: center;
+  }
+  .footer__link {
+    font-size: 1.1rem;
+  }
+  .footer-container-menu {
+    display: flex;
+    ul {
+      display: flex;
+      align-items: baseline;
+      li {
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 968px) {
+  .footer-container-top {
+    width: 80%;
+    margin: auto;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }

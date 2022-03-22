@@ -1,29 +1,143 @@
-.header {
+.navBar {
   position: sticky;
   top: 0;
   max-height: $header-height;
   display: flex;
   justify-content: space-between;
-  background-color: white;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
   z-index: 5;
 }
 
+.navBar__icon__svg {
+  background-color: white;
+  width: 80px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: solid 1px #f2f2f2;
+  border-left: solid 1px #f2f2f2;
+  cursor: pointer;
+  position: relative;
+}
+
+.icon__svg__open {
+  height: 25px;
+}
+
+.nro-carrito {
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  line-height: 18px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: $primary;
+  position: absolute;
+  top: 30%;
+  right: 20%;
+}
+
+.navBar__menu {
+  background: white;
+  justify-content: start;
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  transition: all 0.3s ease;
+  border-right: 1px solid #ccc;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.pepe {
+  background-color: $primary;
+  height: $header-height;
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 13px;
+}
+
+.container__icon__close {
+  max-height: $header-height;
+  max-width: 80px;
+}
+
+.icon__svg__close {
+  height: 25px;
+}
+
+.navBar__menu--active {
+  left: 0%;
+  transition: all 350ms ease;
+}
+
+//menu nava-bar
+.menu__left,
+.menu__right {
+  height: auto;
+}
+
+.menu__item {
+  display: block;
+  text-align: left;
+}
+
+.menu__link {
+  font-size: 1rem;
+  height: auto;
+  padding: 16px;
+  line-height: 1.2;
+  display: block;
+}
+
+.menu-bars {
+  font-size: 2rem;
+}
+
+.nav-menu__icon {
+  color: white;
+}
+
+.menu__redes {
+  display: flex;
+  height: 50px;
+}
+
+.menu__redes__link {
+  display: flex;
+  height: 50px;
+}
+
+.menu__redes__icono {
+  height: auto;
+  padding: 0 1rem;
+  color: $text-color;
+}
+
+/*-----------------------------------------------*/
 .header--resize {
-  background-color: yellow;
-  max-height: 64px;
+  height: 64px;
+  transition: all 0.3s ease;
+  background-color: white;
   transition: all 0.3s ease;
 
-  .header__right {
-    height: 64px;
+  .navBar__icon__svg {
+    height: 100%;
   }
 
-  .header__logo {
-    height: 64px;
+  .menu__logo {
+    height: 60px;
+    width: 60px;
+    padding-top: 0;
   }
 
-  .header_left {
-    height: 64px;
+  .menu__logo__svg {
+    max-height: 100%;
   }
 }
 
@@ -38,18 +152,96 @@
   width: 100%;
 }
 
-.header_left {
-  height: $header-height;
-}
-
-.header__right {
-  cursor: pointer;
-  height: 97px;
+.menu__logo {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, +00%);
+  height: 80px;
   width: 80px;
-  display: flex;
   justify-content: center;
   align-items: center;
-  border-left: solid 1px #f2f2f2;
+  padding-top: 5px;
+  transition: all 0.3s ease;
 }
 
-.header__icon {}
+.menu__logo__svg {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+@media screen and (min-width: 992px) {
+  .navBar {
+    position: sticky;
+    max-height: $header-height;
+  }
+
+  .navBar__icon__svg--none {
+    display: none;
+  }
+
+  .navBar__menu {
+    display: flex;
+    position: static;
+    justify-content: space-between;
+    width: 100%;
+    height: $header-height;
+    border: none;
+    box-shadow: none;
+    transition: all 0.3s ease;
+  }
+
+  .menu__left {
+    display: flex;
+    justify-content: flex-start;
+    width: 50%;
+  }
+
+  .menu__item p {
+    font-size: 16px;
+  }
+
+  .menu__right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    width: 50%;
+  }
+
+  .pepe {
+    display: none;
+  }
+
+  .menu__logo {
+    height: 150px;
+    width: 150px;
+    padding-top: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .menu__logo__svg {
+    height: 100%;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .header--resize {
+    height: 97px;
+    transition: all 0.3s ease;
+
+    .menu__logo {
+      height: 90px;
+      width: 90px;
+      transition: all 0.3s ease;
+    }
+
+    .menu__logo__svg {
+      height: 100%;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+  }
+}
