@@ -1,4 +1,4 @@
-# Pao Nicola Web
+# Pao Nicola Web 🥑🥗🍣
 
 > React frontend project used for ecommerce and appointments management.
 
