@@ -18,7 +18,7 @@ export default function Footer() {
           <div className='footer-container-menu'>
             <ul>
               <li>
-                <a className='footer__link' href=''>
+                <a className='footer__link' href='/home'>
                   Home
                 </a>
               </li>

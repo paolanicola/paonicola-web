@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { NavBar, Products, SectionFooter, Footer, Header, HeaderTitle } from './components';
+import { Products, SectionFooter, Footer, Header, HeaderTitle } from './components';
 import './stylesheets/application.scss';
 
 function App() {
