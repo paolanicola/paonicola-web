@@ -16,6 +16,7 @@
 }
 
 .calendar-picker-container {
+  width: 90%;
   max-width: 100%;
 }
 
@@ -25,11 +26,22 @@
 
 //css select
 .react-select-containerC {
+  width: 100%;
 }
 
 .react-selectC__control {
   display: flex;
   border: none;
+  .react-selectC__indicators {
+    display: none;
+  }
+
+  .react-selectC__value-container {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: none;
+  }
 }
 
 .react-selectC__control--is--focused {
@@ -54,20 +66,44 @@
 .react-selectC__indicator {
   //background: url(../../assets/images/tienda/loupe.svg) no-repeat 80% center;
   display: none;
-}
 
-.react-selectC__menu {
+  .css-tj5bde-Svg {
+    display: none;
+  }
 }
+.react-select-containerC {
+  .react-selectC__menu {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    //height: 100%;
+    .react-selectC__menu-list {
+      height: 120%;
+      width: 100%;
+      padding: 0;
+      overflow: auto;
 
-.react-selectC__menu-list {
-  display: flex;
-  flex-direction: column;
-  border: none;
-  margin-top: -1rem;
+      .react-selectC__option {
+        background-color: $gray-lighter;
+        border-bottom: 1px solid $gray;
+      }
+
+      .css-1n7v3ny-option {
+        background-color: $primary-light;
+      }
+
+      .react-selectC__option--is-selected {
+        background-color: $primary;
+      }
+    }
+  }
 }
 
 .react-selectC__option {
   border: none;
+  .react-selectC__option--is-selected {
+    color: black;
+  }
 }
 
 //calendar css
@@ -106,19 +142,40 @@
 .react-calendar button:enabled:hover {
   cursor: pointer;
 }
+
 .react-calendar__navigation {
   //display: none; // flex
   height: 44px;
   margin-bottom: 1em;
+
+  .react-calendar__navigation__arrow {
+    //display: none;
+  }
+
+  .react-calendar__navigation__label__labelText {
+    text-transform: capitalize;
+    //background: url(../../assets/images/tienda/loupe.svg) no-repeat 80% center;
+  }
 }
+
+.react-calendar__navigation__prev2-button {
+  display: none;
+}
+
+.react-calendar__navigation__next2-button {
+  display: none;
+}
+
 .react-calendar__navigation button {
   min-width: 44px;
   background: none;
 }
+
 .react-calendar__navigation button:disabled {
   background-color: #f0f0f0;
   //background-color: white;
 }
+
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
   background-color: #e6e6e6;
@@ -221,12 +278,13 @@
 .calendar-time-container {
   width: 15%;
   border: 1px solid gray;
+  border-top: none;
 }
 
 .time-container {
   border-top: 1px solid gray;
   border-bottom: 1px solid gray;
-  background-color: green;
+  //background-color: green;
 }
 
 .time-select {
@@ -235,13 +293,6 @@
   justify-content: center;
   cursor: pointer;
   border-bottom: 1px solid gray;
-  &:hover {
-    background-color: $primary;
-    color: white;
-  }
-  &:active {
-    background-color: $primary;
-  }
 }
 
 .time-select__current {
@@ -251,5 +302,56 @@
 @media screen and (min-width: 678px) {
   .wizard-body {
     width: 65%;
+  }
+}
+@media screen and (max-width: 380px) {
+  .calendar-time-picker-container {
+    // background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 350px;
+    padding-bottom: 10rem;
+  }
+
+  .calendar-picker-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .calendar-time-container {
+    width: 100%;
+  }
+
+  .react-calendar {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .time-container {
+    // border-top: 1px solid gray;
+    //border-bottom: 1px solid gray;
+    border: none;
+
+    //padding-top: 1rem;
+    // background-color: green;
+    //height: 150px;
+  }
+
+  .react-select-containerC {
+    z-index: 0;
+    .react-selectC__menu {
+      .react-selectC__menu-list {
+        .react-selectC__option {
+          border: 1px solid $gray;
+        }
+
+        .css-1n7v3ny-option {
+        }
+
+        .react-selectC__option--is-selected {
+        }
+      }
+    }
   }
 }

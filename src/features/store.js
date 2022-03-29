@@ -6,5 +6,9 @@ import appointmentsReducer from './appointments/appointmentsSlice';
 import cartStateReducer from './cartState/cartStateSlice';
 
 export const store = configureStore({
-  reducer: { products: productsReducer, cart: cartReducer, step: stepReducer, appointments: appointmentsReducer },
+  reducer: { products: productsReducer, cart: cartReducer, step: stepReducer, appointments: appointmentsReducer, cartState: cartStateReducer },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
