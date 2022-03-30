@@ -310,7 +310,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 350px;
+    height: 390px;
     padding-bottom: 10rem;
   }
 
@@ -321,6 +321,7 @@
 
   .calendar-time-container {
     width: 100%;
+    border: none;
   }
 
   .react-calendar {
@@ -338,12 +339,27 @@
     //height: 150px;
   }
 
+  .react-selectC__control {
+    display: none;
+    border: none;
+    .react-selectC__indicators {
+      display: flex;
+    }
+
+    .react-selectC__value-container {
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+  }
+
   .react-select-containerC {
-    z-index: 0;
     .react-selectC__menu {
       .react-selectC__menu-list {
         .react-selectC__option {
           border: 1px solid $gray;
+          text-align: center;
         }
 
         .css-1n7v3ny-option {

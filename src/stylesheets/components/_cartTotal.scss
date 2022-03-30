@@ -85,6 +85,11 @@
   display: none;
 }
 
+.disabled {
+  background: $primary-light !important;
+  border: none !important;
+}
+
 .back {
   display: flex;
   justify-content: space-between;

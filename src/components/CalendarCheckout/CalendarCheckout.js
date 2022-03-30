@@ -8,7 +8,7 @@ import 'react-clock/dist/Clock.css';
 import moment from 'moment';
 import 'moment/locale/es';
 import { getAllAppointments } from '../../features/appointments/appointmentsSlice';
-import { getFecha, updateFecha } from '../../features/cartState/cartStateSlice';
+import { getFecha, getHora, updateFecha, updateHora, deleteHora } from '../../features/cartState/cartStateSlice';
 
 moment.locale('es');
 let tomorrow = moment().add(1, 'days').startOf('day');
@@ -58,15 +58,23 @@ function CalendarCheckout() {
   };
 
   const [selectHour, setSelectHour] = useState(null);
+  const handleHourSelect = (e) => {
+    console.log('selecione una hora ' + e.value);
+    dispatch(updateHora(e.value));
+  };
+  let hora = useSelector(getHora);
+  console.log(hora);
 
   const renderizar = (appoint) => {
     let fecha = appoint.toISOString().split('T')[0];
     let horas = [];
     appointments.map((ap) => (ap.fecha.split('T')[0] === fecha ? (horas = ap.horaDisponibles) : horas));
-    const optionsMontht = horas.map((d) => ({
+
+    const optionsHour = horas.map((d) => ({
       value: d,
       label: d,
     }));
+    let horaSelecionadaDefecto = hora !== null ? { value: hora, label: hora } : optionsHour[0];
     setRender1(
       <div>
         <Select
@@ -76,11 +84,11 @@ function CalendarCheckout() {
           //isDisabled
           isSearchable={false}
           placeholder='seleccione hora'
-          options={optionsMontht}
+          options={optionsHour}
           menuIsOpen
-          defaultValue={optionsMontht[0]}
+          defaultValue={horaSelecionadaDefecto}
           //value={tomorrow}
-          // onChange={handleYearTest}
+          onChange={handleHourSelect}
         />
         {/*horas.map((hora, index) => (
           <div key={index} className='time-select '>
@@ -94,6 +102,7 @@ function CalendarCheckout() {
   const changeViewMonth = (activeStartDate, view, action) => {
     //console.log(activeStartDate);
     if (action !== 'onChange') {
+      dispatch(deleteHora());
       //console.log('Changed view to: ', activeStartDate, view);
       let dia = dates.find((day) => day.format('M') == activeStartDate.getMonth() + 1);
       //console.log(dia.toDate());

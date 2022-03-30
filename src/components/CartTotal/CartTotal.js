@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAllProductsCart } from '../../features/cart/cartSlice';
 import { nextStep, backStep } from '../../features/stepsCheckout/stepsSlice';
+import { getHora } from '../../features/cartState/cartStateSlice';
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart);
@@ -17,6 +18,11 @@ function CartTotal() {
   const handleBackStep = () => {
     dispatch(backStep());
   };
+
+  const a = useSelector(getHora);
+  useEffect(() => {
+    console.log('useEffect');
+  }, [a]);
 
   return (
     <div className='carrito-total-container'>
@@ -54,13 +60,16 @@ function CartTotal() {
         >
           Atrás
         </button>
-        <button
-          onClick={() => handleNextStep()}
-          type='button'
-          className={step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'}
-        >
-          Siguiente
-        </button>
+        {a !== null ? (
+          <button onClick={() => handleNextStep()} type='button' className={step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '}>
+            Siguiente
+          </button>
+        ) : (
+          <button onClick={() => handleNextStep()} type='button' className={step === 2 ? 'carrito-finalizar__oculto' : 'disabled carrito-finalizar  '} disabled>
+            Siguiente
+          </button>
+        )}
+
         <Link to='/confirm' className={step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'}>
           Pagar y finalizar
         </Link>
