@@ -20,7 +20,7 @@ function SectionFooter() {
             <PagoSvg className='section__image' />
             <div class='section__texts'>
               <h5>Formas de pago</h5>
-              <p>En consultorio: Eefectivo, Mercado Pago (código QR), o con tarjetas de crédito/débito. Servicios online: Mercado Pago.</p>
+              <p>En consultorio: Efectivo, Mercado Pago (código QR), o con tarjetas de crédito/débito. Servicios online: Mercado Pago.</p>
             </div>
           </div>
           <div className='flex-row'>
