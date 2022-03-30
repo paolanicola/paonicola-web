@@ -3,11 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   appointments: [
     {
-      fecha: '2022-03-30T00:00:00',
+      fecha: '2022-03-31T00:00:00',
       horaDisponibles: ['01:00', '02:00', '03:00'],
     },
     {
-      fecha: '2022-03-31T00:00:00',
+      fecha: '2022-04-01T00:00:00',
       horaDisponibles: ['12:00', '01:00', '05:00'],
     },
     {
