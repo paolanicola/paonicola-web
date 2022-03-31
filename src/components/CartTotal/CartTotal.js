@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAllProductsCart } from '../../features/cart/cartSlice';
@@ -61,7 +61,12 @@ function CartTotal() {
           Atrás
         </button>
         {a !== null ? (
-          <button onClick={() => handleNextStep()} type='button' className={step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '}>
+          <button
+            form='formularioTurno'
+            onClick={() => handleNextStep()}
+            type='submit'
+            className={step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '}
+          >
             Siguiente
           </button>
         ) : (

@@ -43,3 +43,20 @@
     width: 65%;
   }
 }
+
+.carrito-finalizar {
+  @extend %btn;
+  @extend %btn-primary;
+  @extend %btn-md;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  width: 100%;
+  //margin: 1rem;
+}
+
+.carrito-finalizar-next {
+  width: 40%;
+  margin: 1rem;
+}
