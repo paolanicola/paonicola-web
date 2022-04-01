@@ -1,52 +1,105 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateVerificado, getFormulario, updateformulario } from '../../features/cartState/cartStateSlice';
+import { nextStep, backStep } from '../../features/stepsCheckout/stepsSlice';
 
 function FormPatientOrder() {
+  const dispatch = useDispatch();
+  const { step } = useSelector((state) => state.step);
+  const form = useSelector(getFormulario);
+  console.log(form?.nombre);
+  const handleNextStep = () => {
+    dispatch(nextStep());
+  };
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
-
-  console.log(watch('example')); // watch input value by passing the name of it
+  const onSubmit = (data) => {
+    dispatch(updateformulario(data));
+    dispatch(updateVerificado(true));
+    handleNextStep();
+  };
 
   return (
     <div className='form-container'>
-      <h5 class=''>Datos de la persona que realizará la compra y tomará el turno</h5>
+      <p className='form-title'>Datos de la persona que realizará la compra y tomará el turno</p>
       <div className='caja'>
         <form id='formularioTurno' className='form' onSubmit={handleSubmit(onSubmit)}>
           <div className='form-row'>
             <div className='form-row-name'>
               <label>Nombre</label>
-              <input {...register('firstName', { required: true, pattern: /^[A-Za-z]+$/i, maxLength: 20 })} />
-              {errors.firstName?.type === 'required' && 'Nombre es requerido'}
+              <input
+                className={errors.nombre && 'input_error'}
+                type='text'
+                defaultValue={form?.nombre}
+                {...register('nombre', {
+                  required: {
+                    value: true,
+                    message: 'Nombre requerdio',
+                  },
+                  pattern: {
+                    value: /^[a-z ,.'-]+$/i,
+                    message: 'Formato incorrecto, solo letras',
+                  },
+                })}
+              />
+              {errors.nombre && <span className={errors.nombre && 'span_error'}>{errors.nombre.message}</span>}
             </div>
             <div className='form-row-lastName'>
               <label>Apellido</label>
-              <input {...register('lastName', { required: true, pattern: /^[A-Za-z]+$/i, maxLength: 40 })} />
-              {errors.lastName && 'Apellido es requerido'}
+              <input
+                className={errors.apellido && 'input_error'}
+                type='text'
+                defaultValue={form?.apellido}
+                {...register('apellido', {
+                  required: {
+                    value: true,
+                    message: 'Apellido requerdio',
+                  },
+                  pattern: {
+                    value: /^[a-z ,.'-]+$/i,
+                    message: 'Formato incorrecto, solo letras',
+                  },
+                })}
+              />
+              {errors.apellido && <span className={errors.apellido && 'span_error'}>{errors.apellido.message}</span>}
             </div>
           </div>
           <label>Email</label>
           <input
-            placeholder='bluebill1049@hotmail.com'
+            className={errors.email && 'input_error'}
+            placeholder='ejemplo@ejemplo.com.ar'
             type='text'
+            defaultValue={form?.email}
             {...register('email', {
-              required: 'this is required',
+              required: {
+                value: true,
+                message: 'Email requerido',
+              },
               pattern: {
                 value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                message: 'Invalid email address',
+                message: 'Formato del email incorrecto',
               },
             })}
           />
-          <p>{errors.email && 'Email es requerido'}</p>
+          {errors.email && <span className={errors.email && 'span_error'}>{errors.email.message}</span>}
 
-          <label>Telefono</label>
-          <input {...register('telefono', { required: true, pattern: /^[0-9]+$/i, maxLength: 13 })} />
-          <p>{errors.telefono && 'Telefono es requerido'}</p>
-          <input type='submit' value='Verificar' className='carrito-finalizar' />
+          <p>
+            <label>Telefono</label>
+          </p>
+          <input
+            className={errors.telefono && 'input_error'}
+            type='number'
+            defaultValue={form?.telefono}
+            {...register('telefono', {
+              required: { value: true, message: 'Telefono requerido' },
+              valueAsNumber: { value: true, message: 'Solo ingrese numeros' },
+            })}
+          />
+          {errors.telefono && <span className={errors.telefono && 'span_error'}>{errors.telefono.message}</span>}
         </form>
       </div>
     </div>

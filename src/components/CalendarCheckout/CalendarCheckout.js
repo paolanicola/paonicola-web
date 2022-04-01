@@ -101,9 +101,9 @@ function CalendarCheckout() {
 
   const changeViewMonth = (activeStartDate, view, action) => {
     //console.log(activeStartDate);
-    if (action !== 'onChange') {
-      dispatch(deleteHora());
-      //console.log('Changed view to: ', activeStartDate, view);
+    dispatch(deleteHora());
+    if (action !== 'onChange' && view !== 'year' && view !== 'decade' && view !== 'century') {
+      console.log('Changed view to: ', activeStartDate, view);
       let dia = dates.find((day) => day.format('M') == activeStartDate.getMonth() + 1);
       //console.log(dia.toDate());
       setValue(dia.toDate());

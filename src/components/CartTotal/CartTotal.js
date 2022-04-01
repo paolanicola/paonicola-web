@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAllProductsCart } from '../../features/cart/cartSlice';
 import { nextStep, backStep } from '../../features/stepsCheckout/stepsSlice';
-import { getHora } from '../../features/cartState/cartStateSlice';
+import { getHora, getVerificado, updateformulario, updateVerificado } from '../../features/cartState/cartStateSlice';
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart);
@@ -16,10 +16,33 @@ function CartTotal() {
   };
 
   const handleBackStep = () => {
+    if (step === 2) {
+      console.log('volviendo del pago');
+      dispatch(updateVerificado(false));
+    }
+    if (step === 1) {
+      dispatch(updateformulario(null));
+    }
     dispatch(backStep());
   };
 
   const a = useSelector(getHora);
+  const verificado = useSelector(getVerificado);
+  let render = '';
+  console.log(verificado);
+  if (verificado || step === 0) {
+    render = (
+      <button onClick={() => handleNextStep()} type='submit' className={step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '}>
+        Siguiente
+      </button>
+    );
+  } else {
+    render = (
+      <button form='formularioTurno' type='submit' className='carrito-finalizar'>
+        Siguente
+      </button>
+    );
+  }
   useEffect(() => {
     console.log('useEffect');
   }, [a]);
@@ -61,14 +84,7 @@ function CartTotal() {
           Atrás
         </button>
         {a !== null ? (
-          <button
-            form='formularioTurno'
-            onClick={() => handleNextStep()}
-            type='submit'
-            className={step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '}
-          >
-            Siguiente
-          </button>
+          render
         ) : (
           <button onClick={() => handleNextStep()} type='button' className={step === 2 ? 'carrito-finalizar__oculto' : 'disabled carrito-finalizar  '} disabled>
             Siguiente
