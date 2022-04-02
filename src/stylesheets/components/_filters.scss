@@ -1,4 +1,4 @@
-input:not(.quantity):not([type='submit']),
+input:not(.quantity):not([type='submit']):not([type='radio']),
 select {
   width: 100%;
   border-radius: 3px;

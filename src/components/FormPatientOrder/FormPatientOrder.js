@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateVerificado, getFormulario, updateformulario } from '../../features/cartState/cartStateSlice';
@@ -16,12 +16,17 @@ function FormPatientOrder() {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm();
   const onSubmit = (data) => {
     dispatch(updateformulario(data));
     dispatch(updateVerificado(true));
     handleNextStep();
   };
+
+  useEffect(() => {
+    clearErrors();
+  }, [step]);
 
   return (
     <div className='form-container'>

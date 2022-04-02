@@ -1,39 +1,54 @@
 .payment-container {
-  width: 100%;
   display: flex;
+  width: 100%;
   margin-bottom: 4rem;
   flex-direction: column;
 }
-input {
+.payment-form {
   width: 100%;
+}
+
+.payment-block {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.block-label {
+  position: relative;
+  padding: 1.5rem 1.5rem 1.5rem 1rem;
+  border: 1px $gray-lighter solid;
+  border-radius: 3px;
+  transition: ease all 0.3s;
+  display: block;
+  max-width: 100%;
+  display: flex;
+}
+
+.block-selected {
+  border: solid 1px $primary;
+}
+
+.block-radio {
+  //width: 100%;
   padding: 6px 10px;
   margin: 10px 0px;
   box-sizing: border-box;
   display: block;
 }
 
-.medio-pago {
-  margin-bottom: 1.5rem;
-  position: relative;
-  .label-pago {
-    position: relative;
-    //padding: 1.5rem 1.5rem 1.5rem 3rem;
-    border: 1px $gray-lighter solid;
-    border-radius: 3px;
-    transition: ease all 0.3s;
-    display: block;
-    width: 100%;
-    &.activelabel {
-      border: solid 1px $primary;
-    }
-  }
+.block-data {
+  padding: 0 1.5rem 1rem 1.5rem;
 }
-@media screen and (min-width: 678px) {
-  .payment-container {
-    width: 65%;
-  }
 
-  .label-pago {
-    padding: 0;
-  }
+.block-title {
+  margin-top: 0;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.description-text {
+  font-size: 1.2em;
+}
+
+@media screen and (min-width: 678px) {
 }

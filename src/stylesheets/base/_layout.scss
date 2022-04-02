@@ -46,7 +46,7 @@ body {
 
 // Base input styles
 
-input {
+input:not([type='radio']) {
   @include font-size(16px);
 
   font-family: $font-family-base;

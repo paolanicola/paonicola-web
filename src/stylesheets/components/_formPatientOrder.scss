@@ -38,12 +38,21 @@ input::-webkit-inner-spin-button {
   flex-direction: row;
   justify-content: space-between;
 }
-
+.form {
+  input {
+    width: 100%;
+    padding: 6px 10px;
+    margin: 10px 0px;
+    box-sizing: border-box;
+    display: block;
+  }
+}
 .form-row-name {
   width: 48%;
 }
 
 .form-row-lastName {
+  align-self: flex-end;
   width: 48%;
 }
 
