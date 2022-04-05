@@ -36,6 +36,8 @@
   position: absolute;
   top: 30%;
   right: 20%;
+  font-weight: bold;
+  color: black; // bug?
 }
 
 .navBar__menu {
@@ -85,6 +87,10 @@
   padding: 16px;
   line-height: 1.2;
   display: block;
+
+  p:hover {
+    color: blue;
+  }
 }
 
 .menu-bars {

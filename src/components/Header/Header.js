@@ -87,7 +87,7 @@ export default function Header() {
               </div>
             </div>
             <div className='menu__item menu__link'>
-              <PrimaryButton actionText='Tienda Online' href='/' />
+              <PrimaryButton actionText='Solicitar Turno Online' href='/' />
             </div>
           </div>
         </div>

@@ -38,15 +38,20 @@
     margin: 0;
     padding: 0 1.2rem;
     font-size: 1.5rem;
+    font-weight: bold;
   }
+
   .carrito-total-cuenta {
     width: 100%;
+
     .carrito-total-td {
       //border-bottom: 1px solid $gray-lighter;
       font-size: 1.2rem;
-      font-weight: bold;
+
+      //
       padding: 0.5rem 1.2rem;
       color: $gray;
+      color: black;
       line-height: 1.2;
       vertical-align: top;
       &:first-child {
@@ -67,6 +72,8 @@
 
   .text-right {
     text-align: right;
+    font-weight: bold;
+    color: black !important;
   }
   .card-product-price__tachado {
     display: flex;

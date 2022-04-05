@@ -50,7 +50,7 @@ function Product({ product }) {
               ''
             )}
             <h4>
-              {product.currency} {product.promoPrice}
+              {product.currency} {product.promo ? product.promoPrice : product.price}
             </h4>
           </div>
         </div>

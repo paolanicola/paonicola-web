@@ -33,22 +33,31 @@ function Cart() {
   return (
     <div className='carrito-container1'>
       {cart.cartItems.length === 0 ? (
-        <h4>Tu carrito está vacío</h4>
+        <div className='carrito-container carrito-container-empty'>
+          <h4 className='title-empty'>Tu carrito esta vacio, agrega algún producto!</h4>
+          <div className='container-empty-link'>
+            <Link to='/' className='link-empty'>
+              Continúa Comprando
+            </Link>
+          </div>
+        </div>
       ) : (
         <div className='carrito-container'>
           <div className='carrito-cards'>{renderProducts}</div>
 
           <div className='carrito-total'>
-            <h5 class='carrito-total-titulo'>Total del carrito</h5>
+            <h5 class='carrito-total-titulo'>Carrito de compras</h5>
 
             <table class='carrito-total-cuenta' cellpadding='0' cellspacing='0'>
               {products.length > 0 ? (
                 products.map((product) => (
                   <tr>
-                    <td className='carrito-total-td'>{product.name}</td>
-                    <td className='carrito-total-td text-right'>
+                    <td className='carrito-total-td'>
+                      {product.name} x {product.cartQuantity}
+                    </td>
+                    <td className='carrito-total-td text-right '>
                       {product.currency}
-                      {product.promoPrice}
+                      {product.promo ? product.promoPrice : product.price}
                     </td>
                   </tr>
                 ))
@@ -69,6 +78,7 @@ function Cart() {
               <Link to='/checkout' className='  carrito-finalizar '>
                 Finalizar compra
               </Link>
+              <p>Continuar Comprando</p>
               <div class='wizard-footer' style={{ display: 'none' }}>
                 <button type='button' class=' wizard-prev btn btn-primary-outlined btn-irv-default'>
                   Atrás

@@ -48,7 +48,7 @@ function ProductCart({ product }) {
 
         <div class='content-botton-precio'>
           <div class='content-quantity-selector'>
-            <button onClick={() => handleDecreaseCart(product)} class='btn-quantity '>
+            <button onClick={() => handleDecreaseCart(product)} class={product.cartQuantity === 1 ? 'btn-disabled btn-quantity' : 'btn-quantity'}>
               <FontAwesomeIcon icon={faMinus} />
             </button>
 
@@ -69,7 +69,7 @@ function ProductCart({ product }) {
               ''
             )}
             <p class='content-precio-text'>
-              {product.currency} {product.promoPrice}
+              {product.currency} {product.promo ? product.promoPrice : product.price}
             </p>
           </div>
         </div>
