@@ -49,6 +49,10 @@ function Cart() {
             <h5 class='carrito-total-titulo'>Carrito de compras</h5>
 
             <table class='carrito-total-cuenta' cellpadding='0' cellspacing='0'>
+              <tr>
+                <td className='carrito-total-td '>Producto</td> <td className=' carrito-total-td text-right'>SubTotal</td>
+              </tr>
+              <hr />
               {products.length > 0 ? (
                 products.map((product) => (
                   <tr>
@@ -78,7 +82,9 @@ function Cart() {
               <Link to='/checkout' className='  carrito-finalizar '>
                 Finalizar compra
               </Link>
-              <p>Continuar Comprando</p>
+              <Link to='/' className='carrito-continueBuy'>
+                Continuar Comprando
+              </Link>
               <div class='wizard-footer' style={{ display: 'none' }}>
                 <button type='button' class=' wizard-prev btn btn-primary-outlined btn-irv-default'>
                   Atrás
