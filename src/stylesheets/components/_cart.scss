@@ -27,14 +27,16 @@
   }
 }
 
-.carrito-continueBuy {
+.carrito-container-continue {
+  display: flex;
   justify-content: center;
+}
+
+.carrito-continueBuy {
   font-size: 1rem;
   font-weight: bold;
   color: $primary;
-  text-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
-  //box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
+
   &:hover {
     color: $primary-light;
     text-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);

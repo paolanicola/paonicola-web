@@ -82,9 +82,11 @@ function Cart() {
               <Link to='/checkout' className='  carrito-finalizar '>
                 Finalizar compra
               </Link>
-              <Link to='/' className='carrito-continueBuy'>
-                Continuar Comprando
-              </Link>
+              <div className='carrito-container-continue'>
+                <Link to='/' className='carrito-continueBuy'>
+                  Continuar Comprando
+                </Link>
+              </div>
               <div class='wizard-footer' style={{ display: 'none' }}>
                 <button type='button' class=' wizard-prev btn btn-primary-outlined btn-irv-default'>
                   Atrás

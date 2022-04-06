@@ -1,7 +1,17 @@
+import React from 'react';
+import Accordion from '../../components/Accordion/Accordion';
+import { accordionData } from '../../utils/contentFAQ';
+
 export default function Faq() {
   return (
     <>
-      <p>FAQ </p>
+      <div>
+        <div className='accordion'>
+          {accordionData.map(({ title, content, id }) => (
+            <Accordion title={title} content={content} id={id} />
+          ))}
+        </div>
+      </div>
     </>
   );
 }

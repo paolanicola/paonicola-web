@@ -1,0 +1,16 @@
+.accordion {
+  width: 80%;
+  margin: 0 auto;
+}
+@media screen and (min-width: 540px) {
+  .accordion {
+    width: 75%;
+    margin: 0 auto;
+  }
+}
+@media screen and (min-width: 900px) {
+  .accordion {
+    width: 65%;
+    margin: 0 auto;
+  }
+}

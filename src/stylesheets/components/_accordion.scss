@@ -1,0 +1,80 @@
+.card-accordion {
+  width: 100%;
+  margin-bottom: 2rem;
+
+  .card-accordion-header {
+    background-color: $lila;
+    padding: 0 5px 0 105px;
+    color: white;
+    position: relative;
+    transition: all ease 0.3s;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    p {
+      font-size: 1.5rem;
+      color: white;
+      font-weight: bold;
+    }
+  }
+}
+
+.number-collapse {
+  font-weight: bold;
+  color: white;
+  line-height: 1;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  font-size: 121px;
+  left: 0rem;
+}
+
+.title-accordion {
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+
+.card-accordion-body {
+  p {
+    font-size: 1rem;
+  }
+  padding: 2rem 0 1rem;
+  font-weight: 700;
+  ul {
+    padding-left: 1rem;
+    li {
+      list-style-type: circle;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.plusMinusAccordion {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 30px;
+}
+
+@media screen and (min-width: 540px) {
+  .card-accordion-header {
+    padding: 0 20px 0 150px !important;
+    height: 80px;
+  }
+  .number-collapse {
+    left: 0rem;
+    font-size: 154px;
+  }
+
+  .card-accordion-body {
+    padding: 2rem 0 1rem 150px;
+  }
+  .plusMinusAccordion {
+    width: 50px;
+  }
+}
