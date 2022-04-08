@@ -53,11 +53,16 @@
     background: url(../../assets/images/encabezado/fondo-tit-sobremi.svg) no-repeat center;
     background-size: contain;
   }
+
   h1 {
     position: relative;
     z-index: 4;
     font-size: 3, 75rem;
     color: #f2bcbd;
     font-weight: 600;
+  }
+
+  h1 {
+    text-transform: capitalize;
   }
 }

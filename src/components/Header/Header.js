@@ -31,7 +31,7 @@ export default function Header() {
   const closeSidebar = () => setSidebar(!sidebar);
 
   const handleMoveToCart = () => {
-    navigate('/cart');
+    navigate('/carrito');
   };
 
   useEffect(() => {
@@ -58,16 +58,16 @@ export default function Header() {
             <div className='pepe ' onClick={closeSidebar}>
               <div className='container__icon__close'></div>
             </div>
-            <NavLink className='menu__item menu__link' to='/about' onClick={closeSidebar}>
+            <NavLink className='menu__item menu__link' to='/sobre-mi' onClick={closeSidebar}>
               <p>Sobre Mi</p>
             </NavLink>
-            <NavLink className='menu__item menu__link' to='/changes' onClick={closeSidebar}>
+            <NavLink className='menu__item menu__link' to='/cambios-reales' onClick={closeSidebar}>
               <p>Cambios Reales</p>
             </NavLink>
             <NavLink className='menu__item menu__link' to='/faq' onClick={closeSidebar}>
               <p>FAQ</p>
             </NavLink>
-            <NavLink className='menu__item menu__link' to='/contact' onClick={closeSidebar}>
+            <NavLink className='menu__item menu__link' to='/contacto' onClick={closeSidebar}>
               <p>Contacto</p>
             </NavLink>
           </div>

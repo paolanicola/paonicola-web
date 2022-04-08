@@ -87,10 +87,6 @@
   padding: 16px;
   line-height: 1.2;
   display: block;
-
-  p:hover {
-    color: blue;
-  }
 }
 
 .menu-bars {
@@ -105,14 +101,19 @@
   display: flex;
   height: 50px;
 }
+
 .menu__redes__link {
   display: flex;
   height: 50px;
 }
+
 .menu__redes__icono {
   height: auto;
   padding: 0 1rem;
-  color: $text-color;
+  &:hover {
+    opacity: 0.3;
+    transition: all 0.3s ease;
+  }
 }
 
 /*-----------------------------------------------*/
