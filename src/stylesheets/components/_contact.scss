@@ -55,7 +55,7 @@
 }
 
 .btn-primary {
-  width: 12% !important;
+  width: 22% !important;
 }
 textarea {
   width: 100%;
@@ -70,6 +70,24 @@ textarea {
   margin: 10px 0px;
   box-sizing: border-box;
   display: block;
+}
+
+//Animation
+
+.one {
+  -webkit-animation-delay: 1s;
+  -moz-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
+.animate {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeLeft {
 }
 
 @media screen and (min-width: 768px) {
