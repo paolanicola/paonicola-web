@@ -98,7 +98,7 @@ export default function Contact() {
             />
             {errors.textarea && <span className={errors.textarea && 'span_error'}>{errors.textarea.message}</span>}
             <div className='contact-buton-right'>
-              <input type='submit' className='btn-primary right' />
+              <input type='submit' className='btn-primary right' value='Enviar' />
             </div>
           </form>
         </div>
