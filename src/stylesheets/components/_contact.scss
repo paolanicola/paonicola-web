@@ -2,20 +2,87 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
 }
-
+.contact-title {
+  font-size: 1.2rem;
+  padding: 0;
+  margin: 0;
+  padding-bottom: 1rem;
+  font-weight: bold;
+  color: #393338;
+}
 .contact-left {
-  .logo {
-    background-image: url('../../assets/images/header/instagram-brands.svg') no-repeat center left;
-  }
+  width: 100%;
+  padding-bottom: 2rem;
 }
 
 .contact-right {
+  width: 100%;
+  padding-bottom: 6rem;
+}
+
+.contact-right-label {
+  padding: 0;
+  margin: 0;
+  font-size: 1.1rem;
+}
+.contact-buton-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.contact-link {
+  display: flex;
+  padding: 0.5rem;
+  height: 3.5rem;
+  align-items: center;
+  .contact-icon {
+    height: 3.5rem;
+    width: 3.5rem;
+    margin: 1rem;
+    box-sizing: content-box;
+    path {
+      fill: $primary;
+    }
+  }
+  Link:hover {
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+}
+
+.btn-primary {
+  width: 12% !important;
+}
+textarea {
+  width: 100%;
+  max-width: 100%;
+  height: 110px;
+  max-height: 110px;
+  resize: none;
+  border-radius: 3px;
+  border: solid 2px $primary;
+  padding: 0.75rem 1rem;
+
+  margin: 10px 0px;
+  box-sizing: border-box;
+  display: block;
 }
 
 @media screen and (min-width: 768px) {
+  .container-contact {
+    width: 75%;
+  }
+  .contact-icon-info {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #393338;
+  }
+}
+@media screen and (min-width: 992px) {
   .container-contact {
     flex-direction: row;
   }

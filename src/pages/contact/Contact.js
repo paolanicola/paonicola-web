@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { ReactComponent as InstagramBrand } from '../../assets/images/header/instagram-brands.svg';
+import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg';
+import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg';
 
 export default function Contact() {
   const {
@@ -15,20 +18,25 @@ export default function Contact() {
     <>
       <div className='container-contact'>
         <div className='contact-left'>
-          <div className='datos wow fadeInLeft'>
-            <p>Por favor, llená el formulario o contáctame a través de:</p>
+          <div className=' datos wow fadeInLeft'>
+            <p className='contact-title'>Por favor, llená el formulario o contáctame a través de:</p>
             <ul>
-              <li class='c-tel'>
+              <li class='contact-link'>
                 <Link to='https://api.whatsapp.com/send?phone=5492216248895&text=Hola%21%20Estoy%20buscando%20reservar%20un%20turno.&source=&data=&app_absent='>
-                  221-6248895
+                  <WhatsappBrand className='contact-icon' />
+                  <p className='contact-icon-info'>221-6248895</p>
                 </Link>
               </li>
-              <li class='c-mail'>
-                <Link to='mailto:nutricionista.nicola@gmail.com'>nutricionista.nicola@gmail.com</Link>
+              <li class='contact-link'>
+                <Link to='mailto:nutricionista.nicola@gmail.com'>
+                  <MailBrand className='contact-icon' />
+                  <p className='contact-icon-info'>nutricionista.nicola@gmail.com</p>
+                </Link>
               </li>
-              <li class='c-ig'>
+              <li class='contact-link'>
                 <Link target='_blank' to='https://www.instagram.com/nutricion.paonicola/'>
-                  nutricion.paonicola
+                  <InstagramBrand className='contact-icon' />
+                  <p className='contact-icon-info'>nutricion.paonicola</p>
                 </Link>
               </li>
             </ul>
@@ -36,9 +44,11 @@ export default function Contact() {
         </div>
         <div className='contact-right'>
           <form id='formContact' className='form' onSubmit={handleSubmit(onSubmit)}>
-            <div className='form-row'>
-              <div className='form-row-name'>
-                <label>Nombre</label>
+            <div className='form'>
+              <div className='form-name'>
+                <p className='contact-right-label'>
+                  <label>Nombre</label>
+                </p>
                 <input
                   className={errors.nombre && 'input_error'}
                   type='text'
@@ -56,10 +66,12 @@ export default function Contact() {
                 {errors.nombre && <span className={errors.nombre && 'span_error'}>{errors.nombre.message}</span>}
               </div>
             </div>
-            <label>Email</label>
+            <p className='contact-right-label'>
+              <label>E-mail</label>
+            </p>
             <input
               className={errors.email && 'input_error'}
-              placeholder='ejemplo@ejemplo.com.ar'
+              placeholder=''
               type='text'
               {...register('email', {
                 required: {
@@ -74,18 +86,20 @@ export default function Contact() {
             />
             {errors.email && <span className={errors.email && 'span_error'}>{errors.email.message}</span>}
 
-            <p>
-              <label>Telefono</label>
+            <p className='contact-right-label'>
+              <label>Mensaje</label>
             </p>
             <textarea
-              className={errors.telefono && 'input_error'}
+              className={errors.textarea && 'input_error'}
               type='text'
               {...register('textarea', {
                 required: { value: true, message: 'Mensaje requerido' },
               })}
             />
-            {errors.telefono && <span className={errors.telefono && 'span_error'}>{errors.telefono.message}</span>}
-            <input type='submit' />
+            {errors.textarea && <span className={errors.textarea && 'span_error'}>{errors.textarea.message}</span>}
+            <div className='contact-buton-right'>
+              <input type='submit' className='btn-primary right' />
+            </div>
           </form>
         </div>
       </div>
