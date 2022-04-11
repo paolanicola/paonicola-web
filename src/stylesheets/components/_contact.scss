@@ -43,6 +43,7 @@
     height: 3.5rem;
     width: 3.5rem;
     margin: 1rem;
+    margin-left: 0;
     box-sizing: content-box;
     path {
       fill: $primary;
@@ -52,6 +53,11 @@
     opacity: 0.5;
     transition: all 0.3s ease;
   }
+}
+.contact-icon-info {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #393338;
 }
 
 .btn-primary {
@@ -162,5 +168,18 @@ textarea {
 @media screen and (min-width: 992px) {
   .container-contact {
     flex-direction: row;
+    align-items: flex-start;
+    padding-bottom: 6rem;
+  }
+  .contact-left {
+    padding-right: 2rem;
+    padding-bottom: 0;
+  }
+  .contact-right {
+    padding-bottom: 0;
+  }
+  .contact-link {
+    padding: 1rem;
+    padding-left: 0;
   }
 }
