@@ -17,8 +17,8 @@ export default function Contact() {
   return (
     <>
       <div className='container-contact'>
-        <div className='contact-left'>
-          <div className=' datos wow fadeInLeft'>
+        <div className='contact-left one animate fadeLeft'>
+          <div className=''>
             <p className='contact-title'>Por favor, llená el formulario o contáctame a través de:</p>
             <ul>
               <li class='contact-link'>
@@ -42,7 +42,7 @@ export default function Contact() {
             </ul>
           </div>
         </div>
-        <div className='contact-right'>
+        <div className='contact-right one animate fadeRight'>
           <form id='formContact' className='form' onSubmit={handleSubmit(onSubmit)}>
             <div className='form'>
               <div className='form-name'>
