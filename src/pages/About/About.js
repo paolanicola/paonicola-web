@@ -29,59 +29,77 @@ export default function About() {
   return (
     <>
       <div className='container-about'>
-        <div className='about-column'>
-          <div className=''>
-            <div className=''>
-              <h5 className='about-text'>
-                Soy Paola Nicola. Nací en Chacabuco, Pcia. De Bs As, y actualmente vivo en La Plata.
-                <br />
-                <br />
-                Me recibí en 2015 obteniendo el título de Licenciada en Nutrición, MP 3268
-              </h5>
+        <div className='fondo'>
+          <div className='about-column'>
+            <div className='about-row about-row-t'>
+              <div className='about-row-text'>
+                <h5 className='about-text'>
+                  Soy Paola Nicola. Nací en Chacabuco, Pcia. De Bs As, y actualmente vivo en La Plata.
+                  <br />
+                  <br />
+                  Me recibí en 2015 obteniendo el título de Licenciada en Nutrición, MP 3268
+                </h5>
+              </div>
+              <div className='about-row-text'>
+                <h5 className='about-text'>
+                  Realicé varias capacitaciones, cursos y asistí a congresos. <br />
+                  <br />
+                  Los últimos perfeccionamientos fueron del la mano del referente más grande en Nutrición deportiva , Francis Holway.
+                </h5>
+              </div>
             </div>
-            <div className=''>
-              <h5 className='about-text'>
-                Realicé varias capacitaciones, cursos y asistí a congresos. <br />
-                <br />
-                Los últimos perfeccionamientos fueron del la mano del referente más grande en Nutrición deportiva , Francis Holway.
-              </h5>
-            </div>
-          </div>
-          <div className='text-center-1'>
-            <a href='' className='link-underlined'>
-              MI CURRÍCULUM
-            </a>
-          </div>
-        </div>
-        <div className='about-t'>
-          <div className='about-row'>
-            <div className='item-sobre-mi'>
-              <img className='item-img' src={metodologia} alt='Mi metodologia' title='Mi meteodologia' />
-              <h4 className='link-underlined'>Mi metodología</h4>
-              <p>A través de distintas herramientas nutricionales te ayudaré a lograr tu objetivo.</p>
-            </div>
-            <div className=' item-sobre-mi'>
-              <img className='item-img' src={planes} alt='Mi metodologia' title='Mi meteodologia' />
-              <h4 className='link-underlined'>Acerca de mis planes</h4>
-              <p>Todos mis planes son 100% personalizados.</p>
+            <div className='text-center-1'>
+              <a href='' className='link-underlined'>
+                MI CURRÍCULUM
+              </a>
             </div>
           </div>
-          <div className='about-row fondo'>
-            <div className='item-sobre-mi'>
-              <img className='item-img' src={laboratorio} alt='Mi metodologia' title='Mi meteodologia' />
-              <h4 className='link-underlined'>Trabajo en Laboratorio</h4>
-              <p>
-                Realizo análisis fisicoquímicos en los alimentos: materia grasa, proteínas, hidratos, colorantes, cenizas, humedad, acidez. Todos estos datos
-                conforman la tabla nutricional de los alimentos (rótulos alimentarios).
-              </p>
+          <div className='about-t '>
+            <div className='about-row'>
+              <div className='item-sobre-mi'>
+                <img className='item-img' src={metodologia} alt='Mi metodologia' title='Mi meteodologia' />
+                <div className='post'>
+                  <h4 className='link-underlined'>Mi metodología</h4>
+                </div>
+                <div>
+                  <p>A través de distintas herramientas nutricionales te ayudaré a lograr tu objetivo.</p>
+                </div>
+              </div>
+              <div className=' item-sobre-mi'>
+                <img className='item-img' src={planes} alt='Mi metodologia' title='Mi meteodologia' />
+                <div>
+                  <h4 className='link-underlined'>Acerca de mis planes</h4>
+                </div>
+                <div>
+                  <p>Todos mis planes son 100% personalizados.</p>
+                </div>
+              </div>
             </div>
-            <div className='item-sobre-mi'>
-              <img className='item-img' src={honestidad} alt='Mi metodologia' title='Mi meteodologia' />
-              <h4 className='link-underlined'>Honestidad y confianza</h4>
-              <p>
-                Necesito que seas 100 % honesto y sigas las pautas que te voy a dar al pie de la letra, sino mi trabajo es en vano y todo tu progreso se verá
-                comprometido. ﻿El éxito depende solo de vos, de tu compromiso.
-              </p>
+            <div className='about-row '>
+              <div className='item-sobre-mi'>
+                <img className='item-img' src={laboratorio} alt='Mi metodologia' title='Mi meteodologia' />
+                <div className='post'>
+                  <h4 className='link-underlined'>Trabajo en Laboratorio</h4>
+                </div>
+                <div>
+                  <p>
+                    Realizo análisis fisicoquímicos en los alimentos: materia grasa, proteínas, hidratos, colorantes, cenizas, humedad, acidez. Todos estos
+                    datos conforman la tabla nutricional de los alimentos (rótulos alimentarios).
+                  </p>
+                </div>
+              </div>
+              <div className='item-sobre-mi'>
+                <img className='item-img' src={honestidad} alt='Mi metodologia' title='Mi meteodologia' />
+                <div>
+                  <h4 className='link-underlined'>Honestidad y confianza</h4>
+                </div>
+                <div>
+                  <p>
+                    Necesito que seas 100 % honesto y sigas las pautas que te voy a dar al pie de la letra, sino mi trabajo es en vano y todo tu progreso se
+                    verá comprometido. ﻿El éxito depende solo de vos, de tu compromiso.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -113,7 +131,7 @@ export default function About() {
                   Mejorar el perfil lipídico (grasas)
                 </li>
               </ul>
-              <ul className={animate ? 'two animate fadeLeft' : 'two animate fadeOut'}>
+              <ul className={animate ? 'two animate fadeLeft ' : 'two animate fadeOut '}>
                 <li className={animate ? 'three animate fadeIn' : 'two animate fadeOut'}>
                   <img className='item-img-tic' src={tic} alt='Mi metodologia' title='Mi meteodologia' />
                   Aumentar los niveles de hierro

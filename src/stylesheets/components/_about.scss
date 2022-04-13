@@ -63,7 +63,7 @@
   flex-direction: column;
   text-align: center;
   margin: auto 0;
-  padding-bottom: 112px;
+  //padding-bottom: 112px;
 }
 
 .about-row {
@@ -73,9 +73,12 @@
   margin: 0 auto;
   height: 100%;
 }
+.about-row-t {
+  flex-direction: column;
+}
 .fondo {
   background: white url(../../assets/images/sobre-mi/fondo-sobremi.png) no-repeat center bottom;
-  background-size: 500%;
+  padding-bottom: 5rem;
 }
 
 .item-sobre-mi {
@@ -83,8 +86,11 @@
   flex-direction: column;
   margin: 32px 0 0;
   padding: 0 12px;
+  width: 50%;
+  align-items: center;
+  max-height: 100%;
   p {
-    font-size: 1rem;
+    font-size: 1.2em;
     color: $gray;
     margin: 0 0 16px;
     text-align: center;
@@ -94,6 +100,8 @@
 .item-img {
   width: 124px;
   height: 95px;
+  max-height: 197px;
+  max-width: 258px;
 }
 //-------------------------------
 .ayuda {
@@ -259,4 +267,97 @@
 .fadeLeft {
   -webkit-animation-name: fadeLeft;
   animation-name: fadeLeft;
+}
+
+@media screen and (min-width: 338px) {
+  .item-img {
+    height: 100%;
+    width: 100%;
+    height: 140px;
+  }
+  .item-sobre-mi {
+    .post {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 65px;
+      max-height: 100%;
+      line-height: 2.5;
+    }
+  }
+}
+@media screen and (min-width: 302px) {
+}
+@media screen and (min-width: 465px) {
+}
+@media screen and (min-width: 574px) {
+  .deporte {
+    height: 300px;
+    //background-attachment: scroll;
+    //background-size: cover;
+  }
+  .item-sobre-mi {
+    .post {
+      line-height: 1;
+    }
+  }
+  .ayuda ul {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 778px) {
+  .about-row {
+    flex-direction: row;
+
+    .about-row-text {
+      max-width: 50%;
+      h5 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  .deporte {
+    height: 530px;
+    // background: url(../../assets/images/paola-deporte.jpg) no-repeat center fixed;
+    //background-size: cover;
+    background-attachment: fixed;
+  }
+  .lista-ayuda {
+    display: flex;
+  }
+  .ayuda ul {
+    font-size: 1.6rem;
+    font-weight: 900;
+  }
+  .ayuda li {
+    padding-left: 1rem;
+  }
+}
+@media screen and (min-width: 995px) {
+  .about-t {
+    flex-direction: row;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .item-sobre-mi {
+    height: 500px;
+    p {
+      font-size: 1.4em;
+    }
+  }
+
+  .about-row {
+    width: 50%;
+  }
+  .about-row-t {
+    width: 100%;
+
+    .about-row-text {
+      h5 {
+        font-size: 1.5rem;
+      }
+    }
+  }
 }
