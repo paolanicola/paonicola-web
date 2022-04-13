@@ -13,7 +13,7 @@
     align-items: center;
     justify-content: space-between;
     p {
-      font-size: 1.5rem;
+      font-size: 1.1rem;
       color: white;
       font-weight: bold;
     }
@@ -21,16 +21,16 @@
 }
 
 .number-collapse {
-  font-weight: bold;
   color: white;
   line-height: 1;
   display: block;
   position: absolute;
   top: 50%;
   left: 1rem;
-  transform: translateY(-50%);
-  font-size: 121px;
+  transform: translateY(-45%);
+  font-size: 117px;
   left: 0rem;
+  font-weight: 1000;
 }
 
 .title-accordion {
@@ -62,10 +62,17 @@
 }
 
 @media screen and (min-width: 540px) {
-  .card-accordion-header {
-    padding: 0 20px 0 150px !important;
-    height: 80px;
+  .card-accordion {
+    .card-accordion-header {
+      padding: 0 20px 0 150px !important;
+      height: 80px;
+
+      p {
+        font-size: 1.5rem;
+      }
+    }
   }
+
   .number-collapse {
     left: 0rem;
     font-size: 154px;
@@ -74,6 +81,7 @@
   .card-accordion-body {
     padding: 2rem 0 1rem 150px;
   }
+
   .plusMinusAccordion {
     width: 50px;
   }

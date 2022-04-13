@@ -12,7 +12,7 @@ const Accordion = ({ title, content, id }) => {
     <>
       <div className='card-accordion'>
         <div className='card-accordion-header' onClick={() => setIsActive(!isActive)}>
-          <div className='number-collapse '>{id}.</div>
+          <div className='number-collapse'>{id}.</div>
           <div className='title-accordion'>
             <p>{title}</p>
           </div>

@@ -1,0 +1,262 @@
+.container-about {
+  width: 100%;
+  padding-bottom: 6rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.about-text {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+}
+.text-center-1 {
+  text-align: center;
+  a {
+    font-size: 1.2rem;
+    color: $gray;
+    margin: 32px 0px 48px;
+    font-weight: bold;
+  }
+}
+
+.about-column {
+  display: flex;
+  flex-direction: column;
+}
+.deporte {
+  //height: 530px;
+  background: url(../../assets/images/paola-deporte.jpg) no-repeat center fixed;
+  // background-size: cover;
+
+  height: 300px;
+  background-attachment: scroll;
+  background-size: cover;
+}
+
+.link-underlined {
+  color: $text-color;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 1.4rem;
+  &:after {
+    content: '';
+    display: block;
+    margin: 0.3rem 0;
+    width: 100%;
+    height: 3px;
+    background: $primary;
+  }
+  &:hover,
+  &:focus {
+    color: $primary;
+  }
+  margin-bottom: 8px;
+}
+
+.about-t {
+  display: flex;
+  max-width: 100%;
+  flex-direction: column;
+  text-align: center;
+  margin: auto 0;
+  padding-bottom: 112px;
+}
+
+.about-row {
+  display: flex;
+  flex-direction: row; //
+  max-width: 90%;
+  margin: 0 auto;
+  height: 100%;
+}
+.fondo {
+  background: white url(../../assets/images/sobre-mi/fondo-sobremi.png) no-repeat center bottom;
+  background-size: 500%;
+}
+
+.item-sobre-mi {
+  display: flex;
+  flex-direction: column;
+  margin: 32px 0 0;
+  padding: 0 12px;
+  p {
+    font-size: 1rem;
+    color: $gray;
+    margin: 0 0 16px;
+    text-align: center;
+  }
+}
+
+.item-img {
+  width: 124px;
+  height: 95px;
+}
+//-------------------------------
+.ayuda {
+  width: 90%;
+  background: rgba(255, 255, 255, 0.5);
+  border: solid $primary 2px;
+  margin: 0 auto;
+  margin-top: 6rem;
+}
+
+.ayuda h2 {
+  margin: 0;
+  transform: translateY(-50%);
+  display: inline-block;
+  background: white;
+  padding: 0 1rem;
+  font-size: 1.4rem; // 40 50 60
+  color: $primary;
+  font-weight: bold;
+}
+
+.ayuda ul {
+  width: 80%;
+  text-align: left;
+  font-size: 1.1rem; // 1.2 1.4
+  font-weight: 900;
+  color: $gray;
+}
+
+.ayuda li {
+  width: 100%;
+  padding: 0 0 1rem 2.5rem;
+  margin-bottom: 0.7rem;
+  // background: url(image-path('sobre-mi/tic.svg')) no-repeat top left;
+  display: flex;
+}
+
+.item-img-tic {
+  height: 30px;
+  width: 30px;
+  padding-right: 1rem;
+}
+.item-img-paola {
+  box-sizing: content-box;
+  height: 100%;
+  width: 100%;
+  padding-right: 1rem;
+  transform: scale(1.5);
+}
+//-------------------------------
+
+.two {
+  -webkit-animation-delay: 0.2s;
+  -moz-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+.three {
+  -webkit-animation-delay: 0.3s;
+  -moz-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+.four {
+  -webkit-animation-delay: 0.4s;
+  -moz-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+.five {
+  -webkit-animation-delay: 0.5s;
+  -moz-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+.six {
+  -webkit-animation-delay: 0.6s;
+  -moz-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+
+.animate {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+  animation-timing-function: ease;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+}
+
+@-webkit-keyframes fadeLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fadeLeft {
+  -webkit-animation-name: fadeLeft;
+  animation-name: fadeLeft;
+}
