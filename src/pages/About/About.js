@@ -10,10 +10,18 @@ export default function About() {
   const [animate, setAnimate] = useState(false);
   useEffect(() => {
     window.addEventListener('scroll', () => {
-      if (window.scrollY >= 1500) {
-        setAnimate(true);
+      if (window.screen.width < 700) {
+        if (window.scrollY >= 1200) {
+          setAnimate(true);
+        } else {
+          setAnimate(false);
+        }
       } else {
-        setAnimate(false);
+        if (window.scrollY >= 1100) {
+          setAnimate(true);
+        } else {
+          setAnimate(false);
+        }
       }
     });
     return () => {

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { NavBar, Products, SectionFooter, Footer, Header, HeaderTitle, Cart, Checkout } from './components';
 import About from './pages/About';
 import Changes from './pages/changes';
@@ -12,20 +12,29 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <div className='container'>
-        <Header />
-        <HeaderTitle />
         <Routes>
-          <Route exact path='/' element={<Products />} />
-          <Route path='/sobre-mi' element={<About />} />
-          <Route path='/cambios-reales' element={<Changes />} />
-          <Route path='/faq' element={<Faq />} />
-          <Route path='/contacto' element={<Contact />} />
-          <Route path='/carrito' element={<Cart />} />
-          <Route path='/checkout' element={<Checkout />} />
-          <Route path='*' element={<div>NotFound</div>} />
+          <Route
+            exact
+            path='/'
+            element={
+              <div>
+                <Header />
+                <HeaderTitle /> <Outlet /> <SectionFooter />
+                <Footer />
+              </div>
+            }
+          >
+            <Route path='home' element={<div>Home</div>} />
+            <Route exact path='tienda' element={<Products />} />
+            <Route path='sobre-mi' element={<About />} />
+            <Route path='cambios-reales' element={<Changes />} />
+            <Route path='faq' element={<Faq />} />
+            <Route path='contacto' element={<Contact />} />
+            <Route path='carrito' element={<Cart />} />
+            <Route path='checkout' element={<Checkout />} />
+            <Route path='*' element={<Navigate replace to='/home' />} />
+          </Route>
         </Routes>
-        <SectionFooter />
-        <Footer />
       </div>
     </BrowserRouter>
   );

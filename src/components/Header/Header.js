@@ -31,6 +31,9 @@ export default function Header() {
   const closeSidebar = () => setSidebar(!sidebar);
 
   const handleMoveToCart = () => {
+    if (sidebar) {
+      closeSidebar();
+    }
     navigate('/carrito');
   };
 
@@ -48,7 +51,7 @@ export default function Header() {
           <NavOpen className='icon__svg__open' />
         </div>
         <div className='menu__logo'>
-          <NavLink to='/'>
+          <NavLink to='home'>
             <img src={LogoWebp} className='menu__logo__svg' alt='logo' />
           </NavLink>
         </div>
@@ -86,8 +89,8 @@ export default function Header() {
                 </Link>
               </div>
             </div>
-            <div className='menu__item menu__link'>
-              <PrimaryButton actionText='Solicitar Turno Online' href='/' />
+            <div className='menu__item menu__link' onClick={closeSidebar}>
+              <PrimaryButton actionText='Tienda Online' href='tienda' />
             </div>
           </div>
         </div>
