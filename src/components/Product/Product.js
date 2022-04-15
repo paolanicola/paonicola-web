@@ -35,7 +35,7 @@ function Product({ product }) {
               <PrimaryButton size='md' href='/' actionText='Vista rapida' />
             </div>
             <div onClick={() => handleAddToCart(product)} className='botonn'>
-              <PrimaryButton href='/' actionText='Añadir al carrito' />
+              <PrimaryButton href='/tienda' actionText='Añadir al carrito' />
             </div>
           </div>
         </div>

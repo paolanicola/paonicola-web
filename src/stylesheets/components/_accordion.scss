@@ -16,6 +16,7 @@
       font-size: 1.1rem;
       color: white;
       font-weight: bold;
+      margin: 3px;
     }
   }
 }
@@ -27,10 +28,10 @@
   position: absolute;
   top: 50%;
   left: 1rem;
-  transform: translateY(-45%);
+  transform: translateY(-50%);
   font-size: 117px;
   left: 0rem;
-  font-weight: 1000;
+  font-weight: 550;
 }
 
 .title-accordion {
@@ -43,7 +44,7 @@
     font-size: 1.1rem;
   }
   padding: 2rem 0 1rem;
-  font-weight: 700;
+  font-weight: 600;
   ul {
     padding-left: 1rem;
     li {

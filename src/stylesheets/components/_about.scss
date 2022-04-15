@@ -89,8 +89,9 @@
   width: 50%;
   align-items: center;
   max-height: 100%;
+
   p {
-    font-size: 1.2em;
+    font-size: 1rem;
     color: $gray;
     margin: 0 0 16px;
     text-align: center;
@@ -275,16 +276,6 @@
     width: 100%;
     height: 140px;
   }
-  .item-sobre-mi {
-    .post {
-      padding: 0;
-      margin: 0;
-      width: 100%;
-      height: 65px;
-      max-height: 100%;
-      line-height: 2.5;
-    }
-  }
 }
 @media screen and (min-width: 302px) {
 }
@@ -297,8 +288,8 @@
     //background-size: cover;
   }
   .item-sobre-mi {
-    .post {
-      line-height: 1;
+    p {
+      font-size: 1.2rem;
     }
   }
   .ayuda ul {
@@ -307,6 +298,11 @@
 }
 
 @media screen and (min-width: 778px) {
+  .item-sobre-mi {
+    p {
+      font-size: 1.3rem;
+    }
+  }
   .about-row {
     flex-direction: row;
 
@@ -344,7 +340,7 @@
   .item-sobre-mi {
     height: 500px;
     p {
-      font-size: 1.4em;
+      font-size: 1.3rem;
     }
   }
 

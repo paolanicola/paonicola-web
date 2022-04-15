@@ -66,7 +66,7 @@ export default function About() {
             <div className='about-row'>
               <div className='item-sobre-mi'>
                 <img className='item-img' src={metodologia} alt='Mi metodologia' title='Mi meteodologia' />
-                <div className='post'>
+                <div className=''>
                   <h4 className='link-underlined'>Mi metodología</h4>
                 </div>
                 <div>
@@ -86,7 +86,7 @@ export default function About() {
             <div className='about-row '>
               <div className='item-sobre-mi'>
                 <img className='item-img' src={laboratorio} alt='Mi metodologia' title='Mi meteodologia' />
-                <div className='post'>
+                <div className=''>
                   <h4 className='link-underlined'>Trabajo en Laboratorio</h4>
                 </div>
                 <div>
