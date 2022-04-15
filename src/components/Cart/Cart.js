@@ -36,7 +36,7 @@ function Cart() {
         <div className='carrito-container carrito-container-empty'>
           <h4 className='title-empty'>Tu carrito esta vacio, agrega algún producto!</h4>
           <div className='container-empty-link'>
-            <Link to='/' className='link-empty'>
+            <Link to='/tienda' className='link-empty'>
               Continúa Comprando
             </Link>
           </div>
@@ -83,7 +83,7 @@ function Cart() {
                 Finalizar compra
               </Link>
               <div className='carrito-container-continue'>
-                <Link to='/' className='carrito-continueBuy'>
+                <Link to='/tienda' className='carrito-continueBuy'>
                   Continuar Comprando
                 </Link>
               </div>

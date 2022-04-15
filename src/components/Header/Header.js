@@ -5,7 +5,10 @@ import { ReactComponent as InstagramBrand } from '../../assets/images/header/ins
 import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg';
 import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg';
 import { ReactComponent as NavOpen } from '../../assets/images/header/nav-open.svg';
+import navOpen from '../../assets/images/header/nav-open.svg';
+
 import { ReactComponent as NavClose } from '../../assets/images/header/nav-close.svg';
+import navClose from '../../assets/images/header/nav-close.svg';
 import { ReactComponent as PaolaLogo } from '../../assets/images/header/logo.svg';
 import LogoWebp from '../../assets/images/header/paola_logo.webp';
 
@@ -43,12 +46,15 @@ export default function Header() {
       window.removeEventListener('scroll', changeNavbarSize);
     };
   });
+  useEffect(() => {
+    window.addEventListener('click', console.log('hiceclik'));
+  }, [window]);
 
   return (
     <>
       <div className={size ? 'navBar header--resize' : 'navBar'}>
         <div className='navBar__icon__svg navBar__icon__svg--none fixed' onClick={showSidebar}>
-          <NavOpen className='icon__svg__open' />
+          <img className='img-icono-close-open' src={navOpen} />
         </div>
         <div className='menu__logo'>
           <NavLink to='home'>
@@ -58,8 +64,10 @@ export default function Header() {
 
         <div className={sidebar ? 'navBar__menu navBar__menu--active' : 'navBar__menu'}>
           <div className='menu__left'>
-            <div className='pepe ' onClick={closeSidebar}>
-              <div className='container__icon__close'></div>
+            <div className='pepe' onClick={closeSidebar}>
+              <div className='container__icon__close'>
+                <img className='img-icono-close-open' src={navClose} />
+              </div>
             </div>
             <NavLink className='menu__item menu__link' to='/sobre-mi' onClick={closeSidebar}>
               <p>Sobre Mi</p>
@@ -76,7 +84,10 @@ export default function Header() {
           </div>
 
           <div className='menu__right'>
-            <div className='menu__item menu__link'>
+            <div className='menu__item menu__link' onClick={closeSidebar}>
+              <PrimaryButton actionText='Tienda Online' href='tienda' />
+            </div>
+            <div className='menu__item menu__link left-redes'>
               <div className='menu__redes '>
                 <Link to='#' className='menu__redes__link'>
                   <InstagramBrand className='menu__redes__icono' />
@@ -88,9 +99,6 @@ export default function Header() {
                   <WhatsappBrand className='menu__redes__icono' />
                 </Link>
               </div>
-            </div>
-            <div className='menu__item menu__link' onClick={closeSidebar}>
-              <PrimaryButton actionText='Tienda Online' href='tienda' />
             </div>
           </div>
         </div>
