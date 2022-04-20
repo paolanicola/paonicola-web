@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavBar, Logo, PrimaryButton } from '..';
 import { ReactComponent as ShoppingBag } from '../../assets/images/header/shopping-bag.svg';
 import { ReactComponent as InstagramBrand } from '../../assets/images/header/instagram-brands.svg';
@@ -16,17 +16,10 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function Header() {
-  const [size, setSize] = useState(false);
   const navigate = useNavigate();
 
   const { cartTotalQuantity } = useSelector((state) => state.cart);
-  const changeNavbarSize = () => {
-    if (window.scrollY >= 60) {
-      setSize(true);
-    } else {
-      setSize(false);
-    }
-  };
+
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -39,21 +32,54 @@ export default function Header() {
     }
     navigate('/carrito');
   };
+  const [size, setSize] = useState(false);
 
   useEffect(() => {
-    window.addEventListener('scroll', changeNavbarSize);
-    return () => {
-      window.removeEventListener('scroll', changeNavbarSize);
+    const changeNavbarSize = () => {
+      if (window.scrollY >= 60) {
+        setSize(true);
+      }
     };
-  });
+    // clean up code
+    window.removeEventListener('scroll', changeNavbarSize);
+    window.addEventListener('scroll', changeNavbarSize);
+    return () => window.removeEventListener('scroll', changeNavbarSize);
+  }, []);
+
   useEffect(() => {
-    window.addEventListener('click', console.log('hiceclik'));
-  }, [window]);
+    const changeNavbarSizeF = () => {
+      if (window.scrollY < 59) {
+        setSize(false);
+      }
+    };
+    window.addEventListener('scroll', changeNavbarSizeF);
+    return () => window.removeEventListener('scroll', changeNavbarSizeF);
+  }, []);
+
+  const wrapperRef = useRef(null);
+  const wrapperRefIcon = useRef(null);
+  const [isVisible, setIsVisible] = useState(true);
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside, false);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, false);
+    };
+  }, [wrapperRef]);
+  const handleClickOutside = (event) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      if (wrapperRefIcon.current.className == 'navBar__icon__svg navBar__icon__svg--none fixed' && !wrapperRefIcon.current.contains(event.target)) {
+        //setIsVisible(false);
+        setSidebar(false);
+      } else {
+        setSidebar(true);
+      }
+    }
+  };
 
   return (
     <>
       <div className={size ? 'navBar header--resize' : 'navBar'}>
-        <div className='navBar__icon__svg navBar__icon__svg--none fixed' onClick={showSidebar}>
+        <div ref={wrapperRefIcon} className='navBar__icon__svg navBar__icon__svg--none fixed' onClick={showSidebar}>
           <img className='img-icono-close-open' src={navOpen} />
         </div>
         <div className='menu__logo'>
@@ -62,7 +88,7 @@ export default function Header() {
           </NavLink>
         </div>
 
-        <div className={sidebar ? 'navBar__menu navBar__menu--active' : 'navBar__menu'}>
+        <div ref={wrapperRef} className={sidebar ? 'navBar__menu navBar__menu--active' : 'navBar__menu'}>
           <div className='menu__left'>
             <div className='pepe' onClick={closeSidebar}>
               <div className='container__icon__close'>

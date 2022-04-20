@@ -6,6 +6,7 @@
   justify-content: space-between;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
   z-index: 5;
+  background-color: white;
 }
 .navBar__icon__svg {
   background-color: white;
@@ -141,32 +142,37 @@
 }
 
 /*-----------------------------------------------*/
+
 .header--resize {
+  transition: all 0.3s ease;
   height: 64px;
-  transition: all 0.3s ease;
   background-color: white;
-  transition: all 0.3s ease;
 
   .navBar__icon__svg {
     height: 100%;
   }
+
   .menu__logo {
     height: 60px;
     width: 60px;
     padding-top: 0;
   }
+
   .menu__logo__svg {
     max-height: 100%;
   }
 }
+
 .header__logo {
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
 }
 .header__logo__img {
   margin: 0 auto;
   height: 100%;
   width: 100%;
+  transition: all 0.3s ease;
 }
 
 .menu__logo {
@@ -239,7 +245,6 @@
   }
   .header--resize {
     height: 97px;
-    transition: all 0.3s ease;
 
     .menu__logo {
       height: 90px;
