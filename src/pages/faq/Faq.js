@@ -8,7 +8,7 @@ export default function Faq() {
       <div>
         <div className='accordion'>
           {accordionData.map(({ title, content, id }) => (
-            <Accordion title={title} content={content} id={id} />
+            <Accordion key={id} title={title} content={content} id={id} />
           ))}
         </div>
       </div>

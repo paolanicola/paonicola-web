@@ -9,7 +9,7 @@ export default function Changes() {
   return (
     <>
       <div className='container-changes'>
-        <Carousel>
+        <Carousel preventMovementUntilSwipeScrollTolerance>
           <div>
             <img src={img1} />
           </div>

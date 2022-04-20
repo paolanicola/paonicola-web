@@ -25,13 +25,18 @@ const stepSlice = createSlice({
 
       localStorage.setItem('stepCurrent', state.step);
     },
+    resetStep(state, action) {
+      state.step = 0;
+
+      localStorage.setItem('stepCurrent', state.step);
+    },
     setFecha(state, action) {
       localStorage.setItem('fechaCurrent', state.fecha);
     },
   },
 });
 
-export const { nextStep, backStep, setFecha } = stepSlice.actions;
+export const { nextStep, backStep, setFecha, resetStep } = stepSlice.actions;
 export const getStateStep = (state) => state.stepCurrent.step;
 export const getStateFecha = (state) => state.stepCurrent.fecha;
 export default stepSlice.reducer;

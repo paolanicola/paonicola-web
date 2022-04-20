@@ -31,10 +31,20 @@ const cartStateSlice = createSlice({
       state.hora = null;
       localStorage.setItem('hora', JSON.stringify(state.hora));
     },
+    resetCartState(state, action) {
+      state.fecha = null;
+      localStorage.setItem('fecha', JSON.stringify(state.fecha));
+      state.hora = null;
+      localStorage.setItem('hora', JSON.stringify(state.hora));
+      state.verificado = false;
+      localStorage.setItem('verificado', JSON.stringify(state.verificado));
+      state.formulario = null;
+      localStorage.setItem('formulario', JSON.stringify(state.formulario));
+    },
   },
 });
 
-export const { updateFecha, updateHora, updateVerificado, deleteHora, updateformulario } = cartStateSlice.actions;
+export const { updateFecha, updateHora, updateVerificado, deleteHora, updateformulario, resetCartState } = cartStateSlice.actions;
 export const getFecha = (state) => state.cartState.fecha;
 export const getHora = (state) => state.cartState.hora;
 export const getVerificado = (state) => state.cartState.verificado;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { faTrashAlt, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,11 +9,14 @@ import { getAllProducts } from '../../features/products/productSlice';
 import Product from '../Product/Product';
 import { addToCart, decreaseCart, getAllProductsCart, getTotals, removeFromCart } from '../../features/cart/cartSlice';
 import ProductCart from '../ProductCart/ProductCart';
+import { resetStep } from '../../features/stepsCheckout/stepsSlice';
+import { updateFecha, updateHora, resetCartState } from '../../features/cartState/cartStateSlice';
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
   const products = useSelector(getAllProductsCart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getTotals());
   }, [cart, dispatch]);
@@ -27,6 +30,12 @@ function Cart() {
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart(product));
   };
+  const handleContinueBuy = (event) => {
+    event.preventDefault();
+    dispatch(resetStep());
+    dispatch(resetCartState());
+    navigate('/tienda');
+  };
 
   let renderProducts = '';
   renderProducts = products.length > 0 ? products.map((product) => <ProductCart product={product} />) : <div>Error</div>;
@@ -36,7 +45,7 @@ function Cart() {
         <div className='carrito-container carrito-container-empty'>
           <h4 className='title-empty'>Tu carrito esta vacio, agrega algún producto!</h4>
           <div className='container-empty-link'>
-            <Link to='/tienda' className='link-empty'>
+            <Link onClick={handleContinueBuy} to='#' className='link-empty'>
               Continúa Comprando
             </Link>
           </div>
