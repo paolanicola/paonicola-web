@@ -99,7 +99,7 @@ export default function Header() {
               <p>Sobre Mi</p>
             </NavLink>
             <NavLink className='menu__item menu__link' to='/cambios-reales' onClick={closeSidebar}>
-              <p>Cambios Reales</p>
+              <p>Cambios Realess</p>
             </NavLink>
             <NavLink className='menu__item menu__link' to='/faq' onClick={closeSidebar}>
               <p>FAQ</p>
