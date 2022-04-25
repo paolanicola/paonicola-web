@@ -148,7 +148,11 @@
   transform: scale(1.5);
 }
 //-------------------------------
-
+.one {
+  -webkit-animation-delay: 0.1s;
+  -moz-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
 .two {
   -webkit-animation-delay: 0.2s;
   -moz-animation-delay: 0.2s;

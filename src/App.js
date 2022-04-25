@@ -6,6 +6,7 @@ import Faq from './pages/faq';
 import Contact from './pages/contact';
 import './stylesheets/application.scss';
 import ScrollToTop from './components/ScrollToTop';
+import Home from './pages/Home/Home';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
               </div>
             }
           >
-            <Route path='home' element={<div>Home</div>} />
+            <Route path='home' element={<Home />} />
             <Route exact path='tienda' element={<Products />} />
             <Route path='sobre-mi' element={<About />} />
             <Route path='cambios-reales' element={<Changes />} />

@@ -1,0 +1,110 @@
+.encabezado {
+  display: none;
+}
+.home-container {
+  //max-width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-main {
+  //margin-top: $header-height;
+  margin-top: 0 !important;
+  height: auto;
+
+  &::before {
+    content: '';
+    display: block;
+    background: url('../../assets/images/home/paola_ppal.jpg') no-repeat center;
+    height: 70vh;
+    min-height: 470px;
+    background-size: cover;
+  }
+  .home-main-container {
+    .home-main-row {
+      padding-bottom: 1rem;
+      .title-home-container {
+        background: url('../../assets/images/home/encabezado-fondo.png') no-repeat center right #f6dada;
+        display: flex;
+        justify-content: center;
+        margin: -4rem 2rem 0;
+        height: auto;
+        padding: 2rem 1rem;
+        text-align: center;
+        background-size: 90%;
+        max-width: 80%;
+
+        .home-main-title {
+          color: #5a585a;
+          font-weight: 800;
+          text-transform: uppercase;
+          padding: 0;
+          font-size: 1.7rem;
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+.home-services {
+  background-color: palegreen;
+}
+
+.home-shop {
+  background-color: palevioletred;
+}
+
+.home-changes {
+  background-color: plum;
+}
+
+@media screen and (min-width: 575px) {
+  .servicios-home {
+    background-size: 300%;
+  }
+  .home-main {
+    // margin-top: $header-height;
+    position: relative;
+    padding: 0;
+    height: calc(100vh - 147px);
+    margin-bottom: 5rem;
+    &::before {
+      content: '';
+      width: 60%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      height: calc(100vh - 147px);
+    }
+    .home-main-container {
+      .home-main-row {
+        .title-home-container {
+          background-size: contain;
+          width: 45%;
+          position: absolute;
+          top: 0;
+          right: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: left;
+          z-index: 1;
+          height: calc(80vh - 147px);
+          margin: 2rem 5rem 0 0;
+
+          .home-main-title {
+            font-size: 2.1rem !important;
+            padding: 0 0.5rem !important;
+            margin-bottom: 1rem !important;
+            border-bottom: none !important;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (min-width: 768px) {
+}
