@@ -1,6 +1,3 @@
-.encabezado {
-  display: none;
-}
 .home-container {
   //max-width: 90%;
   margin: 0 auto;
@@ -49,7 +46,52 @@
 }
 
 .home-services {
-  background-color: palegreen;
+  // background-color: palegreen;
+}
+.services-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 90%;
+  flex-flow: row wrap;
+}
+.services-item-row {
+  // background-color: paleturquoise;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  width: 45%;
+}
+
+.services-button-container {
+  background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
+  background-size: 300%;
+  padding-bottom: 10rem;
+  display: flex;
+  justify-content: center;
+  .container-btn-sobre-mi {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+}
+.btt {
+  @extend %btn-primary;
+  @extend %btn-md;
+  width: 100% !important;
+  height: 25px;
+}
+.services-item-about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h5 {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-size: 1.2rem;
+  }
 }
 
 .home-shop {
@@ -61,6 +103,10 @@
 }
 
 @media screen and (min-width: 575px) {
+  .services-button-container {
+    //background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
+    background-size: 200%;
+  }
   .servicios-home {
     background-size: 300%;
   }
@@ -105,6 +151,19 @@
       }
     }
   }
+  .services-items {
+    flex-flow: row nowrap;
+  }
+  .services-item-about {
+    h5 {
+      font-size: 1.5rem;
+    }
+  }
 }
+
 @media screen and (min-width: 768px) {
+  .services-button-container {
+    //background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
+    background-size: 100%;
+  }
 }

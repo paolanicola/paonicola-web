@@ -1,5 +1,9 @@
 import React from 'react';
-import metodologia from '../../assets/images/sobre-mi/02metodologia.svg';
+import { NavLink } from 'react-router-dom';
+import Clinica from '../../assets/images/services-img/01clinica.svg';
+import Deportiva from '../../assets/images/services-img/02deportiva.svg';
+import Feedback from '../../assets/images/services-img/03feedback.svg';
+import Bioimpedancia from '../../assets/images/services-img/04bioimpedancia.svg';
 
 export default function Home() {
   return (
@@ -14,62 +18,58 @@ export default function Home() {
         </div>
       </section>
       <section className='home-services'>
-        <div claclassNamess=''>
-          <div className=''>
-            <div className=''>
-              <h2 className=''>
-                <span>Sobre mi</span>
-              </h2>
-            </div>
-          </div>
-        </div>
         <div className=''>
-          <div className='services-about'>
-            <div className='about-row'>
-              <div className='item-sobre-mi'>
-                {
-                  //<%= image_tag'servicios/01clinica.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'} %>
-                }
-                <img className='item-img' src={metodologia} alt='Mi metodologia' title='Mi meteodologia' />
+          <h2 className=''>
+            <span>Sobre mi</span>
+          </h2>
+        </div>
+        <div className='services-items'>
+          <div className='services-item-row'>
+            <div className='services-item-about'>
+              {
+                //<%= image_tag'servicios/01clinica.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'} %>
+              }
+              <img className='item-img' src={Clinica} alt='Mi metodologia' title='Mi meteodologia' />
 
-                <h5>Nutrición clínica: Educación y hábitos saludables</h5>
-              </div>
+              <h5>Nutrición clínica: Educación y hábitos saludables</h5>
             </div>
-            <div className='about-row'>
-              <div className='item-sobre-mi'>
-                {
-                  //<%= image_tag('servicios/02deportiva.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'}) %>
-                }
-                <img className='item-img' src={metodologia} alt='Mi metodologia' title='Mi meteodologia' />
-                <h5>Nutrición para el rendimiento deportivo</h5>
-              </div>
+          </div>
+          <div className='services-item-row'>
+            <div className='services-item-about'>
+              {
+                //<%= image_tag('servicios/02deportiva.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'}) %>
+              }
+              <img className='item-img' src={Deportiva} alt='Mi metodologia' title='Mi meteodologia' />
+              <h5>Nutrición para el rendimiento deportivo</h5>
             </div>
-            <div className='about-row'>
-              <div className='item-sobre-mi'>
-                {
-                  // <%= image_tag('servicios/03feedback.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'}) %>
-                }
-                <img className='item-img' src={metodologia} alt='Mi metodologia' title='Mi meteodologia' />
-                <h5>Feedback continuo</h5>
-              </div>{' '}
-            </div>
-            <div className='about-row'>
-              <div className=' item-sobre-mi'>
-                {
-                  //<%= image_tag('servicios/04bioimpedancia.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'}) %>
-                }
-                <img className='item-img' src={metodologia} alt='Mi metodologia' title='Mi meteodologia' />
-                <h5>Bioimpedancia para conocer tu composición corporal</h5>
-              </div>
+          </div>
+          <div className='services-item-row'>
+            <div className='services-item-about'>
+              {
+                // <%= image_tag('servicios/03feedback.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'}) %>
+              }
+              <img className='item-img' src={Feedback} alt='Mi metodologia' title='Mi meteodologia' />
+              <h5>Feedback continuo</h5>
+            </div>{' '}
+          </div>
+          <div className='services-item-row'>
+            <div className=' services-item-about'>
+              {
+                //<%= image_tag('servicios/04bioimpedancia.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'}) %>
+              }
+              <img className='item-img' src={Bioimpedancia} alt='Mi metodologia' title='Mi meteodologia' />
+              <h5>Consultas Online</h5>
             </div>
           </div>
         </div>
-        <div className=' '>
-          <div className=' '>
+        <div className='services-button-container '>
+          <div className='container-btn-sobre-mi '>
             {
               //<%= link_to 'sobre-mi', {class: 'btn btn-primary btn-md' } do %>Más sobre mi<% end %>
             }
-            mas sobre miiiiiiiiiiiiiiiiiiiii
+            <NavLink to='/sobre-mi' className=' btt'>
+              Mas sobre mi
+            </NavLink>
           </div>
         </div>
       </section>
