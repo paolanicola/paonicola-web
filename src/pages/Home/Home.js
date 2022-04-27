@@ -18,10 +18,8 @@ export default function Home() {
         </div>
       </section>
       <section className='home-services'>
-        <div className=''>
-          <h2 className=''>
-            <span>Sobre mi</span>
-          </h2>
+        <div className='services-title'>
+          <h2 className=''>Sobre mi</h2>
         </div>
         <div className='services-items'>
           <div className='services-item-row'>
@@ -73,52 +71,52 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className='home-shop'>
-        <div class='container'>
-          <div class='row'>
-            <div class=' text-center'>
-              <h2 class='title-section-card title-section-card-rosa'>Tienda</h2>
+      <section className='home-shop '>
+        <div className='shop-container'>
+          <div clclassNameass='shop-container-title-top'>
+            <div className=' '>
+              <h2 className='title-section-card title-section-card-rosa'>Tienda</h2>
             </div>
           </div>
-          <div class=' container-menu-tienda'>
-            <div class=''>
-              <div class=''>
-                <div class=' text-center item-tienda-home'>
-                  <a href='' class='item-tienda-home-mosaicos item'>
-                    <h4>MOSAICOS CON IDEAS DE MENÚES</h4>
-                  </a>
+          <div className='shop-container-menu-tienda'>
+            <div className='menu-top'>
+              <div className='menu-top-grid '>
+                <div className='item-tienda-home '>
+                  <NavLink to='' className='item-tienda-home-mosaicos item'>
+                    <h4 className='item-shop-title'>MOSAICOS CON IDEAS DE MENÚES</h4>
+                  </NavLink>
                 </div>
-                <div class=' text-center item-tienda-home'>
-                  <a href='' class='item-tienda-home-pack item'>
-                    <h4>PACK AHORRO</h4>
-                  </a>
+                <div className='  item-tienda-home'>
+                  <NavLink to='' className='item-tienda-home-pack item'>
+                    <h4 className='item-shop-title'>PACK AHORRO</h4>
+                  </NavLink>
                 </div>
-                <div class='text-center item-tienda-home'>
-                  <a href='' class='item-tienda-home-recetarios item'>
-                    <h4>RECETARIOS</h4>
-                  </a>
+                <div className='  item-tienda-home'>
+                  <NavLink to='' className='item-tienda-home-recetarios item'>
+                    <h4 className='item-shop-title'>RECETARIOS</h4>
+                  </NavLink>
                 </div>
-                <div class=' text-center item-tienda-home'>
-                  <a href='' class='item-tienda-home-guias item'>
-                    <h4>GUÍAS</h4>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class=''>
-              <div class='row'>
-                <div class=' text-center item-tienda-home-lg'>
-                  <a href='' class='item-tienda-home-consultas item'>
-                    <h3>Consultas online</h3>
-                  </a>
+                <div className='  item-tienda-home'>
+                  <NavLink to='' className='item-tienda-home-guias item'>
+                    <h4 className='item-shop-title'>GUÍAS</h4>
+                  </NavLink>
                 </div>
               </div>
             </div>
-            <div class=' text-center'>
-              <a href='' class=''>
-                Ir a la tienda
-              </a>
+            <div className='menu-mid'>
+              <div className='menu-mid-grid'>
+                <div className='item-tienda-home-lg'>
+                  <NavLink to='' className='item-tienda-home-consultas item'>
+                    <h3 className='item-shop-title-h3'>Consultas online</h3>
+                  </NavLink>
+                </div>
+              </div>
             </div>
+          </div>
+          <div className='menu-bot'>
+            <a href='' className=''>
+              Ir a la tienda
+            </a>
           </div>
         </div>
       </section>

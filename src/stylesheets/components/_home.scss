@@ -5,6 +5,7 @@
   flex-direction: column;
 }
 
+//MAIN---------------------------------------------
 .home-main {
   //margin-top: $header-height;
   margin-top: 0 !important;
@@ -18,6 +19,7 @@
     min-height: 470px;
     background-size: cover;
   }
+
   .home-main-container {
     .home-main-row {
       padding-bottom: 1rem;
@@ -45,9 +47,13 @@
   }
 }
 
+//SERVICES------------------------------------------
 .home-services {
   // background-color: palegreen;
+  background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
+  background-size: 300%;
 }
+
 .services-items {
   display: flex;
   flex-direction: column;
@@ -56,6 +62,7 @@
   max-width: 90%;
   flex-flow: row wrap;
 }
+
 .services-item-row {
   // background-color: paleturquoise;
   display: flex;
@@ -65,8 +72,8 @@
 }
 
 .services-button-container {
-  background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
-  background-size: 300%;
+  //background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
+  //background-size: 300%;
   padding-bottom: 10rem;
   display: flex;
   justify-content: center;
@@ -76,12 +83,14 @@
     margin-top: 1rem;
   }
 }
+
 .btt {
   @extend %btn-primary;
   @extend %btn-md;
   width: 100% !important;
   height: 25px;
 }
+
 .services-item-about {
   display: flex;
   flex-direction: column;
@@ -93,11 +102,158 @@
     font-size: 1.2rem;
   }
 }
+.services-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  position: relative;
+  width: 97%;
+  margin: 0 auto;
 
+  &::after {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 80%;
+    height: 100%;
+    z-index: 2;
+    background: url(../../assets/images/encabezado/fondo-tit-sobremi.svg) no-repeat center;
+    background-size: contain;
+  }
+
+  h2 {
+    position: relative;
+    z-index: 4;
+    font-size: 3rem;
+    color: #f2bcbd;
+    font-weight: 200 !important;
+  }
+}
+
+//SHOP---------------------------------------------
 .home-shop {
   background-color: palevioletred;
 }
 
+.home-shop {
+  background: $lila;
+  padding-top: 0;
+  padding-bottom: 8rem;
+  .shop-container-menu-tienda {
+    margin-top: 3rem;
+    .item-shop-title,
+    .item-shop-title-h3 {
+      text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+      color: white;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    .item-shop-title-h3 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .menu-top-grid,
+  .menu-mid-grid {
+    //background-color: palegreen;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0 auto;
+    max-width: 90%;
+    flex-flow: row wrap;
+  }
+
+  .item-tienda-home {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    padding-bottom: 1rem;
+    width: 45%;
+    height: 150px;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 1rem;
+  }
+
+  .item-tienda-home-lg {
+    width: 95%;
+    height: 468px;
+    .item {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .item-tienda-home-mosaicos {
+    background: white url('../../assets/images/tienda/bg-mosaicos.jpg') no-repeat center;
+    background-size: cover;
+  }
+
+  .item-tienda-home-recetarios {
+    background: white url('../../assets/images/tienda/bg-recetarios.jpg') no-repeat center;
+    background-size: cover;
+  }
+
+  .item-tienda-home-pack {
+    background: white url('../../assets/images/tienda/bg-pack-ahorro.jpg') no-repeat center;
+    background-size: cover;
+  }
+
+  .item-tienda-home-guias {
+    background: white url('../../assets/images/tienda/bg-guias.jpg') no-repeat center;
+    background-size: cover;
+  }
+
+  .item-tienda-home-consultas {
+    background: white url('../../assets/images/tienda/bg-consultas.jpg') no-repeat center;
+    background-size: cover;
+  }
+}
+
+.home-shop {
+  .item-tienda-home-lg {
+    height: 300px;
+  }
+}
+
+.shop-container-title-top {
+  position: absolute;
+}
+
+.title-section-card {
+  font-weight: 900;
+  background-color: white;
+  display: inline-block;
+  margin: -5rem 0 0;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  padding: 1rem 2rem;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+  line-height: 1;
+  font-size: 2.3rem;
+}
+.title-section-card-rosa {
+  color: $lila;
+}
+
+//CHANGES------------------------------------------
 .home-changes {
   background-color: plum;
 }
@@ -107,9 +263,15 @@
     //background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
     background-size: 200%;
   }
+
   .servicios-home {
     background-size: 300%;
   }
+
+  .home-services {
+    background-size: 200%;
+  }
+
   .home-main {
     // margin-top: $header-height;
     position: relative;
@@ -151,19 +313,136 @@
       }
     }
   }
+
   .services-items {
     flex-flow: row nowrap;
   }
+
   .services-item-about {
     h5 {
       font-size: 1.5rem;
     }
   }
+
+  //SHOP------------------------------------------------
+
+  .item-tienda-home {
+    .item {
+      .item-shop-title {
+        font-size: 1.5rem;
+      }
+    }
+  }
 }
 
 @media screen and (min-width: 768px) {
+  .home-services {
+    padding-bottom: 5rem;
+  }
+
+  .services-items {
+    width: 70%;
+  }
+
+  .item-img {
+    //width: 258px;
+    height: auto;
+  }
+
   .services-button-container {
     //background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
     background-size: 100%;
+  }
+
+  .services-title {
+    &::before {
+      content: ' ';
+      display: block;
+      width: 100%;
+
+      height: 2px;
+      background: $primary;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      z-index: 1;
+    }
+
+    &::after {
+      width: 60%;
+      height: 100%;
+      top: 20%;
+      max-height: 60%;
+    }
+
+    h2 {
+      font-size: 4rem;
+      font-weight: 300 !important;
+    }
+  }
+  //SHOP---------------------------------------------
+
+  .menu-top-grid,
+  .menu-mid-grid {
+    //background-color: palegreen;
+    width: 75%;
+  }
+
+  .menu-top-grid {
+    .item-tienda-home {
+      width: 45%;
+      height: 218px;
+    }
+  }
+
+  .item {
+  }
+
+  .menu-mid-grid {
+    .item-tienda-home-lg {
+      width: 95%;
+      height: 464px;
+      .item {
+      }
+    }
+  }
+  .title-section-card {
+    font-size: 3.75rem;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .btt {
+    font-size: 1.4rem;
+    padding: 1rem;
+  }
+
+  .home-services {
+    background-size: 100%;
+  }
+  //SHOP---------------------------------------------
+  .shop-container-menu-tienda {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .menu-top {
+    //background-color: palegreen;
+    width: 70%;
+  }
+  .menu-mid {
+    width: 35%;
+  }
+  .menu-top-grid,
+  .menu-mid-grid {
+    width: 100%;
+  }
+
+  .menu-top-grid {
+    .item-tienda-home {
+      width: 45%;
+    }
   }
 }
