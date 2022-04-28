@@ -121,7 +121,28 @@ export default function Home() {
         </div>
       </section>
       <section className='home-changes'>
-        <h2 className=''>Transformaciones</h2>
+        <div className='h2'>
+          <h2 className='transformaciones'>Transformaciones</h2>
+          <NavLink className='botontransfo' to=''>
+            Ver casos reales
+          </NavLink>
+        </div>
+      </section>
+      <div class='flores-faq'></div>
+      <section className='home-faq'>
+        <div className=''>
+          <div className='faq-container'>
+            <div className=' faq-text-top'>
+              <h2 className='title-section-card-b title-section-card-gris'>¿Tenés dudas o consultas?</h2>
+              <h3>Visitá nuestras preguntas frecuentes</h3>
+            </div>
+            <div className='faq-container-button '>
+              <NavLink to='/faq' className='button-faq'>
+                Ir a FAQ
+              </NavLink>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );
