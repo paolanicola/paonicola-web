@@ -11,7 +11,7 @@ export default function Home() {
       <section className='home-main'>
         <div className='home-main-container'>
           <div className='home-main-row'>
-            <div className='  title-home-container  one animate fadeRight  '>
+            <div className='  title-home-containers  one animate fadeRight  '>
               <h1 className='home-main-title '>LOGRÁ UN ESTILO DE VIDA SALUDABLE, A TRAVÉS DE UNA PLANIFICACIÓN PROFESIONAL Y PERSONALIZADA</h1>
             </div>
           </div>
