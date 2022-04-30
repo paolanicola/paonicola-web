@@ -33,25 +33,37 @@ function Filters() {
     }),
   };
 
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
-    <div className='filtros first-section'>
-      <div className='container2'>
+    <div className='container-filters fsirst-section'>
+      <div className='column'>
         <div className='row'>
-          <div className=' container-search'>
+          <div className='container-search'>
             <input className='search' type='search' name='name' placeholder='Buscar...' />
           </div>
-          <div className=' container-categorias'>
-            <Select components={{ DropdownIndicator }} className='react-select-container' classNamePrefix='react-select' options={optionsCat} />
-          </div>
-          <div className=' container-order'>
+
+          <div className=' container-categories activeg'>
             <Select
               components={{ DropdownIndicator }}
               styles={customStyles}
               className='react-select-container'
               classNamePrefix='react-select'
-              options={optionsOrder}
+              options={optionsCat}
             />
           </div>
+        </div>
+        <div className=' container-order'>
+          <Select
+            components={{ DropdownIndicator }}
+            styles={customStyles}
+            className='react-select-container'
+            classNamePrefix='react-select'
+            options={optionsOrder}
+          />
         </div>
       </div>
     </div>

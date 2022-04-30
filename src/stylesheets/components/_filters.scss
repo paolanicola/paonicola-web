@@ -11,58 +11,107 @@ select {
   -webkit-appearance: textfield;
 }
 
-.filtros {
-  width: 100%;
+.container-filters {
+  width: 90%;
   margin-bottom: 2rem;
   padding: 0;
-  margin-top: -5rem;
+  //margin-top: -5rem;
 }
 
 .search {
   background: url(../../assets/images/tienda/loupe.svg) no-repeat 97% center;
-  background-size: 25px;
+  background-size: 30px;
+  background-position: 1rem;
 }
 
-.container2 {
+.column {
+  display: flex;
+  padding-bottom: 1.5rem;
+  align-items: baseline;
+  flex-direction: column;
 }
 
 .row {
   display: flex;
-  padding: 1rem 1px;
-  align-items: baseline;
-  justify-content: space-between;
+  padding-bottom: 1.5rem;
+  width: 100%;
 }
 
 .container-search {
-  width: 40%;
-  padding: 0 16px;
+  width: 25%;
+  max-width: 100%;
+  order: 2;
+  position: relative;
+  //padding: 0 1rem;
 }
 
-.container-categorias {
-  width: 30%;
-  padding: 0 16px;
+.container-categories {
+  width: 90%;
+  min-width: 0;
+  order: 1;
+  padding-right: 1rem;
 }
 
 .container-order {
-  width: 20%;
-  padding: 0 16px;
+  width: 100%;
+  //padding: 0 1rem;
 }
+
+.container-search {
+  .search {
+    background-color: white;
+    transition: all 0.3s ease;
+    position: absolute !important;
+    right: 2px;
+    top: 0;
+
+    &::placeholder {
+      opacity: 0;
+    }
+  }
+
+  .search:focus {
+    position: absolute !important;
+    right: 2px;
+    top: 0;
+    z-index: 7;
+    width: 480% !important;
+    background-color: white;
+    transition: all 0.3s ease;
+
+    &::placeholder {
+      opacity: 1;
+    }
+
+    background-position: right;
+  }
+}
+
+.container-categorias {
+}
+
+.container-order {
+}
+
 //----------------css To Select custom
 
 .react-select-container {
   width: 100%;
   z-index: 4;
 }
+
 .react-select__control {
   display: flex;
   border: solid 2px $primary;
 }
+
 .react-select__control--is--focused {
 }
 
 .react-select__indicator-separator {
   display: none;
 }
+
 .react-select__value-container {
   font-size: 1em;
   font-weight: 400;
