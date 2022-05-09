@@ -35,10 +35,11 @@ select {
   display: flex;
   padding-bottom: 1.5rem;
   width: 100%;
+  justify-content: space-between;
 }
 
 .container-search {
-  width: 25%;
+  width: 10%;
   max-width: 100%;
   order: 2;
   position: relative;
@@ -46,7 +47,7 @@ select {
 }
 
 .container-categories {
-  width: 90%;
+  width: 75%;
   min-width: 0;
   order: 1;
   padding-right: 1rem;
@@ -64,6 +65,7 @@ select {
     position: absolute !important;
     right: 2px;
     top: 0;
+    background-position: 50%;
 
     &::placeholder {
       opacity: 0;
@@ -74,8 +76,7 @@ select {
     position: absolute !important;
     right: 2px;
     top: 0;
-    z-index: 7;
-    width: 480% !important;
+    width: 890% !important;
     background-color: white;
     transition: all 0.3s ease;
 
@@ -84,6 +85,7 @@ select {
     }
 
     background-position: right;
+    background-position: 95%;
   }
 }
 
@@ -97,7 +99,7 @@ select {
 
 .react-select-container {
   width: 100%;
-  z-index: 4;
+  z-index: 3;
 }
 
 .react-select__control {
@@ -157,19 +159,86 @@ select {
 @media screen and (min-width: 370px) {
   .container-buscadores {
   }
+
+  .container-search {
+    width: 15%;
+    .search:focus {
+      width: 610% !important;
+    }
+  }
+
+  .container-categories {
+    width: 75%;
+  }
 }
 
 @media screen and (min-width: 575px) {
   .container-buscadores {
   }
+  .container-search {
+    width: 7%;
+    .search:focus {
+      width: 1345% !important;
+    }
+  }
+
+  .container-categories {
+    width: 85%;
+  }
 }
+
 @media screen and (min-width: 680px) {
   .container-buscadores {
   }
 }
 
 @media screen and (min-width: 768px) {
-  .container-buscadores {
+  .column {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .row {
+    justify-content: space-between;
+    width: 70%;
+  }
+  .container-search {
+    width: 50%;
+    order: 1;
+  }
+
+  .container-categories {
+    width: 45%;
+    order: 2;
+  }
+
+  .container-order {
+    width: 30%;
+
+    //padding: 0 1rem;
+  }
+  .container-search {
+    .search {
+      background-color: white;
+      //background-position: right !important;
+      background-position: 95%;
+      transition: none;
+      position: absolute;
+      right: 2px;
+      top: 0;
+
+      &::placeholder {
+        opacity: 1;
+      }
+    }
+
+    .search:focus {
+      position: sticky;
+
+      max-width: 100%;
+
+      transition: none;
+    }
   }
 }
 

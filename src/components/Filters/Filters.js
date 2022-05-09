@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { createRef, useRef } from 'react';
 import Select, { components, DropdownIndicator, DropdownIndicatorProps } from 'react-select';
 import { ReactComponent as Chevron } from '../../assets/images/tienda/chevron.svg';
 import { ReactComponent as OrderIcon } from '../../assets/images/tienda/order-icon.svg';
 
-function Filters() {
+function Filters({ term, searchKeyWord }) {
   const optionsOrder = [
     { value: 'menor', label: 'Menor precio' },
     { value: 'mayor', label: 'Mayor precio' },
@@ -33,9 +33,14 @@ function Filters() {
     }),
   };
 
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTermq, setSearchTermq] = React.useState('');
   const handleChange = (event) => {
-    setSearchTerm(event.target.value);
+    setSearchTermq(event.target.value);
+  };
+  const inputEl = createRef();
+  const getSearchTerm = () => {
+    //console.log(inputEl.current.value);
+    searchKeyWord(inputEl.current.value);
   };
 
   return (
@@ -43,7 +48,7 @@ function Filters() {
       <div className='column'>
         <div className='row'>
           <div className='container-search'>
-            <input className='search' type='search' name='name' placeholder='Buscar...' />
+            <input ref={inputEl} className='search' type='text' name='search' placeholder='Buscar...' value={term} onChange={getSearchTerm} />
           </div>
 
           <div className=' container-categories activeg'>

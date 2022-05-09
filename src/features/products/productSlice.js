@@ -4,8 +4,8 @@ const initialState = {
   products: [
     {
       id: 1,
-      name: 'Heladera',
-      description: 'Heladera no frost',
+      name: 'turno',
+      description: 'Turno con la nutricionista completo',
       location: 'USA',
       stock: 10,
       size: '100',
@@ -25,7 +25,7 @@ const initialState = {
     },
     {
       id: 2,
-      name: 'Heladera',
+      name: 'Consulta Online',
       description:
         'Heladera no frost,when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 19psum passages, and more recently with ',
       location: 'USA',
@@ -89,7 +89,7 @@ const initialState = {
     },
     {
       id: 5,
-      name: 'Heladera',
+      name: 'Dieta',
       description:
         're going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It',
       location: 'USA',
@@ -110,7 +110,7 @@ const initialState = {
     },
     {
       id: 6,
-      name: 'Heladera',
+      name: 'Dieta Mensual + Consulta',
       description:
         'or those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form,',
       location: 'USA',
@@ -131,7 +131,7 @@ const initialState = {
     },
     {
       id: 7,
-      name: 'Aire acondicionado',
+      name: 'Set Mensual',
       description:
         'or those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form,',
       location: 'USA',
@@ -151,12 +151,26 @@ const initialState = {
       inCart: 0,
     },
   ],
+  product: 0,
 };
 const productSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    getProducts(state, action) {
+      let { product } = state.products.reduce((p) => {
+        const itemIndex = state.products.filter((item) => item.id === parseInt(action.payload));
+        //console.log(itemIndex[0].id + ' dentro del reducer');
+        state.product = itemIndex[0];
+        return itemIndex[0];
+      });
+
+      //return product;
+    },
+  },
 });
 
+export const { getProducts } = productSlice.actions;
 export const getAllProducts = (state) => state.products.products;
+export const getProduct = (state) => state.products.product;
 export default productSlice.reducer;

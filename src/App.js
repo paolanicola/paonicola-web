@@ -7,6 +7,7 @@ import Contact from './pages/contact';
 import './stylesheets/application.scss';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home/Home';
+import ProductPage from './pages/products/ProductPage';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path='contacto' element={<Contact />} />
             <Route path='carrito' element={<Cart />} />
             <Route path='checkout' element={<Checkout />} />
+            <Route path='producto/:id' element={<ProductPage />} />
             <Route path='*' element={<Navigate replace to='/home' />} />
           </Route>
         </Routes>

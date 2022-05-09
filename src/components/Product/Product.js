@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import { ReactComponent as AddToCart } from '../../assets/images/tienda/add-to-cart.svg';
 import { ReactComponent as View } from '../../assets/images/tienda/view.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, getTotals } from '../../features/cart/cartSlice';
@@ -40,7 +40,9 @@ function Product({ product }) {
           </div>
         </div>
         <div className='card-product-text'>
-          <h4 className='card-product-text__name'>{product.name}</h4>
+          <NavLink to={`/producto/${product.id}`}>
+            <h4 className='card-product-text__name'>{product.name}</h4>
+          </NavLink>
           <div className='card-product-text__price'>
             {product.promo ? (
               <h4 className=' card-product-price__tachado '>
