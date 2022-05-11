@@ -10,6 +10,9 @@ import { getAllProducts } from '../../features/products/productSlice';
 import Product from '../Product/Product';
 import { addToCart, decreaseCart, getAllProductsCart, getTotals, removeFromCart } from '../../features/cart/cartSlice';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function ProductCart({ product }) {
   const cart = useSelector((state) => state.cart);
   const products = useSelector(getAllProductsCart);
@@ -26,13 +29,16 @@ function ProductCart({ product }) {
   };
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart(product));
+    toast('Producto Eliminado del Carrito!');
   };
 
   return (
     <div className='carrito-card'>
+      <ToastContainer className='MiClase' toastClassName={'miClase'} bodyClassName='miClase' />
       <div className='carrito-img'>
         <img className='img-source' src={product.displayThumbnail} alt='' />
       </div>
+
       <div className='carrito-content'>
         <div className='content-title'>
           <Link className='' to='/'>

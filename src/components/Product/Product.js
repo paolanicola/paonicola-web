@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, getTotals } from '../../features/cart/cartSlice';
 import Modal from '../Modal/Modal';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Product({ product }) {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -15,16 +18,22 @@ function Product({ product }) {
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
+    toast('Producto agregado al Carrito!');
+    console.log('agregeu producto');
     //navigate('/cart');
   };
 
   useEffect(() => {
     dispatch(getTotals());
   }, [cart, dispatch]);
+  //modal
   const [show, setShow] = useState(false);
+  //toast
+
   return (
     <>
       <Modal onClose={() => setShow(false)} show={show} product={product} />
+      <ToastContainer />
       <div className='card-product-container'>
         <div className='card-product-img'>
           <div className='img-container'>
@@ -58,8 +67,8 @@ function Product({ product }) {
             </h4>
           </div>
         </div>
-        <div className='botones-mobile' onClick={() => setShow(true)}>
-          <Link to='' className='botones-mobile-view' title='Vista rápida'>
+        <div className='botones-mobile'>
+          <Link to='' onClick={() => setShow(true)} className='botones-mobile-view' title='Vista rápida'>
             {/* <View /> */}
             Ver
           </Link>
