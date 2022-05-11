@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from '../../features/products/productSlice';
 import Filters from '../Filters/Filters';
+import Modal from '../Modal/Modal';
 import Product from '../Product/Product';
 
 export default function Products() {

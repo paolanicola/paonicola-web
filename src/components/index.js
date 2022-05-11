@@ -1,6 +1,7 @@
 export { default as NavBar } from './NavBar';
 export { default as PrimaryButton } from './PrimaryButton';
 export { default as Products } from './Products';
+export { default as Product } from './Product';
 export { default as Footer } from './Footer';
 export { default as Header } from './Header';
 export { default as Logo } from './Logo';
@@ -15,3 +16,6 @@ export { default as CalendarCheckout } from './CalendarCheckout';
 export { default as CartTotal } from './CartTotal';
 export { default as FormPatientOrder } from './FormPatientOrder';
 export { default as PaymentMethods } from './PaymentMethods';
+export { default as Accordion } from './Accordion';
+export { default as ProductView } from './ProductView';
+export { default as Modal } from './Modal';
