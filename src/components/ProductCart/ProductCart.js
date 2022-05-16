@@ -23,18 +23,19 @@ function ProductCart({ product }) {
 
   const handleDecreaseCart = (product) => {
     dispatch(decreaseCart(product));
+    toast('Producto eliminado del Carrito!');
   };
   const handleIncreaseCart = (product) => {
     dispatch(addToCart(product));
+    toast('Producto agregado al Carrito!');
   };
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart(product));
-    toast('Producto Eliminado del Carrito!');
+    toast('Producto removido del Carrito!');
   };
 
   return (
     <div className='carrito-card'>
-      <ToastContainer className='MiClase' toastClassName={'miClase'} bodyClassName='miClase' />
       <div className='carrito-img'>
         <img className='img-source' src={product.displayThumbnail} alt='' />
       </div>

@@ -8,6 +8,7 @@ import './stylesheets/application.scss';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home/Home';
 import ProductPage from './pages/products/ProductPage';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -16,25 +17,26 @@ function App() {
       <div className='container'>
         <Routes>
           <Route
-            exact
             path='/'
             element={
               <div>
                 <Header />
+                <ToastContainer />
                 <HeaderTitle /> <Outlet /> <SectionFooter />
                 <Footer />
               </div>
             }
           >
+            <Route index element={<Home />} />
             <Route path='home' element={<Home />} />
-            <Route exact path='tienda' element={<Products />} />
+            <Route path='tienda' element={<Products />} />
             <Route path='sobre-mi' element={<About />} />
             <Route path='cambios-reales' element={<Changes />} />
             <Route path='faq' element={<Faq />} />
             <Route path='contacto' element={<Contact />} />
             <Route path='carrito' element={<Cart />} />
             <Route path='checkout' element={<Checkout />} />
-            <Route path='producto/:id' element={<ProductPage />} />
+            <Route exact path='producto/:id' element={<ProductPage />} />
             <Route path='*' element={<Navigate replace to='/home' />} />
           </Route>
         </Routes>

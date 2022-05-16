@@ -28,7 +28,8 @@ export default function Products() {
   let renderProducts = '';
 
   //renderProducts = products.length > 0 ? products.map((product) => <Product product={product} />) : <div>No hay concidencias</div>;
-  renderProducts = searchResult.length > 0 ? searchResult.map((product) => <Product product={product} />) : <div>No hay concidencias</div>;
+  renderProducts =
+    searchResult.length > 0 ? searchResult.map((product) => <Product product={product} />) : <div className='product-notFound'>No hay concidencias</div>;
 
   return (
     <>

@@ -113,10 +113,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className='menu-bot'>
-            <a href='' className=''>
+          <div className='faq-container-button '>
+            <NavLink to='/tienda' className='button-faq'>
               Ir a la tienda
-            </a>
+            </NavLink>
           </div>
         </div>
       </section>

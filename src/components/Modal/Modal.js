@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import ProductView from '../ProductView/ProductView';
+import { ReactComponent as NavClose } from '../../assets/images/header/nav-close.svg';
 
 export default function Modal(props) {
   useEffect(() => {
@@ -23,9 +24,11 @@ export default function Modal(props) {
             <p>soy el modal</p>
           </div>
           <div className='modal-body'>
-            <label className='body-close' onClick={props.onClose}>
-              X
-            </label>
+            <div className='body-container-close'>
+              <label className='body-close' onClick={props.onClose}>
+                <NavClose className='a' />
+              </label>
+            </div>
             <ProductView product={props.product} />
           </div>
           <div className='modal-footer'>

@@ -14,13 +14,17 @@ function HeaderTitle() {
   let c = str.replace(re, ' ');
   return (
     <>
-      <div className='encabezado'>
-        <div className='col-12'>
-          <div className='titulo'>
-            <h1 className=''>{c}</h1>
+      {c[1] !== 'p' ? (
+        <div className='encabezado'>
+          <div className='col-12'>
+            <div className='titulo'>
+              <h1 className=''>{c}</h1>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className='margintop'></div>
+      )}
     </>
   );
 }

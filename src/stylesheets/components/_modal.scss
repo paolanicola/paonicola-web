@@ -41,13 +41,24 @@
   display: none;
 }
 
+.body-container-close {
+  display: flex;
+  justify-content: flex-end;
+}
 .body-close {
   display: flex;
-  font-size: 2rem;
+  width: 20px;
   justify-content: right;
-  //position: absolute;
-  //right: 5px;
+
+  .a {
+    filter: invert(100%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+  }
+
+  .a:hover {
+    filter: invert(100%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(58%) contrast(19%);
+  }
 }
+
 .modal-body {
   padding: 10px;
   border-top: 1px solid #eee;

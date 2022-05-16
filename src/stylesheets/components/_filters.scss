@@ -79,7 +79,7 @@ select {
     width: 890% !important;
     background-color: white;
     transition: all 0.3s ease;
-
+    z-index: 4;
     &::placeholder {
       opacity: 1;
     }

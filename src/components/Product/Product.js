@@ -19,7 +19,6 @@ function Product({ product }) {
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
     toast('Producto agregado al Carrito!');
-    console.log('agregeu producto');
     //navigate('/cart');
   };
 
@@ -33,7 +32,7 @@ function Product({ product }) {
   return (
     <>
       <Modal onClose={() => setShow(false)} show={show} product={product} />
-      <ToastContainer />
+
       <div className='card-product-container'>
         <div className='card-product-img'>
           <div className='img-container'>
