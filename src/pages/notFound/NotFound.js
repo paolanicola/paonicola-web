@@ -14,7 +14,6 @@ function NotFound() {
             <img src={LogoWebp} className='menu__logo__svg' alt='logo' />
           </NavLink>
         </div>
-
         <div className={'navBar__menuNf'}> </div>
       </div>
       <div className='notfound-container'>
