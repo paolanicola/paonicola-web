@@ -1,9 +1,9 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Clinica from '../../assets/images/services-img/01clinica.svg';
 import Deportiva from '../../assets/images/services-img/02deportiva.svg';
 import Feedback from '../../assets/images/services-img/03feedback.svg';
-import Bioimpedancia from '../../assets/images/services-img/04bioimpedancia.svg';
+import ConsultasOnline from '../../assets/images/services-img/04consultas-online.svg';
 
 export default function Home() {
   return (
@@ -48,14 +48,14 @@ export default function Home() {
               }
               <img className='item-img' src={Feedback} alt='Mi metodologia' title='Mi meteodologia' />
               <h5>Feedback continuo</h5>
-            </div>{' '}
+            </div>
           </div>
           <div className='services-item-row'>
             <div className=' services-item-about'>
               {
                 //<%= image_tag('servicios/04bioimpedancia.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'}) %>
               }
-              <img className='item-img' src={Bioimpedancia} alt='Mi metodologia' title='Mi meteodologia' />
+              <img className='item-img' src={ConsultasOnline} alt='Mi metodologia' title='Mi meteodologia' />
               <h5>Consultas Online</h5>
             </div>
           </div>
@@ -82,22 +82,22 @@ export default function Home() {
             <div className='menu-top'>
               <div className='menu-top-grid '>
                 <div className='item-tienda-home '>
-                  <NavLink to='' className='item-tienda-home-mosaicos item'>
+                  <NavLink to='/tienda' className='item-tienda-home-mosaicos item'>
                     <h4 className='item-shop-title'>MOSAICOS CON IDEAS DE MENÚES</h4>
                   </NavLink>
                 </div>
                 <div className='  item-tienda-home'>
-                  <NavLink to='' className='item-tienda-home-pack item'>
+                  <NavLink to='/tienda' className='item-tienda-home-pack item'>
                     <h4 className='item-shop-title'>PACK AHORRO</h4>
                   </NavLink>
                 </div>
                 <div className='  item-tienda-home'>
-                  <NavLink to='' className='item-tienda-home-recetarios item'>
+                  <NavLink to='/tienda' className='item-tienda-home-recetarios item'>
                     <h4 className='item-shop-title'>RECETARIOS</h4>
                   </NavLink>
                 </div>
                 <div className='  item-tienda-home'>
-                  <NavLink to='' className='item-tienda-home-guias item'>
+                  <NavLink to='/tienda' className='item-tienda-home-guias item'>
                     <h4 className='item-shop-title'>GUÍAS</h4>
                   </NavLink>
                 </div>
@@ -106,24 +106,24 @@ export default function Home() {
             <div className='menu-mid'>
               <div className='menu-mid-grid'>
                 <div className='item-tienda-home-lg'>
-                  <NavLink to='' className='item-tienda-home-consultas item'>
+                  <NavLink to='/tienda' className='item-tienda-home-consultas item'>
                     <h3 className='item-shop-title-h3'>Consultas online</h3>
                   </NavLink>
                 </div>
               </div>
             </div>
           </div>
-          <div className='faq-container-button '>
-            <NavLink to='/tienda' className='button-faq'>
+          <div className='shop-botton-link '>
+            <Link to='/tienda' className='shop-button-go'>
               Ir a la tienda
-            </NavLink>
+            </Link>
           </div>
         </div>
       </section>
       <section className='home-changes'>
         <div className='h2'>
           <h2 className='transformaciones'>Transformaciones</h2>
-          <NavLink className='botontransfo' to=''>
+          <NavLink className='botontransfo' to='/cambios-reales'>
             Ver casos reales
           </NavLink>
         </div>

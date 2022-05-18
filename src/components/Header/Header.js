@@ -96,16 +96,16 @@ export default function Header() {
               </div>
             </div>
             <NavLink className='menu__item menu__link' to='/sobre-mi' onClick={closeSidebar}>
-              <p>Sobre Mi</p>
+              <p className='underlined'>Sobre Mi</p>
             </NavLink>
-            <NavLink className='menu__item menu__link' to='/cambios-reales' onClick={closeSidebar}>
-              <p>Cambios Realess</p>
+            <NavLink className='menu__item menu__link ' to='/cambios-reales' onClick={closeSidebar}>
+              <p className=' underlined'>Cambios Realess</p>
             </NavLink>
             <NavLink className='menu__item menu__link' to='/faq' onClick={closeSidebar}>
-              <p>FAQ</p>
+              <p className=' underlined'>FAQ</p>
             </NavLink>
             <NavLink className='menu__item menu__link' to='/contacto' onClick={closeSidebar}>
-              <p>Contacto</p>
+              <p className=' underlined '>Contacto</p>
             </NavLink>
           </div>
 

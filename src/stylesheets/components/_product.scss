@@ -1,5 +1,5 @@
 .card-product-container {
-  width: 50%;
+  width: 100%;
   padding-bottom: 2rem;
 }
 //
@@ -110,6 +110,10 @@
 .card-product-text__name {
   text-align: center;
   margin: 0px 0px 5px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
 }
 .card-product-text__price {
   font-size: 1.1rem;

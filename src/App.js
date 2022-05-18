@@ -9,6 +9,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home/Home';
 import ProductPage from './pages/products/ProductPage';
 import { ToastContainer } from 'react-toastify';
+import NotFound from './pages/notFound';
 
 function App() {
   return (
@@ -37,8 +38,8 @@ function App() {
             <Route path='carrito' element={<Cart />} />
             <Route path='checkout' element={<Checkout />} />
             <Route exact path='producto/:id' element={<ProductPage />} />
-            <Route path='*' element={<Navigate replace to='/home' />} />
           </Route>
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
     </BrowserRouter>

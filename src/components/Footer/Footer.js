@@ -73,18 +73,18 @@ export default function Footer() {
 
         <div className='footer-container-botton'>
           <div className='footer-container-botton-left'>
-            <p className='rayo'>
-              Diseño y maquetado:
-              <a href='https://rayoestudio.com/' target='_blank' rel='noopener'></a>
-            </p>
+            <p className='rayo'>Diseño: </p>
+            <Link className='a' to='https://rayoestudio.com/' target='_blank' rel='noopener'>
+              Rayo
+            </Link>
           </div>
+          <h3>|</h3>
           <div className='footer-container-botton-right'>
-            <h3>|</h3>
-            <p className='felipe'>Desarrollo: </p>
+            <p className='felipe'>Desarrollo y maquetado: </p>
 
-            <a href='https://www.linkedin.com/in/felipe-arana-37782071/' target='_blank' rel='noopener'>
-              Felipe Arana
-            </a>
+            <Link className='a' to='https://www.linkedin.com/in/felipe-arana-37782071/' target='_blank' rel='noopener'>
+              Paola Nicola Team
+            </Link>
           </div>
         </div>
       </div>

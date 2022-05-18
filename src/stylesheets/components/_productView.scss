@@ -13,13 +13,10 @@
 }
 
 .view-category {
-  background-color: $lila;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: white;
-  padding: 0.5rem;
+  font-size: 1.5rem !important; //warning
+  color: #393339;
   display: inline;
-  margin-top: 2rem;
+  padding: 4px 0;
 }
 
 .view-detail-title {

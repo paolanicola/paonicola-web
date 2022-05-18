@@ -1,0 +1,50 @@
+.navBarNf {
+  //padding: 2rem;
+  background-color: $primary-light;
+  opacity: 0.4;
+  height: 84px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
+}
+.navBar__menuNf {
+}
+
+.header--resizeNf {
+}
+
+.notfound-container {
+  background-color: #fff;
+  padding-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
+  background-size: 500%;
+}
+
+.notfound-link {
+  padding-top: 2rem;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+@media screen and (min-width: 400px) {
+  .notfound-container {
+    background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
+    background-size: 275%;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .navBarNf {
+    //padding: 2rem;
+    height: 96px;
+    transition: all 0.3s ease-in-out;
+  }
+  .notfound-container {
+    background-size: 150%;
+  }
+}

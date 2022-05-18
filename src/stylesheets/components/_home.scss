@@ -294,6 +294,28 @@
   color: $lila;
 }
 
+.shop-botton-link {
+  // background-color: black;
+  display: flex;
+  justify-content: center;
+}
+
+.shop-button-go {
+  @extend %btn-primary;
+  @extend %btn-md;
+  margin-top: 1rem;
+  font-size: 2rem;
+  padding: 10px 32px;
+  margin: 16px 0 0;
+  background-color: $primary;
+  color: white !important;
+  border: none;
+
+  &:hover {
+    background-color: $primary-light;
+  }
+}
+
 //CHANGES------------------------------------------
 .home-changes {
   //background-color: plum;
@@ -411,6 +433,9 @@
   justify-content: center;
   background-color: $primary-light;
   color: $gray !important;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .faq-text-top {

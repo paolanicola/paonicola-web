@@ -23,7 +23,7 @@
   background-color: white;
   display: flex;
   width: 100%;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
 }
 
@@ -67,6 +67,9 @@
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
+  }
+  .container-list-products {
+    flex-direction: row;
   }
 }
 @media screen and (min-width: 768px) {
