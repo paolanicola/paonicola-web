@@ -12,16 +12,32 @@ function HeaderTitle() {
   let str = location.pathname;
   var re = /[-/]+/g;
   let c = str.replace(re, ' ');
+  console.log(c);
+  function renderSwitch(param) {
+    switch (param) {
+      case ' home':
+        return false;
+      case ' ':
+        return false;
+      default:
+        return true;
+    }
+  }
+
   return (
     <>
       {c[1] !== 'p' ? (
-        <div className='encabezado'>
-          <div className='col-12'>
-            <div className='titulo'>
-              <h1 className=''>{c}</h1>
+        renderSwitch(c) ? (
+          <div className='encabezado'>
+            <div className='col-12'>
+              <div className='titulo'>
+                <h1 className=''>{c}</h1>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className=''></div>
+        )
       ) : (
         <div className='margintop'></div>
       )}
