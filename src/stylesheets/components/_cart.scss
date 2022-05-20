@@ -31,6 +31,10 @@
   display: flex;
   justify-content: center;
 }
+.mobile {
+  display: none;
+  transition: all 0.3s ease;
+}
 
 .carrito-continueBuy {
   font-size: 1rem;

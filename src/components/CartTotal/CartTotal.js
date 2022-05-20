@@ -47,6 +47,51 @@ function CartTotal() {
     console.log('useEffect');
   }, [a]);
 
+  const [mobile, setMobile] = useState(window.screen.width <= 677);
+  const [end, setEnd] = useState(false);
+
+  useEffect(() => {
+    const changeNavbarSizeFs = () => {
+      if (window.screen.width <= 767) {
+        setMobile(true);
+      }
+    };
+    window.addEventListener('resize', changeNavbarSizeFs);
+    return () => window.removeEventListener('resize', changeNavbarSizeFs);
+  }, []);
+  useEffect(() => {
+    const changeNavbarSizeFss = () => {
+      if (window.screen.width > 677) {
+        setMobile(false);
+      }
+    };
+    window.addEventListener('resize', changeNavbarSizeFss);
+    return () => window.removeEventListener('resize', changeNavbarSizeFss);
+  }, []);
+
+  useEffect(() => {
+    const changeNavbarSizeFsss = () => {
+      if (document.body.scrollHeight === window.scrollY + window.innerHeight) {
+        console.log('llegue al final');
+        setEnd(true);
+      }
+    };
+
+    window.addEventListener('scroll', changeNavbarSizeFsss);
+    return () => window.removeEventListener('scroll', changeNavbarSizeFsss);
+  }, []);
+  useEffect(() => {
+    const changeNavbarSizeFssss = () => {
+      if (document.body.scrollHeight > window.scrollY + window.innerHeight) {
+        console.log('no es el final');
+        setEnd(false);
+      }
+    };
+
+    window.addEventListener('scroll', changeNavbarSizeFssss);
+    return () => window.removeEventListener('scroll', changeNavbarSizeFssss);
+  }, []);
+
   return (
     <div className='carrito-total-container'>
       <h5 class='carrito-total-titulo'>Total del carrito</h5>
@@ -75,7 +120,7 @@ function CartTotal() {
         </tr>
       </table>
 
-      <div class='carrito-total-buttons back'>
+      <div class={mobile && end ? 'carrito-total-buttons back mobile' : 'carrito-total-buttons back'}>
         <button
           onClick={() => handleBackStep()}
           type='button'

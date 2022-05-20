@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { faTrashAlt, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
@@ -17,9 +17,53 @@ function Cart() {
   const products = useSelector(getAllProductsCart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [mobile, setMobile] = useState(window.screen.width <= 767);
+  const [end, setEnd] = useState(false);
   useEffect(() => {
     dispatch(getTotals());
   }, [cart, dispatch]);
+
+  useEffect(() => {
+    const changeNavbarSizeFs = () => {
+      if (window.screen.width <= 767) {
+        setMobile(true);
+      }
+    };
+    window.addEventListener('resize', changeNavbarSizeFs);
+    return () => window.removeEventListener('resize', changeNavbarSizeFs);
+  }, []);
+  useEffect(() => {
+    const changeNavbarSizeFss = () => {
+      if (window.screen.width > 767) {
+        setMobile(false);
+      }
+    };
+    window.addEventListener('resize', changeNavbarSizeFss);
+    return () => window.removeEventListener('resize', changeNavbarSizeFss);
+  }, []);
+
+  useEffect(() => {
+    const changeNavbarSizeFsss = () => {
+      if (document.body.scrollHeight === window.scrollY + window.innerHeight) {
+        console.log('llegue al final');
+        setEnd(true);
+      }
+    };
+
+    window.addEventListener('scroll', changeNavbarSizeFsss);
+    return () => window.removeEventListener('scroll', changeNavbarSizeFsss);
+  }, []);
+  useEffect(() => {
+    const changeNavbarSizeFssss = () => {
+      if (document.body.scrollHeight > window.scrollY + window.innerHeight) {
+        console.log('no es el final');
+        setEnd(false);
+      }
+    };
+
+    window.addEventListener('scroll', changeNavbarSizeFssss);
+    return () => window.removeEventListener('scroll', changeNavbarSizeFssss);
+  }, []);
 
   const handleDecreaseCart = (product) => {
     dispatch(decreaseCart(product));
@@ -87,7 +131,7 @@ function Cart() {
               </tr>
             </table>
 
-            <div class='next1'>
+            <div class={mobile && end ? 'next1 mobile' : 'next1'}>
               <Link to='/checkout' className='  carrito-finalizar '>
                 Finalizar compra
               </Link>
