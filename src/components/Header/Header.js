@@ -83,9 +83,9 @@ export default function Header() {
           <img className='img-icono-close-open' src={navOpen} />
         </div>
         <div className='menu__logo'>
-          <NavLink to='home'>
+          <Link to='home'>
             <img src={LogoWebp} className='menu__logo__svg' alt='logo' />
-          </NavLink>
+          </Link>
         </div>
 
         <div ref={wrapperRef} className={sidebar ? 'navBar__menu navBar__menu--active' : 'navBar__menu'}>

@@ -22,7 +22,7 @@ function App() {
             element={
               <div>
                 <Header />
-                <ToastContainer autoClose={900} pauseOnFocusLoss={false} draggablePercent={60} limit={2} />
+                <ToastContainer autoClose={900} pauseOnFocusLoss={false} draggablePercent={30} limit={2} />
                 <HeaderTitle /> <Outlet /> <SectionFooter />
                 <Footer />
               </div>
