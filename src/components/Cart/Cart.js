@@ -44,7 +44,7 @@ function Cart() {
 
   useEffect(() => {
     const changeNavbarSizeFsss = () => {
-      if (document.body.scrollHeight === window.scrollY + window.innerHeight) {
+      if (document.body.scrollHeight === window.scrollY + window.screen.height) {
         console.log('llegue al final');
         setEnd(true);
       }
@@ -55,8 +55,10 @@ function Cart() {
   }, []);
   useEffect(() => {
     const changeNavbarSizeFssss = () => {
-      if (document.body.scrollHeight > window.scrollY + window.innerHeight) {
+      if (document.body.scrollHeight > window.scrollY + window.screen.height) {
         console.log('no es el final');
+        console.log(window.screen.height);
+        console.log(window.innerHeight);
         setEnd(false);
       }
     };
