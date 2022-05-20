@@ -22,22 +22,26 @@ export default function Contact() {
             <p className='contact-title'>Por favor, llená el formulario o contáctame a través de:</p>
             <ul>
               <li class='contact-link'>
-                <Link to='https://api.whatsapp.com/send?phone=5492216248895&text=Hola%21%20Estoy%20buscando%20reservar%20un%20turno.&source=&data=&app_absent='>
+                <a
+                  href='https://api.whatsapp.com/send?phone=5492216248895&text=Hola%21%20Estoy%20buscando%20reservar%20un%20turno.&source=&data=&app_absent='
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
                   <WhatsappBrand className='contact-icon' />
                   <p className='contact-icon-info'>221-6248895</p>
-                </Link>
+                </a>
               </li>
               <li class='contact-link'>
-                <Link to='mailto:nutricionista.nicola@gmail.com'>
+                <a href='mailto:nutricionista.nicola@gmail.com' target='_blank' rel='noopener noreferrer'>
                   <MailBrand className='contact-icon' />
                   <p className='contact-icon-info'>nutricionista.nicola@gmail.com</p>
-                </Link>
+                </a>
               </li>
               <li class='contact-link'>
-                <Link target='_blank' to='https://www.instagram.com/nutricion.paonicola/'>
+                <a href='https://www.instagram.com/nutricion.paonicola/' target='_blank' rel='noopener noreferrer'>
                   <InstagramBrand className='contact-icon' />
                   <p className='contact-icon-info'>nutricion.paonicola</p>
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

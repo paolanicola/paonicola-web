@@ -115,15 +115,20 @@ export default function Header() {
             </div>
             <div className='menu__item menu__link left-redes'>
               <div className='menu__redes '>
-                <Link to='#' className='menu__redes__link'>
+                <a className='menu__redes__link' href='https://www.instagram.com/nutricion.paonicola/' target='_blank' rel='noopener noreferrer'>
                   <InstagramBrand className='menu__redes__icono' />
-                </Link>
-                <Link to='#' className='menu__redes__link'>
+                </a>
+                <a className='menu__redes__link' href='mailto:nutricionista.nicola@gmail.com' target='_blank' rel='noopener noreferrer'>
                   <MailBrand className='menu__redes__icono' />
-                </Link>
-                <Link to='#' className='menu__redes__link'>
+                </a>
+                <a
+                  className='menu__redes__link'
+                  href='https://api.whatsapp.com/send?phone=5492216248895&text=Hola%21%20Estoy%20buscando%20reservar%20un%20turno.&source=&data=&app_absent='
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
                   <WhatsappBrand className='menu__redes__icono' />
-                </Link>
+                </a>
               </div>
             </div>
           </div>
