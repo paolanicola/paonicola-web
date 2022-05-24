@@ -54,32 +54,32 @@ export default function ConfirmSale() {
           <h3 className='data__details-title'>Detalles de tu compra</h3>
           <div className='data__details-buyer'>
             <div className='details__buyer-cart'>
-              <div className='carrito-total-container'>
-                <h5 class='carrito-total-titulo'>Total del carrito</h5>
+              <div className='carrito-total-container2'>
+                <h5 class='carrito-total-titulo2'>Total del carrito</h5>
 
-                <table class='carrito-total-items' cellpadding='0' cellspacing='0'>
-                  <tr className='carrito-total-item'>
-                    <td className='carrito-total-item-name'>Guia plan general hacia una alimentacion saludable</td>
-                    <td className='carrito-total-item-price text-right'>$1652</td>
-                  </tr>{' '}
-                  <tr className='carrito-total-item'>
-                    <td className='carrito-total-item-name'>Guia plan general</td>
-                    <td className='carrito-total-item-price text-right'>$9052</td>
-                  </tr>{' '}
-                  <tr className='carrito-total-item'>
-                    <td className='carrito-total-item-name'> Alimentacion saludable</td>
-                    <td className='carrito-total-item-price text-right'>$1782</td>
-                  </tr>{' '}
-                  <tr className='carrito-total-item'>
-                    <td className='carrito-total-item-name'> Plan general saludable</td>
-                    <td className='carrito-total-item-price text-right'>$1652</td>
+                <table class='carrito-total-items2' cellpadding='0' cellspacing='0'>
+                  <tr className='carrito-total-item2'>
+                    <td className='carrito-total-item-name2'>Guia plan general hacia una alimentacion saludable</td>
+                    <td className='carrito-total-item-price2 text-right'>$1652</td>
+                  </tr>
+                  <tr className='carrito-total-item2'>
+                    <td className='carrito-total-item-name2'>Guia plan general</td>
+                    <td className='carrito-total-item-price2 text-right'>$9052</td>
+                  </tr>
+                  <tr className='carrito-total-item2'>
+                    <td className='carrito-total-item-name2'> Alimentacion saludable</td>
+                    <td className='carrito-total-item-price2 text-right'>$1782</td>
+                  </tr>
+                  <tr className='carrito-total-item2'>
+                    <td className='carrito-total-item-name2'> Plan general saludable</td>
+                    <td className='carrito-total-item-price2 text-right'>$1652</td>
                   </tr>
                   <tr>
-                    <td className='carrito-total-ch-td'></td>
+                    <td className='carrito-total-ch-td2'></td>
                   </tr>
-                  <tr className='carrito-resume'>
-                    <td className='carrito-resume-title'>Total</td>
-                    <td className='carrito-resume-price text-right'> $2050</td>
+                  <tr className='carrito-resume2'>
+                    <td className='carrito-resume-title2'>Total</td>
+                    <td className='carrito-resume-price2 text-right'> $2050</td>
                   </tr>
                 </table>
               </div>

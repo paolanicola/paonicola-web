@@ -23,6 +23,9 @@
 .data__nro {
   margin-top: -6.5rem;
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .data__nro-title {
@@ -111,6 +114,49 @@ $size-transfer-1: 1.1rem;
   font-size: $size-transfer-9;
   color: $primary;
 }
+//carrito
+.carrito-total-container2 {
+  border: solid 1px $gray-lighter;
+}
+
+.carrito-total-titulo2 {
+  font-size: 1.4rem;
+  margin: 0;
+  margin: 1rem 0.5rem 0.5rem;
+  font-weight: 800;
+  padding-left: 0.7rem;
+}
+.carrito-total-items2 {
+  width: 100%;
+}
+
+.carrito-total-item2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem 1.2rem;
+  color: $gray;
+  line-height: 1.3;
+  vertical-align: top;
+}
+
+.carrito-total-item-name2 {
+  font-size: 0.9rem;
+  padding-left: 1.2rem;
+}
+
+.carrito-total-item-price2 {
+  text-align: right;
+  padding-right: 1rem;
+}
+
+.carrito-resume-title2,
+.carrito-resume-price2 {
+  padding: 1rem 1.2rem;
+  color: $text-color;
+  font-weight: bold;
+  background-color: $lila-lighter;
+  font-size: 1.5rem;
+}
 
 //detalle
 
@@ -124,12 +170,11 @@ $size-transfer-1: 1.1rem;
 }
 
 .details__buyer-contact {
-  padding: 1rem 1.5rem 1.5rem;
+  padding: 1rem;
   border: solid 1px $gray-lighter;
   border-radius: 3px;
-  margin-bottom: 3rem;
   margin: 0 auto;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .data__details-title {
@@ -138,21 +183,98 @@ $size-transfer-1: 1.1rem;
 }
 
 .buyer__contact-container-h5 {
-  margin-bottom: 0.9rem;
+  font-size: 1.4rem;
+  margin: 0;
+  margin: 1rem 0.5rem 0.5rem;
+  font-weight: 800;
 }
 
 .buyer__contact-container-p {
-  padding: 0 1.2rem;
+  padding: 0;
+  margin: 0;
+  margin: 1rem 0.5rem 0.5rem;
   color: $gray;
+  font-size: 1.1rem;
 }
 
 .buyer__contact-container-clarify {
+  padding: 0;
+  margin: 0;
+  margin: 1rem 0.5rem 0.5rem;
   color: $primary;
-  margin-bottom: 0;
   font-size: 0.9rem;
   font-style: italic;
   a {
     color: $primary;
     margin-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .carrito-total-container2 {
+    width: 90%;
+  }
+
+  .data__details-buyer {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 3rem;
+    justify-content: space-between;
+  }
+
+  .carrito-total-container {
+    width: 50%;
+  }
+
+  .details__buyer-contact {
+    width: 50%;
+    margin: 0;
+    padding: 0;
+  }
+  //confirm data sale
+  .data__list {
+    flex-direction: row;
+  }
+  .data__list-li {
+    border-right: dashed $gray 1px;
+    border-bottom: none;
+  }
+  .confirm__data-transfer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+  }
+  .data__transfer-cbu {
+    width: 60%;
+  }
+  .data__transfer-text-important {
+    font-size: 1.5rem;
+    width: 90%;
+    margin: 0;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .buyer__contact-container {
+    padding-left: 1rem;
+  }
+
+  .data__buyer-cart {
+    width: 100%;
+  }
+
+  .carrito-total-container2 {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 1100px) {
+  .carrito-total-container2 {
+    width: 110%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .carrito-total-container2 {
+    width: 130%;
   }
 }
