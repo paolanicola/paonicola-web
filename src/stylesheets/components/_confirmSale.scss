@@ -1,0 +1,158 @@
+.confirm {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+//data sale
+.confirm__h3 {
+  margin: 0 auto;
+  padding-bottom: 5rem;
+  text-align: center;
+  color: $primary;
+}
+
+.confirm__data-sale {
+  padding: 3.75rem 2.5rem 1.5rem;
+  border: solid 1px $gray-lighter;
+  border-radius: 3px;
+  margin-bottom: 3rem;
+  margin: 0 auto;
+}
+
+.data__nro {
+  margin-top: -6.5rem;
+  margin-bottom: 2rem;
+}
+
+.data__nro-title {
+  font-size: 1.1rem;
+  margin: 0;
+  text-align: center;
+}
+.data__nro-number {
+  background: $lila;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  display: inline-block;
+  min-width: 177px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.data__list {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  flex-direction: column;
+}
+
+.data__list-li {
+  padding: 0 0.5rem;
+  border-bottom: dashed $gray 1px;
+}
+.data__list-li-not {
+  padding: 0 0.5rem;
+}
+
+.data__list-title {
+  margin: 0;
+  line-height: 1.2;
+  text-transform: uppercase;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.data__list-description {
+  margin: 0;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+//data transfer
+$size-transfer-9: 1.2rem;
+$size-transfer-1: 1.1rem;
+.confirm__data-transfer {
+  margin: 0 auto 2rem;
+  max-width: 515px;
+}
+
+.data__transfer-title {
+  margin-bottom: 0;
+  font-size: $size-transfer-9;
+  text-align: center;
+}
+
+.data__transfer-cbu {
+  font-size: $size-transfer-9;
+  background: $primary-light;
+  border-radius: 3px;
+  padding: 1rem;
+  line-height: 1.7;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.data__transfer-text-important {
+  font-size: $size-transfer-9;
+  text-align: center;
+  font-weight: bold;
+  line-height: 1.5;
+  margin-bottom: 3rem;
+}
+
+.data__transfer-email {
+  font-size: $size-transfer-9;
+  color: $primary;
+}
+
+//detalle
+
+.confirm__data-details {
+}
+
+.data__details-buyer {
+}
+
+.details__buyer-cart {
+}
+
+.details__buyer-contact {
+  padding: 1rem 1.5rem 1.5rem;
+  border: solid 1px $gray-lighter;
+  border-radius: 3px;
+  margin-bottom: 3rem;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.data__details-title {
+  color: $primary;
+  margin: 1rem 0 1.5rem;
+}
+
+.buyer__contact-container-h5 {
+  margin-bottom: 0.9rem;
+}
+
+.buyer__contact-container-p {
+  padding: 0 1.2rem;
+  color: $gray;
+}
+
+.buyer__contact-container-clarify {
+  color: $primary;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+  font-style: italic;
+  a {
+    color: $primary;
+    margin-bottom: 0;
+  }
+}

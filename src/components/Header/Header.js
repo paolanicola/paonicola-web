@@ -82,6 +82,7 @@ export default function Header() {
         <div ref={wrapperRefIcon} className='navBar__icon__svg navBar__icon__svg--none fixed' onClick={showSidebar}>
           <img className='img-icono-close-open' src={navOpen} />
         </div>
+
         <div className='menu__logo'>
           <Link to='home'>
             <img src={LogoWebp} className='menu__logo__svg' alt='logo' />

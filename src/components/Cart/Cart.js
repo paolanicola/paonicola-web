@@ -24,47 +24,45 @@ function Cart() {
   }, [cart, dispatch]);
 
   useEffect(() => {
-    const changeNavbarSizeFs = () => {
+    const mobileScreen = () => {
       if (window.screen.width <= 767) {
         setMobile(true);
       }
     };
-    window.addEventListener('resize', changeNavbarSizeFs);
-    return () => window.removeEventListener('resize', changeNavbarSizeFs);
+    window.addEventListener('resize', mobileScreen);
+    return () => window.removeEventListener('resize', mobileScreen);
   }, []);
   useEffect(() => {
-    const changeNavbarSizeFss = () => {
+    const notMobileScreen = () => {
       if (window.screen.width > 767) {
         setMobile(false);
       }
     };
-    window.addEventListener('resize', changeNavbarSizeFss);
-    return () => window.removeEventListener('resize', changeNavbarSizeFss);
+    window.addEventListener('resize', notMobileScreen);
+    return () => window.removeEventListener('resize', notMobileScreen);
   }, []);
 
   useEffect(() => {
-    const changeNavbarSizeFsss = () => {
+    const endPage = () => {
       if (document.body.scrollHeight === window.scrollY + window.screen.height) {
         console.log('llegue al final');
         setEnd(true);
       }
     };
 
-    window.addEventListener('scroll', changeNavbarSizeFsss);
-    return () => window.removeEventListener('scroll', changeNavbarSizeFsss);
+    window.addEventListener('scroll', endPage);
+    return () => window.removeEventListener('scroll', endPage);
   }, []);
   useEffect(() => {
-    const changeNavbarSizeFssss = () => {
+    const itsEnd = () => {
       if (document.body.scrollHeight > window.scrollY + window.screen.height) {
         console.log('no es el final');
-        console.log(window.screen.height);
-        console.log(window.innerHeight);
         setEnd(false);
       }
     };
 
-    window.addEventListener('scroll', changeNavbarSizeFssss);
-    return () => window.removeEventListener('scroll', changeNavbarSizeFssss);
+    window.addEventListener('scroll', itsEnd);
+    return () => window.removeEventListener('scroll', itsEnd);
   }, []);
 
   const handleDecreaseCart = (product) => {

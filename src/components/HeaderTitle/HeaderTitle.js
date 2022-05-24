@@ -31,7 +31,7 @@ function HeaderTitle() {
           <div className='encabezado'>
             <div className='col-12'>
               <div className='titulo'>
-                <h1 className=''>{c}</h1>
+                <h1 className=''>{(c = 'Checkout Confirm' ? 'Compra Finalizada' : c)}</h1>
               </div>
             </div>
           </div>

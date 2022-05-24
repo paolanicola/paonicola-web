@@ -8,10 +8,10 @@ import ConsultasOnline from '../../assets/images/services-img/04consultas-online
 export default function Home() {
   return (
     <div className='home-container'>
-      <section className='home-main'>
-        <div className='home-main-container'>
+      <section className='home-main '>
+        <div className='home-main-container '>
           <div className='home-main-row'>
-            <div className='  title-home-containers  one animate fadeRight  '>
+            <div className='  title-home-containers one animate fadeRight'>
               <h1 className='home-main-title '>LOGRÁ UN ESTILO DE VIDA SALUDABLE, A TRAVÉS DE UNA PLANIFICACIÓN PROFESIONAL Y PERSONALIZADA</h1>
             </div>
           </div>

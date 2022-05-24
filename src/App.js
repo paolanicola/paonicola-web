@@ -10,6 +10,7 @@ import Home from './pages/Home/Home';
 import ProductPage from './pages/products/ProductPage';
 import { ToastContainer } from 'react-toastify';
 import NotFound from './pages/notFound';
+import ConfirmSale from './components/ConfirmSale/ConfirmSale';
 
 function App() {
   return (
@@ -36,7 +37,8 @@ function App() {
             <Route path='faq' element={<Faq />} />
             <Route path='contacto' element={<Contact />} />
             <Route path='carrito' element={<Cart />} />
-            <Route path='checkout' element={<Checkout />} />
+            <Route path='checkout' element={<Checkout />}></Route>
+            <Route path='checkout/confirm' element={<ConfirmSale />} />
             <Route exact path='producto/:id' element={<ProductPage />} />
           </Route>
           <Route path='*' element={<NotFound />} />

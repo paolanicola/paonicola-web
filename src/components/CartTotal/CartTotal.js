@@ -136,7 +136,7 @@ function CartTotal() {
           </button>
         )}
 
-        <Link to='/confirm' className={step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'}>
+        <Link to='/checkout/confirm' className={step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'}>
           Pagar y finalizar
         </Link>
       </div>
