@@ -7,6 +7,7 @@
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
   z-index: 5;
   background-color: white;
+  transition: all 0.3s ease;
 }
 
 .navBar__icon__svg {
@@ -156,9 +157,9 @@
 /*-----------------------------------------------*/
 
 .header--resize {
-  transition: all 0.3s ease;
   height: 64px;
   background-color: white;
+  transition: all 0.3s ease;
 
   .navBar__icon__svg {
     height: 100%;
@@ -211,6 +212,7 @@
   .navBar {
     position: sticky;
     max-height: $header-height;
+    transition: all 0.3s ease;
   }
   .navBar__icon__svg--none {
     display: none;
@@ -257,6 +259,7 @@
   }
   .header--resize {
     height: 97px;
+    transition: all 0.3s ease-in-out;
 
     .menu__logo {
       height: 90px;
