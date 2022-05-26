@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { ReactComponent as PaolaSvg } from '../../assets/images/footer/paola-nicola.svg';
 import { ReactComponent as MailSvg } from '../../assets/images/footer/mail-footer.svg';
 import { ReactComponent as WhatsappSvg } from '../../assets/images/footer/whatsapp-footer.svg';
@@ -19,7 +19,7 @@ export default function Footer() {
           <div className='footer-container-menu'>
             <ul className='footer-container-menu-ul'>
               <li>
-                <Link to='/home' className='footer__link'>
+                <Link to='home' className='footer__link'>
                   Home
                 </Link>
               </li>
