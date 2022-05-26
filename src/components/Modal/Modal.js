@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ProductView from '../ProductView/ProductView';
-import { ReactComponent as NavClose } from '../../assets/images/header/nav-close.svg';
+import { ReactComponent as Close } from '../../assets/images/header/nav-close.svg';
 
 export default function Modal(props) {
   useEffect(() => {
@@ -20,19 +20,13 @@ export default function Modal(props) {
     <>
       <div className={`modal-container ${props.show ? 'show' : ''}`} onClick={props.onClose}>
         <div className='modal-content' onClick={(e) => e.stopPropagation()}>
-          <div className='modal-header'>
-            <p>soy el modal</p>
-          </div>
           <div className='modal-body'>
             <div className='body-container-close'>
               <label className='body-close' onClick={props.onClose}>
-                <NavClose className='a' />
+                <Close className='a' />
               </label>
             </div>
             <ProductView product={props.product} />
-          </div>
-          <div className='modal-footer'>
-            <button onClick={props.onClose}>close</button>
           </div>
         </div>
       </div>
