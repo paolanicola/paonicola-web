@@ -57,7 +57,7 @@ export default function About() {
               </div>
             </div>
             <div className='text-center-1'>
-              <a href='' className='link-underlined'>
+              <a href='../../../public/packs/media/documents/CV_Paola_Nicola.pdf' className='link-underlined'>
                 MI CURRÍCULUM
               </a>
             </div>

@@ -100,7 +100,9 @@ function CartTotal() {
         {products.length > 0 ? (
           products.map((product) => (
             <tr className='carrito-total-item'>
-              <td className='carrito-total-item-name'>{product.name}</td>
+              <td className='carrito-total-item-name'>
+                {product.name} x {product.cartQuantity}
+              </td>
               <td className='carrito-total-item-price text-right'>
                 {product.currency}
                 {product.promoPrice}

@@ -12,7 +12,6 @@ function HeaderTitle() {
   let str = location.pathname;
   var re = /[-/]+/g;
   let c = str.replace(re, ' ');
-  console.log(c);
   function renderSwitch(param) {
     switch (param) {
       case ' home':
@@ -28,10 +27,10 @@ function HeaderTitle() {
     <>
       {c[1] !== 'p' ? (
         renderSwitch(c) ? (
-          <div className='encabezado'>
-            <div className='col-12'>
-              <div className='titulo'>
-                <h1 className=''>{c == ' checkout confirm' ? 'Compra Finalizada' : c}</h1>
+          <div className='encabezado__container'>
+            <div className='encabezado__container-title'>
+              <div className='title__container'>
+                <h1 className='title__container-h1'>{c == ' checkout confirm' ? 'Compra Finalizada' : c}</h1>
               </div>
             </div>
           </div>

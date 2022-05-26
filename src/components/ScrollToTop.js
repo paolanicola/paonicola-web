@@ -3,7 +3,9 @@ import { useLocation } from 'react-router-dom';
 
 export default function ScrollToTop() {
   const { pathname } = useLocation();
-  window.scrollTo(0, 0);
+  if (pathname !== '/tienda') {
+    window.scrollTo(0, 0);
+  }
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);

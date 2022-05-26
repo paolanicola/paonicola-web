@@ -42,7 +42,7 @@ function ProductCart({ product }) {
 
       <div className='carrito-content'>
         <div className='content-title'>
-          <Link className='' to='/'>
+          <Link className='' to={`/producto/${product.id}`}>
             <p className='content-title__h6'>{product.name}</p>
           </Link>
           <button onClick={() => handleRemoveFromCart(product)} className='content-delete'>
