@@ -5,11 +5,14 @@ import { ReactComponent as OrderIcon } from '../../assets/images/tienda/order-ic
 
 function Filters({ term, searchKeyWord }) {
   const optionsOrder = [
+    { value: 'relevante', label: 'Mas relevante' },
     { value: 'menor', label: 'Menor precio' },
     { value: 'mayor', label: 'Mayor precio' },
+    { value: 'mayorDescuento', label: 'Mayor descuento' },
     { value: 'a-z', label: 'A-Z' },
     { value: 'z-a', label: 'Z-A' },
   ];
+
   const optionsCat = [
     { value: 'todas', label: 'Todas las categorías' },
     { value: 'consultas', label: 'Consultas online' },

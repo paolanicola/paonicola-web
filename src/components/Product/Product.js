@@ -11,6 +11,7 @@ import Modal from '../Modal/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import img1 from '../../assets/images/tienda/producto-ejemplo.jpg';
 function Product({ product }) {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ function Product({ product }) {
       <div className='card-product-container'>
         <div className='card-product-img'>
           <div className='img-container'>
-            <img className='img-source' src={product.displayThumbnail} alt='' />
+            <img className='img-source' src={img1} alt='' />
           </div>
           <div className='sale-text bold'>-20%</div>
           <div className='label-text black'>{product.category}</div>

@@ -39,7 +39,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to='/tienda' className='footer__link'>
+                <Link to='tienda' className='footer__link'>
                   Solicitar turno
                 </Link>
               </li>
