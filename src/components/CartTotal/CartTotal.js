@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { getAllProductsCart } from '../../features/cart/cartSlice';
 import { nextStep, backStep } from '../../features/stepsCheckout/stepsSlice';
 import { getHora, getVerificado, updateformulario, updateVerificado } from '../../features/cartState/cartStateSlice';
+import axios from 'axios';
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart);
@@ -49,6 +50,7 @@ function CartTotal() {
 
   const [mobile, setMobile] = useState(window.screen.width <= 677);
   const [end, setEnd] = useState(false);
+  const [isPending, setIsPending] = useState(false);
 
   useEffect(() => {
     const changeNavbarSizeFs = () => {
@@ -83,7 +85,7 @@ function CartTotal() {
   useEffect(() => {
     const changeNavbarSizeFssss = () => {
       if (document.body.scrollHeight > window.scrollY + window.innerHeight) {
-        console.log('no es el final');
+        //console.log('no es el final');
         setEnd(false);
       }
     };
@@ -91,7 +93,62 @@ function CartTotal() {
     window.addEventListener('scroll', changeNavbarSizeFssss);
     return () => window.removeEventListener('scroll', changeNavbarSizeFssss);
   }, []);
+  //Post bakend cart
+  const axios = require('axios').default;
+  const [mercado, setMercado] = useState('');
+  const [linkPago, setLinkPago] = useState('');
 
+  let r = '';
+  useEffect(() => {
+    console.log(linkPago);
+    setMercado(<a href={linkPago}>Pagar con Mercado Pago</a>);
+
+    return () => {};
+  }, [linkPago]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('enviar formulario');
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    const method = { 'method ': 'get' };
+    const body = {
+      data: {
+        firstName: 'Fred',
+        lastName: 'Flintstone',
+      },
+    };
+    const url = 'http://localhost:5000/payment';
+    try {
+      //const respuesta = await axios.get(url, { headers });
+      const respuesta = await axios.post(
+        url,
+        {
+          firstName: 'Fred',
+          lastName: 'Flintstone',
+          cart: cart,
+        },
+        { headers }
+      );
+
+      console.log(respuesta);
+      console.log(respuesta.data.id);
+      console.log(respuesta.data.init_point);
+
+      const preferenceId = respuesta.data.id;
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = 'https://www.mercadopago.cl/integrations/v1/web-payment-checkout.js';
+      script.setAttribute('data-preference-id', preferenceId);
+      const form = document.getElementById('mp');
+      setLinkPago(respuesta.data.init_point);
+      form.appendChild(script);
+    } catch (error) {
+      console.log('error');
+      console.log(error);
+    }
+  };
   return (
     <div className='carrito-total-container'>
       <h5 class='carrito-total-titulo'>Total del carrito</h5>
@@ -138,9 +195,23 @@ function CartTotal() {
           </button>
         )}
 
-        <Link to='/checkout/confirm' className={step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'}>
-          Pagar y finalizar
-        </Link>
+        <form onSubmit={handleSubmit}>
+          <button>pagar</button>
+        </form>
+        <a href='https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=1133741060-6a001319-3c8c-420e-8eb3-d945776dd962'> pagar mp local</a>
+        {mercado == '' ? '' : mercado}
+
+        <form id='mp'></form>
+        {!isPending && (
+          <Link to='/checkout/confirm' className={step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'}>
+            Pagar y finalizar
+          </Link>
+        )}
+        {isPending && (
+          <Link to='#' className={step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next disabled'}>
+            Cargando...
+          </Link>
+        )}
       </div>
     </div>
   );
