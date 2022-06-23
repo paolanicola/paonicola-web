@@ -1,16 +1,16 @@
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
-import { NavBar, Products, SectionFooter, Footer, Header, HeaderTitle, Cart, Checkout } from './components';
-import About from './pages/About';
-import Changes from './pages/changes';
-import Faq from './pages/faq';
-import Contact from './pages/contact';
-import './stylesheets/application.scss';
-import ScrollToTop from './components/ScrollToTop';
-import Home from './pages/Home/Home';
-import ProductPage from './pages/products/ProductPage';
-import { ToastContainer } from 'react-toastify';
-import NotFound from './pages/notFound';
-import ConfirmSale from './components/ConfirmSale/ConfirmSale';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
+import { Products, SectionFooter, Footer, Header, HeaderTitle, Cart, Checkout } from './components'
+import About from './pages/About'
+import Changes from './pages/changes'
+import Faq from './pages/faq'
+import Contact from './pages/contact'
+import './stylesheets/application.scss'
+import ScrollToTop from './components/ScrollToTop'
+import Home from './pages/Home/Home'
+import ProductPage from './pages/products/ProductPage'
+import { ToastContainer } from 'react-toastify'
+import NotFound from './pages/notFound'
+import ConfirmSale from './components/ConfirmSale/ConfirmSale'
 
 function App() {
   return (
@@ -23,7 +23,12 @@ function App() {
             element={
               <div>
                 <Header />
-                <ToastContainer autoClose={900} pauseOnFocusLoss={false} draggablePercent={30} limit={2} />
+                <ToastContainer
+                  autoClose={900}
+                  pauseOnFocusLoss={false}
+                  draggablePercent={30}
+                  limit={2}
+                />
                 <HeaderTitle /> <Outlet /> <SectionFooter />
                 <Footer />
               </div>
@@ -39,13 +44,15 @@ function App() {
             <Route path='carrito' element={<Cart />} />
             <Route path='checkout' element={<Checkout />}></Route>
             <Route path='checkout/confirm' element={<ConfirmSale />} />
+            <Route path='checkout/mercadopago/succes' element={<div>succes</div>} />
+            <Route path='checkout/mercadopago/failed' element={<div>failed</div>} />
             <Route exact path='producto/:id' element={<ProductPage />} />
           </Route>
           <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App

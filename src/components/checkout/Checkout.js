@@ -1,28 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import 'react-calendar/dist/Calendar.css';
+import 'react-calendar/dist/Calendar.css'
 
-import { addToCart, decreaseCart, getAllProductsCart, getTotals, removeFromCart } from '../../features/cart/cartSlice';
-import Steps from '../Steps/Steps';
-import CalendarCheckout from '../CalendarCheckout/CalendarCheckout';
-import CartTotal from '../CartTotal/CartTotal';
-import { FormPatientOrder, PaymentMethods } from '..';
+import {
+  addToCart,
+  decreaseCart,
+  getAllProductsCart,
+  getTotals,
+  removeFromCart
+} from '../../features/cart/cartSlice'
+import Steps from '../Steps/Steps'
+import CalendarCheckout from '../CalendarCheckout/CalendarCheckout'
+import CartTotal from '../CartTotal/CartTotal'
+import { FormPatientOrder, PaymentMethods } from '..'
 
 function Checkout() {
-  const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch()
+  const cart = useSelector((state) => state.cart)
   useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
-  const { step } = useSelector((state) => state.step);
-  console.log(step);
+    dispatch(getTotals())
+  }, [cart, dispatch])
+  const { step } = useSelector((state) => state.step)
+  //console.log(step);
 
   const stepCurrent = {
     0: <CalendarCheckout />,
     1: <FormPatientOrder />,
-    2: <PaymentMethods />,
-  };
+    2: <PaymentMethods />
+  }
 
   return (
     <div>
@@ -38,7 +44,7 @@ function Checkout() {
         </div>
       </section>
     </div>
-  );
+  )
 }
 
-export default Checkout;
+export default Checkout
