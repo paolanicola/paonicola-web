@@ -1,9 +1,5 @@
 import axios from 'axios'
-import API from 'constants/api'
-import i18n from 'i18n'
 import * as actions from '../apiCalls'
-import authHeader from './auth-header'
-import tokenRefresh from './token-refresh'
 
 const api =
   ({ dispatch }) =>
@@ -17,18 +13,14 @@ const api =
 
     next(action)
 
-    const headers = authHeader()
-
     try {
       const response = await axios.request({
-        baseURL: API.BASE_URL,
-        params: { ...API.DEFAULT_PARAMS, ...params },
+        baseURL: '',
+        params: '',
         url,
         method,
-        data,
-        headers
+        data
       })
-
       // Specific Api call
       if (onSuccess) dispatch({ type: onSuccess, payload: response.data })
       else dispatch(actions.apiCallSuccess(response.data))
@@ -38,16 +30,13 @@ const api =
         action.payload.onSuccess !== 'auth/loggedOut' &&
         error.response &&
         error.response.status === 401
-      ) {
-        return tokenRefresh(dispatch, () => dispatch(action))
-      }
-
-      // General api error
-      dispatch(actions.apiCallFailed(error.response ? error.response.data : error.message))
+      )
+        // General api error
+        dispatch(actions.apiCallFailed(error.response ? error.response.data : error.message))
 
       // Sepecific API error handling.
       if (onError) {
-        let errorMessage = { message: i18n.t('errors.wrong') }
+        let errorMessage = 'error'
         if (error.response) errorMessage = error.response.data
         dispatch({ type: onError, payload: errorMessage })
       }

@@ -1,17 +1,22 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { ReactComponent as CalendarSvg } from '../../assets/images/tienda/calendar.svg';
-import { ReactComponent as UserSvg } from '../../assets/images/tienda/user.svg';
-import { ReactComponent as CreditCardSvg } from '../../assets/images/tienda/credit-card.svg';
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { ReactComponent as CalendarSvg } from '../../assets/images/tienda/calendar.svg'
+import { ReactComponent as UserSvg } from '../../assets/images/tienda/user.svg'
+import { ReactComponent as CreditCardSvg } from '../../assets/images/tienda/credit-card.svg'
 
 function Steps() {
-  const { step } = useSelector((state) => state.step);
+  const { step } = useSelector((state) => state.step)
+
   return (
     <div className=''>
       <div class='wizard'>
         <div class='wizard-header'>
           <div class='steps text-center'>
-            <div className={step === 0 ? 'wizard-step wizard-step-01 active' : 'wizard-step wizard-step-01'}>
+            <div
+              className={
+                step === 0 ? 'wizard-step wizard-step-01 active' : 'wizard-step wizard-step-01'
+              }
+            >
               <div class='icon-stepper'>
                 <CalendarSvg />
               </div>
@@ -22,7 +27,11 @@ function Steps() {
                 <p>Elegí tu turno</p>
               </div>
             </div>
-            <div className={step === 1 ? 'wizard-step wizard-step-02 active' : 'wizard-step wizard-step-02'}>
+            <div
+              className={
+                step === 1 ? 'wizard-step wizard-step-02 active' : 'wizard-step wizard-step-02'
+              }
+            >
               <div class='icon-stepper'>
                 <UserSvg />
               </div>
@@ -33,7 +42,11 @@ function Steps() {
                 <p>Tus datos</p>
               </div>
             </div>
-            <div className={step === 2 ? 'wizard-step wizard-step-03 active' : 'wizard-step wizard-step-03'}>
+            <div
+              className={
+                step === 2 ? 'wizard-step wizard-step-03 active' : 'wizard-step wizard-step-03'
+              }
+            >
               <div class='icon-stepper'>
                 <CreditCardSvg />
               </div>
@@ -48,7 +61,7 @@ function Steps() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Steps;
+export default Steps
