@@ -7,10 +7,12 @@ import cartStateReducer from './cartState/cartStateSlice'
 // import logger from "./middleware/logger";
 import api from './middleware/api'
 import categoriesReducer from './categories'
+import productosReducer from './producto'
 
 export const store = configureStore({
   reducer: {
     products: productsReducer,
+    productos: productosReducer,
     cart: cartReducer,
     step: stepReducer,
     appointments: appointmentsReducer,

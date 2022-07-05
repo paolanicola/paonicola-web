@@ -6,6 +6,8 @@ import Product from '../Product/Product'
 
 import { loadCategories } from '../../features/categories'
 import axios from 'axios'
+import { loadProducts } from '../../features/producto'
+import { productsWithOff } from '../../features/producto/selector'
 
 export default function Products() {
   const dispatch = useDispatch()
@@ -24,16 +26,24 @@ export default function Products() {
       const url = 'http://localhost:3002/api/products'
 
       const result = await axios({ method: accesoAPI.tipo, url: accesoAPI.url })
-      setSearchResult(result.data)
+      //setSearchResult(result.data)
     }
 
     oP()
   }, [])
   //fin
+  const { loading: isLoading, data: info, success } = useSelector((state) => state.productos)
 
   useEffect(() => {
-    console.log('entro')
+    if (success) {
+      console.log(info)
+      setSearchResult(info)
+    }
+  }, [success, info])
+
+  useEffect(() => {
     dispatch(loadCategories())
+    dispatch(loadProducts())
   }, [])
 
   const searchHandler = (searchTerm) => {

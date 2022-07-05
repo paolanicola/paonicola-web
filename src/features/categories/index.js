@@ -23,7 +23,6 @@ const categoriesReducer = createReducer(initialState, {
   [categoriesReceived.type]: (state, action) => {
     state.loading = false
     state.loadSuccess = true
-    console.log(action.payload)
     state.data = action.payload
   },
   [categoriesRequestFailed.type]: (state, action) => {
