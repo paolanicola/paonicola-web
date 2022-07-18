@@ -17,21 +17,8 @@ export default function Products() {
 
   //inico
   const [productos, setProductos] = useState()
-  const [accesoAPI, setAccesoAPI] = useState({
-    tipo: 'GET',
-    url: 'http://localhost:3002/api/products'
-  })
-  useEffect(() => {
-    const oP = async () => {
-      const url = 'http://localhost:3002/api/products'
-
-      const result = await axios({ method: accesoAPI.tipo, url: accesoAPI.url })
-      //setSearchResult(result.data)
-    }
-
-    oP()
-  }, [])
   //fin
+
   const { loading: isLoading, data: info, success } = useSelector((state) => state.productos)
 
   useEffect(() => {

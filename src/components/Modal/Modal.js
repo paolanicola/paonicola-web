@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import ProductView from '../ProductView/ProductView';
-import { ReactComponent as Close } from '../../assets/images/header/nav-close.svg';
+import React, { useEffect } from 'react'
+import ProductView from '../ProductView/ProductView'
+import { ReactComponent as Close } from '../../assets/images/header/nav-close.svg'
 
 export default function Modal(props) {
   useEffect(() => {
-    document.body.addEventListener('keydown', closeOnEscapeKeyDown);
+    document.body.addEventListener('keydown', closeOnEscapeKeyDown)
     return function cleanup() {
-      document.body.removeEventListener('keydown', closeOnEscapeKeyDown);
-    };
-  }, []);
+      document.body.removeEventListener('keydown', closeOnEscapeKeyDown)
+    }
+  }, [])
 
   const closeOnEscapeKeyDown = (e) => {
     if ((e.charCode || e.keyCode) === 27) {
-      props.onClose();
+      props.onClose()
     }
-  };
+  }
 
   return (
     <>
@@ -31,5 +31,5 @@ export default function Modal(props) {
         </div>
       </div>
     </>
-  );
+  )
 }

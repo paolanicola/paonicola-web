@@ -144,7 +144,8 @@ select {
 
 .react-select__menu-list {
   background-color: white;
-  border-radius: 3px;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
   border: solid 2px $primary;
   margin-top: -0.9rem;
 }

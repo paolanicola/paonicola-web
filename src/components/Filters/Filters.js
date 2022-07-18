@@ -32,7 +32,6 @@ function Filters({ term, searchKeyWord }) {
   const customStyles = {
     control: () => ({
       // none of react-select's styles are passed to <Control />
-      //width: 200,
     }),
   };
 
