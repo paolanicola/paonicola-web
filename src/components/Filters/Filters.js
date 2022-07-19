@@ -1,7 +1,8 @@
-import React, { createRef, useRef } from 'react';
-import Select, { components, DropdownIndicator, DropdownIndicatorProps } from 'react-select';
-import { ReactComponent as Chevron } from '../../assets/images/tienda/chevron.svg';
-import { ReactComponent as OrderIcon } from '../../assets/images/tienda/order-icon.svg';
+import React, { createRef, useRef } from 'react'
+import Select, { components, DropdownIndicator, DropdownIndicatorProps } from 'react-select'
+import { ReactComponent as Chevron } from '../../assets/images/tienda/chevron.svg'
+import { ReactComponent as OrderIcon } from '../../assets/images/tienda/order-icon.svg'
+import DropDown from '../DropDown'
 
 function Filters({ term, searchKeyWord }) {
   const optionsOrder = [
@@ -10,8 +11,8 @@ function Filters({ term, searchKeyWord }) {
     { value: 'mayor', label: 'Mayor precio' },
     { value: 'mayorDescuento', label: 'Mayor descuento' },
     { value: 'a-z', label: 'A-Z' },
-    { value: 'z-a', label: 'Z-A' },
-  ];
+    { value: 'z-a', label: 'Z-A' }
+  ]
 
   const optionsCat = [
     { value: 'todas', label: 'Todas las categorías' },
@@ -19,38 +20,46 @@ function Filters({ term, searchKeyWord }) {
     { value: 'guias', label: 'Guías' },
     { value: 'mosaicos', label: 'Mosaicos' },
     { value: 'pack', label: 'Pack Ahorro' },
-    { value: 'recetarios', label: 'Recetarios' },
-  ];
+    { value: 'recetarios', label: 'Recetarios' }
+  ]
 
   const DropdownIndicator = (props) => {
     return (
       <components.DropdownIndicator {...props}>
         <OrderIcon />
       </components.DropdownIndicator>
-    );
-  };
+    )
+  }
   const customStyles = {
     control: () => ({
       // none of react-select's styles are passed to <Control />
-    }),
-  };
+    })
+  }
 
-  const [searchTermq, setSearchTermq] = React.useState('');
+  const [searchTermq, setSearchTermq] = React.useState('')
   const handleChange = (event) => {
-    setSearchTermq(event.target.value);
-  };
-  const inputEl = createRef();
+    setSearchTermq(event.target.value)
+  }
+  const inputEl = createRef()
   const getSearchTerm = () => {
     //console.log(inputEl.current.value);
-    searchKeyWord(inputEl.current.value);
-  };
+    searchKeyWord(inputEl.current.value)
+  }
 
   return (
     <div className='container-filters fsirst-section'>
       <div className='column'>
         <div className='row'>
           <div className='container-search'>
-            <input ref={inputEl} className='search' type='text' name='search' placeholder='Buscar...' value={term} onChange={getSearchTerm} />
+            <input
+              ref={inputEl}
+              className='search'
+              type='text'
+              name='search'
+              placeholder='Buscar...'
+              value={term}
+              onChange={getSearchTerm}
+            />
           </div>
 
           <div className=' container-categories activeg'>
@@ -73,8 +82,11 @@ function Filters({ term, searchKeyWord }) {
           />
         </div>
       </div>
+      <div>
+        <DropDown />
+      </div>
     </div>
-  );
+  )
 }
 
-export default Filters;
+export default Filters
