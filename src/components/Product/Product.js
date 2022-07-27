@@ -1,33 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import PrimaryButton from '../PrimaryButton/PrimaryButton';
-import { ReactComponent as AddToCart } from '../../assets/images/tienda/add-to-cart.svg';
-import { ReactComponent as View } from '../../assets/images/tienda/view.svg';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import PrimaryButton from '../PrimaryButton/PrimaryButton'
+import { ReactComponent as AddToCart } from '../../assets/images/tienda/add-to-cart.svg'
+import { ReactComponent as View } from '../../assets/images/tienda/view.svg'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, getTotals } from '../../features/cart/cartSlice';
-import Modal from '../Modal/Modal';
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCart, getTotals } from '../../features/cart/cartSlice'
+import Modal from '../Modal/Modal'
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-import img1 from '../../assets/images/tienda/producto-ejemplo.jpg';
+import img1 from '../../assets/images/tienda/producto-ejemplo.jpg'
 function Product({ product }) {
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const cart = useSelector((state) => state.cart)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-    toast('Producto agregado al Carrito!');
-    //navigate('/cart');
-  };
+    dispatch(addToCart(product))
+    toast('Producto agregado al Carrito!')
+  }
 
   useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
+    dispatch(getTotals())
+  }, [cart, dispatch])
   //modal
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
   //toast
 
   return (
@@ -40,7 +39,7 @@ function Product({ product }) {
             <img className='img-source' src={img1} alt='' />
           </div>
           <div className='sale-text bold'>-20%</div>
-          <div className='label-text black'>{product.category}</div>
+          <div className='label-text black'>{product.category_id}</div>
           <div className='card-product-overlay'>
             <div className='botonn1' onClick={() => setShow(true)}>
               <PrimaryButton size='md' href='#' actionText='Vista rapida' />
@@ -68,18 +67,27 @@ function Product({ product }) {
           </div>
         </div>
         <div className='botones-mobile'>
-          <Link to='' onClick={() => setShow(true)} className='botones-mobile-view' title='Vista rápida'>
+          <Link
+            to=''
+            onClick={() => setShow(true)}
+            className='botones-mobile-view'
+            title='Vista rápida'
+          >
             {/* <View /> */}
             Ver
           </Link>
-          <button onClick={() => handleAddToCart(product)} className='botones-mobile-addToCart' title='Añadir al carrito'>
+          <button
+            onClick={() => handleAddToCart(product)}
+            className='botones-mobile-addToCart'
+            title='Añadir al carrito'
+          >
             {/* <AddToCart /> */}
             Añadir al Carrito
           </button>
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default Product;
+export default Product

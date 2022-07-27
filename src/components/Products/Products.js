@@ -5,9 +5,7 @@ import Filters from '../Filters/Filters'
 import Product from '../Product/Product'
 
 import { loadCategories } from '../../features/categories'
-import axios from 'axios'
 import { loadProducts } from '../../features/producto'
-import { productsWithOff } from '../../features/producto/selector'
 
 export default function Products() {
   const dispatch = useDispatch()

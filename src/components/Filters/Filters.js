@@ -62,28 +62,13 @@ function Filters({ term, searchKeyWord }) {
             />
           </div>
 
-          <div className=' container-categories activeg'>
-            <Select
-              components={{ DropdownIndicator }}
-              styles={customStyles}
-              className='react-select-container'
-              classNamePrefix='react-select'
-              options={optionsCat}
-            />
+          <div className='container-categories'>
+            <DropDown options={optionsCat} variant='' />
           </div>
         </div>
         <div className=' container-order'>
-          <Select
-            components={{ DropdownIndicator }}
-            styles={customStyles}
-            className='react-select-container'
-            classNamePrefix='react-select'
-            options={optionsOrder}
-          />
+          <DropDown options={optionsOrder} variant='' />
         </div>
-      </div>
-      <div>
-        <DropDown />
       </div>
     </div>
   )

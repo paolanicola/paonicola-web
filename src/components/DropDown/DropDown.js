@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-function DropDown() {
+function DropDown({ options, variant }) {
   const selectReft = useRef()
   const [language, setLanguage] = useState('i18n.language')
   const [isActive, setIsActive] = useState(false)
   const [selected, setSelected] = useState('Selecciona')
 
-  const options = [
+  const optionss = [
     { value: 'relevante', label: 'Mas relevante' },
     { value: 'menor', label: 'Menor precio' },
     { value: 'mayor', label: 'Mayor precio' },
@@ -44,7 +44,7 @@ function DropDown() {
   }, [selectReft])
 
   return (
-    <div ref={selectReft} className='dropdown'>
+    <div ref={selectReft} className={`dropdown ${variant} `}>
       <span className='dropdown-world' onClick={handlerShowOptions} />
       <div
         className={isActive ? 'dropdown-btn dropdown-btn--active' : 'dropdown-btn'}
@@ -56,9 +56,12 @@ function DropDown() {
         {selected}
         <div className='separator' />
       </div>
-      <span className='dropdown-vector' onClick={handlerShowOptions} />
+      <span
+        className={isActive ? 'dropdown-vector dropdown-vector--active' : 'dropdown-vector'}
+        onClick={handlerShowOptions}
+      />
       {isActive && (
-        <div className='dropdown-content'>
+        <div className={`dropdown-content ${variant} `}>
           {options.map((option) =>
             option.value !== language ? (
               <div

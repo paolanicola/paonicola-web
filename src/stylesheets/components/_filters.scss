@@ -18,6 +18,10 @@ select {
   //margin-top: -5rem;
 }
 
+.activeg {
+  z-index: 99;
+}
+
 .search {
   background: url(../../assets/images/tienda/loupe.svg) no-repeat 97% center;
   background-size: 30px;
@@ -36,6 +40,7 @@ select {
   padding-bottom: 1.5rem;
   width: 100%;
   justify-content: space-between;
+ 
 }
 
 .container-search {
@@ -51,21 +56,26 @@ select {
   min-width: 0;
   order: 1;
   padding-right: 1rem;
+  z-index: 3;
 }
 
 .container-order {
   width: 100%;
   //padding: 0 1rem;
+  z-index: 2;
 }
 
 .container-search {
+
   .search {
+    height: 27px;
     background-color: white;
     transition: all 0.3s ease;
     position: absolute !important;
     right: 2px;
     top: 0;
     background-position: 50%;
+    z-index: 4;
 
     &::placeholder {
       opacity: 0;
@@ -79,7 +89,7 @@ select {
     width: 890% !important;
     background-color: white;
     transition: all 0.3s ease;
-    z-index: 4;
+
     &::placeholder {
       opacity: 1;
     }
@@ -95,66 +105,6 @@ select {
 .container-order {
 }
 
-//----------------css To Select custom
-
-.react-select-container {
-  width: 100%;
-  z-index: 3;
-}
-
-.react-select__control {
-  display: flex;
-  border: solid 2px $primary;
-}
-
-.react-select__control--is--focused {
-}
-
-.react-select__indicator-separator {
-  display: none;
-}
-
-.react-select__value-container {
-  font-size: 1em;
-  font-weight: 400;
-
-  .react-select__input-container {
-  }
-}
-
-.react-select__input {
-  background-color: tomato;
-}
-
-.react-select__indicators {
-  background-color: white;
-}
-
-.react-select__indicator {
-  //background: url(../../assets/images/tienda/loupe.svg) no-repeat 80% center;
-  width: 2.5rem;
-}
-
-.react-select__menu {
-  background-color: violet;
-  width: 100px;
-  margin: 0;
-  padding: 0;
-}
-
-.react-select__menu-list {
-  background-color: white;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
-  border: solid 2px $primary;
-  margin-top: -0.9rem;
-}
-
-.react-select__option {
-  border-top: solid 2px $primary;
-  padding: 0.75rem 1rem;
-}
-//----------------------fin select custom
 
 //queryes------------------------------------------------------------------------
 @media screen and (min-width: 370px) {
@@ -178,6 +128,7 @@ select {
   }
   .container-search {
     width: 7%;
+
     .search:focus {
       width: 1345% !important;
     }

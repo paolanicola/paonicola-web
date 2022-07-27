@@ -9,6 +9,7 @@ import {
   updateformulario,
   updateVerificado
 } from '../../features/cartState/cartStateSlice'
+import { createPreference } from '../../features/producto'
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
@@ -58,6 +59,10 @@ function CartTotal() {
 
   const [mobile, setMobile] = useState(window.screen.width <= 677)
   const [end, setEnd] = useState(false)
+
+  const crearPreference = () => {
+    dispatch(createPreference(cart))
+  }
 
   useEffect(() => {
     const changeNavbarSizeFs = () => {
@@ -113,8 +118,7 @@ function CartTotal() {
                 {product.name} x {product.cartQuantity}
               </td>
               <td className='carrito-total-item-price text-right'>
-                {product.currency}
-                {product.promoPrice}
+                {product.currency}${product.price}
               </td>
             </tr>
           ))
@@ -157,7 +161,8 @@ function CartTotal() {
         )}
 
         <Link
-          to='/checkout/confirm'
+          to='/'
+          onClick={crearPreference}
           className={
             step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'
           }
