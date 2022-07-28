@@ -44,7 +44,7 @@ function DropDown({ options, variant }) {
   }, [selectReft])
 
   return (
-    <div ref={selectReft} className={`dropdown ${variant} `}>
+    <div ref={selectReft} className='dropdown'>
       <span className='dropdown-world' onClick={handlerShowOptions} />
       <div
         className={isActive ? 'dropdown-btn dropdown-btn--active' : 'dropdown-btn'}
@@ -57,11 +57,15 @@ function DropDown({ options, variant }) {
         <div className='separator' />
       </div>
       <span
-        className={isActive ? 'dropdown-vector dropdown-vector--active' : 'dropdown-vector'}
+        className={
+          isActive
+            ? `dropdown-vector-${variant} dropdown-vector--active-${variant}`
+            : `dropdown-vector-${variant}`
+        }
         onClick={handlerShowOptions}
       />
       {isActive && (
-        <div className={`dropdown-content ${variant} `}>
+        <div className='dropdown-content'>
           {options.map((option) =>
             option.value !== language ? (
               <div

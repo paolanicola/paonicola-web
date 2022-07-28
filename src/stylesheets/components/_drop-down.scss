@@ -20,9 +20,20 @@
         content: '';
     }
 
-    .dropdown-vector {
+    .dropdown-vector-categories {
         position: absolute;
-        top: 12px;
+        top: 23px;
+        right: 15px;
+        width: 13px;
+        height: 7px;
+        background: url('../../assets/images/tienda/chevron.svg') no-repeat;
+        background-size: contain;
+        content: '';
+    }
+
+    .dropdown-vector-orders {
+        position: absolute;
+        top: 17px;
         right: 15px;
         width: 20px;
         height: 20px;
@@ -53,7 +64,8 @@
     }
 
     .dropdown-btn--active {
-		transition: all 0.1s ease-in-out;
+      transition: all 0.3s ease-in-out;
+    //border-bottom: none;
 
         .separator {
             display: flex;
@@ -67,42 +79,57 @@
         }
     }
 
-    .dropdown-vector--active{
-        transform: rotate(189deg);
+    .dropdown-vector--active-categories {
+      transform: rotate(180deg);
+      transition: all 0.3s ease-in-out;
+      //top: 12px;
+      //  -webkit-animation: rotate 1s normal linear ;
+      //  animation: rotate 1s normal linear ;
+    }
+
+    @keyframes rotate {
+      0% {
+       // -webkit-transform: rotate(0, 0, 1, 0deg);
+       // transform: rotate(0, 0, 1, 0deg);
+       rotate: 0deg;
+      }
+
+      100% {
+       // -webkit-transform: rotate(0, 0, 1, 180deg);
+        //transform: rotate(0, 0, 1, 180deg);
+        rotate: 180deg;
+      }
+      
     }
 
     .dropdown-content {
       position: absolute;
       top: 100%;
-      //padding: 0.5rem 1rem;
       width: 100%;
       color: $primary;
       text-align: center;
       background: #ffff;
-      border: 0;
-	  //	border: solid 1px $primary;
-      // border-bottom-right-radius:30px;
-      // border-bottom-left-radius: 30px;
-      //box-shadow: inset 0px -4px 10px rgba(0, 0, 0, 0.45);
       box-sizing: border-box;
       cursor: pointer;
+      transition: all 0.3s ease-in-out;
     }
 
     .dropdown-item {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 99%;
+      width: 100;
       height: 40px;
-      // border-radius: $border-radius;
+      margin: 0;
       transition: all 0.1s ease-in-out;
       border: solid 1px $primary;
+      border-top: none;
     }
 
     .dropdown-item:hover {
       color: $white;
       background-color: $primary;
-			transition: all 0.1s ease-in-out;
+			transition: all 0.2s ease-in-out;
     }
   
 }

@@ -63,11 +63,11 @@ function Filters({ term, searchKeyWord }) {
           </div>
 
           <div className='container-categories'>
-            <DropDown options={optionsCat} variant='' />
+            <DropDown options={optionsCat} variant='categories' />
           </div>
         </div>
         <div className=' container-order'>
-          <DropDown options={optionsOrder} variant='' />
+          <DropDown options={optionsOrder} variant='orders' />
         </div>
       </div>
     </div>
