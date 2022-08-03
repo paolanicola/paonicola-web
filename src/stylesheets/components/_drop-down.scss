@@ -1,5 +1,5 @@
 .dropdown {
-    @include font-size(12px);
+    @include font-size(16px);
 
     display: flex;
     position: relative;
@@ -43,7 +43,7 @@
     }
 
     .dropdown-btn {
-        @include font-size(12px);
+        @include font-size(16px);
 
         display: flex;
         align-items: center;
@@ -65,18 +65,7 @@
 
     .dropdown-btn--active {
       transition: all 0.3s ease-in-out;
-    //border-bottom: none;
-
-        .separator {
-            display: flex;
-            position: absolute;
-            top: to-rem(-32);
-            z-index: 202;
-            width: to-rem(2);
-            height: to-rem(144);
-            // background: linear-gradient(90deg, $black 0%, $gray-1d 50%, $gray-39 50%, $gray-42 100%);
-            transform: rotate(90deg);
-        }
+      //border-bottom: none;
     }
 
     .dropdown-vector--active-categories {

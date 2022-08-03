@@ -1,4 +1,4 @@
-import React, { createRef, useRef } from 'react'
+import React, { createRef, useRef, useState } from 'react'
 import Select, { components, DropdownIndicator, DropdownIndicatorProps } from 'react-select'
 import { ReactComponent as Chevron } from '../../assets/images/tienda/chevron.svg'
 import { ReactComponent as OrderIcon } from '../../assets/images/tienda/order-icon.svg'
@@ -23,20 +23,7 @@ function Filters({ term, searchKeyWord }) {
     { value: 'recetarios', label: 'Recetarios' }
   ]
 
-  const DropdownIndicator = (props) => {
-    return (
-      <components.DropdownIndicator {...props}>
-        <OrderIcon />
-      </components.DropdownIndicator>
-    )
-  }
-  const customStyles = {
-    control: () => ({
-      // none of react-select's styles are passed to <Control />
-    })
-  }
-
-  const [searchTermq, setSearchTermq] = React.useState('')
+  const [searchTermq, setSearchTermq] = useState('')
   const handleChange = (event) => {
     setSearchTermq(event.target.value)
   }
@@ -47,7 +34,7 @@ function Filters({ term, searchKeyWord }) {
   }
 
   return (
-    <div className='container-filters fsirst-section'>
+    <div className='container-filters'>
       <div className='column'>
         <div className='row'>
           <div className='container-search'>
@@ -61,7 +48,6 @@ function Filters({ term, searchKeyWord }) {
               onChange={getSearchTerm}
             />
           </div>
-
           <div className='container-categories'>
             <DropDown options={optionsCat} variant='categories' />
           </div>

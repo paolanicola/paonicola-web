@@ -6,15 +6,6 @@ function DropDown({ options, variant }) {
   const [isActive, setIsActive] = useState(false)
   const [selected, setSelected] = useState('Selecciona')
 
-  const optionss = [
-    { value: 'relevante', label: 'Mas relevante' },
-    { value: 'menor', label: 'Menor precio' },
-    { value: 'mayor', label: 'Mayor precio' },
-    { value: 'mayorDescuento', label: 'Mayor descuento' },
-    { value: 'a-z', label: 'A-Z' },
-    { value: 'z-a', label: 'Z-A' }
-  ]
-
   const handlerShowOptions = () => {
     setIsActive(!isActive)
   }
