@@ -42,10 +42,11 @@ function App() {
             <Route path='faq' element={<Faq />} />
             <Route path='contacto' element={<Contact />} />
             <Route path='carrito' element={<Cart />} />
-            <Route path='checkout' element={<Checkout />}></Route>
-            <Route path='checkout/confirm' element={<ConfirmSale />} />
-            <Route path='checkout/mercadopago/succes' element={<div>succes</div>} />
-            <Route path='checkout/mercadopago/failed' element={<div>failed</div>} />
+            <Route path='checkout' element={<Checkout />}>
+              <Route path='confirm' element={<ConfirmSale />} />
+            </Route>
+            <Route path='mercadopago/succes' element={<div>succes</div>} />
+            <Route path='mercadopago/failed' element={<div>failed</div>} />
             <Route exact path='producto/:id' element={<ProductPage />} />
           </Route>
           <Route path='*' element={<NotFound />} />

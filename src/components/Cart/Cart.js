@@ -1,88 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { faTrashAlt, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { getAllProducts } from '../../features/products/productSlice';
-
-import Product from '../Product/Product';
-import { addToCart, decreaseCart, getAllProductsCart, getTotals, removeFromCart } from '../../features/cart/cartSlice';
-import ProductCart from '../ProductCart/ProductCart';
-import { resetStep } from '../../features/stepsCheckout/stepsSlice';
-import { updateFecha, updateHora, resetCartState } from '../../features/cartState/cartStateSlice';
+import {
+  addToCart,
+  decreaseCart,
+  getAllProductsCart,
+  getTotals,
+  removeFromCart
+} from '../../features/cart/cartSlice'
+import ProductCart from '../ProductCart/ProductCart'
+import { resetStep } from '../../features/stepsCheckout/stepsSlice'
+import { resetCartState } from '../../features/cartState/cartStateSlice'
 
 function Cart() {
-  const cart = useSelector((state) => state.cart);
-  const products = useSelector(getAllProductsCart);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [mobile, setMobile] = useState(window.screen.width <= 767);
-  const [end, setEnd] = useState(false);
+  const cart = useSelector((state) => state.cart)
+  const products = useSelector(getAllProductsCart)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
-
-  useEffect(() => {
-    const mobileScreen = () => {
-      if (window.screen.width <= 767) {
-        setMobile(true);
-      }
-    };
-    window.addEventListener('resize', mobileScreen);
-    return () => window.removeEventListener('resize', mobileScreen);
-  }, []);
-  useEffect(() => {
-    const notMobileScreen = () => {
-      if (window.screen.width > 767) {
-        setMobile(false);
-      }
-    };
-    window.addEventListener('resize', notMobileScreen);
-    return () => window.removeEventListener('resize', notMobileScreen);
-  }, []);
-
-  useEffect(() => {
-    const endPage = () => {
-      if (document.body.scrollHeight === window.scrollY + window.screen.height) {
-        console.log('llegue al final');
-        setEnd(true);
-      }
-    };
-
-    window.addEventListener('scroll', endPage);
-    return () => window.removeEventListener('scroll', endPage);
-  }, []);
-  useEffect(() => {
-    const itsEnd = () => {
-      if (document.body.scrollHeight > window.scrollY + window.screen.height) {
-        console.log('no es el final');
-        setEnd(false);
-      }
-    };
-
-    window.addEventListener('scroll', itsEnd);
-    return () => window.removeEventListener('scroll', itsEnd);
-  }, []);
+    dispatch(getTotals())
+  }, [cart, dispatch])
 
   const handleDecreaseCart = (product) => {
-    dispatch(decreaseCart(product));
-  };
+    dispatch(decreaseCart(product))
+  }
   const handleIncreaseCart = (product) => {
-    dispatch(addToCart(product));
-  };
+    dispatch(addToCart(product))
+  }
   const handleRemoveFromCart = (product) => {
-    dispatch(removeFromCart(product));
-  };
+    dispatch(removeFromCart(product))
+  }
   const handleContinueBuy = (event) => {
-    event.preventDefault();
-    dispatch(resetStep());
-    dispatch(resetCartState());
-    navigate('/tienda');
-  };
+    event.preventDefault()
+    dispatch(resetStep())
+    dispatch(resetCartState())
+    navigate('/tienda')
+  }
 
-  let renderProducts = '';
-  renderProducts = products.length > 0 ? products.map((product) => <ProductCart product={product} />) : <div>Error</div>;
+  let renderProducts = ''
+  renderProducts =
+    products.length > 0 ? (
+      products.map((product) => <ProductCart product={product} />)
+    ) : (
+      <div>Error</div>
+    )
   return (
     <div className='carrito-container1'>
       {cart.cartItems.length === 0 ? (
@@ -103,7 +65,8 @@ function Cart() {
 
             <table class='carrito-total-cuenta' cellpadding='0' cellspacing='0'>
               <tr>
-                <td className='carrito-total-td '>Producto</td> <td className=' carrito-total-td text-right'>SubTotal</td>
+                <td className='carrito-total-td '>Producto</td>{' '}
+                <td className=' carrito-total-td text-right'>SubTotal</td>
               </tr>
               <hr />
               {products.length > 0 ? (
@@ -131,7 +94,7 @@ function Cart() {
               </tr>
             </table>
 
-            <div class={mobile && end ? 'next1 mobile' : 'next1'}>
+            <div class='next1'>
               <Link to='/checkout' className='  carrito-finalizar '>
                 Finalizar compra
               </Link>
@@ -142,13 +105,13 @@ function Cart() {
               </div>
               <div class='wizard-footer' style={{ display: 'none' }}>
                 <button type='button' class=' wizard-prev btn btn-primary-outlined btn-irv-default'>
-                  Atrás
+                  Atrás 1
                 </button>
                 <button type='button' class=' wizard-next btn btn-primary'>
-                  Siguiente
+                  Siguiente 1
                 </button>
                 <Link to='/confirm' className='btn btn-primary btn-md wizard-subm'>
-                  Pagar y finalizar
+                  Pagar y finalizar 1
                 </Link>
               </div>
             </div>
@@ -156,7 +119,7 @@ function Cart() {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default Cart;
+export default Cart

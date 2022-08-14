@@ -1,24 +1,43 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { ReactComponent as MercadoPago } from '../../assets/images/tienda/mercadopago.svg';
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { ReactComponent as MercadoPago } from '../../assets/images/tienda/mercadopago.svg'
+import { setFecha } from '../../features/stepsCheckout/stepsSlice'
+import { setMethod } from '../../features/validators'
 
 function PaymentMethods() {
+  const dispatch = useDispatch()
   const {
     register,
     formState: { errors },
     handleSubmit,
-    clearErrors,
-  } = useForm();
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
+    clearErrors
+  } = useForm()
+  const onSubmit = (data) => console.log(data)
+  //console.log(errors)
+
+  const PaymentMP = () => {
+    console.log('me hicieron clik MP')
+    dispatch(setMethod('MP'))
+  }
+  const PaymentTrans = () => {
+    console.log('me hicieron clik trans')
+    dispatch(setMethod('Trans'))
+  }
 
   return (
     <div className='payment-container'>
       <h5 className='payment-title'>Seleccioná el método de pago</h5>
       <form className='payment-form' onSubmit={handleSubmit(onSubmit)}>
-        <div className='payment-block'>
+        <div className='payment-block' onClick={PaymentMP}>
           <label className='block-label block-selected'>
-            <input className='block-radio' {...register} type='radio' name='pago' value='mercadopago' />
+            <input
+              className='block-radio'
+              {...register}
+              type='radio'
+              name='pago'
+              value='mercadopago'
+            />
             <div className='block-data'>
               <p className='block-title'>Tarjeta de debito/credito</p>
               <MercadoPago />
@@ -26,14 +45,21 @@ function PaymentMethods() {
           </label>
         </div>
 
-        <div className='payment-block'>
+        <div className='payment-block' onClick={PaymentTrans}>
           <label className='block-label block-selected'>
-            <input className='block-radio' {...register} type='radio' name='pago' value='transferencia' />
+            <input
+              className='block-radio'
+              {...register}
+              type='radio'
+              name='pago'
+              value='transferencia'
+            />
             <div className='block-data'>
               <p className='block-title'>Transferencia Bancaria</p>
               <div className='block-description'>
                 <p className='description-text'>
-                  Realizá una transferencia al cbu que te indicaré al finalizar la compra. La compra se efectuará una vez que me envíes el comprobante de pago.
+                  Realizá una transferencia al cbu que te indicaré al finalizar la compra. La compra
+                  se efectuará una vez que me envíes el comprobante de pago.
                 </p>
               </div>
             </div>
@@ -42,7 +68,7 @@ function PaymentMethods() {
         <input type='submit' hidden />
       </form>
     </div>
-  );
+  )
 }
 
-export default PaymentMethods;
+export default PaymentMethods

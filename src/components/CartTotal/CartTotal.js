@@ -9,9 +9,23 @@ import {
   updateformulario,
   updateVerificado
 } from '../../features/cartState/cartStateSlice'
+import { setMethod } from '../../features/validators'
+
+function MercadoPagoScript(publicKey, options) {
+  const script = document.createElement('script')
+  script.src = 'https://sdk.mercadopago.com/js/v2'
+
+  // script.addEventListener('load', () => {
+  //   setMercadopago(new window.MercadoPago(publicKey, options))
+  // })
+
+  document.body.appendChild(script)
+}
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
+  const { data: method } = useSelector((state) => state.validators)
+  const { preference } = useSelector((state) => state.productos)
   const products = useSelector(getAllProductsCart)
   const dispatch = useDispatch()
   const { step } = useSelector((state) => state.step)
@@ -28,13 +42,17 @@ function CartTotal() {
     if (step === 1) {
       dispatch(updateformulario(null))
     }
+    dispatch(setMethod(''))
     dispatch(backStep())
   }
-
-  const a = useSelector(getHora)
+  const className = () => {
+    return step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '
+  }
+  // console.log(className)
+  const hora = useSelector(getHora)
   const verificado = useSelector(getVerificado)
   let render = ''
-  //console.log(verificado);
+
   if (verificado || step === 0) {
     render = (
       <button
@@ -54,58 +72,61 @@ function CartTotal() {
   }
   useEffect(() => {
     //console.log('useEffect');
-  }, [a])
+  }, [hora])
 
-  const [mobile, setMobile] = useState(window.screen.width <= 677)
-  const [end, setEnd] = useState(false)
+  let variantBack = ''
+  let variantNext = ''
+  let actionBack = ''
+  let actionNext = ''
+  let typeBack = ''
+  let typeNext = ''
+  let formNext = ''
+  const [variantTrans, setVariantTrans] = useState('')
+  const [variantMP, setVariantMP] = useState('')
+
+  if (step === 0) {
+    variantBack = 'carrito-finalizar__oculto'
+    variantNext = 'carrito-finalizar'
+    variantNext += hora !== null ? '' : ' disabled'
+    actionNext = () => handleNextStep()
+    typeNext = 'submit'
+  }
+  //console.log(variantNext)
+  if (step === 1) {
+    variantBack = 'carrito-finalizar carrito-finalizar-next'
+    variantNext = 'carrito-finalizar'
+    actionBack = () => handleBackStep()
+    actionNext = ''
+    typeNext = 'submit'
+    formNext = 'formularioTurno'
+  }
+
+  if (step === 2) {
+    variantBack = 'carrito-finalizar carrito-finalizar-next'
+    variantNext = 'carrito-finalizar__oculto'
+    actionBack = () => handleBackStep()
+  }
 
   useEffect(() => {
-    const changeNavbarSizeFs = () => {
-      if (window.screen.width <= 767) {
-        setMobile(true)
+    console.log(method)
+    if (step === 2) {
+      if (method === 'MP') {
+        setVariantTrans('carrito-finalizar__oculto')
+        setVariantMP('carrito-finalizar')
+        MercadoPagoScript()
+      }
+      if (method === 'Trans') {
+        setVariantTrans('carrito-finalizar')
+        setVariantMP('carrito-finalizar__oculto')
       }
     }
-    window.addEventListener('resize', changeNavbarSizeFs)
-    return () => window.removeEventListener('resize', changeNavbarSizeFs)
-  }, [])
-  useEffect(() => {
-    const changeNavbarSizeFss = () => {
-      if (window.screen.width > 677) {
-        setMobile(false)
-      }
-    }
-    window.addEventListener('resize', changeNavbarSizeFss)
-    return () => window.removeEventListener('resize', changeNavbarSizeFss)
-  }, [])
-
-  useEffect(() => {
-    const changeNavbarSizeFsss = () => {
-      if (document.body.scrollHeight === window.scrollY + window.innerHeight) {
-        //console.log('llegue al final');
-        setEnd(true)
-      }
-    }
-
-    window.addEventListener('scroll', changeNavbarSizeFsss)
-    return () => window.removeEventListener('scroll', changeNavbarSizeFsss)
-  }, [])
-  useEffect(() => {
-    const changeNavbarSizeFssss = () => {
-      if (document.body.scrollHeight > window.scrollY + window.innerHeight) {
-        //console.log('no es el final');
-        setEnd(false)
-      }
-    }
-
-    window.addEventListener('scroll', changeNavbarSizeFssss)
-    return () => window.removeEventListener('scroll', changeNavbarSizeFssss)
-  }, [])
+  }, [method])
 
   return (
     <div className='carrito-total-container'>
-      <h5 class='carrito-total-titulo'>Total del carrito</h5>
+      <h5 className='carrito-total-titulo'>Total del carrito</h5>
 
-      <table class='carrito-total-items' cellpadding='0' cellspacing='0'>
+      <table className='carrito-total-items' cellpadding='0' cellspacing='0'>
         {products.length > 0 ? (
           products.map((product) => (
             <tr className='carrito-total-item'>
@@ -131,9 +152,7 @@ function CartTotal() {
         </tr>
       </table>
 
-      <div
-        class={mobile && end ? 'carrito-total-buttons back mobile' : 'carrito-total-buttons back'}
-      >
+      <div className='carrito-total-buttons back'>
         <button
           onClick={() => handleBackStep()}
           type='button'
@@ -143,7 +162,7 @@ function CartTotal() {
         >
           Atrás
         </button>
-        {a !== null ? (
+        {hora !== null ? (
           render
         ) : (
           <button
@@ -162,7 +181,29 @@ function CartTotal() {
             step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'
           }
         >
-          Pagar y finalizar
+          Pagar y finalizar 2
+        </Link>
+        <a
+          href='https://www.google.com'
+          className={
+            step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'
+          }
+        >
+          Pagar y finalizar MP
+        </a>
+      </div>
+      <div className='carrito-total-buttons back'>
+        <button onClick={actionBack} type={typeBack} className={variantBack}>
+          atras
+        </button>
+        <button onClick={actionNext} type={typeNext} form={formNext} className={variantNext}>
+          Siguiente
+        </button>
+        <Link to='/checkout/confirm' className={variantTrans}>
+          Pagar con Trans
+        </Link>
+        <Link to='/checkout/confirm' className={variantMP}>
+          Pagar con MP
         </Link>
       </div>
     </div>
