@@ -69,11 +69,21 @@ export const loadProducts = () => (dispatch, getState) => {
   )
 }
 export const loadPreference = () => (dispatch, getState) => {
+  const { cart } = getState()
+  const { cartState } = getState()
+  console.log(cart)
+  console.log(cartState)
+  const items = [
+    {
+      cart: { cart },
+      cartState: { cartState }
+    }
+  ]
   dispatch(
     apiCallBegan({
       url: `http://localhost:3002/api/checkout`,
       method: 'post',
-      data: [],
+      data: { items },
       onStart: preferenceRequested.type,
       onSuccess: preferenceReceived.type,
       onError: preferenceRequestFailed.type

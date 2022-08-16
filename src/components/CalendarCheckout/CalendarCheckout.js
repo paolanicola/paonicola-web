@@ -33,6 +33,7 @@ function CalendarCheckout() {
 
   const nextDateAvailbleToToday = () => {
     const temp = moment()
+    console.log(temp)
     const temp2 = dates.filter((date) => date > temp)
     return temp2[0].toDate()
   }
@@ -83,6 +84,13 @@ function CalendarCheckout() {
 
   const renderizar = (appoint) => {
     let fecha = null
+    let tmp = null
+    if (true) {
+      tmp = nextDateAvailbleToToday()
+      fecha = moment(tmp).format('YYYY-MM-DD') + 'T03:00:00Z'
+      console.log(fecha)
+    }
+    console.log(fecha)
     if (typeof appoint === 'string') {
       fecha = appoint.toString().split('T')[0]
     } else {

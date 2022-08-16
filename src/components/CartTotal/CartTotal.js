@@ -10,6 +10,7 @@ import {
   updateVerificado
 } from '../../features/cartState/cartStateSlice'
 import { setMethod } from '../../features/validators'
+import { toast } from 'react-toastify'
 
 function MercadoPagoScript(publicKey, options) {
   const script = document.createElement('script')
@@ -29,14 +30,32 @@ function CartTotal() {
   const products = useSelector(getAllProductsCart)
   const dispatch = useDispatch()
   const { step } = useSelector((state) => state.step)
+  const [variantTrans, setVariantTrans] = useState('carrito-finalizar__oculto ')
+  const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
 
   const handleNextStep = () => {
     dispatch(nextStep())
   }
 
+  const handleEnd = () => {
+    // Limpieza de todo
+    // Limpiar el carrito
+    // limpiar step
+    // validators limpiar
+    // cart state limpiar
+    setVariantTrans('carrito-finalizar__oculto ')
+    setVariantMP('carrito-finalizar__oculto ')
+  }
+
+  const handleVerificationSelectMethod = () => {
+    toast('Seleccione un metodo de pago')
+  }
+
   const handleBackStep = () => {
     if (step === 2) {
       //console.log('volviendo del pago');
+      setVariantTrans('carrito-finalizar__oculto ')
+      setVariantMP('carrito-finalizar__oculto ')
       dispatch(updateVerificado(false))
     }
     if (step === 1) {
@@ -45,10 +64,7 @@ function CartTotal() {
     dispatch(setMethod(''))
     dispatch(backStep())
   }
-  const className = () => {
-    return step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '
-  }
-  // console.log(className)
+
   const hora = useSelector(getHora)
   const verificado = useSelector(getVerificado)
   let render = ''
@@ -81,8 +97,8 @@ function CartTotal() {
   let typeBack = ''
   let typeNext = ''
   let formNext = ''
-  const [variantTrans, setVariantTrans] = useState('')
-  const [variantMP, setVariantMP] = useState('')
+  let actionEnd = ''
+  let actionVerificationMethod = ''
 
   if (step === 0) {
     variantBack = 'carrito-finalizar__oculto'
@@ -91,7 +107,7 @@ function CartTotal() {
     actionNext = () => handleNextStep()
     typeNext = 'submit'
   }
-  //console.log(variantNext)
+
   if (step === 1) {
     variantBack = 'carrito-finalizar carrito-finalizar-next'
     variantNext = 'carrito-finalizar'
@@ -102,9 +118,11 @@ function CartTotal() {
   }
 
   if (step === 2) {
-    variantBack = 'carrito-finalizar carrito-finalizar-next'
+    variantBack = 'carrito-finalizar carrito-finalizar-next '
     variantNext = 'carrito-finalizar__oculto'
     actionBack = () => handleBackStep()
+    actionVerificationMethod = () => handleVerificationSelectMethod()
+    actionEnd = () => handleEnd()
   }
 
   useEffect(() => {
@@ -113,7 +131,6 @@ function CartTotal() {
       if (method === 'MP') {
         setVariantTrans('carrito-finalizar__oculto')
         setVariantMP('carrito-finalizar')
-        MercadoPagoScript()
       }
       if (method === 'Trans') {
         setVariantTrans('carrito-finalizar')
@@ -153,58 +170,28 @@ function CartTotal() {
       </table>
 
       <div className='carrito-total-buttons back'>
-        <button
-          onClick={() => handleBackStep()}
-          type='button'
-          className={
-            step === 0 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'
-          }
-        >
-          Atrás
-        </button>
-        {hora !== null ? (
-          render
-        ) : (
-          <button
-            onClick={() => handleNextStep()}
-            type='button'
-            className={step === 2 ? 'carrito-finalizar__oculto' : 'disabled carrito-finalizar  '}
-            disabled
-          >
-            Siguiente
-          </button>
-        )}
-
-        <Link
-          to='/checkout/confirm'
-          className={
-            step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'
-          }
-        >
-          Pagar y finalizar 2
-        </Link>
-        <a
-          href='https://www.google.com'
-          className={
-            step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'
-          }
-        >
-          Pagar y finalizar MP
-        </a>
-      </div>
-      <div className='carrito-total-buttons back'>
         <button onClick={actionBack} type={typeBack} className={variantBack}>
           atras
         </button>
         <button onClick={actionNext} type={typeNext} form={formNext} className={variantNext}>
           Siguiente
         </button>
-        <Link to='/checkout/confirm' className={variantTrans}>
-          Pagar con Trans
+        <button
+          onClick={actionVerificationMethod}
+          className={
+            step !== 2 || method !== ''
+              ? 'carrito-finalizar__oculto'
+              : 'carrito-finalizar carrito-finalizar-next disabled'
+          }
+        >
+          Pagar
+        </button>
+        <Link to='/checkout/confirm' onClick={actionEnd} className={variantTrans}>
+          Pagar
         </Link>
-        <Link to='/checkout/confirm' className={variantMP}>
-          Pagar con MP
-        </Link>
+        <a href={preference} onClick={actionEnd} className={variantMP}>
+          Pagar
+        </a>
       </div>
     </div>
   )

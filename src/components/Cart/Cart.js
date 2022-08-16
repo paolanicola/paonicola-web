@@ -12,6 +12,7 @@ import {
 import ProductCart from '../ProductCart/ProductCart'
 import { resetStep } from '../../features/stepsCheckout/stepsSlice'
 import { resetCartState } from '../../features/cartState/cartStateSlice'
+import { setMethod } from '../../features/validators'
 
 function Cart() {
   const cart = useSelector((state) => state.cart)
@@ -95,7 +96,11 @@ function Cart() {
             </table>
 
             <div class='next1'>
-              <Link to='/checkout' className='  carrito-finalizar '>
+              <Link
+                to='/checkout'
+                onClick={dispatch(setMethod(''))}
+                className='  carrito-finalizar '
+              >
                 Finalizar compra
               </Link>
               <div className='carrito-container-continue'>
