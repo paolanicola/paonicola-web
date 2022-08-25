@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { getAllProductsCart } from '../../features/cart/cartSlice'
 import { nextStep, backStep } from '../../features/stepsCheckout/stepsSlice'
 import {
+  getFecha,
   getHora,
   getVerificado,
   updateformulario,
@@ -33,8 +34,12 @@ function CartTotal() {
   const [variantTrans, setVariantTrans] = useState('carrito-finalizar__oculto ')
   const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
 
+  const horario = useSelector(getHora)
+  const fecha = useSelector(getFecha)
   const handleNextStep = () => {
-    dispatch(nextStep())
+    if (horario === null) {
+      handleVerificationSelectMethod('Seleccione un Horario!')
+    } else dispatch(nextStep())
   }
 
   const handleEnd = () => {
@@ -48,8 +53,8 @@ function CartTotal() {
     setVariantMP('carrito-finalizar__oculto')
   }
 
-  const handleVerificationSelectMethod = () => {
-    toast('Seleccione un metodo de pago')
+  const handleVerificationSelectMethod = (text) => {
+    toast(text)
   }
 
   const handleBackStep = () => {
@@ -94,10 +99,6 @@ function CartTotal() {
     )
   }
 
-  useEffect(() => {
-    //console.log('useEffect');
-  }, [hora])
-
   let variantBack = ''
   let variantNext = ''
   let actionBack = ''
@@ -129,7 +130,8 @@ function CartTotal() {
     variantBack = 'carrito-finalizar carrito-finalizar-next '
     variantNext = 'carrito-finalizar__oculto'
     actionBack = () => handleBackStep()
-    actionVerificationMethod = () => handleVerificationSelectMethod()
+    actionVerificationMethod = () =>
+      handleVerificationSelectMethod('Seleccione un metodo de pago!')
     actionEnd = () => handleEnd()
   }
 

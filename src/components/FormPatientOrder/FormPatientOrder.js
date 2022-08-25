@@ -12,8 +12,9 @@ import { nextStep, backStep } from '../../features/stepsCheckout/stepsSlice'
 function FormPatientOrder() {
   const dispatch = useDispatch()
   const { step } = useSelector((state) => state.step)
+
   const form = useSelector(getFormulario)
-  console.log(form?.nombre)
+
   const handleNextStep = () => {
     dispatch(nextStep())
   }
@@ -36,9 +37,15 @@ function FormPatientOrder() {
 
   return (
     <div className='form-container'>
-      <p className='form-title'>Datos de la persona que realizará la compra y tomará el turno</p>
+      <p className='form-title'>
+        Datos de la persona que realizará la compra y tomará el turno
+      </p>
       <div className='caja'>
-        <form id='formularioTurno' className='form' onSubmit={handleSubmit(onSubmit)}>
+        <form
+          id='formularioTurno'
+          className='form'
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className='form-row'>
             <div className='form-row-name'>
               <label>Nombre</label>
@@ -58,7 +65,9 @@ function FormPatientOrder() {
                 })}
               />
               {errors.nombre && (
-                <span className={errors.nombre && 'span_error'}>{errors.nombre.message}</span>
+                <span className={errors.nombre && 'span_error'}>
+                  {errors.nombre.message}
+                </span>
               )}
             </div>
             <div className='form-row-lastName'>
@@ -79,7 +88,9 @@ function FormPatientOrder() {
                 })}
               />
               {errors.apellido && (
-                <span className={errors.apellido && 'span_error'}>{errors.apellido.message}</span>
+                <span className={errors.apellido && 'span_error'}>
+                  {errors.apellido.message}
+                </span>
               )}
             </div>
           </div>
@@ -95,13 +106,16 @@ function FormPatientOrder() {
                 message: 'Email requerido'
               },
               pattern: {
-                value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                value:
+                  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                 message: 'Formato del email incorrecto'
               }
             })}
           />
           {errors.email && (
-            <span className={errors.email && 'span_error'}>{errors.email.message}</span>
+            <span className={errors.email && 'span_error'}>
+              {errors.email.message}
+            </span>
           )}
 
           <p>
@@ -117,7 +131,9 @@ function FormPatientOrder() {
             })}
           />
           {errors.telefono && (
-            <span className={errors.telefono && 'span_error'}>{errors.telefono.message}</span>
+            <span className={errors.telefono && 'span_error'}>
+              {errors.telefono.message}
+            </span>
           )}
         </form>
       </div>

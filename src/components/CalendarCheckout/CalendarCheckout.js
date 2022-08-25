@@ -30,15 +30,13 @@ function CalendarCheckout() {
   dates.map((d) => meses.set(d.format('MMMM'), d.toDate()))
 
   const dateRedux = useSelector(getFecha)
+  const [value, setValue] = useState(null)
 
   const nextDateAvailbleToToday = () => {
     const temp = moment()
-    console.log(temp)
     const temp2 = dates.filter((date) => date > temp)
     return temp2[0].toDate()
   }
-
-  const [value, setValue] = useState(null)
 
   const dateIntoAppoints = () => {
     const temp = new Date(dateRedux)
@@ -48,6 +46,8 @@ function CalendarCheckout() {
   }
 
   useEffect(() => {
+    console.log(dateRedux === null)
+    console.log(dateIntoAppoints())
     if (dateRedux === null) {
       setValue(nextDateAvailbleToToday())
       dispatch(updateFecha(nextDateAvailbleToToday()))
@@ -62,7 +62,7 @@ function CalendarCheckout() {
 
   useEffect(() => {
     renderizar(dateRedux)
-  }, [value])
+  }, [dateRedux])
 
   const onClick = (value, event) => {
     dispatch(updateFecha(value))
@@ -83,28 +83,34 @@ function CalendarCheckout() {
   let hora = useSelector(getHora)
 
   const renderizar = (appoint) => {
+    console.log(value)
     let fecha = null
     let tmp = null
     if (true) {
       tmp = nextDateAvailbleToToday()
       fecha = moment(tmp).format('YYYY-MM-DD') + 'T03:00:00Z'
-      console.log(fecha)
     }
-    console.log(fecha)
-    if (typeof appoint === 'string') {
-      fecha = appoint.toString().split('T')[0]
+
+    if (appoint === null) {
+      fecha = fecha.toString().split('T')[0]
+    } else if (typeof appoint === 'string') {
+      fecha = appoint.split('T')[0]
     } else {
       fecha = appoint.toISOString().split('T')[0]
     }
     let horas = []
+    console.log(fecha)
     appointments.map((ap) =>
-      ap.fecha.toString().split('T')[0] === fecha ? (horas = ap.horaDisponibles) : horas
+      ap.fecha.toString().split('T')[0] === fecha
+        ? (horas = ap.horaDisponibles)
+        : horas
     )
     const optionsHour = horas.map((d) => ({
       value: d,
       label: d
     }))
-    let horaSelecionadaDefecto = hora !== null ? { value: hora, label: hora } : optionsHour[0]
+    let horaSelecionadaDefecto =
+      hora !== null ? { value: hora, label: hora } : ''
     setRender1(
       <div>
         <Select
@@ -131,8 +137,15 @@ function CalendarCheckout() {
 
   const changeViewMonth = (activeStartDate, view, action) => {
     dispatch(deleteHora())
-    if (action !== 'onChange' && view !== 'year' && view !== 'decade' && view !== 'century') {
-      let dia = dates.find((day) => day.format('M') == activeStartDate.getMonth() + 1)
+    if (
+      action !== 'onChange' &&
+      view !== 'year' &&
+      view !== 'decade' &&
+      view !== 'century'
+    ) {
+      let dia = dates.find(
+        (day) => day.format('M') == activeStartDate.getMonth() + 1
+      )
       setValue(dia.toDate())
       dispatch(updateFecha(dia.toDate()))
     }
@@ -165,7 +178,9 @@ function CalendarCheckout() {
   return (
     <div className='wizard-body'>
       <div className='step initial active'>
-        <h5 className='calendar-title'>Seleccioná la fecha y hora para tu turno:</h5>
+        <h5 className='calendar-title'>
+          Seleccioná la fecha y hora para tu turno:
+        </h5>
         <div className='calendar-time-picker-container'>
           <div className='calendar-picker-container'>
             <Calendar
@@ -179,9 +194,12 @@ function CalendarCheckout() {
               onClickDay={(value, event) => onClick(value, event)}
               //maxDate={new Date(2022, 1, 28)}
               //onViewChange={({ action, activeStartDate, value, view }) => console.log('New view is: ', value)}
-              onActiveStartDateChange={({ action, activeStartDate, value, view }) =>
-                changeViewMonth(activeStartDate, view, action)
-              }
+              onActiveStartDateChange={({
+                action,
+                activeStartDate,
+                value,
+                view
+              }) => changeViewMonth(activeStartDate, view, action)}
               activeStartDate={value}
               next2Label=''
               prev2Label=''
