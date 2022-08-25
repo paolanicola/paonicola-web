@@ -1,5 +1,13 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
-import { Products, SectionFooter, Footer, Header, HeaderTitle, Cart, Checkout } from './components'
+import {
+  Products,
+  SectionFooter,
+  Footer,
+  Header,
+  HeaderTitle,
+  Cart,
+  Checkout
+} from './components'
 import About from './pages/About'
 import Changes from './pages/changes'
 import Faq from './pages/faq'
@@ -24,6 +32,7 @@ function App() {
               <div>
                 <Header />
                 <ToastContainer
+                  position='bottom-right'
                   autoClose={900}
                   pauseOnFocusLoss={false}
                   draggablePercent={30}

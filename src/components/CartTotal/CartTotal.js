@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getAllProductsCart } from '../../features/cart/cartSlice'
-import { nextStep, backStep } from '../../features/stepsCheckout/stepsSlice'
+import {
+  deleteCartItems,
+  getAllProductsCart
+} from '../../features/cart/cartSlice'
+import {
+  nextStep,
+  backStep,
+  resetStep
+} from '../../features/stepsCheckout/stepsSlice'
 import {
   getFecha,
   getHora,
   getVerificado,
+  resetCartState,
   updateformulario,
   updateVerificado
 } from '../../features/cartState/cartStateSlice'
@@ -45,9 +53,10 @@ function CartTotal() {
   const handleEnd = () => {
     // Limpieza de todo
     // Limpiar el carrito
-    // limpiar step
-    // validators limpiar
-    // cart state limpiar
+    dispatch(deleteCartItems())
+    // limpiar step cart state limpiar validators limpiar
+    dispatch(resetStep())
+    dispatch(resetCartState())
     // dispatch(confirmedBuy())
     setVariantTrans('carrito-finalizar__oculto')
     setVariantMP('carrito-finalizar__oculto')
@@ -199,7 +208,7 @@ function CartTotal() {
           className={
             step !== 2 || method !== ''
               ? 'carrito-finalizar__oculto'
-              : 'carrito-finalizar carrito-finalizar-next disabled'
+              : 'carrito-finalizar disabled'
           }
         >
           Pagar
@@ -214,7 +223,7 @@ function CartTotal() {
         <a href={preference} onClick={actionEnd} className={variantMP}>
           Pagar
         </a>
-        <div class=' '></div>
+        <div class=''></div>
       </div>
     </div>
   )

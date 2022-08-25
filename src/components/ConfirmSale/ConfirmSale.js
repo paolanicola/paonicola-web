@@ -1,7 +1,15 @@
-import React from 'react';
-import CartTotal from '../CartTotal/CartTotal';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getTotals } from '../../features/cart/cartSlice'
 
 export default function ConfirmSale() {
+  const dispatch = useDispatch()
+  const cart = useSelector((state) => state.cart)
+
+  useEffect(() => {
+    dispatch(getTotals())
+  }, [cart])
+
   return (
     <>
       <section className='confirm'>
@@ -18,7 +26,9 @@ export default function ConfirmSale() {
             </li>
             <li className='data__list-li'>
               <p className='data__list-title'>FECHA DEL TURNO</p>
-              <p className='data__list-description'>20 de febrero de 2021 - 15:30hs</p>
+              <p className='data__list-description'>
+                20 de febrero de 2021 - 15:30hs
+              </p>
             </li>
             <li className='data__list-li'>
               <p className='data__list-title'>EMAIL</p>
@@ -35,14 +45,17 @@ export default function ConfirmSale() {
           </ul>
         </div>
         <div className='confirm__data-transfer'>
-          <p className='data__transfer-title '>Para hacer efectiva tu compra, realizá el pago la siguiente cuenta:</p>
+          <p className='data__transfer-title '>
+            Para hacer efectiva tu compra, realizá el pago la siguiente cuenta:
+          </p>
           <h6 className='data__transfer-cbu'>
             CBU: 0000123456789123 / Alias test.test.test <br />
             Titular: Paola Nicola <br />
             Banco Provincia <br />
           </h6>
           <h5 className='data__transfer-text-important '>
-            IMPORTANTE: Si no recibís un e-mail de confirmación, por favor, revisá tu casilla de spam.
+            IMPORTANTE: Si no recibís un e-mail de confirmación, por favor,
+            revisá tu casilla de spam.
             <br />
             Ante cualquier inconveniente, escribime a
             <a href='mailto:' className='data__transfer-email'>
@@ -57,22 +70,44 @@ export default function ConfirmSale() {
               <div className='carrito-total-container2'>
                 <h5 class='carrito-total-titulo2'>Total del carrito</h5>
 
-                <table class='carrito-total-items2' cellpadding='0' cellspacing='0'>
+                <table
+                  class='carrito-total-items2'
+                  cellpadding='0'
+                  cellspacing='0'
+                >
                   <tr className='carrito-total-item2'>
-                    <td className='carrito-total-item-name2'>Guia plan general hacia una alimentacion saludable</td>
-                    <td className='carrito-total-item-price2 text-right'>$1652</td>
+                    <td className='carrito-total-item-name2'>
+                      Guia plan general hacia una alimentacion saludable
+                    </td>
+                    <td className='carrito-total-item-price2 text-right'>
+                      $1652
+                    </td>
                   </tr>
                   <tr className='carrito-total-item2'>
-                    <td className='carrito-total-item-name2'>Guia plan general</td>
-                    <td className='carrito-total-item-price2 text-right'>$9052</td>
+                    <td className='carrito-total-item-name2'>
+                      Guia plan general
+                    </td>
+                    <td className='carrito-total-item-price2 text-right'>
+                      $9052
+                    </td>
                   </tr>
                   <tr className='carrito-total-item2'>
-                    <td className='carrito-total-item-name2'> Alimentacion saludable</td>
-                    <td className='carrito-total-item-price2 text-right'>$1782</td>
+                    <td className='carrito-total-item-name2'>
+                      {' '}
+                      Alimentacion saludable
+                    </td>
+                    <td className='carrito-total-item-price2 text-right'>
+                      $1782
+                    </td>
                   </tr>
                   <tr className='carrito-total-item2'>
-                    <td className='carrito-total-item-name2'> Plan general saludable</td>
-                    <td className='carrito-total-item-price2 text-right'>$1652</td>
+                    <td className='carrito-total-item-name2'>
+                      {' '}
+                      Plan general saludable
+                    </td>
+                    <td className='carrito-total-item-price2 text-right'>
+                      $1652
+                    </td>
                   </tr>
                   <tr>
                     <td className='carrito-total-ch-td2'></td>
@@ -86,7 +121,9 @@ export default function ConfirmSale() {
             </div>
             <div className='details__buyer-contact'>
               <div className='buyer__contact-container'>
-                <h5 className='buyer__contact-container-h5'>Datos personales</h5>
+                <h5 className='buyer__contact-container-h5'>
+                  Datos personales
+                </h5>
                 <p className='buyer__contact-container-p'>
                   Nombre: <b>Nombre Apellido</b>
                 </p>
@@ -108,5 +145,5 @@ export default function ConfirmSale() {
         </div>
       </section>
     </>
-  );
+  )
 }
