@@ -43,8 +43,9 @@ function CartTotal() {
     // limpiar step
     // validators limpiar
     // cart state limpiar
-    setVariantTrans('carrito-finalizar__oculto ')
-    setVariantMP('carrito-finalizar__oculto ')
+    // dispatch(confirmedBuy())
+    setVariantTrans('carrito-finalizar__oculto')
+    setVariantMP('carrito-finalizar__oculto')
   }
 
   const handleVerificationSelectMethod = () => {
@@ -74,18 +75,25 @@ function CartTotal() {
       <button
         onClick={() => handleNextStep()}
         type='submit'
-        className={step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '}
+        className={
+          step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '
+        }
       >
         Siguiente
       </button>
     )
   } else {
     render = (
-      <button form='formularioTurno' type='submit' className='carrito-finalizar'>
+      <button
+        form='formularioTurno'
+        type='submit'
+        className='carrito-finalizar'
+      >
         Siguente
       </button>
     )
   }
+
   useEffect(() => {
     //console.log('useEffect');
   }, [hora])
@@ -165,7 +173,10 @@ function CartTotal() {
         </tr>
         <tr className='carrito-resume'>
           <td className='carrito-resume-title'>Total</td>
-          <td className='carrito-resume-price text-right'> ${cart.cartTotalAmount}</td>
+          <td className='carrito-resume-price text-right'>
+            {' '}
+            ${cart.cartTotalAmount}
+          </td>
         </tr>
       </table>
 
@@ -173,7 +184,12 @@ function CartTotal() {
         <button onClick={actionBack} type={typeBack} className={variantBack}>
           atras
         </button>
-        <button onClick={actionNext} type={typeNext} form={formNext} className={variantNext}>
+        <button
+          onClick={actionNext}
+          type={typeNext}
+          form={formNext}
+          className={variantNext}
+        >
           Siguiente
         </button>
         <button
@@ -186,12 +202,17 @@ function CartTotal() {
         >
           Pagar
         </button>
-        <Link to='/checkout/confirm' onClick={actionEnd} className={variantTrans}>
+        <Link
+          to='/checkout/confirm'
+          onClick={actionEnd}
+          className={variantTrans}
+        >
           Pagar
         </Link>
         <a href={preference} onClick={actionEnd} className={variantMP}>
           Pagar
         </a>
+        <div class=' '></div>
       </div>
     </div>
   )
