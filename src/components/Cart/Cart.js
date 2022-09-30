@@ -13,21 +13,34 @@ import ProductCart from '../ProductCart/ProductCart'
 import { resetStep } from '../../features/stepsCheckout/stepsSlice'
 import { resetCartState } from '../../features/cartState/cartStateSlice'
 import { setMethod } from '../../features/validators'
+import { backStep } from '../../features/stepsCheckout/stepsSlice'
 
 function Cart() {
   const cart = useSelector((state) => state.cart)
   const products = useSelector(getAllProductsCart)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const stepLocal = useSelector((state) => state.step.step)
+
   useEffect(() => {
     dispatch(getTotals())
   }, [cart, dispatch])
 
   const handleDecreaseCart = (product) => {
     dispatch(decreaseCart(product))
+    if (stepLocal === 2) {
+      if (cart.cartTotalQuantity > 2) {
+        dispatch(backStep())
+      }
+    }
   }
   const handleIncreaseCart = (product) => {
     dispatch(addToCart(product))
+    if (stepLocal === 2) {
+      if (cart.cartTotalQuantity > 1) {
+        dispatch(backStep())
+      }
+    }
   }
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart(product))
@@ -50,7 +63,9 @@ function Cart() {
     <div className='carrito-container1'>
       {cart.cartItems.length === 0 ? (
         <div className='carrito-container carrito-container-empty'>
-          <h4 className='title-empty'>Tu carrito esta vacio, agrega algún producto!</h4>
+          <h4 className='title-empty'>
+            Tu carrito esta vacio, agrega algún producto!
+          </h4>
           <div className='container-empty-link'>
             <Link onClick={handleContinueBuy} to='#' className='link-empty'>
               Continúa Comprando
@@ -91,7 +106,10 @@ function Cart() {
               </tr>
               <tr className='carrito-total-price-title'>
                 <td className='carrito-total-price'>Total</td>
-                <td className='carrito-total-price text-right'> ${cart.cartTotalAmount}</td>
+                <td className='carrito-total-price text-right'>
+                  {' '}
+                  ${cart.cartTotalAmount}
+                </td>
               </tr>
             </table>
 
@@ -109,13 +127,19 @@ function Cart() {
                 </Link>
               </div>
               <div class='wizard-footer' style={{ display: 'none' }}>
-                <button type='button' class=' wizard-prev btn btn-primary-outlined btn-irv-default'>
+                <button
+                  type='button'
+                  class=' wizard-prev btn btn-primary-outlined btn-irv-default'
+                >
                   Atrás 1
                 </button>
                 <button type='button' class=' wizard-next btn btn-primary'>
                   Siguiente 1
                 </button>
-                <Link to='/confirm' className='btn btn-primary btn-md wizard-subm'>
+                <Link
+                  to='/confirm'
+                  className='btn btn-primary btn-md wizard-subm'
+                >
                   Pagar y finalizar 1
                 </Link>
               </div>

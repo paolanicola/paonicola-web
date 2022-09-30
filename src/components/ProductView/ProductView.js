@@ -1,29 +1,37 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import PrimaryButton from '../PrimaryButton/PrimaryButton';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
+import PrimaryButton from '../PrimaryButton/PrimaryButton'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { addToCart, getTotals } from '../../features/cart/cartSlice';
-import { ToastContainer, toast } from 'react-toastify';
-
-import { ReactComponent as InstagramBrand } from '../../assets/images/header/instagram-brands.svg';
-import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg';
-import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg';
+import { addToCart } from '../../features/cart/cartSlice'
+import { toast } from 'react-toastify'
+import { backStep } from '../../features/stepsCheckout/stepsSlice'
 
 export default function ProductView({ product }) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  const cart = useSelector((state) => state.cart)
+  const stepLocal = useSelector((state) => state.step.step)
+
   const handleAddToCartView = () => {
-    dispatch(addToCart(product));
-    toast('Producto agregado al Carrito!');
+    dispatch(addToCart(product))
+    toast('Producto agregado al Carrito!')
+    if (stepLocal === 2) {
+      if (cart.cartTotalQuantity > 1) {
+        dispatch(backStep())
+      }
+    }
     //navigate('/cart');
-  };
+  }
 
   return (
     <>
       <div className='view-container'>
         <div className='view-product'>
           <div className='view-img-container'>
-            <img className='view-img-source' src={product.displayThumbnail} alt='' />
+            <img
+              className='view-img-source'
+              src={product.displayThumbnail}
+              alt=''
+            />
           </div>
         </div>
         <div className='view-detail-container'>
@@ -38,12 +46,14 @@ export default function ProductView({ product }) {
               ''
             )}
             <h4 className='price'>
-              {product.currency} {product.promo ? product.promoPrice : product.price}
+              {product.currency}{' '}
+              {product.promo ? product.promoPrice : product.price}
             </h4>
           </div>
           <div className=' view-detail-raiting'> </div>
           <div className='view-detail-important'>
-            IMPORTANTE: Este producto tiene una vigencia de <b>50</b> días desde el día de su compra. La consulta es <b>online</b> .
+            IMPORTANTE: Este producto tiene una vigencia de <b>50</b> días desde
+            el día de su compra. La consulta es <b>online</b> .
           </div>
           <div className='view-detail-description'> {product.description} </div>
 
@@ -53,5 +63,5 @@ export default function ProductView({ product }) {
         </div>
       </div>
     </>
-  );
+  )
 }

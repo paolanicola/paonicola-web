@@ -6,7 +6,8 @@ import {
   Header,
   HeaderTitle,
   Cart,
-  Checkout
+  Checkout,
+  MercadopagoSuccess
 } from './components'
 import About from './pages/About'
 import Changes from './pages/changes'
@@ -19,6 +20,7 @@ import ProductPage from './pages/products/ProductPage'
 import { ToastContainer } from 'react-toastify'
 import NotFound from './pages/notFound'
 import ConfirmSale from './components/ConfirmSale/ConfirmSale'
+import MercadopagoFailed from './components/MercadopagoFailed'
 
 function App() {
   return (
@@ -53,8 +55,9 @@ function App() {
             <Route path='carrito' element={<Cart />} />
             <Route path='checkout' element={<Checkout />}></Route>
             <Route path='checkout/confirm' element={<ConfirmSale />} />
-            <Route path='mercadopago/succes' element={<div>succes</div>} />
-            <Route path='mercadopago/failed' element={<div>failed</div>} />
+            <Route path='mercadopago/succes' element={<MercadopagoSuccess />} />
+            <Route path='mercadopago/failed' element={<MercadopagoFailed />} />
+            <Route path='mercadopago/pending' element={<MercadopagoFailed />} />
             <Route exact path='producto/:id' element={<ProductPage />} />
           </Route>
           <Route path='*' element={<NotFound />} />

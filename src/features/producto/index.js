@@ -73,23 +73,23 @@ export const loadPreference = () => (dispatch, getState) => {
   const { cartState } = getState()
   console.log(cart)
   console.log(cartState)
-  const itms = cart.cartItems.map((product) => ({
+  const items = cart.cartItems.map((product) => ({
     id: product.id,
     title: product.name,
     currency_id: 'ARS',
     picture_url: 'https://www.mercadopago.com/org-img/MP3/home/logomp3.gif',
     description: product.description,
-    category_id: product.category,
+    category_id: product.category_id,
     quantity: product.cartQuantity,
     unit_price: product.price
   }))
-  console.log(itms)
-  const items = itms
+  console.log(items)
+  const order = { items, cartState }
   dispatch(
     apiCallBegan({
       url: `http://localhost:3002/api/checkout`,
       method: 'post',
-      data: { items },
+      data: { order },
       onStart: preferenceRequested.type,
       onSuccess: preferenceReceived.type,
       onError: preferenceRequestFailed.type
