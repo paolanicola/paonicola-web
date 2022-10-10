@@ -20,6 +20,7 @@ import {
 } from '../../features/cartState/cartStateSlice'
 import { setMethod } from '../../features/validators'
 import { toast } from 'react-toastify'
+import { confirmedBuy } from '../../features/producto'
 
 function MercadoPagoScript(publicKey, options) {
   const script = document.createElement('script')
@@ -57,7 +58,7 @@ function CartTotal() {
     // limpiar step cart state limpiar validators limpiar
     dispatch(resetStep())
     dispatch(resetCartState())
-    // dispatch(confirmedBuy())
+    dispatch(confirmedBuy())
     setVariantTrans('carrito-finalizar__oculto')
     setVariantMP('carrito-finalizar__oculto')
   }
