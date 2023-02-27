@@ -44,7 +44,7 @@ function CartTotal() {
   const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
 
   const horario = useSelector(getHora)
-  const fecha = useSelector(getFecha)
+  const date = useSelector(getFecha)
   const handleNextStep = () => {
     if (horario === null) {
       handleVerificationSelectMethod('Seleccione un Horario!')

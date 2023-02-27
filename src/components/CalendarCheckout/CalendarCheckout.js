@@ -21,7 +21,7 @@ moment.locale('es')
 function CalendarCheckout() {
   //const cartState = useSelector((state) => state.cartState);
   const appointments = useSelector(getAllAppointments)
-  const dates = appointments.map((appointment) => moment(appointment.fecha))
+  const dates = appointments.map((appointment) => moment(appointment.date))
   const [render1, setRender1] = useState('')
   const dispatch = useDispatch()
   //let stringdate = moment(tomorrow).format('YYYY-MM-DD');
@@ -40,7 +40,7 @@ function CalendarCheckout() {
 
   const dateIntoAppoints = () => {
     const temp = new Date(dateRedux)
-    const dat = appointments.map((appointment) => new Date(appointment.fecha))
+    const dat = appointments.map((appointment) => new Date(appointment.date))
     const temp2 = dat.filter((date) => date.getTime() === temp.getTime())
     return temp2.length > 0
   }
@@ -84,25 +84,25 @@ function CalendarCheckout() {
 
   const renderizar = (appoint) => {
     console.log(value)
-    let fecha = null
+    let date = null
     let tmp = null
     if (true) {
       tmp = nextDateAvailbleToToday()
-      fecha = moment(tmp).format('YYYY-MM-DD') + 'T03:00:00Z'
+      date = moment(tmp).format('YYYY-MM-DD') + 'T03:00:00Z'
     }
 
     if (appoint === null) {
-      fecha = fecha.toString().split('T')[0]
+      date = date.toString().split('T')[0]
     } else if (typeof appoint === 'string') {
-      fecha = appoint.split('T')[0]
+      date = appoint.split('T')[0]
     } else {
-      fecha = appoint.toISOString().split('T')[0]
+      date = appoint.toISOString().split('T')[0]
     }
     let horas = []
-    console.log(fecha)
+    console.log(date)
     appointments.map((ap) =>
-      ap.fecha.toString().split('T')[0] === fecha
-        ? (horas = ap.horaDisponibles)
+      ap.date.toString().split('T')[0] === date
+        ? (horas = ap.available_hours)
         : horas
     )
     const optionsHour = horas.map((d) => ({

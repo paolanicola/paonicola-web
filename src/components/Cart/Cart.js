@@ -68,7 +68,7 @@ function Cart() {
           </h4>
           <div className='container-empty-link'>
             <Link onClick={handleContinueBuy} to='#' className='link-empty'>
-              Continúa Comprando
+              Tienda
             </Link>
           </div>
         </div>
