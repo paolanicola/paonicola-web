@@ -1,111 +1,169 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getAllProductsCart } from '../../features/cart/cartSlice'
-import { nextStep, backStep } from '../../features/stepsCheckout/stepsSlice'
 import {
+  deleteCartItems,
+  getAllProductsCart
+} from '../../features/cart/cartSlice'
+import {
+  nextStep,
+  backStep,
+  resetStep
+} from '../../features/stepsCheckout/stepsSlice'
+import {
+  getFecha,
   getHora,
   getVerificado,
+  resetCartState,
   updateformulario,
   updateVerificado
 } from '../../features/cartState/cartStateSlice'
+import { setMethod } from '../../features/validators'
+import { toast } from 'react-toastify'
+import { confirmedBuy } from '../../features/producto'
+
+function MercadoPagoScript(publicKey, options) {
+  const script = document.createElement('script')
+  script.src = 'https://sdk.mercadopago.com/js/v2'
+
+  // script.addEventListener('load', () => {
+  //   setMercadopago(new window.MercadoPago(publicKey, options))
+  // })
+
+  document.body.appendChild(script)
+}
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
+  const { data: method } = useSelector((state) => state.validators)
+  const { preference } = useSelector((state) => state.productos)
   const products = useSelector(getAllProductsCart)
   const dispatch = useDispatch()
   const { step } = useSelector((state) => state.step)
+  const [variantTrans, setVariantTrans] = useState('carrito-finalizar__oculto ')
+  const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
 
+  const horario = useSelector(getHora)
+  const date = useSelector(getFecha)
   const handleNextStep = () => {
-    dispatch(nextStep())
+    if (horario === null) {
+      handleVerificationSelectMethod('Seleccione un Horario!')
+    } else dispatch(nextStep())
+  }
+
+  const handleEnd = () => {
+    // Limpieza de todo
+    // Limpiar el carrito
+    dispatch(deleteCartItems())
+    // limpiar step cart state limpiar validators limpiar
+    dispatch(resetStep())
+    dispatch(resetCartState())
+    dispatch(confirmedBuy())
+    setVariantTrans('carrito-finalizar__oculto')
+    setVariantMP('carrito-finalizar__oculto')
+  }
+
+  const handleVerificationSelectMethod = (text) => {
+    toast(text)
   }
 
   const handleBackStep = () => {
     if (step === 2) {
       //console.log('volviendo del pago');
+      setVariantTrans('carrito-finalizar__oculto ')
+      setVariantMP('carrito-finalizar__oculto ')
       dispatch(updateVerificado(false))
     }
     if (step === 1) {
       dispatch(updateformulario(null))
     }
+    dispatch(setMethod(''))
     dispatch(backStep())
   }
 
-  const a = useSelector(getHora)
+  const hora = useSelector(getHora)
   const verificado = useSelector(getVerificado)
   let render = ''
-  //console.log(verificado);
+
   if (verificado || step === 0) {
     render = (
       <button
         onClick={() => handleNextStep()}
         type='submit'
-        className={step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '}
+        className={
+          step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '
+        }
       >
         Siguiente
       </button>
     )
   } else {
     render = (
-      <button form='formularioTurno' type='submit' className='carrito-finalizar'>
+      <button
+        form='formularioTurno'
+        type='submit'
+        className='carrito-finalizar'
+      >
         Siguente
       </button>
     )
   }
-  useEffect(() => {
-    //console.log('useEffect');
-  }, [a])
 
-  const [mobile, setMobile] = useState(window.screen.width <= 677)
-  const [end, setEnd] = useState(false)
+  let variantBack = ''
+  let variantNext = ''
+  let actionBack = ''
+  let actionNext = ''
+  let typeBack = ''
+  let typeNext = ''
+  let formNext = ''
+  let actionEnd = ''
+  let actionVerificationMethod = ''
+
+  if (step === 0) {
+    variantBack = 'carrito-finalizar__oculto'
+    variantNext = 'carrito-finalizar'
+    variantNext += hora !== null ? '' : ' disabled'
+    actionNext = () => handleNextStep()
+    typeNext = 'submit'
+  }
+
+  if (step === 1) {
+    variantBack = 'carrito-finalizar carrito-finalizar-next'
+    variantNext = 'carrito-finalizar'
+    actionBack = () => handleBackStep()
+    actionNext = ''
+    typeNext = 'submit'
+    formNext = 'formularioTurno'
+  }
+
+  if (step === 2) {
+    variantBack = 'carrito-finalizar carrito-finalizar-next '
+    variantNext = 'carrito-finalizar__oculto'
+    actionBack = () => handleBackStep()
+    actionVerificationMethod = () =>
+      handleVerificationSelectMethod('Seleccione un metodo de pago!')
+    actionEnd = () => handleEnd()
+  }
 
   useEffect(() => {
-    const changeNavbarSizeFs = () => {
-      if (window.screen.width <= 767) {
-        setMobile(true)
+    console.log(method)
+    if (step === 2) {
+      if (method === 'MP') {
+        setVariantTrans('carrito-finalizar__oculto')
+        setVariantMP('carrito-finalizar')
+      }
+      if (method === 'Trans') {
+        setVariantTrans('carrito-finalizar')
+        setVariantMP('carrito-finalizar__oculto')
       }
     }
-    window.addEventListener('resize', changeNavbarSizeFs)
-    return () => window.removeEventListener('resize', changeNavbarSizeFs)
-  }, [])
-  useEffect(() => {
-    const changeNavbarSizeFss = () => {
-      if (window.screen.width > 677) {
-        setMobile(false)
-      }
-    }
-    window.addEventListener('resize', changeNavbarSizeFss)
-    return () => window.removeEventListener('resize', changeNavbarSizeFss)
-  }, [])
-
-  useEffect(() => {
-    const changeNavbarSizeFsss = () => {
-      if (document.body.scrollHeight === window.scrollY + window.innerHeight) {
-        //console.log('llegue al final');
-        setEnd(true)
-      }
-    }
-
-    window.addEventListener('scroll', changeNavbarSizeFsss)
-    return () => window.removeEventListener('scroll', changeNavbarSizeFsss)
-  }, [])
-  useEffect(() => {
-    const changeNavbarSizeFssss = () => {
-      if (document.body.scrollHeight > window.scrollY + window.innerHeight) {
-        //console.log('no es el final');
-        setEnd(false)
-      }
-    }
-
-    window.addEventListener('scroll', changeNavbarSizeFssss)
-    return () => window.removeEventListener('scroll', changeNavbarSizeFssss)
-  }, [])
+  }, [method])
 
   return (
     <div className='carrito-total-container'>
-      <h5 class='carrito-total-titulo'>Total del carrito</h5>
+      <h5 className='carrito-total-titulo'>Total del carrito</h5>
 
-      <table class='carrito-total-items' cellpadding='0' cellspacing='0'>
+      <table className='carrito-total-items' cellpadding='0' cellspacing='0'>
         {products.length > 0 ? (
           products.map((product) => (
             <tr className='carrito-total-item'>
@@ -127,43 +185,46 @@ function CartTotal() {
         </tr>
         <tr className='carrito-resume'>
           <td className='carrito-resume-title'>Total</td>
-          <td className='carrito-resume-price text-right'> ${cart.cartTotalAmount}</td>
+          <td className='carrito-resume-price text-right'>
+            {' '}
+            ${cart.cartTotalAmount}
+          </td>
         </tr>
       </table>
 
-      <div
-        class={mobile && end ? 'carrito-total-buttons back mobile' : 'carrito-total-buttons back'}
-      >
+      <div className='carrito-total-buttons back'>
+        <button onClick={actionBack} type={typeBack} className={variantBack}>
+          atras
+        </button>
         <button
-          onClick={() => handleBackStep()}
-          type='button'
+          onClick={actionNext}
+          type={typeNext}
+          form={formNext}
+          className={variantNext}
+        >
+          Siguiente
+        </button>
+        <button
+          onClick={actionVerificationMethod}
           className={
-            step === 0 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'
+            step !== 2 || method !== ''
+              ? 'carrito-finalizar__oculto'
+              : 'carrito-finalizar disabled'
           }
         >
-          Atrás
+          Pagar
         </button>
-        {a !== null ? (
-          render
-        ) : (
-          <button
-            onClick={() => handleNextStep()}
-            type='button'
-            className={step === 2 ? 'carrito-finalizar__oculto' : 'disabled carrito-finalizar  '}
-            disabled
-          >
-            Siguiente
-          </button>
-        )}
-
         <Link
           to='/checkout/confirm'
-          className={
-            step !== 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar carrito-finalizar-next'
-          }
+          onClick={actionEnd}
+          className={variantTrans}
         >
-          Pagar y finalizar
+          Pagar
         </Link>
+        <a href={preference} onClick={actionEnd} className={variantMP}>
+          Pagar
+        </a>
+        <div class=''></div>
       </div>
     </div>
   )

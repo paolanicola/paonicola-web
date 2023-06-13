@@ -1,33 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import PrimaryButton from '../PrimaryButton/PrimaryButton';
-import { ReactComponent as AddToCart } from '../../assets/images/tienda/add-to-cart.svg';
-import { ReactComponent as View } from '../../assets/images/tienda/view.svg';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import PrimaryButton from '../PrimaryButton/PrimaryButton'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, getTotals } from '../../features/cart/cartSlice';
-import Modal from '../Modal/Modal';
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCart, getTotals } from '../../features/cart/cartSlice'
+import Modal from '../Modal/Modal'
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-import img1 from '../../assets/images/tienda/producto-ejemplo.jpg';
+import img1 from '../../assets/images/tienda/producto-ejemplo.jpg'
+import { backStep } from '../../features/stepsCheckout/stepsSlice'
+
 function Product({ product }) {
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const cart = useSelector((state) => state.cart)
+  const stepLocal = useSelector((state) => state.step.step)
+  const dispatch = useDispatch()
 
   const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-    toast('Producto agregado al Carrito!');
+    dispatch(addToCart(product))
+    toast('Producto agregado al Carrito!')
+    if (stepLocal === 2) {
+      if (cart.cartTotalQuantity > 1) {
+        dispatch(backStep())
+      }
+    }
     //navigate('/cart');
-  };
+  }
 
   useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
+    dispatch(getTotals())
+  }, [cart, dispatch])
   //modal
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
   //toast
 
   return (
@@ -63,23 +68,33 @@ function Product({ product }) {
               ''
             )}
             <h4>
-              {product.currency} {product.promo ? product.promoPrice : product.price}
+              {product.currency}{' '}
+              {product.promo ? product.promoPrice : product.price}
             </h4>
           </div>
         </div>
         <div className='botones-mobile'>
-          <Link to='' onClick={() => setShow(true)} className='botones-mobile-view' title='Vista rápida'>
+          <Link
+            to=''
+            onClick={() => setShow(true)}
+            className='botones-mobile-view'
+            title='Vista rápida'
+          >
             {/* <View /> */}
             Ver
           </Link>
-          <button onClick={() => handleAddToCart(product)} className='botones-mobile-addToCart' title='Añadir al carrito'>
+          <button
+            onClick={() => handleAddToCart(product)}
+            className='botones-mobile-addToCart'
+            title='Añadir al carrito'
+          >
             {/* <AddToCart /> */}
             Añadir al Carrito
           </button>
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default Product;
+export default Product

@@ -21,7 +21,7 @@ moment.locale('es')
 function CalendarCheckout() {
   //const cartState = useSelector((state) => state.cartState);
   const appointments = useSelector(getAllAppointments)
-  const dates = appointments.map((appointment) => moment(appointment.fecha))
+  const dates = appointments.map((appointment) => moment(appointment.date))
   const [render1, setRender1] = useState('')
   const dispatch = useDispatch()
   //let stringdate = moment(tomorrow).format('YYYY-MM-DD');
@@ -30,6 +30,7 @@ function CalendarCheckout() {
   dates.map((d) => meses.set(d.format('MMMM'), d.toDate()))
 
   const dateRedux = useSelector(getFecha)
+  const [value, setValue] = useState(null)
 
   const nextDateAvailbleToToday = () => {
     const temp = moment()
@@ -37,16 +38,16 @@ function CalendarCheckout() {
     return temp2[0].toDate()
   }
 
-  const [value, setValue] = useState(null)
-
   const dateIntoAppoints = () => {
     const temp = new Date(dateRedux)
-    const dat = appointments.map((appointment) => new Date(appointment.fecha))
+    const dat = appointments.map((appointment) => new Date(appointment.date))
     const temp2 = dat.filter((date) => date.getTime() === temp.getTime())
     return temp2.length > 0
   }
 
   useEffect(() => {
+    console.log(dateRedux === null)
+    console.log(dateIntoAppoints())
     if (dateRedux === null) {
       setValue(nextDateAvailbleToToday())
       dispatch(updateFecha(nextDateAvailbleToToday()))
@@ -61,7 +62,7 @@ function CalendarCheckout() {
 
   useEffect(() => {
     renderizar(dateRedux)
-  }, [value])
+  }, [dateRedux])
 
   const onClick = (value, event) => {
     dispatch(updateFecha(value))
@@ -82,21 +83,34 @@ function CalendarCheckout() {
   let hora = useSelector(getHora)
 
   const renderizar = (appoint) => {
-    let fecha = null
-    if (typeof appoint === 'string') {
-      fecha = appoint.toString().split('T')[0]
+    console.log(value)
+    let date = null
+    let tmp = null
+    if (true) {
+      tmp = nextDateAvailbleToToday()
+      date = moment(tmp).format('YYYY-MM-DD') + 'T03:00:00Z'
+    }
+
+    if (appoint === null) {
+      date = date.toString().split('T')[0]
+    } else if (typeof appoint === 'string') {
+      date = appoint.split('T')[0]
     } else {
-      fecha = appoint.toISOString().split('T')[0]
+      date = appoint.toISOString().split('T')[0]
     }
     let horas = []
+    console.log(date)
     appointments.map((ap) =>
-      ap.fecha.toString().split('T')[0] === fecha ? (horas = ap.horaDisponibles) : horas
+      ap.date.toString().split('T')[0] === date
+        ? (horas = ap.available_hours)
+        : horas
     )
     const optionsHour = horas.map((d) => ({
       value: d,
       label: d
     }))
-    let horaSelecionadaDefecto = hora !== null ? { value: hora, label: hora } : optionsHour[0]
+    let horaSelecionadaDefecto =
+      hora !== null ? { value: hora, label: hora } : ''
     setRender1(
       <div>
         <Select
@@ -123,8 +137,15 @@ function CalendarCheckout() {
 
   const changeViewMonth = (activeStartDate, view, action) => {
     dispatch(deleteHora())
-    if (action !== 'onChange' && view !== 'year' && view !== 'decade' && view !== 'century') {
-      let dia = dates.find((day) => day.format('M') == activeStartDate.getMonth() + 1)
+    if (
+      action !== 'onChange' &&
+      view !== 'year' &&
+      view !== 'decade' &&
+      view !== 'century'
+    ) {
+      let dia = dates.find(
+        (day) => day.format('M') == activeStartDate.getMonth() + 1
+      )
       setValue(dia.toDate())
       dispatch(updateFecha(dia.toDate()))
     }
@@ -157,7 +178,9 @@ function CalendarCheckout() {
   return (
     <div className='wizard-body'>
       <div className='step initial active'>
-        <h5 className='calendar-title'>Seleccioná la fecha y hora para tu turno:</h5>
+        <h5 className='calendar-title'>
+          Seleccioná la fecha y hora para tu turno:
+        </h5>
         <div className='calendar-time-picker-container'>
           <div className='calendar-picker-container'>
             <Calendar
@@ -171,9 +194,12 @@ function CalendarCheckout() {
               onClickDay={(value, event) => onClick(value, event)}
               //maxDate={new Date(2022, 1, 28)}
               //onViewChange={({ action, activeStartDate, value, view }) => console.log('New view is: ', value)}
-              onActiveStartDateChange={({ action, activeStartDate, value, view }) =>
-                changeViewMonth(activeStartDate, view, action)
-              }
+              onActiveStartDateChange={({
+                action,
+                activeStartDate,
+                value,
+                view
+              }) => changeViewMonth(activeStartDate, view, action)}
               activeStartDate={value}
               next2Label=''
               prev2Label=''

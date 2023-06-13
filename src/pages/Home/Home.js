@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import Clinica from '../../assets/images/services-img/01clinica.svg';
-import Deportiva from '../../assets/images/services-img/02deportiva.svg';
-import Feedback from '../../assets/images/services-img/03feedback.svg';
-import ConsultasOnline from '../../assets/images/services-img/04consultas-online.svg';
+import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import Clinica from '../../assets/images/services-img/01clinica.svg'
+import Deportiva from '../../assets/images/services-img/02deportiva.svg'
+import Feedback from '../../assets/images/services-img/03feedback.svg'
+import ConsultasOnline from '../../assets/images/services-img/04consultas-online.svg'
 
 export default function Home() {
   return (
@@ -12,7 +12,10 @@ export default function Home() {
         <div className='home-main-container '>
           <div className='home-main-row'>
             <div className='  title-home-containers one animate fadeRight'>
-              <h1 className='home-main-title '>LOGRÁ UN ESTILO DE VIDA SALUDABLE, A TRAVÉS DE UNA PLANIFICACIÓN PROFESIONAL Y PERSONALIZADA</h1>
+              <h1 className='home-main-title '>
+                LOGRÁ UN ESTILO DE VIDA SALUDABLE, A TRAVÉS DE UNA PLANIFICACIÓN PROFESIONAL Y
+                PERSONALIZADA
+              </h1>
             </div>
           </div>
         </div>
@@ -27,7 +30,12 @@ export default function Home() {
               {
                 //<%= image_tag'servicios/01clinica.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'} %>
               }
-              <img className='item-img' src={Clinica} alt='Mi metodologia' title='Mi meteodologia' />
+              <img
+                className='item-img'
+                src={Clinica}
+                alt='Mi metodologia'
+                title='Mi meteodologia'
+              />
 
               <h5>Nutrición clínica: Educación y hábitos saludables</h5>
             </div>
@@ -37,7 +45,12 @@ export default function Home() {
               {
                 //<%= image_tag('servicios/02deportiva.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'}) %>
               }
-              <img className='item-img' src={Deportiva} alt='Mi metodologia' title='Mi meteodologia' />
+              <img
+                className='item-img'
+                src={Deportiva}
+                alt='Mi metodologia'
+                title='Mi meteodologia'
+              />
               <h5>Nutrición para el rendimiento deportivo</h5>
             </div>
           </div>
@@ -46,7 +59,12 @@ export default function Home() {
               {
                 // <%= image_tag('servicios/03feedback.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'}) %>
               }
-              <img className='item-img' src={Feedback} alt='Mi metodologia' title='Mi meteodologia' />
+              <img
+                className='item-img'
+                src={Feedback}
+                alt='Mi metodologia'
+                title='Mi meteodologia'
+              />
               <h5>Feedback continuo</h5>
             </div>
           </div>
@@ -55,7 +73,12 @@ export default function Home() {
               {
                 //<%= image_tag('servicios/04bioimpedancia.svg', alt: 'Nutrición clínica', data: { title:'Nutrición clínica'}) %>
               }
-              <img className='item-img' src={ConsultasOnline} alt='Mi metodologia' title='Mi meteodologia' />
+              <img
+                className='item-img'
+                src={ConsultasOnline}
+                alt='Mi metodologia'
+                title='Mi meteodologia'
+              />
               <h5>Consultas Online</h5>
             </div>
           </div>
@@ -133,7 +156,9 @@ export default function Home() {
         <div className=''>
           <div className='faq-container'>
             <div className=' faq-text-top'>
-              <h2 className='title-section-card-b title-section-card-gris'>¿Tenés dudas o consultas?</h2>
+              <h2 className='title-section-card-b title-section-card-gris'>
+                ¿Tenés dudas o consultas?
+              </h2>
               <h3>Visitá nuestras preguntas frecuentes</h3>
             </div>
             <div className='faq-container-button '>
@@ -145,5 +170,5 @@ export default function Home() {
         </div>
       </section>
     </div>
-  );
+  )
 }

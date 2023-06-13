@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import 'react-calendar/dist/Calendar.css'
 
-import {
-  addToCart,
-  decreaseCart,
-  getAllProductsCart,
-  getTotals,
-  removeFromCart
-} from '../../features/cart/cartSlice'
+import { getTotals } from '../../features/cart/cartSlice'
 import Steps from '../Steps/Steps'
 import CalendarCheckout from '../CalendarCheckout/CalendarCheckout'
 import CartTotal from '../CartTotal/CartTotal'

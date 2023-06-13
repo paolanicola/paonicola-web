@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import { getTotals } from '../../features/cart/cartSlice'
 
-export default function ConfirmSale() {
+export default function MercadopagoPending() {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
+
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  console.log(params.get('preference_id'))
 
   useEffect(() => {
     dispatch(getTotals())

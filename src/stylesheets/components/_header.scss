@@ -27,6 +27,7 @@
 .icon__svg__open {
   height: 25px;
 }
+
 .img-icono-close-open {
   height: 25px;
   width: 25px;
@@ -60,6 +61,7 @@
   border-right: 1px solid #ccc;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
+
 .pepe {
   background-color: $primary;
   height: $header-height;
@@ -94,6 +96,7 @@
 .menu__item {
   display: block;
   text-align: left;
+
   p {
     color: #393338;
     font-size: 1rem;
@@ -115,6 +118,7 @@
 .underlined {
   //background-color: yellow;
   position: relative;
+
   &:hover {
     transition: all 0.3s ease;
     -webkit-transition: 0.5s ease;
@@ -148,6 +152,7 @@
 .menu__redes__icono {
   height: auto;
   padding: 0 1rem;
+
   &:hover {
     opacity: 0.3;
     transition: all 0.3s ease;
@@ -181,6 +186,7 @@
   justify-content: center;
   transition: all 0.3s ease;
 }
+
 .header__logo__img {
   margin: 0 auto;
   height: 100%;
@@ -201,6 +207,7 @@
   padding-top: 5px;
   transition: all 0.3s ease;
 }
+
 .menu__logo__svg {
   height: 100%;
   width: 100%;
@@ -214,6 +221,7 @@
     max-height: $header-height;
     transition: all 0.3s ease;
   }
+
   .navBar__icon__svg--none {
     display: none;
   }
@@ -228,14 +236,17 @@
     box-shadow: none;
     transition: all 0.3s ease;
   }
+
   .menu__left {
     display: flex;
     justify-content: flex-start;
     width: 50%;
   }
+
   .menu__item p {
     font-size: 16px;
   }
+
   .menu__right {
     display: flex;
     justify-content: flex-end;
@@ -246,17 +257,20 @@
   .pepe {
     display: none;
   }
+
   .menu__logo {
     height: 150px;
     width: 150px;
     padding-top: 5px;
     transition: all 0.3s ease;
   }
+
   .menu__logo__svg {
     height: 100%;
     width: 100%;
     transition: all 0.3s ease;
   }
+
   .header--resize {
     height: 97px;
     transition: all 0.3s ease-in-out;
@@ -266,6 +280,7 @@
       width: 90px;
       transition: all 0.3s ease;
     }
+
     .menu__logo__svg {
       height: 100%;
       width: 100%;
@@ -276,6 +291,7 @@
   .underlined {
     //background-color: yellow;
     position: relative;
+
     &:hover {
       transition: all 0.3s ease;
       -webkit-transition: 0.5s ease;
