@@ -1,41 +1,53 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
-import { useSelector, useDispatch } from 'react-redux'
-import 'react-datetime-picker/dist/DateTimePicker.css'
-import Select from 'react-select'
 import 'react-calendar/dist/Calendar.css'
 import 'react-clock/dist/Clock.css'
-import moment from 'moment'
-import 'moment/locale/es'
+import 'react-datetime-picker/dist/DateTimePicker.css'
+import { useDispatch, useSelector } from 'react-redux'
+import Select from 'react-select'
 import { getAllAppointments } from '../../features/appointments/appointmentsSlice'
 import {
+  deleteHora,
   getFecha,
   getHora,
   updateFecha,
   updateHora,
-  deleteHora
 } from '../../features/cartState/cartStateSlice'
-
-moment.locale('es')
 
 function CalendarCheckout() {
   //const cartState = useSelector((state) => state.cartState);
   const appointments = useSelector(getAllAppointments)
-  const dates = appointments.map((appointment) => moment(appointment.date))
+  const dates = appointments.map((appointment) => new Date(appointment.fecha))
   const [render1, setRender1] = useState('')
   const dispatch = useDispatch()
   //let stringdate = moment(tomorrow).format('YYYY-MM-DD');
   //var mydate = new Date(stringdate + 'T03:00:00Z');
   const meses = new Map()
-  dates.map((d) => meses.set(d.format('MMMM'), d.toDate()))
+
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
+
+  dates.map((d) => meses.set(monthNames[d.getMonth()], new Date(d)))
 
   const dateRedux = useSelector(getFecha)
   const [value, setValue] = useState(null)
 
-  const nextDateAvailbleToToday = () => {
-    const temp = moment()
+  const nextDateAvailableToToday = () => {
+    const temp = new Date()
     const temp2 = dates.filter((date) => date > temp)
-    return temp2[0].toDate()
+    return temp2[0]
   }
 
   const dateIntoAppoints = () => {
@@ -46,17 +58,15 @@ function CalendarCheckout() {
   }
 
   useEffect(() => {
-    console.log(dateRedux === null)
-    console.log(dateIntoAppoints())
     if (dateRedux === null) {
-      setValue(nextDateAvailbleToToday())
-      dispatch(updateFecha(nextDateAvailbleToToday()))
+      setValue(nextDateAvailableToToday())
+      dispatch(updateFecha(nextDateAvailableToToday()))
     } else if (dateIntoAppoints()) {
       setValue(new Date(dateRedux))
       dispatch(updateFecha(new Date(dateRedux)))
     } else {
-      setValue(nextDateAvailbleToToday())
-      dispatch(updateFecha(nextDateAvailbleToToday()))
+      setValue(nextDateAvailableToToday())
+      dispatch(updateFecha(nextDateAvailableToToday()))
     }
   }, [])
 
@@ -73,7 +83,7 @@ function CalendarCheckout() {
   const customStyles = {
     control: () => ({
       // none of react-select's styles are passed to <Control />
-    })
+    }),
   }
 
   const handleHourSelect = (e) => {
@@ -83,13 +93,12 @@ function CalendarCheckout() {
   let hora = useSelector(getHora)
 
   const renderizar = (appoint) => {
-    console.log(value)
     let date = null
-    let tmp = null
-    if (true) {
-      tmp = nextDateAvailbleToToday()
-      date = moment(tmp).format('YYYY-MM-DD') + 'T03:00:00Z'
-    }
+    const tmp = nextDateAvailableToToday()
+    const year = tmp.getFullYear()
+    const month = (tmp.getMonth() + 1).toString().padStart(2, '0')
+    const day = tmp.getDate().toString().padStart(2, '0')
+    date = `${year}-${month}-${day}T03:00:00Z`
 
     if (appoint === null) {
       date = date.toString().split('T')[0]
@@ -98,19 +107,26 @@ function CalendarCheckout() {
     } else {
       date = appoint.toISOString().split('T')[0]
     }
+
     let horas = []
-    console.log(date)
-    appointments.map((ap) =>
-      ap.date.toString().split('T')[0] === date
-        ? (horas = ap.available_hours)
-        : horas
-    )
+    console.log(appointments)
+    appointments.forEach((ap) => {
+      const apDate = new Date(ap.fecha)
+      const apDateSplit = apDate.toISOString().split('T')[0]
+
+      if (apDateSplit === date) {
+        horas = ap.horaDisponibles
+      }
+    })
+
     const optionsHour = horas.map((d) => ({
       value: d,
-      label: d
+      label: d,
     }))
-    let horaSelecionadaDefecto =
+
+    const horaSelecionadaDefecto =
       hora !== null ? { value: hora, label: hora } : ''
+
     setRender1(
       <div>
         <Select
@@ -127,10 +143,10 @@ function CalendarCheckout() {
           onChange={handleHourSelect}
         />
         {/*horas.map((hora, index) => (
-          <div key={index} className='time-select '>
-            <button className='nada '>{hora}</button>
-          </div>
-        ))*/}
+            <div key={index} className='time-select '>
+              <button className='nada '>{hora}</button>
+            </div>
+          ))*/}
       </div>
     )
   }
@@ -144,7 +160,7 @@ function CalendarCheckout() {
       view !== 'century'
     ) {
       let dia = dates.find(
-        (day) => day.format('M') == activeStartDate.getMonth() + 1
+        (day) => day.format('M') === activeStartDate.getMonth() + 1
       )
       setValue(dia.toDate())
       dispatch(updateFecha(dia.toDate()))
@@ -159,8 +175,8 @@ function CalendarCheckout() {
   function itsTrue(a, b) {
     var temp = false
     if (isSameDay(a, b)) {
-      let dato = new Date(dateRedux)
-      temp = b.getMonth() + 1 == dato.getMonth() + 1
+      let date = new Date(dateRedux)
+      temp = b.getMonth() + 1 === date.getMonth() + 1
     }
     return temp
   }
@@ -170,7 +186,7 @@ function CalendarCheckout() {
     // Disable tiles in month view only
     if (view === 'month') {
       // Check if a date React-Calendar wants to check is on the list of disabled dates
-      var temp = dates.find((dDate) => itsTrue(dDate.toDate(), date))
+      var temp = dates.find((dDate) => itsTrue(dDate, date))
       return !temp
     }
   }
@@ -189,8 +205,8 @@ function CalendarCheckout() {
               tileDisabled={tileDisabled}
               value={value}
               onChange={setValue}
-              maxDate={dates[dates.length - 1].toDate()}
-              minDate={nextDateAvailbleToToday()}
+              maxDate={new Date(dates[dates.length - 1])}
+              minDate={nextDateAvailableToToday()}
               onClickDay={(value, event) => onClick(value, event)}
               //maxDate={new Date(2022, 1, 28)}
               //onViewChange={({ action, activeStartDate, value, view }) => console.log('New view is: ', value)}
@@ -198,7 +214,7 @@ function CalendarCheckout() {
                 action,
                 activeStartDate,
                 value,
-                view
+                view,
               }) => changeViewMonth(activeStartDate, view, action)}
               activeStartDate={value}
               next2Label=''
