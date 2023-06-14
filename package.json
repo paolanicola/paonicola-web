@@ -24,7 +24,7 @@
     "react-router-dom": "6",
     "react-scripts": "4.0.3",
     "react-select": "^5.2.1",
-    "react-toastify": "^9.0.1",
+    "react-toastify": "^8.1.0",
     "redux": "^4.1.2",
     "sass": "^1.44.0",
     "web-vitals": "^1.1.2"
@@ -32,6 +32,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "start-legacy": "react-scripts --openssl-legacy-provider start",
+    "build-legacy": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
