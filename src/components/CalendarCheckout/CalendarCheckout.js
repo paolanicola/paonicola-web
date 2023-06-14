@@ -13,6 +13,7 @@ import {
   updateFecha,
   updateHora,
 } from '../../features/cartState/cartStateSlice'
+import { monthNames } from '../../utils/constants'
 
 function CalendarCheckout() {
   //const cartState = useSelector((state) => state.cartState);
@@ -23,21 +24,6 @@ function CalendarCheckout() {
   //let stringdate = moment(tomorrow).format('YYYY-MM-DD');
   //var mydate = new Date(stringdate + 'T03:00:00Z');
   const meses = new Map()
-
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ]
 
   dates.map((d) => meses.set(monthNames[d.getMonth()], new Date(d)))
 
