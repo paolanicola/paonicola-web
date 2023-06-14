@@ -186,7 +186,7 @@ function CalendarCheckout() {
     // Disable tiles in month view only
     if (view === 'month') {
       // Check if a date React-Calendar wants to check is on the list of disabled dates
-      var temp = dates.find((dDate) => itsTrue(dDate, date))
+      const temp = dates.find((dDate) => itsTrue(dDate, date))
       return !temp
     }
   }
