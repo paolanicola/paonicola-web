@@ -173,7 +173,7 @@ function CalendarCheckout() {
   }
 
   function itsTrue(a, b) {
-    var temp = false
+    let temp = false
     if (isSameDay(a, b)) {
       const date = new Date(dateRedux)
       temp = b.getMonth() + 1 === date.getMonth() + 1
