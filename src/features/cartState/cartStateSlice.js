@@ -1,14 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  fecha: localStorage.getItem('fecha') ? JSON.parse(localStorage.getItem('fecha')) : null,
-  hora: localStorage.getItem('hora') ? JSON.parse(localStorage.getItem('hora')) : null,
+  fecha: localStorage.getItem('fecha')
+    ? JSON.parse(localStorage.getItem('fecha'))
+    : null,
+  hora: localStorage.getItem('hora')
+    ? JSON.parse(localStorage.getItem('hora'))
+    : null,
   formulario: localStorage.getItem('formulario')
     ? JSON.parse(localStorage.getItem('formulario'))
     : null,
   verificado: localStorage.getItem('verificado')
     ? JSON.parse(localStorage.getItem('verificado'))
-    : false
+    : false,
 }
 
 const cartStateSlice = createSlice({
@@ -44,8 +48,8 @@ const cartStateSlice = createSlice({
       localStorage.setItem('verificado', JSON.stringify(state.verificado))
       state.formulario = null
       localStorage.setItem('formulario', JSON.stringify(state.formulario))
-    }
-  }
+    },
+  },
 })
 
 export const {
@@ -54,7 +58,7 @@ export const {
   updateVerificado,
   deleteHora,
   updateformulario,
-  resetCartState
+  resetCartState,
 } = cartStateSlice.actions
 export const getFecha = (state) => state.cartState.fecha
 export const getHora = (state) => state.cartState.hora

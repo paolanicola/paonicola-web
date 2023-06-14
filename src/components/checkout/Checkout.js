@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import 'react-calendar/dist/Calendar.css'
 
+import { FormPatientOrder, PaymentMethods } from '..'
 import { getTotals } from '../../features/cart/cartSlice'
-import Steps from '../Steps/Steps'
 import CalendarCheckout from '../CalendarCheckout/CalendarCheckout'
 import CartTotal from '../CartTotal/CartTotal'
-import { FormPatientOrder, PaymentMethods } from '..'
+import Steps from '../Steps/Steps'
 
 function Checkout() {
   const dispatch = useDispatch()
@@ -21,7 +21,7 @@ function Checkout() {
   const stepCurrent = {
     0: <CalendarCheckout />,
     1: <FormPatientOrder />,
-    2: <PaymentMethods />
+    2: <PaymentMethods />,
   }
 
   return (
