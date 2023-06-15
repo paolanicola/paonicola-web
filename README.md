@@ -3,7 +3,13 @@
 > React frontend project used for ecommerce and appointments management.
 
 ## Installation Steps.
+
+Duplicate the root file ".env-sample" and rename it to ".env" only.
+
+Edit ".env" file and add the corresponding environment variables (i.e: the API base URL).
+
 ### `yarn install`
+
 Will install the dependencies
 
 ### `yarn start`
@@ -68,4 +74,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
 # paonicola-web

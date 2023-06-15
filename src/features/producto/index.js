@@ -16,7 +16,7 @@ export const initialState = {
   loading: false,
   loadSuccess: false,
   success: false,
-  preference: ''
+  preference: '',
 }
 
 const productosReducer = createReducer(initialState, {
@@ -52,7 +52,7 @@ const productosReducer = createReducer(initialState, {
     state.loading = false
     state.success = false
     state.loadSuccess = false
-  }
+  },
 })
 
 export default productosReducer
@@ -61,18 +61,16 @@ export default productosReducer
 export const loadProducts = () => (dispatch, getState) => {
   dispatch(
     apiCallBegan({
-      url: `http://localhost:3002/api/products`,
+      url: `${process.env.REACT_APP_API_BASE_URL}/products`,
       onStart: productsRequested.type,
       onSuccess: productsReceived.type,
-      onError: productsRequestFailed.type
+      onError: productsRequestFailed.type,
     })
   )
 }
 export const loadPreference = () => (dispatch, getState) => {
   const { cart } = getState()
   const { cartState } = getState()
-  console.log(cart)
-  console.log(cartState)
   const items = cart.cartItems.map((product) => ({
     id: product.id,
     title: product.name,
@@ -81,9 +79,8 @@ export const loadPreference = () => (dispatch, getState) => {
     description: product.description,
     category_id: product.category_id,
     quantity: product.cartQuantity,
-    unit_price: product.price
+    unit_price: product.price,
   }))
-  console.log(items)
   const order = { items, cartState }
   dispatch(
     apiCallBegan({
@@ -92,15 +89,14 @@ export const loadPreference = () => (dispatch, getState) => {
       data: { order },
       onStart: preferenceRequested.type,
       onSuccess: preferenceReceived.type,
-      onError: preferenceRequestFailed.type
+      onError: preferenceRequestFailed.type,
     })
   )
 }
 export const confirmedBuy = () => (dispatch, getState) => {
   const { cart } = getState()
   const { cartState } = getState()
-  console.log(cart)
-  console.log(cartState)
+
   const items = cart.cartItems.map((product) => ({
     id: product.id,
     title: product.name,
@@ -109,9 +105,8 @@ export const confirmedBuy = () => (dispatch, getState) => {
     description: product.description,
     category_id: product.category_id,
     quantity: product.cartQuantity,
-    unit_price: product.price
+    unit_price: product.price,
   }))
-  console.log(items)
   const order = { items, cartState }
   dispatch(
     apiCallBegan({
@@ -120,7 +115,7 @@ export const confirmedBuy = () => (dispatch, getState) => {
       data: { order },
       onStart: preferenceRequested.type,
       onSuccess: preferenceReceived.type,
-      onError: preferenceRequestFailed.type
+      onError: preferenceRequestFailed.type,
     })
   )
 }
