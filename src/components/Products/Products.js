@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../features/products/productSlice'
 import Filters from '../Filters/Filters'
 import Product from '../Product/Product'
 
 import { loadCategories } from '../../features/categories'
-import axios from 'axios'
 import { loadProducts } from '../../features/producto'
-import { productsWithOff } from '../../features/producto/selector'
 
 export default function Products() {
   const dispatch = useDispatch()
@@ -15,11 +13,11 @@ export default function Products() {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState(products)
 
-  //inico
-  const [productos, setProductos] = useState()
-  //fin
-
-  const { loading: isLoading, data: info, success } = useSelector((state) => state.productos)
+  const {
+    loading: isLoading,
+    data: info,
+    success,
+  } = useSelector((state) => state.productos) // Assuming `productos` is the correct slice name
 
   useEffect(() => {
     if (success) {
@@ -34,13 +32,14 @@ export default function Products() {
   }, [])
 
   const searchHandler = (searchTerm) => {
-    //console.log(searchTerm);
     setSearchTerm(searchTerm)
     if (searchTerm !== '') {
       const newProductsList = Object.values(products).filter((product) => {
-        return Object.values(product).join(' ').toLowerCase().includes(searchTerm.toLowerCase())
+        return Object.values(product)
+          .join(' ')
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
       })
-      console.log(newProductsList)
       setSearchResult(newProductsList)
     } else {
       setSearchResult(products)
@@ -49,12 +48,13 @@ export default function Products() {
 
   let renderProducts = ''
 
-  //renderProducts = products.length > 0 ? products.map((product) => <Product product={product} />) : <div>No hay concidencias</div>;
   renderProducts =
     searchResult.length > 0 ? (
-      searchResult.map((product) => <Product product={product} />)
+      searchResult.map((product) => (
+        <Product key={product.id} product={product} />
+      ))
     ) : (
-      <div className='product-notFound'>No hay concidencias</div>
+      <div className='product-notFound'>No hay coincidencias</div>
     )
 
   return (
