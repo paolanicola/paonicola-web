@@ -2,18 +2,18 @@ import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  updateVerificado,
-  getFormulario,
-  updateformulario
+  getForm,
+  updateForm,
+  updateVerified,
 } from '../../features/cartState/cartStateSlice'
 import { loadPreference } from '../../features/producto'
-import { nextStep, backStep } from '../../features/stepsCheckout/stepsSlice'
+import { nextStep } from '../../features/stepsCheckout/stepsSlice'
 
 function FormPatientOrder() {
   const dispatch = useDispatch()
   const { step } = useSelector((state) => state.step)
 
-  const form = useSelector(getFormulario)
+  const form = useSelector(getForm)
 
   const handleNextStep = () => {
     dispatch(nextStep())
@@ -22,11 +22,11 @@ function FormPatientOrder() {
     register,
     handleSubmit,
     formState: { errors },
-    clearErrors
+    clearErrors,
   } = useForm()
   const onSubmit = (data) => {
-    dispatch(updateformulario(data))
-    dispatch(updateVerificado(true))
+    dispatch(updateForm(data))
+    dispatch(updateVerified(true))
     dispatch(loadPreference())
     handleNextStep()
   }
@@ -56,12 +56,12 @@ function FormPatientOrder() {
                 {...register('nombre', {
                   required: {
                     value: true,
-                    message: 'Nombre requerdio'
+                    message: 'Nombre requerido',
                   },
                   pattern: {
                     value: /^[a-z ,.'-]+$/i,
-                    message: 'Formato incorrecto, solo letras'
-                  }
+                    message: 'Formato incorrecto, solo letras',
+                  },
                 })}
               />
               {errors.nombre && (
@@ -79,12 +79,12 @@ function FormPatientOrder() {
                 {...register('apellido', {
                   required: {
                     value: true,
-                    message: 'Apellido requerdio'
+                    message: 'Apellido requerido',
                   },
                   pattern: {
                     value: /^[a-z ,.'-]+$/i,
-                    message: 'Formato incorrecto, solo letras'
-                  }
+                    message: 'Formato incorrecto, solo letras',
+                  },
                 })}
               />
               {errors.apellido && (
@@ -103,13 +103,13 @@ function FormPatientOrder() {
             {...register('email', {
               required: {
                 value: true,
-                message: 'Email requerido'
+                message: 'Email requerido',
               },
               pattern: {
                 value:
                   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                message: 'Formato del email incorrecto'
-              }
+                message: 'Formato del email incorrecto',
+              },
             })}
           />
           {errors.email && (
@@ -127,7 +127,7 @@ function FormPatientOrder() {
             defaultValue={form?.telefono}
             {...register('telefono', {
               required: { value: true, message: 'Telefono requerido' },
-              valueAsNumber: { value: true, message: 'Solo ingrese numeros' }
+              valueAsNumber: { value: true, message: 'Solo ingrese numeros' },
             })}
           />
           {errors.telefono && (

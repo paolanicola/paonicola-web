@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import {
   deleteCartItems,
-  getAllProductsCart
+  getAllProductsCart,
 } from '../../features/cart/cartSlice'
 import {
-  nextStep,
-  backStep,
-  resetStep
-} from '../../features/stepsCheckout/stepsSlice'
-import {
-  getFecha,
-  getHora,
-  getVerificado,
+  getDate,
+  getTime,
+  getVerified,
   resetCartState,
-  updateformulario,
-  updateVerificado
+  updateForm,
+  updateVerified,
 } from '../../features/cartState/cartStateSlice'
-import { setMethod } from '../../features/validators'
-import { toast } from 'react-toastify'
 import { confirmedBuy } from '../../features/producto'
+import {
+  backStep,
+  nextStep,
+  resetStep,
+} from '../../features/stepsCheckout/stepsSlice'
+import { setMethod } from '../../features/validators'
 
 function MercadoPagoScript(publicKey, options) {
   const script = document.createElement('script')
@@ -43,8 +43,8 @@ function CartTotal() {
   const [variantTrans, setVariantTrans] = useState('carrito-finalizar__oculto ')
   const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
 
-  const horario = useSelector(getHora)
-  const date = useSelector(getFecha)
+  const horario = useSelector(getTime)
+  const date = useSelector(getDate)
   const handleNextStep = () => {
     if (horario === null) {
       handleVerificationSelectMethod('Seleccione un Horario!')
@@ -72,17 +72,17 @@ function CartTotal() {
       //console.log('volviendo del pago');
       setVariantTrans('carrito-finalizar__oculto ')
       setVariantMP('carrito-finalizar__oculto ')
-      dispatch(updateVerificado(false))
+      dispatch(updateVerified(false))
     }
     if (step === 1) {
-      dispatch(updateformulario(null))
+      dispatch(updateForm(null))
     }
     dispatch(setMethod(''))
     dispatch(backStep())
   }
 
-  const hora = useSelector(getHora)
-  const verificado = useSelector(getVerificado)
+  const hora = useSelector(getTime)
+  const verificado = useSelector(getVerified)
   let render = ''
 
   if (verificado || step === 0) {
@@ -224,7 +224,7 @@ function CartTotal() {
         <a href={preference} onClick={actionEnd} className={variantMP}>
           Pagar
         </a>
-        <div class=''></div>
+        <div className=''></div>
       </div>
     </div>
   )

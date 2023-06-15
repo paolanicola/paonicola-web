@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  fecha: localStorage.getItem('fecha')
-    ? JSON.parse(localStorage.getItem('fecha'))
+  date: localStorage.getItem('date')
+    ? new Date(JSON.parse(localStorage.getItem('date')))
     : null,
-  hora: localStorage.getItem('hora')
-    ? JSON.parse(localStorage.getItem('hora'))
+  time: localStorage.getItem('time')
+    ? JSON.parse(localStorage.getItem('time'))
     : null,
-  formulario: localStorage.getItem('formulario')
-    ? JSON.parse(localStorage.getItem('formulario'))
+  form: localStorage.getItem('form')
+    ? JSON.parse(localStorage.getItem('form'))
     : null,
-  verificado: localStorage.getItem('verificado')
-    ? JSON.parse(localStorage.getItem('verificado'))
+  verified: localStorage.getItem('verified')
+    ? JSON.parse(localStorage.getItem('verified'))
     : false,
 }
 
@@ -19,49 +19,49 @@ const cartStateSlice = createSlice({
   name: 'cartState',
   initialState,
   reducers: {
-    updateFecha(state, action) {
-      state.fecha = action.payload
-      localStorage.setItem('fecha', JSON.stringify(state.fecha))
+    updateDate(state, action) {
+      state.date = new Date(action.payload)
+      localStorage.setItem('date', JSON.stringify(state.date))
     },
-    updateHora(state, action) {
-      state.hora = action.payload
-      localStorage.setItem('hora', JSON.stringify(state.hora))
+    updateTime(state, action) {
+      state.time = action.payload
+      localStorage.setItem('time', JSON.stringify(state.time))
     },
-    updateVerificado(state, action) {
-      state.verificado = action.payload
-      localStorage.setItem('verificado', JSON.stringify(state.verificado))
+    updateVerified(state, action) {
+      state.verified = action.payload
+      localStorage.setItem('verified', JSON.stringify(state.verified))
     },
-    updateformulario(state, action) {
-      state.formulario = action.payload
-      localStorage.setItem('formulario', JSON.stringify(state.formulario))
+    updateForm(state, action) {
+      state.form = action.payload
+      localStorage.setItem('form', JSON.stringify(state.form))
     },
-    deleteHora(state, action) {
-      state.hora = null
-      localStorage.setItem('hora', JSON.stringify(state.hora))
+    deleteTime(state, action) {
+      state.time = null
+      localStorage.setItem('time', JSON.stringify(state.time))
     },
     resetCartState(state, action) {
-      state.fecha = null
-      localStorage.setItem('fecha', JSON.stringify(state.fecha))
-      state.hora = null
-      localStorage.setItem('hora', JSON.stringify(state.hora))
-      state.verificado = false
-      localStorage.setItem('verificado', JSON.stringify(state.verificado))
-      state.formulario = null
-      localStorage.setItem('formulario', JSON.stringify(state.formulario))
+      state.date = null
+      localStorage.setItem('date', JSON.stringify(state.date))
+      state.time = null
+      localStorage.setItem('time', JSON.stringify(state.time))
+      state.verified = false
+      localStorage.setItem('verified', JSON.stringify(state.verified))
+      state.form = null
+      localStorage.setItem('form', JSON.stringify(state.form))
     },
   },
 })
 
 export const {
-  updateFecha,
-  updateHora,
-  updateVerificado,
-  deleteHora,
-  updateformulario,
+  updateDate,
+  updateTime,
+  updateVerified,
+  deleteTime,
+  updateForm,
   resetCartState,
 } = cartStateSlice.actions
-export const getFecha = (state) => state.cartState.fecha
-export const getHora = (state) => state.cartState.hora
-export const getVerificado = (state) => state.cartState.verificado
-export const getFormulario = (state) => state.cartState.formulario
+export const getDate = (state) => state.cartState.date
+export const getTime = (state) => state.cartState.time
+export const getVerified = (state) => state.cartState.verified
+export const getForm = (state) => state.cartState.form
 export default cartStateSlice.reducer
