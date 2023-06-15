@@ -13,8 +13,8 @@ export default function Home() {
           <div className='home-main-row'>
             <div className='  title-home-containers one animate fadeRight'>
               <h1 className='home-main-title '>
-                LOGRÁ UN ESTILO DE VIDA SALUDABLE, A TRAVÉS DE UNA PLANIFICACIÓN PROFESIONAL Y
-                PERSONALIZADA
+                LOGRÁ UN ESTILO DE VIDA SALUDABLE, A TRAVÉS DE UNA PLANIFICACIÓN
+                PROFESIONAL Y PERSONALIZADA
               </h1>
             </div>
           </div>
@@ -96,17 +96,24 @@ export default function Home() {
       </section>
       <section className='home-shop '>
         <div className='shop-container'>
-          <div clclassNameass='shop-container-title-top'>
+          <div className='shop-container-title-top'>
             <div className=' '>
-              <h2 className='title-section-card title-section-card-rosa'>Tienda</h2>
+              <h2 className='title-section-card title-section-card-rosa'>
+                Tienda
+              </h2>
             </div>
           </div>
           <div className='shop-container-menu-tienda'>
             <div className='menu-top'>
               <div className='menu-top-grid '>
                 <div className='item-tienda-home '>
-                  <NavLink to='/tienda' className='item-tienda-home-mosaicos item'>
-                    <h4 className='item-shop-title'>MOSAICOS CON IDEAS DE MENÚES</h4>
+                  <NavLink
+                    to='/tienda'
+                    className='item-tienda-home-mosaicos item'
+                  >
+                    <h4 className='item-shop-title'>
+                      MOSAICOS CON IDEAS DE MENÚES
+                    </h4>
                   </NavLink>
                 </div>
                 <div className='  item-tienda-home'>
@@ -115,7 +122,10 @@ export default function Home() {
                   </NavLink>
                 </div>
                 <div className='  item-tienda-home'>
-                  <NavLink to='/tienda' className='item-tienda-home-recetarios item'>
+                  <NavLink
+                    to='/tienda'
+                    className='item-tienda-home-recetarios item'
+                  >
                     <h4 className='item-shop-title'>RECETARIOS</h4>
                   </NavLink>
                 </div>
@@ -129,7 +139,10 @@ export default function Home() {
             <div className='menu-mid'>
               <div className='menu-mid-grid'>
                 <div className='item-tienda-home-lg'>
-                  <NavLink to='/tienda' className='item-tienda-home-consultas item'>
+                  <NavLink
+                    to='/tienda'
+                    className='item-tienda-home-consultas item'
+                  >
                     <h3 className='item-shop-title-h3'>Consultas online</h3>
                   </NavLink>
                 </div>
@@ -151,7 +164,7 @@ export default function Home() {
           </NavLink>
         </div>
       </section>
-      <div class='flores-faq'></div>
+      <div className='flores-faq'></div>
       <section className='home-faq'>
         <div className=''>
           <div className='faq-container'>

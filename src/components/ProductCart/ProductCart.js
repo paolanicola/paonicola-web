@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { faTrashAlt, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+import { faMinus, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   addToCart,
   decreaseCart,
   getAllProductsCart,
   getTotals,
-  removeFromCart
+  removeFromCart,
 } from '../../features/cart/cartSlice'
 
 import { toast } from 'react-toastify'
@@ -72,11 +72,11 @@ function ProductCart({ product }) {
           </p>
         </div>
 
-        <div class='content-botton-precio'>
-          <div class='content-quantity-selector'>
+        <div className='content-botton-precio'>
+          <div className='content-quantity-selector'>
             <button
               onClick={() => handleDecreaseCart(product)}
-              class={
+              className={
                 product.cartQuantity === 1
                   ? 'btn-disabled btn-quantity'
                   : 'btn-quantity'
@@ -102,7 +102,7 @@ function ProductCart({ product }) {
           </div>
           <div className='content-precio'>
             {product.promo ? (
-              <p class='content-precio-text'>
+              <p className='content-precio-text'>
                 <span className=' card-product-price__tachado '>
                   {product.currency} {product.price}
                 </span>
@@ -110,7 +110,7 @@ function ProductCart({ product }) {
             ) : (
               ''
             )}
-            <p class='content-precio-text'>
+            <p className='content-precio-text'>
               {product.currency}{' '}
               {product.promo ? product.promoPrice : product.price}
             </p>

@@ -7,13 +7,12 @@ import {
   decreaseCart,
   getAllProductsCart,
   getTotals,
-  removeFromCart
+  removeFromCart,
 } from '../../features/cart/cartSlice'
-import ProductCart from '../ProductCart/ProductCart'
-import { resetStep } from '../../features/stepsCheckout/stepsSlice'
 import { resetCartState } from '../../features/cartState/cartStateSlice'
+import { backStep, resetStep } from '../../features/stepsCheckout/stepsSlice'
 import { setMethod } from '../../features/validators'
-import { backStep } from '../../features/stepsCheckout/stepsSlice'
+import ProductCart from '../ProductCart/ProductCart'
 
 function Cart() {
   const cart = useSelector((state) => state.cart)
@@ -77,9 +76,13 @@ function Cart() {
           <div className='carrito-cards'>{renderProducts}</div>
 
           <div className='carrito-total'>
-            <h5 class='carrito-total-titulo'>Carrito de compras</h5>
+            <h5 className='carrito-total-titulo'>Carrito de compras</h5>
 
-            <table class='carrito-total-cuenta' cellpadding='0' cellspacing='0'>
+            <table
+              className='carrito-total-cuenta'
+              cellpadding='0'
+              cellspacing='0'
+            >
               <tr>
                 <td className='carrito-total-td '>Producto</td>{' '}
                 <td className=' carrito-total-td text-right'>SubTotal</td>
@@ -113,7 +116,7 @@ function Cart() {
               </tr>
             </table>
 
-            <div class='next1'>
+            <div className='next1'>
               <Link
                 to='/checkout'
                 onClick={dispatch(setMethod(''))}
@@ -126,14 +129,14 @@ function Cart() {
                   Continuar Comprando
                 </Link>
               </div>
-              <div class='wizard-footer' style={{ display: 'none' }}>
+              <div className='wizard-footer' style={{ display: 'none' }}>
                 <button
                   type='button'
-                  class=' wizard-prev btn btn-primary-outlined btn-irv-default'
+                  className=' wizard-prev btn btn-primary-outlined btn-irv-default'
                 >
                   Atrás 1
                 </button>
-                <button type='button' class=' wizard-next btn btn-primary'>
+                <button type='button' className=' wizard-next btn btn-primary'>
                   Siguiente 1
                 </button>
                 <Link

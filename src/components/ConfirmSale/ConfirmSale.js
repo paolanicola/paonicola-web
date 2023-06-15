@@ -68,10 +68,10 @@ export default function ConfirmSale() {
           <div className='data__details-buyer'>
             <div className='details__buyer-cart'>
               <div className='carrito-total-container2'>
-                <h5 class='carrito-total-titulo2'>Total del carrito</h5>
+                <h5 className='carrito-total-titulo2'>Total del carrito</h5>
 
                 <table
-                  class='carrito-total-items2'
+                  className='carrito-total-items2'
                   cellpadding='0'
                   cellspacing='0'
                 >
