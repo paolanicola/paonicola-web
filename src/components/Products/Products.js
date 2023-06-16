@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Filters from '../Filters/Filters'
 import Product from '../Product/Product'
 
-import { loadCategories } from '../../features/categories'
 import { getAllProducts, loadProducts } from '../../features/producto'
 
 const Products = () => {
@@ -24,7 +23,6 @@ const Products = () => {
   }, [success, products])
 
   useEffect(() => {
-    dispatch(loadCategories())
     dispatch(loadProducts())
   }, [])
 
