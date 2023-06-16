@@ -121,3 +121,8 @@ export const confirmedBuy = () => (dispatch, getState) => {
 }
 
 export const getAllProducts = (state) => state.productos
+
+export const getCategories = (state) => Object.values(state.productos.products.reduce((categories, product) => {
+  categories[product.category] = product.category
+  return categories;
+}, {}))

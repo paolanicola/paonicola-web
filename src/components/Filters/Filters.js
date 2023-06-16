@@ -1,9 +1,14 @@
-import React, { createRef, useRef } from 'react';
-import Select, { components, DropdownIndicator, DropdownIndicatorProps } from 'react-select';
-import { ReactComponent as Chevron } from '../../assets/images/tienda/chevron.svg';
+import React, { createRef } from 'react';
+import { useSelector } from 'react-redux';
+import Select, { components } from 'react-select';
+
+
 import { ReactComponent as OrderIcon } from '../../assets/images/tienda/order-icon.svg';
+import { getCategories } from '../../features/producto';
 
 function Filters({ term, searchKeyWord }) {
+  const categories = useSelector(getCategories)
+
   const optionsOrder = [
     { value: 'relevante', label: 'Mas relevante' },
     { value: 'menor', label: 'Menor precio' },
@@ -13,14 +18,11 @@ function Filters({ term, searchKeyWord }) {
     { value: 'z-a', label: 'Z-A' },
   ];
 
-  const optionsCat = [
-    { value: 'todas', label: 'Todas las categorías' },
-    { value: 'consultas', label: 'Consultas online' },
-    { value: 'guias', label: 'Guías' },
-    { value: 'mosaicos', label: 'Mosaicos' },
-    { value: 'pack', label: 'Pack Ahorro' },
-    { value: 'recetarios', label: 'Recetarios' },
-  ];
+  const optionsCat = [{ value: 'todas', label: 'Todas las categorías' }, 
+  ...categories.map(category => ({value: category, label: category}))
+]
+  
+
 
   const DropdownIndicator = (props) => {
     return (
