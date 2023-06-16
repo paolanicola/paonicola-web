@@ -12,7 +12,7 @@ const preferenceReceived = createAction('preference/received')
 
 // REDUCER
 export const initialState = {
-  data: [],
+  products: [],
   loading: false,
   loadSuccess: false,
   success: false,
@@ -29,7 +29,7 @@ const productosReducer = createReducer(initialState, {
     state.loading = false
     state.loadSuccess = true
     state.success = true
-    state.data = action.payload
+    state.products = [...action.payload]
   },
   [productsRequestFailed.type]: (state, action) => {
     state.loading = false
@@ -119,3 +119,5 @@ export const confirmedBuy = () => (dispatch, getState) => {
     })
   )
 }
+
+export const getAllProducts = (state) => state.productos

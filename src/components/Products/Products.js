@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllProducts } from '../../features/products/productSlice'
 import Filters from '../Filters/Filters'
 import Product from '../Product/Product'
 
 import { loadCategories } from '../../features/categories'
-import { loadProducts } from '../../features/producto'
+import { getAllProducts, loadProducts } from '../../features/producto'
 
-export default function Products() {
+const Products = () => {
   const dispatch = useDispatch()
-  const products = useSelector(getAllProducts)
   const [searchTerm, setSearchTerm] = useState('')
-  const [searchResult, setSearchResult] = useState(products)
+  const [searchResult, setSearchResult] = useState([])
 
   const {
     loading: isLoading,
-    data: info,
+    products,
     success,
-  } = useSelector((state) => state.productos) // Assuming `productos` is the correct slice name
+  } = useSelector(getAllProducts)
 
   useEffect(() => {
     if (success) {
-      console.log(info)
-      setSearchResult(info)
+      setSearchResult(products)
     }
-  }, [success, info])
+  }, [success, products])
 
   useEffect(() => {
     dispatch(loadCategories())
@@ -34,9 +31,8 @@ export default function Products() {
   const searchHandler = (searchTerm) => {
     setSearchTerm(searchTerm)
     if (searchTerm !== '') {
-      const newProductsList = Object.values(products).filter((product) => {
-        return Object.values(product)
-          .join(' ')
+      const newProductsList = products.filter(({ name }) => {
+        return name
           .toLowerCase()
           .includes(searchTerm.toLowerCase())
       })
@@ -45,10 +41,14 @@ export default function Products() {
       setSearchResult(products)
     }
   }
+  
+  if(isLoading){
+    return(
+      <div className='product-notFound'>Cargando productos ...</div>
+    )
+  }
 
-  let renderProducts = ''
-
-  renderProducts =
+  const renderProducts =
     searchResult.length > 0 ? (
       searchResult.map((product) => (
         <Product key={product.id} product={product} />
@@ -58,13 +58,13 @@ export default function Products() {
     )
 
   return (
-    <>
-      <div className='container-products'>
-        <div className='container-page-products'>
-          <Filters term={searchTerm} searchKeyWord={searchHandler} />
-          <div className='container-list-products'>{renderProducts}</div>
-        </div>
+    <div className='container-products'>
+      <div className='container-page-products'>
+        <Filters term={searchTerm} searchKeyWord={searchHandler} />
+        <div className='container-list-products'>{renderProducts}</div>
       </div>
-    </>
+    </div>
   )
 }
+
+export default Products
