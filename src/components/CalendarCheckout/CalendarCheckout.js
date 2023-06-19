@@ -155,12 +155,12 @@ const CalendarCheckout = () => {
     <div className='wizard-body'>
       <div className='step initial active'>
         <h5 className='calendar-title'>
-          Select the date and time for your appointment:
+          Seleccioná la fecha y hora para tu turno:
         </h5>
         <div className='calendar-time-picker-container'>
           <div className='calendar-picker-container'>
             <Calendar
-              locale
+              locale='es'
               className=''
               tileDisabled={tileDisabled}
               value={value}
