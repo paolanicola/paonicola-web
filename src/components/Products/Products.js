@@ -10,11 +10,7 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState([])
 
-  const {
-    loading: isLoading,
-    products,
-    success,
-  } = useSelector(getAllProducts)
+  const { loading: isLoading, products, success } = useSelector(getAllProducts)
 
   useEffect(() => {
     if (success) {
@@ -30,20 +26,16 @@ const Products = () => {
     setSearchTerm(searchTerm)
     if (searchTerm !== '') {
       const newProductsList = products.filter(({ name }) => {
-        return name
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
+        return name.toLowerCase().includes(searchTerm.toLowerCase())
       })
       setSearchResult(newProductsList)
     } else {
       setSearchResult(products)
     }
   }
-  
-  if(isLoading){
-    return(
-      <div className='product-notFound'>Cargando productos ...</div>
-    )
+
+  if (isLoading) {
+    return <div className='product-notFound'>Cargando productos ...</div>
   }
 
   const renderProducts =

@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  date: localStorage.getItem('date')
-    ? new Date(JSON.parse(localStorage.getItem('date')))
-    : null,
+  date: localStorage.getItem('date') ? localStorage.getItem('date') : '',
   time: localStorage.getItem('time')
     ? JSON.parse(localStorage.getItem('time'))
     : null,
@@ -20,8 +18,8 @@ const cartStateSlice = createSlice({
   initialState,
   reducers: {
     updateDate(state, action) {
-      state.date = new Date(action.payload)
-      localStorage.setItem('date', JSON.stringify(state.date))
+      state.date = action.payload
+      localStorage.setItem('date', state.date)
     },
     updateTime(state, action) {
       state.time = action.payload

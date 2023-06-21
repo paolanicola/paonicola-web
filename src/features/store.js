@@ -1,12 +1,12 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import cartReducer, { getTotals } from './cart/cartSlice'
+import appointmentsReducer from './appointments/index'
+import cartReducer from './cart/cartSlice'
+import cartStateReducer from './cartState/cartStateSlice'
 import productsReducer from './products/productSlice'
 import stepReducer from './stepsCheckout/stepsSlice'
-import appointmentsReducer from './appointments/appointmentsSlice'
-import cartStateReducer from './cartState/cartStateSlice'
 // import logger from "./middleware/logger";
-import api from './middleware/api'
 import categoriesReducer from './categories'
+import api from './middleware/api'
 import productosReducer from './producto'
 import validatorsReducer from './validators'
 
@@ -17,9 +17,9 @@ export const store = configureStore({
     validators: validatorsReducer,
     cart: cartReducer,
     step: stepReducer,
-    appointments: appointmentsReducer,
+    schedules: appointmentsReducer,
     cartState: cartStateReducer,
-    categories: categoriesReducer
+    categories: categoriesReducer,
   },
-  middleware: [...getDefaultMiddleware(), api]
+  middleware: [...getDefaultMiddleware(), api],
 })
