@@ -8,7 +8,7 @@ export default function ConfirmSale() {
 
   useEffect(() => {
     dispatch(getTotals())
-  }, [cart])
+  }, [cart, dispatch])
 
   return (
     <>
@@ -72,8 +72,8 @@ export default function ConfirmSale() {
 
                 <table
                   className='carrito-total-items2'
-                  cellpadding='0'
-                  cellspacing='0'
+                  cellPadding='0'
+                  cellSpacing='0'
                 >
                   <tr className='carrito-total-item2'>
                     <td className='carrito-total-item-name2'>

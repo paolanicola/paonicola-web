@@ -1,12 +1,12 @@
 import React, { createRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Select, { components } from 'react-select';
-
-
+import { ReactComponent as FilterIcon } from '../../assets/images/tienda/filter.svg';
 import { ReactComponent as OrderIcon } from '../../assets/images/tienda/order-icon.svg';
-import { getCategories } from '../../features/producto';
+import { getCategories, setCategoryFilter, setOrderProducts } from '../../features/products';
 
 function Filters({ term, searchKeyWord }) {
+  const dispatch = useDispatch()
   const categories = useSelector(getCategories)
 
   const optionsOrder = [
@@ -18,35 +18,39 @@ function Filters({ term, searchKeyWord }) {
     { value: 'z-a', label: 'Z-A' },
   ];
 
-  const optionsCat = [{ value: 'todas', label: 'Todas las categorías' }, 
-  ...categories.map(category => ({value: category, label: category}))
-]
+  const optionsCat = categories.map(category => ({value: category, label: category}))
+
+  const FilterIndicator = (props) =>  
+    <components.DropdownIndicator {...props}>
+      <FilterIcon />
+    </components.DropdownIndicator>
+
+  const OrderIndicator = (props) =>  
+    <components.DropdownIndicator {...props}>
+      <OrderIcon />
+    </components.DropdownIndicator>
   
-
-
-  const DropdownIndicator = (props) => {
-    return (
-      <components.DropdownIndicator {...props}>
-        <OrderIcon />
-      </components.DropdownIndicator>
-    );
-  };
+ 
   const customStyles = {
     control: () => ({
       // none of react-select's styles are passed to <Control />
     }),
   };
 
-  const [searchTermq, setSearchTermq] = React.useState('');
-  const handleChange = (event) => {
-    setSearchTermq(event.target.value);
-  };
   const inputEl = createRef();
   const getSearchTerm = () => {
-    //console.log(inputEl.current.value);
     searchKeyWord(inputEl.current.value);
   };
 
+
+  const handleFilterCategory = (e) => {
+    dispatch(setCategoryFilter(e.value))
+  }
+
+  const handleOrderProducts= (e) => {
+    dispatch(setOrderProducts(e.value))
+  }
+  
   return (
     <div className='container-filters fsirst-section'>
       <div className='column'>
@@ -57,21 +61,25 @@ function Filters({ term, searchKeyWord }) {
 
           <div className=' container-categories activeg'>
             <Select
-              components={{ DropdownIndicator }}
+              components={{ DropdownIndicator: (props) => <FilterIndicator {...props} /> }}
               styles={customStyles}
               className='react-select-container'
               classNamePrefix='react-select'
               options={optionsCat}
+              onChange={handleFilterCategory}
+              placeholder={'Seleccionar Categoria'}
             />
           </div>
         </div>
         <div className=' container-order'>
           <Select
-            components={{ DropdownIndicator }}
+            components={{ DropdownIndicator: (props) => <OrderIndicator {...props}/> }}
             styles={customStyles}
             className='react-select-container'
             classNamePrefix='react-select'
             options={optionsOrder}
+            placeholder={'Seleccionar Ordenamiento'}
+            onChange={handleOrderProducts}
           />
         </div>
       </div>

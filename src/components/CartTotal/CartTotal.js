@@ -5,16 +5,14 @@ import { toast } from 'react-toastify'
 import {
   deleteCartItems,
   getAllProductsCart,
+  isCartWithCalendar
 } from '../../features/cart/cartSlice'
 import {
-  getDate,
   getTime,
-  getVerified,
-  resetCartState,
+  isCheckoutCalendarValid, resetCartState,
   updateForm,
-  updateVerified,
-} from '../../features/cartState/cartStateSlice'
-import { confirmedBuy } from '../../features/producto'
+  updateVerified
+} from '../../features/checkout/checkoutSlice'
 import {
   backStep,
   nextStep,
@@ -22,31 +20,28 @@ import {
 } from '../../features/stepsCheckout/stepsSlice'
 import { setMethod } from '../../features/validators'
 
-function MercadoPagoScript(publicKey, options) {
-  const script = document.createElement('script')
-  script.src = 'https://sdk.mercadopago.com/js/v2'
-
-  // script.addEventListener('load', () => {
-  //   setMercadopago(new window.MercadoPago(publicKey, options))
-  // })
-
-  document.body.appendChild(script)
-}
-
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
   const { data: method } = useSelector((state) => state.validators)
-  const { preference } = useSelector((state) => state.productos)
+  const { preference } = useSelector((state) => state.products)
   const products = useSelector(getAllProductsCart)
   const dispatch = useDispatch()
   const { step } = useSelector((state) => state.step)
+  const withCalendar = useSelector(isCartWithCalendar)
+  const isCheckoutCalendarReady = useSelector(isCheckoutCalendarValid)
   const [variantTrans, setVariantTrans] = useState('carrito-finalizar__oculto ')
   const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
 
+  useEffect(() => {
+    if(!withCalendar &&  step === 0){
+      dispatch(nextStep())
+    }
+  }, [dispatch, step, withCalendar])
+
   const horario = useSelector(getTime)
-  const date = useSelector(getDate)
+
   const handleNextStep = () => {
-    if (horario === null) {
+    if (withCalendar && horario === null) {
       handleVerificationSelectMethod('Seleccione un Horario!')
     } else dispatch(nextStep())
   }
@@ -58,7 +53,6 @@ function CartTotal() {
     // limpiar step cart state limpiar validators limpiar
     dispatch(resetStep())
     dispatch(resetCartState())
-    dispatch(confirmedBuy())
     setVariantTrans('carrito-finalizar__oculto')
     setVariantMP('carrito-finalizar__oculto')
   }
@@ -69,7 +63,6 @@ function CartTotal() {
 
   const handleBackStep = () => {
     if (step === 2) {
-      //console.log('volviendo del pago');
       setVariantTrans('carrito-finalizar__oculto ')
       setVariantMP('carrito-finalizar__oculto ')
       dispatch(updateVerified(false))
@@ -82,32 +75,6 @@ function CartTotal() {
   }
 
   const hora = useSelector(getTime)
-  const verificado = useSelector(getVerified)
-  let render = ''
-
-  if (verificado || step === 0) {
-    render = (
-      <button
-        onClick={() => handleNextStep()}
-        type='submit'
-        className={
-          step === 2 ? 'carrito-finalizar__oculto' : 'carrito-finalizar  '
-        }
-      >
-        Siguiente
-      </button>
-    )
-  } else {
-    render = (
-      <button
-        form='formularioTurno'
-        type='submit'
-        className='carrito-finalizar'
-      >
-        Siguente
-      </button>
-    )
-  }
 
   let variantBack = ''
   let variantNext = ''
@@ -128,7 +95,7 @@ function CartTotal() {
   }
 
   if (step === 1) {
-    variantBack = 'carrito-finalizar carrito-finalizar-next'
+    variantBack = withCalendar? 'carrito-finalizar carrito-finalizar-next':'carrito-finalizar__oculto'
     variantNext = 'carrito-finalizar'
     actionBack = () => handleBackStep()
     actionNext = ''
@@ -146,7 +113,6 @@ function CartTotal() {
   }
 
   useEffect(() => {
-    console.log(method)
     if (step === 2) {
       if (method === 'MP') {
         setVariantTrans('carrito-finalizar__oculto')
@@ -157,16 +123,16 @@ function CartTotal() {
         setVariantMP('carrito-finalizar__oculto')
       }
     }
-  }, [method])
+  }, [method, step])
 
   return (
     <div className='carrito-total-container'>
       <h5 className='carrito-total-titulo'>Total del carrito</h5>
 
-      <table className='carrito-total-items' cellpadding='0' cellspacing='0'>
+      <table className='carrito-total-items' cellPadding='0' cellSpacing='0'>
         {products.length > 0 ? (
           products.map((product) => (
-            <tr className='carrito-total-item'>
+            <tr className='carrito-total-item' key={product.id}>
               <td className='carrito-total-item-name'>
                 {product.name} x {product.cartQuantity}
               </td>
@@ -204,16 +170,19 @@ function CartTotal() {
         >
           Siguiente
         </button>
-        <button
-          onClick={actionVerificationMethod}
-          className={
-            step !== 2 || method !== ''
-              ? 'carrito-finalizar__oculto'
-              : 'carrito-finalizar disabled'
-          }
-        >
-          Pagar
-        </button>
+        { (!withCalendar || (withCalendar && isCheckoutCalendarReady)) &&
+          <button
+            onClick={actionVerificationMethod}
+            className={
+              step !== 2 || method !== ''
+                ? 'carrito-finalizar__oculto'
+                : 'carrito-finalizar disabled'
+            }
+          >
+            Pagar
+          </button>
+        }
+     
         <Link
           to='/checkout/confirm'
           onClick={actionEnd}

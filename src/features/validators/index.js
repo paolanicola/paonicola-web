@@ -35,13 +35,6 @@ const validatorsReducer = createReducer(initialState, {
 export default validatorsReducer
 // PUBLIC ACTIONS
 
-export const setMethod = (a) => (dispatch, getState) => {
-  console.log(a)
-  dispatch(methodReceived(a))
-}
-export const getMethod = () => (dispatch, getState) => {
-  dispatch()
-}
-export const loadMethod = () => (dispatch, getState) => {
-  dispatch()
-}
+export const setMethod = (a) => (dispatch) =>  dispatch(methodReceived(a))
+export const getMethod = () => (dispatch) => dispatch()
+export const loadMethod = () => (dispatch) => dispatch()

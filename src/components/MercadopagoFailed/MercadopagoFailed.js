@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
 import { getTotals } from '../../features/cart/cartSlice'
 
 export default function MercadopagoFailed() {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
 
-  const location = useLocation()
-  const params = new URLSearchParams(location.search)
-  console.log(params.get('preference_id'))
 
   useEffect(() => {
     dispatch(getTotals())
-  }, [cart])
+  }, [cart, dispatch])
 
   return (
     <>
@@ -77,8 +73,8 @@ export default function MercadopagoFailed() {
 
                 <table
                   class='carrito-total-items2'
-                  cellpadding='0'
-                  cellspacing='0'
+                  cellPadding='0'
+                  cellSpacing='0'
                 >
                   <tr className='carrito-total-item2'>
                     <td className='carrito-total-item-name2'>

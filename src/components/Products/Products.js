@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import Filters from '../Filters/Filters'
 import Product from '../Product/Product'
 
-import { getAllProducts, loadProducts } from '../../features/producto'
+import { getAllProducts, getProductsAvailables, loadProducts } from '../../features/products'
 
 const Products = () => {
   const dispatch = useDispatch()
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState([])
 
-  const { loading: isLoading, products, success } = useSelector(getAllProducts)
+  const { loading: isLoading, success } = useSelector(getAllProducts)
+  const products = useSelector(getProductsAvailables)
 
   useEffect(() => {
     if (success) {
@@ -20,7 +21,7 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(loadProducts())
-  }, [])
+  }, [dispatch])
 
   const searchHandler = (searchTerm) => {
     setSearchTerm(searchTerm)

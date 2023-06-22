@@ -12,7 +12,6 @@ export default function Contact() {
     register,
     handleSubmit,
     formState: { errors },
-    clearErrors,
   } = useForm()
   const onSubmit = (data) => {
     toast('Mensaje Enviado Correctamente!')
@@ -20,7 +19,6 @@ export default function Contact() {
   }
 
   return (
-    <>
       <div className='container-contact'>
         <div className='contact-left one animate fadeLeft'>
           <div className=''>
@@ -151,6 +149,5 @@ export default function Contact() {
           </div>
         )}
       </div>
-    </>
   )
 }

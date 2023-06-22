@@ -25,34 +25,7 @@ const appointmentsReducer = createReducer(initialState, {
     state.loading = false
     state.loadSuccess = true
     state.success = true
-    // state.appointments = [...action.payload]
-    state.appointments = [
-      {
-        id: 2,
-        date: '2033-06-10',
-        available_hours: '01:00',
-      },
-      {
-        id: 3,
-        date: '2033-06-10',
-        available_hours: '02:30',
-      },
-      {
-        id: 4,
-        date: '2033-07-10',
-        available_hours: '03:45',
-      },
-      {
-        id: 5,
-        date: '2033-08-13',
-        available_hours: '00:00',
-      },
-      {
-        id: 5,
-        date: '2034-01-01',
-        available_hours: '00:00',
-      },
-    ]
+    state.appointments = [...action.payload]
   },
   [appointmentsRequestFailed.type]: (state, action) => {
     state.loading = false

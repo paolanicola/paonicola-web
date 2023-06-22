@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  date: localStorage.getItem('date') ? localStorage.getItem('date') : '',
-  time: localStorage.getItem('time')
-    ? JSON.parse(localStorage.getItem('time'))
-    : null,
+  date: '',
+  dateSelected: null,
+  time: null,
   form: localStorage.getItem('form')
     ? JSON.parse(localStorage.getItem('form'))
     : null,
@@ -13,17 +12,19 @@ const initialState = {
     : false,
 }
 
-const cartStateSlice = createSlice({
-  name: 'cartState',
+const checkoutSlice = createSlice({
+  name: 'checkout',
   initialState,
   reducers: {
-    updateDate(state, action) {
-      state.date = action.payload
-      localStorage.setItem('date', state.date)
+    updateDate(state, { payload }) {
+      state.date = payload
+    },
+    updateDateSelected(state, { payload }) {
+      state.dateSelected = payload
+      state.time = null
     },
     updateTime(state, action) {
       state.time = action.payload
-      localStorage.setItem('time', JSON.stringify(state.time))
     },
     updateVerified(state, action) {
       state.verified = action.payload
@@ -35,13 +36,11 @@ const cartStateSlice = createSlice({
     },
     deleteTime(state, action) {
       state.time = null
-      localStorage.setItem('time', JSON.stringify(state.time))
     },
     resetCartState(state, action) {
       state.date = null
       localStorage.setItem('date', JSON.stringify(state.date))
       state.time = null
-      localStorage.setItem('time', JSON.stringify(state.time))
       state.verified = false
       localStorage.setItem('verified', JSON.stringify(state.verified))
       state.form = null
@@ -52,14 +51,18 @@ const cartStateSlice = createSlice({
 
 export const {
   updateDate,
+  updateDateSelected,
   updateTime,
   updateVerified,
   deleteTime,
   updateForm,
   resetCartState,
-} = cartStateSlice.actions
-export const getDate = (state) => state.cartState.date
-export const getTime = (state) => state.cartState.time
-export const getVerified = (state) => state.cartState.verified
-export const getForm = (state) => state.cartState.form
-export default cartStateSlice.reducer
+} = checkoutSlice.actions
+
+export const getDate = (state) => state.checkout.date
+export const getDateSelected = (state) => state.checkout.dateSelected
+export const getTime = (state) => state.checkout.time
+export const getVerified = (state) => state.checkout.verified
+export const getForm = (state) => state.checkout.form
+export const isCheckoutCalendarValid = (state) => (state.checkout.dateSelected &&  state.checkout.time)
+export default checkoutSlice.reducer

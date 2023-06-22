@@ -1,20 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
-import ProductView from '../ProductView/ProductView'
 import { ReactComponent as Close } from '../../assets/images/header/nav-close.svg'
+import ProductView from '../ProductView/ProductView'
 
 export default function Modal(props) {
-  useEffect(() => {
-    document.body.addEventListener('keydown', closeOnEscapeKeyDown)
-    return function cleanup() {
-      document.body.removeEventListener('keydown', closeOnEscapeKeyDown)
-    }
-  }, [])
-
   const closeOnEscapeKeyDown = (e) => {
     if ((e.charCode || e.keyCode) === 27) {
       props.onClose()
     }
   }
+  
+  useEffect(() => {
+    document.body.addEventListener('keydown', closeOnEscapeKeyDown)
+    return function cleanup() {
+      document.body.removeEventListener('keydown', closeOnEscapeKeyDown)
+    }
+  }, [closeOnEscapeKeyDown])
+
+ 
 
   return (
     <>

@@ -3,14 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
 import {
-  addToCart,
-  decreaseCart,
   getAllProductsCart,
-  getTotals,
-  removeFromCart,
+  getTotals
 } from '../../features/cart/cartSlice'
-import { resetCartState } from '../../features/cartState/cartStateSlice'
-import { backStep, resetStep } from '../../features/stepsCheckout/stepsSlice'
+import { resetCartState } from '../../features/checkout/checkoutSlice'
+import { resetStep } from '../../features/stepsCheckout/stepsSlice'
 import { setMethod } from '../../features/validators'
 import ProductCart from '../ProductCart/ProductCart'
 
@@ -19,31 +16,12 @@ function Cart() {
   const products = useSelector(getAllProductsCart)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const stepLocal = useSelector((state) => state.step.step)
 
   useEffect(() => {
     dispatch(getTotals())
   }, [cart, dispatch])
 
-  const handleDecreaseCart = (product) => {
-    dispatch(decreaseCart(product))
-    if (stepLocal === 2) {
-      if (cart.cartTotalQuantity > 2) {
-        dispatch(backStep())
-      }
-    }
-  }
-  const handleIncreaseCart = (product) => {
-    dispatch(addToCart(product))
-    if (stepLocal === 2) {
-      if (cart.cartTotalQuantity > 1) {
-        dispatch(backStep())
-      }
-    }
-  }
-  const handleRemoveFromCart = (product) => {
-    dispatch(removeFromCart(product))
-  }
+
   const handleContinueBuy = (event) => {
     event.preventDefault()
     dispatch(resetStep())
@@ -54,7 +32,7 @@ function Cart() {
   let renderProducts = ''
   renderProducts =
     products.length > 0 ? (
-      products.map((product) => <ProductCart product={product} />)
+      products.map((product) => <ProductCart product={product} key={product.id}/>)
     ) : (
       <div>Error</div>
     )
@@ -80,8 +58,8 @@ function Cart() {
 
             <table
               className='carrito-total-cuenta'
-              cellpadding='0'
-              cellspacing='0'
+              cellPadding='0'
+              cellSpacing='0'
             >
               <tr>
                 <td className='carrito-total-td '>Producto</td>{' '}
@@ -90,7 +68,7 @@ function Cart() {
               <hr />
               {products.length > 0 ? (
                 products.map((product) => (
-                  <tr>
+                  <tr key={product.id}>
                     <td className='carrito-total-td'>
                       {product.name} x {product.cartQuantity}
                     </td>

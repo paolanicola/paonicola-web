@@ -7,9 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   addToCart,
   decreaseCart,
-  getAllProductsCart,
   getTotals,
-  removeFromCart,
+  removeFromCart
 } from '../../features/cart/cartSlice'
 
 import { toast } from 'react-toastify'
@@ -19,7 +18,7 @@ import { backStep } from '../../features/stepsCheckout/stepsSlice'
 function ProductCart({ product }) {
   const cart = useSelector((state) => state.cart)
   const stepLocal = useSelector((state) => state.step.step)
-  const products = useSelector(getAllProductsCart)
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getTotals())

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import PrimaryButton from '../PrimaryButton/PrimaryButton'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, getTotals } from '../../features/cart/cartSlice'

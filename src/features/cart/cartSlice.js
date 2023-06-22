@@ -91,4 +91,6 @@ export const {
   getTotals
 } = cartSlice.actions
 export const getAllProductsCart = (state) => state.cart.cartItems
+export const isCartEmpty = (state) => state.cart.cartItems.length === 0
+export const isCartWithCalendar = (state) => state.cart.cartItems.some(({ category }) => category === "Consultas Online")
 export default cartSlice.reducer

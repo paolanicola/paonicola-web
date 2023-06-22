@@ -5,8 +5,7 @@ import {
   getForm,
   updateForm,
   updateVerified,
-} from '../../features/cartState/cartStateSlice'
-import { loadPreference } from '../../features/producto'
+} from '../../features/checkout/checkoutSlice'
 import { nextStep } from '../../features/stepsCheckout/stepsSlice'
 
 function FormPatientOrder() {
@@ -27,13 +26,12 @@ function FormPatientOrder() {
   const onSubmit = (data) => {
     dispatch(updateForm(data))
     dispatch(updateVerified(true))
-    dispatch(loadPreference())
     handleNextStep()
   }
 
   useEffect(() => {
     clearErrors()
-  }, [step])
+  }, [clearErrors, step])
 
   return (
     <div className='form-container'>

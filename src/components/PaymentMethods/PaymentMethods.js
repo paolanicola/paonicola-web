@@ -2,26 +2,20 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { ReactComponent as MercadoPago } from '../../assets/images/tienda/mercadopago.svg'
-import { setFecha } from '../../features/stepsCheckout/stepsSlice'
 import { setMethod } from '../../features/validators'
 
 function PaymentMethods() {
   const dispatch = useDispatch()
   const {
     register,
-    formState: { errors },
     handleSubmit,
-    clearErrors
   } = useForm()
-  const onSubmit = (data) => console.log(data)
-  //console.log(errors)
+  const onSubmit = (data) => null
 
   const PaymentMP = () => {
-    console.log('me hicieron clik MP')
     dispatch(setMethod('MP'))
   }
   const PaymentTrans = () => {
-    console.log('me hicieron clik trans')
     dispatch(setMethod('Trans'))
   }
 

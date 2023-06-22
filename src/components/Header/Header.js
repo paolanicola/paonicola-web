@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { NavBar, Logo, PrimaryButton } from '..';
-import { ReactComponent as ShoppingBag } from '../../assets/images/header/shopping-bag.svg';
+/* eslint-disable eqeqeq */
+import React, { useEffect, useRef, useState } from 'react';
+import { PrimaryButton } from '..';
 import { ReactComponent as InstagramBrand } from '../../assets/images/header/instagram-brands.svg';
 import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg';
+import { ReactComponent as ShoppingBag } from '../../assets/images/header/shopping-bag.svg';
 import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg';
-import { ReactComponent as NavOpen } from '../../assets/images/header/nav-open.svg';
-import navOpen from '../../assets/images/header/nav-open.svg';
 
-import { ReactComponent as NavClose } from '../../assets/images/header/nav-close.svg';
 import navClose from '../../assets/images/header/nav-close.svg';
-import { ReactComponent as PaolaLogo } from '../../assets/images/header/logo.svg';
+import navOpen from '../../assets/images/header/nav-open.svg';
 import LogoWebp from '../../assets/images/header/paola_logo.webp';
 
-import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -58,7 +56,7 @@ export default function Header() {
 
   const wrapperRef = useRef(null);
   const wrapperRefIcon = useRef(null);
-  const [isVisible, setIsVisible] = useState(true);
+
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, false);
     return () => {
@@ -80,7 +78,7 @@ export default function Header() {
     <>
       <div className={size ? 'navBar header--resize' : 'navBar'}>
         <div ref={wrapperRefIcon} className='navBar__icon__svg navBar__icon__svg--none fixed' onClick={showSidebar}>
-          <img className='img-icono-close-open' src={navOpen} />
+          <img className='img-icono-close-open' src={navOpen} alt=''/>
         </div>
 
         <div className='menu__logo'>
@@ -93,7 +91,7 @@ export default function Header() {
           <div className='menu__left'>
             <div className='pepe' onClick={closeSidebar}>
               <div className='container__icon__close'>
-                <img className='img-icono-close-open' src={navClose} />
+                <img className='img-icono-close-open' src={navClose} alt=''/>
               </div>
             </div>
             <NavLink className='menu__item menu__link' to='/sobre-mi' onClick={closeSidebar}>
