@@ -5,13 +5,14 @@ import { toast } from 'react-toastify'
 import {
   deleteCartItems,
   getAllProductsCart,
-  isCartWithCalendar
+  isCartWithCalendar,
 } from '../../features/cart/cartSlice'
 import {
   getTime,
-  isCheckoutCalendarValid, resetCartState,
+  isCheckoutCalendarValid,
+  resetCartState,
   updateForm,
-  updateVerified
+  updateVerified,
 } from '../../features/checkout/checkoutSlice'
 import {
   backStep,
@@ -33,7 +34,7 @@ function CartTotal() {
   const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
 
   useEffect(() => {
-    if(!withCalendar &&  step === 0){
+    if (!withCalendar && step === 0) {
       dispatch(nextStep())
     }
   }, [dispatch, step, withCalendar])
@@ -95,7 +96,9 @@ function CartTotal() {
   }
 
   if (step === 1) {
-    variantBack = withCalendar? 'carrito-finalizar carrito-finalizar-next':'carrito-finalizar__oculto'
+    variantBack = withCalendar
+      ? 'carrito-finalizar carrito-finalizar-next'
+      : 'carrito-finalizar__oculto'
     variantNext = 'carrito-finalizar'
     actionBack = () => handleBackStep()
     actionNext = ''
@@ -138,7 +141,7 @@ function CartTotal() {
               </td>
               <td className='carrito-total-item-price text-right'>
                 {product.currency}
-                {product.promoPrice}
+                {product.promo ? product.promoPrice : product.price}
               </td>
             </tr>
           ))
@@ -170,7 +173,7 @@ function CartTotal() {
         >
           Siguiente
         </button>
-        { (!withCalendar || (withCalendar && isCheckoutCalendarReady)) &&
+        {(!withCalendar || (withCalendar && isCheckoutCalendarReady)) && (
           <button
             onClick={actionVerificationMethod}
             className={
@@ -181,8 +184,8 @@ function CartTotal() {
           >
             Pagar
           </button>
-        }
-     
+        )}
+
         <Link
           to='/checkout/confirm'
           onClick={actionEnd}
