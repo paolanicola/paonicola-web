@@ -5,7 +5,7 @@ const initialState = {
     ? JSON.parse(localStorage.getItem('cartItems'))
     : [],
   cartTotalQuantity: 0,
-  cartTotalAmount: 0
+  cartTotalAmount: 0,
 }
 
 const cartSlice = createSlice({
@@ -18,7 +18,14 @@ const cartSlice = createSlice({
       )
 
       if (itemIndex >= 0) {
-        state.cartItems[itemIndex].cartQuantity += 1
+        // Check if adding 1 to cartQuantity exceeds stock
+        if (state.cartItems[itemIndex].cartQuantity < action.payload.stock) {
+          state.cartItems[itemIndex].cartQuantity += 1
+        } else {
+          throw new Error(
+            'Stock limit reached. Item cannot be added to the cart.'
+          )
+        }
       } else {
         const tempProduct = { ...action.payload, cartQuantity: 1 }
         state.cartItems.push(tempProduct)
@@ -73,14 +80,14 @@ const cartSlice = createSlice({
         },
         {
           total: 0,
-          quantity: 0
+          quantity: 0,
         }
       )
 
       state.cartTotalQuantity = quantity
       state.cartTotalAmount = total
-    }
-  }
+    },
+  },
 })
 
 export const {
@@ -88,9 +95,10 @@ export const {
   removeFromCart,
   deleteCartItems,
   decreaseCart,
-  getTotals
+  getTotals,
 } = cartSlice.actions
 export const getAllProductsCart = (state) => state.cart.cartItems
 export const isCartEmpty = (state) => state.cart.cartItems.length === 0
-export const isCartWithCalendar = (state) => state.cart.cartItems.some(({ category }) => category === "Consultas Online")
+export const isCartWithCalendar = (state) =>
+  state.cart.cartItems.some(({ category }) => category === 'Consultas Online')
 export default cartSlice.reducer

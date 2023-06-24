@@ -18,9 +18,13 @@ function Product({ product }) {
   const stepLocal = useSelector((state) => state.step.step)
   const dispatch = useDispatch()
 
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product))
-    toast('Producto agregado al carrito!')
+  const handleAddToCart = async (product) => {
+    try {
+      await dispatch(addToCart(product))
+      toast.success('Producto agregado al carrito!')
+    } catch (error) {
+      toast.error('Límite de stock alcanzado!')
+    }
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
         dispatch(backStep())

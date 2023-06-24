@@ -10,6 +10,7 @@ import {
   getTotals,
   removeFromCart,
 } from '../../features/cart/cartSlice'
+import img1 from '../../assets/images/tienda/producto-ejemplo.jpg'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -27,16 +28,20 @@ function ProductCart({ product }) {
 
   const handleDecreaseCart = (product) => {
     dispatch(decreaseCart(product))
-    toast('Producto eliminado del Carrito!')
+    toast.info('Producto eliminado del Carrito!')
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
         dispatch(backStep())
       }
     }
   }
-  const handleIncreaseCart = (product) => {
-    dispatch(addToCart(product))
-    toast('Producto agregado al Carrito!')
+  const handleIncreaseCart = async (product) => {
+    try {
+      await dispatch(addToCart(product))
+      toast.success('Producto agregado al carrito!')
+    } catch (error) {
+      toast.error('Límite de stock alcanzado!')
+    }
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
         dispatch(backStep())
@@ -45,13 +50,20 @@ function ProductCart({ product }) {
   }
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart(product))
-    toast('Producto removido del Carrito!')
+    toast.success('Producto removido del Carrito!')
   }
+
+  const handleOnError = (event) => (event.target.src = img1)
 
   return (
     <div className='carrito-card'>
       <div className='carrito-img'>
-        <img className='img-source' src={product.displayThumbnail} alt='' />
+        <img
+          className='img-source'
+          src={product.displayThumbnail}
+          onError={handleOnError}
+          alt=''
+        />
       </div>
 
       <div className='carrito-content'>
@@ -96,7 +108,11 @@ function ProductCart({ product }) {
 
             <button
               onClick={() => handleIncreaseCart(product)}
-              className='btn-quantity '
+              className={
+                product.cartQuantity >= product.stock
+                  ? 'btn-disabled btn-quantity'
+                  : 'btn-quantity'
+              }
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>
@@ -105,7 +121,8 @@ function ProductCart({ product }) {
             {product.promo ? (
               <p className='content-precio-text'>
                 <span className=' card-product-price__tachado '>
-                  {product.currency} {formatNumber(product.price)}
+                  {product.currency}{' '}
+                  {formatNumber(product.price * product.cartQuantity)}
                 </span>
               </p>
             ) : (
@@ -114,8 +131,8 @@ function ProductCart({ product }) {
             <p className='content-precio-text'>
               {product.currency}{' '}
               {product.promo
-                ? formatNumber(product.promoPrice)
-                : formatNumber(product.price)}
+                ? formatNumber(product.promoPrice * product.cartQuantity)
+                : formatNumber(product.price * product.cartQuantity)}
             </p>
           </div>
         </div>

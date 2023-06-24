@@ -60,7 +60,7 @@ function CartTotal() {
   }
 
   const handleVerificationSelectMethod = (text) => {
-    toast(text)
+    toast.warning(text)
   }
 
   const handleBackStep = () => {

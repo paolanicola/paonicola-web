@@ -12,9 +12,13 @@ export default function ProductView({ product }) {
   const cart = useSelector((state) => state.cart)
   const stepLocal = useSelector((state) => state.step.step)
 
-  const handleAddToCartView = () => {
-    dispatch(addToCart(product))
-    toast('Producto agregado al Carrito!')
+  const handleAddToCartView = async () => {
+    try {
+      await dispatch(addToCart(product))
+      toast.success('Producto agregado al Carrito!')
+    } catch (error) {
+      toast.error('Límite de stock alcanzado!')
+    }
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
         dispatch(backStep())

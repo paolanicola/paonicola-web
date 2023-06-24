@@ -1,5 +1,5 @@
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import {
   Cart,
   Checkout,
@@ -8,18 +8,18 @@ import {
   HeaderTitle,
   MercadopagoSuccess,
   Products,
-  SectionFooter
-} from './components';
-import ConfirmSale from './components/ConfirmSale/ConfirmSale';
-import MercadopagoFailed from './components/MercadopagoFailed';
-import ScrollToTop from './components/ScrollToTop';
-import About from './pages/About';
-import Home from './pages/Home/Home';
-import Changes from './pages/changes';
-import Contact from './pages/contact';
-import Faq from './pages/faq';
-import NotFound from './pages/notFound';
-import './stylesheets/application.scss';
+  SectionFooter,
+} from './components'
+import ConfirmSale from './components/ConfirmSale/ConfirmSale'
+import MercadopagoFailed from './components/MercadopagoFailed'
+import ScrollToTop from './components/ScrollToTop'
+import About from './pages/About'
+import Home from './pages/Home/Home'
+import Changes from './pages/changes'
+import Contact from './pages/contact'
+import Faq from './pages/faq'
+import NotFound from './pages/notFound'
+import './stylesheets/application.scss'
 
 function App() {
   return (
@@ -34,10 +34,9 @@ function App() {
                 <Header />
                 <ToastContainer
                   position='bottom-right'
-                  autoClose={900}
+                  autoClose={5000}
                   pauseOnFocusLoss={false}
-                  draggablePercent={30}
-                  limit={2}
+                  limit={3}
                 />
                 <HeaderTitle /> <Outlet /> <SectionFooter />
                 <Footer />
@@ -52,8 +51,8 @@ function App() {
             <Route path='faq' element={<Faq />} />
             <Route path='contacto' element={<Contact />} />
             <Route path='carrito' element={<Cart />} />
-            <Route path='checkout' element={<Checkout /> }></Route>
-            <Route path='checkout/confirm' element={<ConfirmSale /> } />
+            <Route path='checkout' element={<Checkout />}></Route>
+            <Route path='checkout/confirm' element={<ConfirmSale />} />
             <Route path='mercadopago/succes' element={<MercadopagoSuccess />} />
             <Route path='mercadopago/failed' element={<MercadopagoFailed />} />
             <Route path='mercadopago/pending' element={<MercadopagoFailed />} />
