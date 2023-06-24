@@ -36,6 +36,8 @@ function Product({ product }) {
   const [show, setShow] = useState(false)
   //toast
 
+  const handleOnError = (event) => (event.target.src = img1)
+
   return (
     <>
       <Modal onClose={() => setShow(false)} show={show} product={product} />
@@ -43,7 +45,12 @@ function Product({ product }) {
       <div className='card-product-container'>
         <div className='card-product-img'>
           <div className='img-container'>
-            <img className='img-source' src={img1} alt='' />
+            <img
+              className='img-source'
+              src={product.displayThumbnail}
+              alt=''
+              onError={handleOnError}
+            />
           </div>
           <div className='sale-text bold'>-20%</div>
           <div className='label-text black'>{product.category}</div>
