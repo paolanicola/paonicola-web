@@ -13,7 +13,7 @@ function Steps() {
       <div className='wizard'>
         <div className='wizard-header'>
           <div className='steps text-center'>
-            {withCalendar &&
+            {withCalendar && (
               <div
                 className={
                   step === 0
@@ -31,10 +31,14 @@ function Steps() {
                   <p>Elegí tu turno</p>
                 </div>
               </div>
-            }
+            )}
             <div
               className={
-                step === 1
+                !withCalendar && step === 1
+                  ? 'wizard-step wizard-step-01 active'
+                  : !withCalendar
+                  ? 'wizard-step wizard-step-01'
+                  : withCalendar && step === 1
                   ? 'wizard-step wizard-step-02 active'
                   : 'wizard-step wizard-step-02'
               }
@@ -44,7 +48,7 @@ function Steps() {
               </div>
               <div className='text-stepper'>
                 <p className='mb-0'>
-                  <small>{withCalendar? 'PASO 2': 'PASO 1'}</small>
+                  <small>{withCalendar ? 'PASO 2' : 'PASO 1'}</small>
                 </p>
                 <p>Tus datos</p>
               </div>
@@ -61,7 +65,7 @@ function Steps() {
               </div>
               <div className='text-stepper'>
                 <p className='mb-0'>
-                  <small>{withCalendar? 'PASO 3': 'PASO 2'}</small>
+                  <small>{withCalendar ? 'PASO 3' : 'PASO 2'}</small>
                 </p>
                 <p>Opciones de pago</p>
               </div>
