@@ -20,6 +20,7 @@ import {
   resetStep,
 } from '../../features/stepsCheckout/stepsSlice'
 import { setMethod } from '../../features/validators'
+import { formatNumber } from '../../utils/utils'
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
@@ -140,8 +141,10 @@ function CartTotal() {
                 {product.name} x {product.cartQuantity}
               </td>
               <td className='carrito-total-item-price text-right'>
-                {product.currency}
-                {product.promo ? product.promoPrice : product.price}
+                {product.currency}{' '}
+                {product.promo
+                  ? formatNumber(product.promoPrice)
+                  : formatNumber(product.price)}
               </td>
             </tr>
           ))
@@ -156,14 +159,14 @@ function CartTotal() {
           <td className='carrito-resume-title'>Total</td>
           <td className='carrito-resume-price text-right'>
             {' '}
-            ${cart.cartTotalAmount}
+            $ {formatNumber(cart.cartTotalAmount)}
           </td>
         </tr>
       </table>
 
       <div className='carrito-total-buttons back'>
         <button onClick={actionBack} type={typeBack} className={variantBack}>
-          atras
+          Atrás
         </button>
         <button
           onClick={actionNext}

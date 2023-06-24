@@ -1,10 +1,11 @@
 import React from 'react'
-import PrimaryButton from '../PrimaryButton/PrimaryButton'
 import { useDispatch, useSelector } from 'react-redux'
+import PrimaryButton from '../PrimaryButton/PrimaryButton'
 
-import { addToCart } from '../../features/cart/cartSlice'
 import { toast } from 'react-toastify'
+import { addToCart } from '../../features/cart/cartSlice'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
+import { formatNumber } from '../../utils/utils'
 
 export default function ProductView({ product }) {
   const dispatch = useDispatch()
@@ -40,14 +41,16 @@ export default function ProductView({ product }) {
           <div className='view-detail-price'>
             {product.promo ? (
               <h4 className='price-off card-product-price__tachado '>
-                {product.currency} {product.price}
+                {product.currency} {formatNumber(product.price)}
               </h4>
             ) : (
               ''
             )}
             <h4 className='price'>
               {product.currency}{' '}
-              {product.promo ? product.promoPrice : product.price}
+              {product.promo
+                ? formatNumber(product.promoPrice)
+                : formatNumber(product.price)}
             </h4>
           </div>
           <div className=' view-detail-raiting'> </div>

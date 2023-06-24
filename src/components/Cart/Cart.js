@@ -2,13 +2,11 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
-import {
-  getAllProductsCart,
-  getTotals
-} from '../../features/cart/cartSlice'
+import { getAllProductsCart, getTotals } from '../../features/cart/cartSlice'
 import { resetCartState } from '../../features/checkout/checkoutSlice'
 import { resetStep } from '../../features/stepsCheckout/stepsSlice'
 import { setMethod } from '../../features/validators'
+import { formatNumber } from '../../utils/utils'
 import ProductCart from '../ProductCart/ProductCart'
 
 function Cart() {
@@ -21,7 +19,6 @@ function Cart() {
     dispatch(getTotals())
   }, [cart, dispatch])
 
-
   const handleContinueBuy = (event) => {
     event.preventDefault()
     dispatch(resetStep())
@@ -32,7 +29,9 @@ function Cart() {
   let renderProducts = ''
   renderProducts =
     products.length > 0 ? (
-      products.map((product) => <ProductCart product={product} key={product.id}/>)
+      products.map((product) => (
+        <ProductCart product={product} key={product.id} />
+      ))
     ) : (
       <div>Error</div>
     )
@@ -41,7 +40,7 @@ function Cart() {
       {cart.cartItems.length === 0 ? (
         <div className='carrito-container carrito-container-empty'>
           <h4 className='title-empty'>
-            Tu carrito esta vacio, agrega algún producto!
+            Tu carrito está vacío, agrega algún producto!
           </h4>
           <div className='container-empty-link'>
             <Link onClick={handleContinueBuy} to='#' className='link-empty'>
@@ -63,7 +62,7 @@ function Cart() {
             >
               <tr>
                 <td className='carrito-total-td '>Producto</td>{' '}
-                <td className=' carrito-total-td text-right'>SubTotal</td>
+                <td className=' carrito-total-td text-right'>Subtotal</td>
               </tr>
               <hr />
               {products.length > 0 ? (
@@ -73,13 +72,15 @@ function Cart() {
                       {product.name} x {product.cartQuantity}
                     </td>
                     <td className='carrito-total-td text-right '>
-                      {product.currency}
-                      {product.promo ? product.promoPrice : product.price}
+                      {product.currency}{' '}
+                      {product.promo
+                        ? formatNumber(product.promoPrice)
+                        : formatNumber(product.price)}
                     </td>
                   </tr>
                 ))
               ) : (
-                <p>no hay nada</p>
+                <p>No hay productos</p>
               )}
 
               <tr>
@@ -89,7 +90,7 @@ function Cart() {
                 <td className='carrito-total-price'>Total</td>
                 <td className='carrito-total-price text-right'>
                   {' '}
-                  ${cart.cartTotalAmount}
+                  $ {formatNumber(cart.cartTotalAmount)}
                 </td>
               </tr>
             </table>
@@ -104,7 +105,7 @@ function Cart() {
               </Link>
               <div className='carrito-container-continue'>
                 <Link to='/tienda' className='carrito-continueBuy'>
-                  Continuar Comprando
+                  Continuar comprando
                 </Link>
               </div>
               <div className='wizard-footer' style={{ display: 'none' }}>

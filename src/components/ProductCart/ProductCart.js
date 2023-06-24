@@ -8,12 +8,13 @@ import {
   addToCart,
   decreaseCart,
   getTotals,
-  removeFromCart
+  removeFromCart,
 } from '../../features/cart/cartSlice'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
+import { formatNumber } from '../../utils/utils'
 
 function ProductCart({ product }) {
   const cart = useSelector((state) => state.cart)
@@ -103,7 +104,7 @@ function ProductCart({ product }) {
             {product.promo ? (
               <p className='content-precio-text'>
                 <span className=' card-product-price__tachado '>
-                  {product.currency} {product.price}
+                  {product.currency} {formatNumber(product.price)}
                 </span>
               </p>
             ) : (
@@ -111,7 +112,9 @@ function ProductCart({ product }) {
             )}
             <p className='content-precio-text'>
               {product.currency}{' '}
-              {product.promo ? product.promoPrice : product.price}
+              {product.promo
+                ? formatNumber(product.promoPrice)
+                : formatNumber(product.price)}
             </p>
           </div>
         </div>

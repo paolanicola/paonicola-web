@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import img1 from '../../assets/images/tienda/producto-ejemplo.jpg'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
+import { formatNumber } from '../../utils/utils'
 
 function Product({ product }) {
   const cart = useSelector((state) => state.cart)
@@ -19,7 +20,7 @@ function Product({ product }) {
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product))
-    toast('Producto agregado al Carrito!')
+    toast('Producto agregado al carrito!')
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
         dispatch(backStep())
@@ -62,14 +63,16 @@ function Product({ product }) {
           <div className='card-product-text__price'>
             {product.promo ? (
               <h4 className=' card-product-price__tachado '>
-                {product.currency} {product.price}
+                {product.currency} {formatNumber(product.price)}
               </h4>
             ) : (
               ''
             )}
             <h4>
               {product.currency}{' '}
-              {product.promo ? product.promoPrice : product.price}
+              {product.promo
+                ? formatNumber(product.promoPrice)
+                : formatNumber(product.price)}
             </h4>
           </div>
         </div>
