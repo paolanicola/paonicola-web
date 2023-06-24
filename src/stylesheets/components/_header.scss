@@ -113,6 +113,7 @@
   display: flex; // center
   justify-content: center; //center
   z-index: 3;
+  align-self: center;
 }
 
 .underlined {
@@ -141,7 +142,6 @@
 .menu__redes {
   display: flex;
   height: 50px;
-  // left
 }
 
 .menu__redes__link {
