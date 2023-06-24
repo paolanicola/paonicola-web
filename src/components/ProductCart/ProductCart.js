@@ -91,6 +91,7 @@ function ProductCart({ product }) {
               name='quantity'
               value={product.cartQuantity}
               type='number'
+              readOnly
             />
 
             <button

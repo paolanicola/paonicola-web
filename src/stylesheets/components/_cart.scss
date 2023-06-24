@@ -138,3 +138,11 @@
     width: 30%;
   }
 }
+
+.separator {
+  border: none;
+  border-top: 1px solid black;
+  width: 40%;
+  margin: 0 auto;
+  border-color: $gray;
+}

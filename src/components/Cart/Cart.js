@@ -60,39 +60,47 @@ function Cart() {
               cellPadding='0'
               cellSpacing='0'
             >
-              <tr>
-                <td className='carrito-total-td '>Producto</td>{' '}
-                <td className=' carrito-total-td text-right'>Subtotal</td>
-              </tr>
-              <hr />
-              {products.length > 0 ? (
-                products.map((product) => (
-                  <tr key={product.id}>
-                    <td className='carrito-total-td'>
-                      {product.name} x {product.cartQuantity}
-                    </td>
-                    <td className='carrito-total-td text-right '>
-                      {product.currency}{' '}
-                      {product.promo
-                        ? formatNumber(product.promoPrice)
-                        : formatNumber(product.price)}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <p>No hay productos</p>
-              )}
+              <thead>
+                <tr>
+                  <td className='carrito-total-td '>Producto</td>
+                  <td className=' carrito-total-td text-right'>Subtotal</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className='separator'></td>
+                </tr>
+                {products.length > 0 ? (
+                  products.map((product) => (
+                    <tr key={product.id}>
+                      <td className='carrito-total-td'>
+                        {product.name} x {product.cartQuantity}
+                      </td>
+                      <td className='carrito-total-td text-right '>
+                        {product.currency}{' '}
+                        {product.promo
+                          ? formatNumber(product.promoPrice)
+                          : formatNumber(product.price)}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <p>No hay productos</p>
+                )}
+              </tbody>
 
-              <tr>
-                <td className='carrito-total-td'></td>
-              </tr>
-              <tr className='carrito-total-price-title'>
-                <td className='carrito-total-price'>Total</td>
-                <td className='carrito-total-price text-right'>
-                  {' '}
-                  $ {formatNumber(cart.cartTotalAmount)}
-                </td>
-              </tr>
+              <tfoot>
+                <tr>
+                  <td className='carrito-total-td'></td>
+                </tr>
+                <tr className='carrito-total-price-title'>
+                  <td className='carrito-total-price'>Total</td>
+                  <td className='carrito-total-price text-right'>
+                    {' '}
+                    $ {formatNumber(cart.cartTotalAmount)}
+                  </td>
+                </tr>
+              </tfoot>
             </table>
 
             <div className='next1'>

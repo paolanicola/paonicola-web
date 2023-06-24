@@ -134,34 +134,36 @@ function CartTotal() {
       <h5 className='carrito-total-titulo'>Total del carrito</h5>
 
       <table className='carrito-total-items' cellPadding='0' cellSpacing='0'>
-        {products.length > 0 ? (
-          products.map((product) => (
-            <tr className='carrito-total-item' key={product.id}>
-              <td className='carrito-total-item-name'>
-                {product.name} x {product.cartQuantity}
-              </td>
-              <td className='carrito-total-item-price text-right'>
-                {product.currency}{' '}
-                {product.promo
-                  ? formatNumber(product.promoPrice)
-                  : formatNumber(product.price)}
-              </td>
-            </tr>
-          ))
-        ) : (
-          <p>no hay nada</p>
-        )}
+        <tbody>
+          {products.length > 0 ? (
+            products.map((product) => (
+              <tr className='carrito-total-item' key={product.id}>
+                <td className='carrito-total-item-name'>
+                  {product.name} x {product.cartQuantity}
+                </td>
+                <td className='carrito-total-item-price text-right'>
+                  {product.currency}{' '}
+                  {product.promo
+                    ? formatNumber(product.promoPrice)
+                    : formatNumber(product.price)}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <p>No hay productos</p>
+          )}
 
-        <tr>
-          <td className='carrito-total-ch-td'></td>
-        </tr>
-        <tr className='carrito-resume'>
-          <td className='carrito-resume-title'>Total</td>
-          <td className='carrito-resume-price text-right'>
-            {' '}
-            $ {formatNumber(cart.cartTotalAmount)}
-          </td>
-        </tr>
+          <tr>
+            <td className='carrito-total-ch-td'></td>
+          </tr>
+          <tr className='carrito-resume'>
+            <td className='carrito-resume-title'>Total</td>
+            <td className='carrito-resume-price text-right'>
+              {' '}
+              $ {formatNumber(cart.cartTotalAmount)}
+            </td>
+          </tr>
+        </tbody>
       </table>
 
       <div className='carrito-total-buttons back'>
