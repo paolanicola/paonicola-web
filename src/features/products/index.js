@@ -10,13 +10,13 @@ const productsReceived = 'received'
 const filterByCategory = 'filterByCategory'
 const orderProducts = 'orderProducts'
 
-const ALL_CATEGORIES = "Todas las categorías"
+const ALL_CATEGORIES = 'Todas las categorías'
 
 const initialState = {
   allProducts: [],
   productsAvailable: [],
-  filterCategory: "",
-  orderProducts: "",
+  filterCategory: '',
+  orderProducts: '',
   loading: false,
   loadSuccess: false,
   success: false,
@@ -46,8 +46,13 @@ const productSlice = createSlice({
     },
     [filterByCategory]: (state, action) => {
       state.filterCategory = action.payload
-      const showAll =  !state.filterCategory || state.filterCategory === ALL_CATEGORIES
-      state.productsAvailable = showAll? [...state.allProducts] : state.allProducts.filter(({ category }) => category === state.filterCategory)
+      const showAll =
+        !state.filterCategory || state.filterCategory === ALL_CATEGORIES
+      state.productsAvailable = showAll
+        ? [...state.allProducts]
+        : state.allProducts.filter(
+            ({ category }) => category === state.filterCategory
+          )
       return state
     },
     [orderProducts]: (state, action) => {
@@ -55,25 +60,37 @@ const productSlice = createSlice({
       const prodsAvailable = [...state.productsAvailable]
       switch (state.orderProducts) {
         case 'mayor':
-          state.productsAvailable =  prodsAvailable.sort((a, b) => b.price - a.price)
+          state.productsAvailable = prodsAvailable.sort(
+            (a, b) =>
+              (b.promo ? b.promoPrice : b.price) -
+              (a.promo ? a.promoPrice : a.price)
+          )
           break
         case 'menor':
-          state.productsAvailable =  prodsAvailable.sort((a, b) => a.price - b.price)
+          state.productsAvailable = prodsAvailable.sort(
+            (a, b) =>
+              (a.promo ? a.promoPrice : a.price) -
+              (b.promo ? b.promoPrice : b.price)
+          )
           break
         case 'a-z':
-          state.productsAvailable =  prodsAvailable.sort((a, b) => a.name.localeCompare(b.name))
+          state.productsAvailable = prodsAvailable.sort((a, b) =>
+            a.name.localeCompare(b.name)
+          )
           break
         case 'z-a':
-          state.productsAvailable =  prodsAvailable.sort((a, b) => b.name.localeCompare(a.name))
+          state.productsAvailable = prodsAvailable.sort((a, b) =>
+            b.name.localeCompare(a.name)
+          )
       }
     },
-  }
+  },
 })
 
 // Actions
-const productsRequestedAction = productSlice.actions[productsRequested];
-const productsRequestFailedAction = productSlice.actions[productsRequestFailed];
-const productsReceivedAction = productSlice.actions[productsReceived];
+const productsRequestedAction = productSlice.actions[productsRequested]
+const productsRequestFailedAction = productSlice.actions[productsRequestFailed]
+const productsReceivedAction = productSlice.actions[productsReceived]
 
 export const loadProducts = () => (dispatch, getState) => {
   dispatch(
@@ -86,21 +103,26 @@ export const loadProducts = () => (dispatch, getState) => {
   )
 }
 
-
-
 // Selectors
 export const getAllProducts = (state) => state.products
 
 export const getProductsAvailables = (state) => {
-  return  state.products.productsAvailable
+  return state.products.productsAvailable
 }
 
-export const getCategories = (state) => Object.values(state.products.allProducts.reduce((categories, product) => {
-  categories[product.category] = product.category
-  return categories;
-}, {[ALL_CATEGORIES]: ALL_CATEGORIES}))
+export const getCategories = (state) =>
+  Object.values(
+    state.products.allProducts.reduce(
+      (categories, product) => {
+        categories[product.category] = product.category
+        return categories
+      },
+      { [ALL_CATEGORIES]: ALL_CATEGORIES }
+    )
+  )
 
-export const { filterByCategory: setCategoryFilter, orderProducts:  setOrderProducts } = productSlice.actions;
+export const {
+  filterByCategory: setCategoryFilter,
+  orderProducts: setOrderProducts,
+} = productSlice.actions
 export default productSlice.reducer
-
-

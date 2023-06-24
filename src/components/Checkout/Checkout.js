@@ -18,16 +18,16 @@ const Checkout = () => {
     dispatch(getTotals())
   }, [cart, dispatch])
 
-  const stepCurrent = withCalendar ?
-  {
-    0: <CalendarCheckout />,
-    1: <FormPatientOrder />,
-    2: <PaymentMethods />,
-  }:
-  {
-    1: <FormPatientOrder />,
-    2: <PaymentMethods />,
-  }
+  const stepCurrent = withCalendar
+    ? {
+        0: <CalendarCheckout />,
+        1: <FormPatientOrder />,
+        2: <PaymentMethods />,
+      }
+    : {
+        1: <FormPatientOrder />,
+        2: <PaymentMethods />,
+      }
 
   return (
     <div>
