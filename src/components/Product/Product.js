@@ -3,7 +3,11 @@ import { Link, NavLink } from 'react-router-dom'
 import PrimaryButton from '../PrimaryButton/PrimaryButton'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, getTotals } from '../../features/cart/cartSlice'
+import {
+  addToCart,
+  getTotals,
+  isCartWithCalendar,
+} from '../../features/cart/cartSlice'
 import Modal from '../Modal/Modal'
 
 import { toast } from 'react-toastify'
@@ -11,26 +15,33 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import img1 from '../../assets/images/tienda/producto-ejemplo.jpg'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
-import { formatNumber } from '../../utils/utils'
+import { formatNumber, countProductInCart } from '../../utils/utils'
+import { messages } from '../../utils/messages'
 
 function Product({ product }) {
   const cart = useSelector((state) => state.cart)
   const stepLocal = useSelector((state) => state.step.step)
   const dispatch = useDispatch()
+  const cartAlreadyHasCalendarProduct = useSelector(isCartWithCalendar)
 
-  const handleAddToCart = async (product) => {
-    try {
-      await dispatch(addToCart(product))
-      toast.success('Producto agregado al carrito!')
-    } catch (error) {
-      toast.error('Límite de stock alcanzado!')
+  const handleAddToCart = () => {
+    // this allows only one calendar product on the cart
+    if (
+      product.category === 'Consultas Online' &&
+      cartAlreadyHasCalendarProduct
+    ) {
+      toast.info(messages.cartAlreadyHasCalendarProduct)
+    } else if (countProductInCart(product.id, cart) >= product.stock) {
+      toast.error(messages.stockLimitReached)
+    } else {
+      dispatch(addToCart(product))
+      toast.success(messages.productAddedToCart)
     }
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
         dispatch(backStep())
       }
     }
-    //navigate('/cart');
   }
 
   useEffect(() => {
@@ -56,13 +67,19 @@ function Product({ product }) {
               onError={handleOnError}
             />
           </div>
-          <div className='sale-text bold'>-20%</div>
+          {product.promo && (
+            <div className='sale-text bold'>
+              {`${Math.floor(
+                ((product.price - product.promoPrice) / product.price) * -100
+              )}%`}
+            </div>
+          )}
           <div className='label-text black'>{product.category}</div>
           <div className='card-product-overlay'>
             <div className='botonn1' onClick={() => setShow(true)}>
               <PrimaryButton size='md' href='#' actionText='Vista rapida' />
             </div>
-            <div onClick={() => handleAddToCart(product)} className='botonn'>
+            <div onClick={() => handleAddToCart()} className='botonn'>
               <PrimaryButton href='/tienda' actionText='Añadir al carrito' />
             </div>
           </div>
@@ -98,7 +115,7 @@ function Product({ product }) {
             Ver
           </Link>
           <button
-            onClick={() => handleAddToCart(product)}
+            onClick={() => handleAddToCart()}
             className='botones-mobile-addToCart'
             title='Añadir al carrito'
           >
