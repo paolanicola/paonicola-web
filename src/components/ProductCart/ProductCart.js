@@ -1,42 +1,55 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 
-import { faTrashAlt, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+import { faMinus, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   addToCart,
   decreaseCart,
-  getAllProductsCart,
   getTotals,
-  removeFromCart
+  removeFromCart,
+  isCartWithCalendar,
 } from '../../features/cart/cartSlice'
+import img1 from '../../assets/images/tienda/producto-ejemplo.jpg'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
+import { formatNumber, countProductInCart } from '../../utils/utils'
+import { messages } from '../../utils/messages'
 
 function ProductCart({ product }) {
   const cart = useSelector((state) => state.cart)
   const stepLocal = useSelector((state) => state.step.step)
-  const products = useSelector(getAllProductsCart)
+  const cartAlreadyHasCalendarProduct = useSelector(isCartWithCalendar)
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getTotals())
   }, [cart, dispatch])
 
-  const handleDecreaseCart = (product) => {
+  const handleDecreaseCart = () => {
     dispatch(decreaseCart(product))
-    toast('Producto eliminado del Carrito!')
+    toast.info(messages.cartProductQuantityUpdated)
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
         dispatch(backStep())
       }
     }
   }
-  const handleIncreaseCart = (product) => {
-    dispatch(addToCart(product))
-    toast('Producto agregado al Carrito!')
+  const handleIncreaseCart = () => {
+    // this allows only one calendar product on the cart
+    if (
+      product.category === 'Consultas Online' &&
+      cartAlreadyHasCalendarProduct
+    ) {
+      toast.info(messages.cartAlreadyHasCalendarProduct)
+    } else if (countProductInCart(product.id, cart) >= product.stock) {
+      toast.error(messages.stockLimitReached)
+    } else {
+      dispatch(addToCart(product))
+      toast.info(messages.cartProductQuantityUpdated)
+    }
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
         dispatch(backStep())
@@ -45,20 +58,25 @@ function ProductCart({ product }) {
   }
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart(product))
-    toast('Producto removido del Carrito!')
+    toast.info(messages.productRemovedFromCart)
   }
+
+  const handleOnError = (event) => (event.target.src = img1)
 
   return (
     <div className='carrito-card'>
       <div className='carrito-img'>
-        <img className='img-source' src={product.displayThumbnail} alt='' />
+        <img
+          className='img-source'
+          src={product.displayThumbnail}
+          onError={handleOnError}
+          alt=''
+        />
       </div>
 
       <div className='carrito-content'>
         <div className='content-title'>
-          <Link className='' to={`/producto/${product.id}`}>
-            <p className='content-title__h6'>{product.name}</p>
-          </Link>
+          <p className='content-title__h6'>{product.name}</p>
           <button
             onClick={() => handleRemoveFromCart(product)}
             className='content-delete'
@@ -72,11 +90,11 @@ function ProductCart({ product }) {
           </p>
         </div>
 
-        <div class='content-botton-precio'>
-          <div class='content-quantity-selector'>
+        <div className='content-botton-precio'>
+          <div className='content-quantity-selector'>
             <button
               onClick={() => handleDecreaseCart(product)}
-              class={
+              className={
                 product.cartQuantity === 1
                   ? 'btn-disabled btn-quantity'
                   : 'btn-quantity'
@@ -91,28 +109,38 @@ function ProductCart({ product }) {
               name='quantity'
               value={product.cartQuantity}
               type='number'
+              readOnly
             />
 
             <button
-              onClick={() => handleIncreaseCart(product)}
-              className='btn-quantity '
+              onClick={() => handleIncreaseCart()}
+              className={
+                product.cartQuantity >= product.stock ||
+                (product.category === 'Consultas Online' &&
+                  cartAlreadyHasCalendarProduct)
+                  ? 'btn-disabled btn-quantity'
+                  : 'btn-quantity'
+              }
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
           <div className='content-precio'>
             {product.promo ? (
-              <p class='content-precio-text'>
+              <p className='content-precio-text'>
                 <span className=' card-product-price__tachado '>
-                  {product.currency} {product.price}
+                  {product.currency}{' '}
+                  {formatNumber(product.price * product.cartQuantity)}
                 </span>
               </p>
             ) : (
               ''
             )}
-            <p class='content-precio-text'>
+            <p className='content-precio-text'>
               {product.currency}{' '}
-              {product.promo ? product.promoPrice : product.price}
+              {product.promo
+                ? formatNumber(product.promoPrice * product.cartQuantity)
+                : formatNumber(product.price * product.cartQuantity)}
             </p>
           </div>
         </div>

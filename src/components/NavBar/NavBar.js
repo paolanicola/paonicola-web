@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { PrimaryButton } from '..';
 
 import { ReactComponent as InstagramBrand } from '../../assets/images/header/instagram-brands.svg';
 import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg';
-import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg';
-import { ReactComponent as NavOpen } from '../../assets/images/header/nav-open.svg';
 import { ReactComponent as NavClose } from '../../assets/images/header/nav-close.svg';
-import { ReactComponent as PaolaLogo } from '../../assets/images/header/logo.svg';
+import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg';
+
 
 export default function NavBar() {
   const [sidebar, setSidebar] = useState(false);
-
-  const showSidebar = () => setSidebar(!sidebar);
 
   const closeSidebar = () => setSidebar(!sidebar);
 

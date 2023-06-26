@@ -5,7 +5,7 @@ const initialState = {
     ? JSON.parse(localStorage.getItem('cartItems'))
     : [],
   cartTotalQuantity: 0,
-  cartTotalAmount: 0
+  cartTotalAmount: 0,
 }
 
 const cartSlice = createSlice({
@@ -73,14 +73,14 @@ const cartSlice = createSlice({
         },
         {
           total: 0,
-          quantity: 0
+          quantity: 0,
         }
       )
 
       state.cartTotalQuantity = quantity
       state.cartTotalAmount = total
-    }
-  }
+    },
+  },
 })
 
 export const {
@@ -88,7 +88,10 @@ export const {
   removeFromCart,
   deleteCartItems,
   decreaseCart,
-  getTotals
+  getTotals,
 } = cartSlice.actions
 export const getAllProductsCart = (state) => state.cart.cartItems
+export const isCartEmpty = (state) => state.cart.cartItems.length === 0
+export const isCartWithCalendar = (state) =>
+  state.cart.cartItems.some(({ category }) => category === 'Consultas Online')
 export default cartSlice.reducer

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import laboratorio from '../../assets/images/sobre-mi/01laboratorio.svg';
 import metodologia from '../../assets/images/sobre-mi/02metodologia.svg';
 import planes from '../../assets/images/sobre-mi/03planes.svg';
-import laboratorio from '../../assets/images/sobre-mi/01laboratorio.svg';
 import honestidad from '../../assets/images/sobre-mi/04honestidad.svg';
-import fondo from '../../assets/images/sobre-mi/fondo-sobremi.png';
 import tic from '../../assets/images/sobre-mi/tic.svg';
-import paolaDeporte from '../../assets/images/paola-deporte.jpg';
+
 export default function About() {
   const [animate, setAnimate] = useState(false);
   useEffect(() => {

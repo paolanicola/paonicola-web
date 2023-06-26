@@ -1,9 +1,9 @@
-import React, { useLayoutEffect } from 'react';
-import { ReactComponent as PaolaSvg } from '../../assets/images/footer/paola-nicola.svg';
-import { ReactComponent as MailSvg } from '../../assets/images/footer/mail-footer.svg';
-import { ReactComponent as WhatsappSvg } from '../../assets/images/footer/whatsapp-footer.svg';
-import { ReactComponent as InstagramSvg } from '../../assets/images/footer/instagram-footer.svg';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { ReactComponent as InstagramSvg } from '../../assets/images/footer/instagram-footer.svg'
+import { ReactComponent as MailSvg } from '../../assets/images/footer/mail-footer.svg'
+import { ReactComponent as PaolaSvg } from '../../assets/images/footer/paola-nicola.svg'
+import { ReactComponent as WhatsappSvg } from '../../assets/images/footer/whatsapp-footer.svg'
 
 export default function Footer() {
   return (
@@ -44,14 +44,24 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <ul class='footer-menu-redes'>
+                <ul className='footer-menu-redes'>
                   <li>
-                    <a className='footer__link' href='https://www.instagram.com/nutricion.paonicola/' target='_blank' rel='noopener noreferrer'>
+                    <a
+                      className='footer__link'
+                      href='https://www.instagram.com/nutricion.paonicola/'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
                       <InstagramSvg />
                     </a>
                   </li>
                   <li>
-                    <a className='footer__link' href='mailto:nutricionista.nicola@gmail.com' target='_blank' rel='noopener noreferrer'>
+                    <a
+                      className='footer__link'
+                      href='mailto:nutricionista.nicola@gmail.com'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
                       <MailSvg />
                     </a>
                   </li>
@@ -74,7 +84,12 @@ export default function Footer() {
         <div className='footer-container-botton'>
           <div className='footer-container-botton-left'>
             <p className='rayo'>Diseño: </p>
-            <a className='a' href='https://rayoestudio.com/' target='_blank' rel='noopener noreferrer'>
+            <a
+              className='a'
+              href='https://rayoestudio.com/'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               Rayo
             </a>
           </div>
@@ -82,12 +97,17 @@ export default function Footer() {
           <div className='footer-container-botton-right'>
             <p className='felipe'>Desarrollo y maquetado: </p>
 
-            <a className='a' href='https://www.linkedin.com/in/felipe-arana-37782071/' target='_blank' rel='noopener noreferrer'>
+            <a
+              className='a'
+              href='https://www.linkedin.com/in/felipe-arana-37782071/'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               Paola Nicola Team
             </a>
           </div>
         </div>
       </div>
     </>
-  );
+  )
 }

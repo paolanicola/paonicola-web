@@ -8,7 +8,7 @@ export default function ConfirmSale() {
 
   useEffect(() => {
     dispatch(getTotals())
-  }, [cart])
+  }, [cart, dispatch])
 
   return (
     <>
@@ -68,12 +68,12 @@ export default function ConfirmSale() {
           <div className='data__details-buyer'>
             <div className='details__buyer-cart'>
               <div className='carrito-total-container2'>
-                <h5 class='carrito-total-titulo2'>Total del carrito</h5>
+                <h5 className='carrito-total-titulo2'>Total del carrito</h5>
 
                 <table
-                  class='carrito-total-items2'
-                  cellpadding='0'
-                  cellspacing='0'
+                  className='carrito-total-items2'
+                  cellPadding='0'
+                  cellSpacing='0'
                 >
                   <tr className='carrito-total-item2'>
                     <td className='carrito-total-item-name2'>

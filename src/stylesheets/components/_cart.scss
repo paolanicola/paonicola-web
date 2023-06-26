@@ -97,7 +97,7 @@
   }
   .card-product-price__tachado {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     font-size: 0.8rem;
   }
 }
@@ -137,4 +137,12 @@
   .carrito-total {
     width: 30%;
   }
+}
+
+.separator {
+  border: none;
+  border-top: 1px solid black;
+  width: 40%;
+  margin: 0 auto;
+  border-color: $gray;
 }

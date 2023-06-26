@@ -1,7 +1,9 @@
+/* eslint-disable eqeqeq */
 import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { getTotals } from '../../features/cart/cartSlice';
+
 function HeaderTitle() {
   const dispatch = useDispatch();
   useEffect(() => {

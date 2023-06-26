@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import PrimaryButton from '../PrimaryButton/PrimaryButton'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, getTotals } from '../../features/cart/cartSlice'
+import {
+  addToCart,
+  getTotals,
+  isCartWithCalendar,
+} from '../../features/cart/cartSlice'
 import Modal from '../Modal/Modal'
 
 import { toast } from 'react-toastify'
@@ -11,21 +15,33 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import img1 from '../../assets/images/tienda/producto-ejemplo.jpg'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
+import { formatNumber, countProductInCart } from '../../utils/utils'
+import { messages } from '../../utils/messages'
 
 function Product({ product }) {
   const cart = useSelector((state) => state.cart)
   const stepLocal = useSelector((state) => state.step.step)
   const dispatch = useDispatch()
+  const cartAlreadyHasCalendarProduct = useSelector(isCartWithCalendar)
 
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product))
-    toast('Producto agregado al Carrito!')
+  const handleAddToCart = () => {
+    // this allows only one calendar product on the cart
+    if (
+      product.category === 'Consultas Online' &&
+      cartAlreadyHasCalendarProduct
+    ) {
+      toast.info(messages.cartAlreadyHasCalendarProduct)
+    } else if (countProductInCart(product.id, cart) >= product.stock) {
+      toast.error(messages.stockLimitReached)
+    } else {
+      dispatch(addToCart(product))
+      toast.success(messages.productAddedToCart)
+    }
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
         dispatch(backStep())
       }
     }
-    //navigate('/cart');
   }
 
   useEffect(() => {
@@ -35,6 +51,8 @@ function Product({ product }) {
   const [show, setShow] = useState(false)
   //toast
 
+  const handleOnError = (event) => (event.target.src = img1)
+
   return (
     <>
       <Modal onClose={() => setShow(false)} show={show} product={product} />
@@ -42,15 +60,26 @@ function Product({ product }) {
       <div className='card-product-container'>
         <div className='card-product-img'>
           <div className='img-container'>
-            <img className='img-source' src={img1} alt='' />
+            <img
+              className='img-source'
+              src={product.displayThumbnail}
+              alt=''
+              onError={handleOnError}
+            />
           </div>
-          <div className='sale-text bold'>-20%</div>
+          {product.promo && (
+            <div className='sale-text bold'>
+              {`${Math.floor(
+                ((product.price - product.promoPrice) / product.price) * -100
+              )}%`}
+            </div>
+          )}
           <div className='label-text black'>{product.category}</div>
           <div className='card-product-overlay'>
             <div className='botonn1' onClick={() => setShow(true)}>
               <PrimaryButton size='md' href='#' actionText='Vista rapida' />
             </div>
-            <div onClick={() => handleAddToCart(product)} className='botonn'>
+            <div onClick={() => handleAddToCart()} className='botonn'>
               <PrimaryButton href='/tienda' actionText='Añadir al carrito' />
             </div>
           </div>
@@ -62,14 +91,16 @@ function Product({ product }) {
           <div className='card-product-text__price'>
             {product.promo ? (
               <h4 className=' card-product-price__tachado '>
-                {product.currency} {product.price}
+                {product.currency} {formatNumber(product.price)}
               </h4>
             ) : (
               ''
             )}
             <h4>
               {product.currency}{' '}
-              {product.promo ? product.promoPrice : product.price}
+              {product.promo
+                ? formatNumber(product.promoPrice)
+                : formatNumber(product.price)}
             </h4>
           </div>
         </div>
@@ -84,7 +115,7 @@ function Product({ product }) {
             Ver
           </Link>
           <button
-            onClick={() => handleAddToCart(product)}
+            onClick={() => handleAddToCart()}
             className='botones-mobile-addToCart'
             title='Añadir al carrito'
           >

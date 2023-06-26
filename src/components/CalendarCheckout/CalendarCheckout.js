@@ -1,214 +1,117 @@
 import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
-import 'react-clock/dist/Clock.css'
-import 'react-datetime-picker/dist/DateTimePicker.css'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
-import { getAllAppointments } from '../../features/appointments/appointmentsSlice'
 import {
-  deleteHora,
-  getFecha,
-  getHora,
-  updateFecha,
-  updateHora,
-} from '../../features/cartState/cartStateSlice'
-import { monthNames } from '../../utils/constants'
+  getDate,
+  getDateSelected,
+  getTime,
+  updateDate,
+  updateDateSelected,
+  updateTime
+} from '../../features/checkout/checkoutSlice'
+import {
+  createDateFromDateString,
+  dateExistsInAppointments,
+  getNewMonthViewByDate,
+  getOptionsTime,
+  nextAvailableDate,
+  tileDisabled
+} from './utils'
 
-function CalendarCheckout() {
-  //const cartState = useSelector((state) => state.cartState);
-  const appointments = useSelector(getAllAppointments)
-  const dates = appointments.map((appointment) => new Date(appointment.fecha))
-  const [render1, setRender1] = useState('')
+const CalendarCheckout = ({ appointments }) => {
   const dispatch = useDispatch()
-  //let stringdate = moment(tomorrow).format('YYYY-MM-DD');
-  //var mydate = new Date(stringdate + 'T03:00:00Z');
-  const meses = new Map()
-
-  dates.map((d) => meses.set(monthNames[d.getMonth()], new Date(d)))
-
-  const dateRedux = useSelector(getFecha)
+  const localDate = useSelector(getDate)
+  const dateSelected = useSelector(getDateSelected)
   const [value, setValue] = useState(null)
-
-  const nextDateAvailableToToday = () => {
-    const temp = new Date()
-    const temp2 = dates.filter((date) => date > temp)
-    return temp2[0]
-  }
-
-  const dateIntoAppoints = () => {
-    const temp = new Date(dateRedux)
-    const dat = appointments.map((appointment) => new Date(appointment.date))
-    const temp2 = dat.filter((date) => date.getTime() === temp.getTime())
-    return temp2.length > 0
-  }
+  const time = useSelector(getTime)
 
   useEffect(() => {
-    if (dateRedux === null) {
-      setValue(nextDateAvailableToToday())
-      dispatch(updateFecha(nextDateAvailableToToday()))
-    } else if (dateIntoAppoints()) {
-      setValue(new Date(dateRedux))
-      dispatch(updateFecha(new Date(dateRedux)))
+    if (!localDate) {
+      const nextDate = nextAvailableDate(appointments)
+      setValue(new Date(nextDate))
+      dispatch(updateDate(nextDate))
+    } else if (dateExistsInAppointments(appointments, localDate)) {
+      setValue(new Date(localDate))
+      dispatch(updateDate(localDate))
     } else {
-      setValue(nextDateAvailableToToday())
-      dispatch(updateFecha(nextDateAvailableToToday()))
+      const nextDate = nextAvailableDate(appointments)
+      setValue(new Date(nextDate))
+      dispatch(updateDate(nextDate))
     }
-  }, [])
+  }, [appointments, dispatch, localDate])
 
-  useEffect(() => {
-    renderizar(dateRedux)
-  }, [dateRedux])
-
-  const onClick = (value, event) => {
-    dispatch(updateFecha(value))
+  const onClick = (value) => {
+    const date =  value.toISOString()
+    dispatch(updateDate(date))
+    dispatch(updateDateSelected(date))
+    
     setValue(value)
   }
 
-  //------------------------EStilos del calendar
-  const customStyles = {
-    control: () => ({
-      // none of react-select's styles are passed to <Control />
-    }),
+  const handleTimeSelect = (e) => {
+    dispatch(updateTime(e.value))
   }
 
-  const handleHourSelect = (e) => {
-    dispatch(updateHora(e.value))
-  }
-
-  let hora = useSelector(getHora)
-
-  const renderizar = (appoint) => {
-    let date = null
-    const tmp = nextDateAvailableToToday()
-    const year = tmp.getFullYear()
-    const month = (tmp.getMonth() + 1).toString().padStart(2, '0')
-    const day = tmp.getDate().toString().padStart(2, '0')
-    date = `${year}-${month}-${day}T03:00:00Z`
-
-    if (appoint === null) {
-      date = date.toString().split('T')[0]
-    } else if (typeof appoint === 'string') {
-      date = appoint.split('T')[0]
-    } else {
-      date = appoint.toISOString().split('T')[0]
-    }
-
-    let horas = []
-    console.log(appointments)
-    appointments.forEach((ap) => {
-      const apDate = new Date(ap.fecha)
-      const apDateSplit = apDate.toISOString().split('T')[0]
-
-      if (apDateSplit === date) {
-        horas = ap.horaDisponibles
-      }
-    })
-
-    const optionsHour = horas.map((d) => ({
-      value: d,
-      label: d,
-    }))
-
-    const horaSelecionadaDefecto =
-      hora !== null ? { value: hora, label: hora } : ''
-
-    setRender1(
-      <div>
-        <Select
-          styles={customStyles}
-          className='react-select-containerC'
-          classNamePrefix='react-selectC'
-          //isDisabled
-          isSearchable={false}
-          placeholder='seleccione hora'
-          options={optionsHour}
-          menuIsOpen
-          defaultValue={horaSelecionadaDefecto}
-          //value={tomorrow}
-          onChange={handleHourSelect}
-        />
-        {/*horas.map((hora, index) => (
-            <div key={index} className='time-select '>
-              <button className='nada '>{hora}</button>
-            </div>
-          ))*/}
-      </div>
-    )
-  }
-
-  const changeViewMonth = (activeStartDate, view, action) => {
-    dispatch(deleteHora())
-    if (
-      action !== 'onChange' &&
-      view !== 'year' &&
-      view !== 'decade' &&
-      view !== 'century'
-    ) {
-      let dia = dates.find(
-        (day) => day.format('M') === activeStartDate.getMonth() + 1
+  const changeViewMonth = ( view, action) => {
+    if (action !== 'onChange' && view === 'month') {
+      const date = getNewMonthViewByDate(
+        appointments,
+        new Date(localDate),
+        view,
+        action
       )
-      setValue(dia.toDate())
-      dispatch(updateFecha(dia.toDate()))
+      setValue(new Date(date))
+      dispatch(updateDate(date))
     }
   }
 
-  function isSameDay(a, b) {
-    var temp = !(a.getTime() !== b.getTime())
-    return temp
-  }
+  const handleOnActiveStartDateChange = ({ action, view }) =>
+    changeViewMonth( view, action)
 
-  function itsTrue(a, b) {
-    let temp = false
-    if (isSameDay(a, b)) {
-      const date = new Date(dateRedux)
-      temp = b.getMonth() + 1 === date.getMonth() + 1
-    }
-    return temp
-  }
-
-  // Disable tiles in month view only
-  function tileDisabled({ date, view }) {
-    // Disable tiles in month view only
-    if (view === 'month') {
-      // Check if a date React-Calendar wants to check is on the list of disabled dates
-      const temp = dates.find((dDate) => itsTrue(dDate, date))
-      return !temp
-    }
-  }
+  const selectedDate = (dateSelected && time) ? `${dateSelected.split('T')[0]} ${time}`: ''
 
   return (
     <div className='wizard-body'>
       <div className='step initial active'>
         <h5 className='calendar-title'>
-          Seleccioná la fecha y hora para tu turno:
+          Seleccioná la fecha y hora para tu turno: {selectedDate}
         </h5>
         <div className='calendar-time-picker-container'>
           <div className='calendar-picker-container'>
             <Calendar
-              locale
+              locale='es'
               className=''
-              tileDisabled={tileDisabled}
+              view='month'
+              tileDisabled={({ date, view }) =>
+                tileDisabled(appointments, { date, view })
+              }
               value={value}
               onChange={setValue}
-              maxDate={new Date(dates[dates.length - 1])}
-              minDate={nextDateAvailableToToday()}
+              maxDate={createDateFromDateString(appointments[appointments.length - 1].date)}
+              minDate={new Date(nextAvailableDate(appointments))}
               onClickDay={(value, event) => onClick(value, event)}
-              //maxDate={new Date(2022, 1, 28)}
-              //onViewChange={({ action, activeStartDate, value, view }) => console.log('New view is: ', value)}
-              onActiveStartDateChange={({
-                action,
-                activeStartDate,
-                value,
-                view,
-              }) => changeViewMonth(activeStartDate, view, action)}
+              onActiveStartDateChange={handleOnActiveStartDateChange}
               activeStartDate={value}
               next2Label=''
               prev2Label=''
             />
           </div>
           <div className='calendar-time-container'>
-            <div className='time-container'>{render1}</div>
+            <div className='time-container'>
+              <Select
+                className='react-select-containerC'
+                classNamePrefix='react-selectC'
+                isSearchable={false}
+                placeholder='Select a time'
+                options={getOptionsTime(appointments, localDate)}
+                menuIsOpen
+                onChange={handleTimeSelect}
+                isDisabled={!dateSelected}
+                {... time ? { defaultValue: { label: time, value: time } }: {}}
+              />
+            </div>
           </div>
         </div>
       </div>
