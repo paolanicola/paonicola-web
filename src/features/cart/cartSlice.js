@@ -18,14 +18,7 @@ const cartSlice = createSlice({
       )
 
       if (itemIndex >= 0) {
-        // Check if adding 1 to cartQuantity exceeds stock
-        if (state.cartItems[itemIndex].cartQuantity < action.payload.stock) {
-          state.cartItems[itemIndex].cartQuantity += 1
-        } else {
-          throw new Error(
-            'Stock limit reached. Item cannot be added to the cart.'
-          )
-        }
+        state.cartItems[itemIndex].cartQuantity += 1
       } else {
         const tempProduct = { ...action.payload, cartQuantity: 1 }
         state.cartItems.push(tempProduct)

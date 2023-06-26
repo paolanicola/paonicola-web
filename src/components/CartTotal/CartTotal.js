@@ -21,6 +21,7 @@ import {
 } from '../../features/stepsCheckout/stepsSlice'
 import { setMethod } from '../../features/validators'
 import { formatNumber } from '../../utils/utils'
+import { messages } from '../../utils/messages'
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
@@ -44,7 +45,7 @@ function CartTotal() {
 
   const handleNextStep = () => {
     if (withCalendar && horario === null) {
-      handleVerificationSelectMethod('Seleccione un Horario!')
+      handleVerificationSelectMethod(messages.timeMissing)
     } else dispatch(nextStep())
   }
 
@@ -112,7 +113,7 @@ function CartTotal() {
     variantNext = 'carrito-finalizar__oculto'
     actionBack = () => handleBackStep()
     actionVerificationMethod = () =>
-      handleVerificationSelectMethod('Seleccione un metodo de pago!')
+      handleVerificationSelectMethod(messages.paymentMethodMissing)
     actionEnd = () => handleEnd()
   }
 

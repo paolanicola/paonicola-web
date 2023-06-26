@@ -3,29 +3,39 @@ import { useDispatch, useSelector } from 'react-redux'
 import PrimaryButton from '../PrimaryButton/PrimaryButton'
 
 import { toast } from 'react-toastify'
-import { addToCart } from '../../features/cart/cartSlice'
+import { addToCart, isCartWithCalendar } from '../../features/cart/cartSlice'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
-import { formatNumber } from '../../utils/utils'
+import { formatNumber, countProductInCart } from '../../utils/utils'
+import img1 from '../../assets/images/tienda/producto-ejemplo.jpg'
+import { messages } from '../../utils/messages'
 
 export default function ProductView({ product }) {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
   const stepLocal = useSelector((state) => state.step.step)
+  const cartAlreadyHasCalendarProduct = useSelector(isCartWithCalendar)
 
-  const handleAddToCartView = async () => {
-    try {
-      await dispatch(addToCart(product))
-      toast.success('Producto agregado al Carrito!')
-    } catch (error) {
-      toast.error('Límite de stock alcanzado!')
+  const handleAddToCartView = () => {
+    // this allows only one calendar product on the cart
+    if (
+      product.category === 'Consultas Online' &&
+      cartAlreadyHasCalendarProduct
+    ) {
+      toast.info(messages.cartAlreadyHasCalendarProduct)
+    } else if (countProductInCart(product.id, cart) >= product.stock) {
+      toast.error(messages.stockLimitReached)
+    } else {
+      dispatch(addToCart(product))
+      toast.success(messages.productAddedToCart)
     }
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
         dispatch(backStep())
       }
     }
-    //navigate('/cart');
   }
+
+  const handleOnError = (event) => (event.target.src = img1)
 
   return (
     <>
@@ -35,6 +45,7 @@ export default function ProductView({ product }) {
             <img
               className='view-img-source'
               src={product.displayThumbnail}
+              onError={handleOnError}
               alt=''
             />
           </div>

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 import { faMinus, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,38 +8,47 @@ import {
   decreaseCart,
   getTotals,
   removeFromCart,
+  isCartWithCalendar,
 } from '../../features/cart/cartSlice'
 import img1 from '../../assets/images/tienda/producto-ejemplo.jpg'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
-import { formatNumber } from '../../utils/utils'
+import { formatNumber, countProductInCart } from '../../utils/utils'
+import { messages } from '../../utils/messages'
 
 function ProductCart({ product }) {
   const cart = useSelector((state) => state.cart)
   const stepLocal = useSelector((state) => state.step.step)
+  const cartAlreadyHasCalendarProduct = useSelector(isCartWithCalendar)
 
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getTotals())
   }, [cart, dispatch])
 
-  const handleDecreaseCart = (product) => {
+  const handleDecreaseCart = () => {
     dispatch(decreaseCart(product))
-    toast.info('Producto eliminado del Carrito!')
+    toast.info(messages.cartProductQuantityUpdated)
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
         dispatch(backStep())
       }
     }
   }
-  const handleIncreaseCart = async (product) => {
-    try {
-      await dispatch(addToCart(product))
-      toast.success('Producto agregado al carrito!')
-    } catch (error) {
-      toast.error('Límite de stock alcanzado!')
+  const handleIncreaseCart = () => {
+    // this allows only one calendar product on the cart
+    if (
+      product.category === 'Consultas Online' &&
+      cartAlreadyHasCalendarProduct
+    ) {
+      toast.info(messages.cartAlreadyHasCalendarProduct)
+    } else if (countProductInCart(product.id, cart) >= product.stock) {
+      toast.error(messages.stockLimitReached)
+    } else {
+      dispatch(addToCart(product))
+      toast.info(messages.cartProductQuantityUpdated)
     }
     if (stepLocal === 2) {
       if (cart.cartTotalQuantity > 1) {
@@ -50,7 +58,7 @@ function ProductCart({ product }) {
   }
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart(product))
-    toast.success('Producto removido del Carrito!')
+    toast.info(messages.productRemovedFromCart)
   }
 
   const handleOnError = (event) => (event.target.src = img1)
@@ -68,9 +76,7 @@ function ProductCart({ product }) {
 
       <div className='carrito-content'>
         <div className='content-title'>
-          <Link className='' to={`/producto/${product.id}`}>
-            <p className='content-title__h6'>{product.name}</p>
-          </Link>
+          <p className='content-title__h6'>{product.name}</p>
           <button
             onClick={() => handleRemoveFromCart(product)}
             className='content-delete'
@@ -107,9 +113,11 @@ function ProductCart({ product }) {
             />
 
             <button
-              onClick={() => handleIncreaseCart(product)}
+              onClick={() => handleIncreaseCart()}
               className={
-                product.cartQuantity >= product.stock
+                product.cartQuantity >= product.stock ||
+                (product.category === 'Consultas Online' &&
+                  cartAlreadyHasCalendarProduct)
                   ? 'btn-disabled btn-quantity'
                   : 'btn-quantity'
               }

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { ReactComponent as InstagramBrand } from '../../assets/images/header/instagram-brands.svg'
 import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg'
 import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg'
+import { messages } from '../../utils/messages'
 
 import { toast } from 'react-toastify'
 
@@ -14,7 +15,7 @@ export default function Contact() {
     formState: { errors },
   } = useForm()
   const onSubmit = (data) => {
-    toast.success('Mensaje Enviado Correctamente!')
+    toast.success(messages.submitFormConfirmation)
     setSend(true)
   }
 

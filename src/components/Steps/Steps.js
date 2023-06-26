@@ -33,6 +33,7 @@ function Steps() {
               </div>
             )}
             <div
+              // this className condition is tricky and hard to read but does the magic right
               className={
                 !withCalendar && step === 1
                   ? 'wizard-step wizard-step-01 active'
