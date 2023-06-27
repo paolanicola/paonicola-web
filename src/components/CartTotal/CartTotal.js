@@ -11,7 +11,6 @@ import {
   getTime,
   isCheckoutCalendarValid,
   resetCartState,
-  updateForm,
   updateVerified,
 } from '../../features/checkout/checkoutSlice'
 import {
@@ -69,9 +68,6 @@ function CartTotal() {
       setVariantTrans('carrito-finalizar__oculto ')
       setVariantMP('carrito-finalizar__oculto ')
       dispatch(updateVerified(false))
-    }
-    if (step === 1) {
-      dispatch(updateForm(null))
     }
     dispatch(setMethod(''))
     dispatch(backStep())

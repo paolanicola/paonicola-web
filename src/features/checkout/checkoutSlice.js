@@ -32,7 +32,7 @@ const checkoutSlice = createSlice({
     },
     updateForm(state, action) {
       state.form = action.payload
-      localStorage.setItem('form', state.form)
+      localStorage.setItem('form', JSON.stringify(state.form))
     },
     deleteTime(state, action) {
       state.time = null
