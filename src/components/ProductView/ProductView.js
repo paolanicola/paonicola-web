@@ -69,10 +69,7 @@ export default function ProductView({ product }) {
             </h4>
           </div>
           <div className=' view-detail-raiting'> </div>
-          <div className='view-detail-important'>
-            IMPORTANTE: Este producto tiene una vigencia de <b>50</b> días desde
-            el día de su compra. La consulta es <b>online</b> .
-          </div>
+          <div className='view-detail-important'>{product.warningNote}</div>
           <div className='view-detail-description'> {product.description} </div>
 
           <div className='view-detail-button' onClick={handleAddToCartView}>
