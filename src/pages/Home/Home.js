@@ -65,7 +65,7 @@ export default function Home() {
                 alt='Mi metodologia'
                 title='Mi meteodologia'
               />
-              <h5>Feedback continuo</h5>
+              <h5>Feedback contínuo</h5>
             </div>
           </div>
           <div className='services-item-row'>
@@ -89,7 +89,7 @@ export default function Home() {
               //<%= link_to 'sobre-mi', {class: 'btn btn-primary btn-md' } do %>Más sobre mi<% end %>
             }
             <NavLink to='/sobre-mi' className=' btt'>
-              Mas sobre mi
+              Más sobre mí
             </NavLink>
           </div>
         </div>

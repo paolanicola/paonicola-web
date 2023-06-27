@@ -34,7 +34,9 @@
   padding: 0.5rem;
 }
 .footer__link {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
   color: white;
   font-weight: 300;
@@ -103,7 +105,7 @@
     display: flex;
     ul {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       li {
       }
     }
