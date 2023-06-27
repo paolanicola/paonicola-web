@@ -32,7 +32,7 @@ const checkoutSlice = createSlice({
     },
     updateForm(state, action) {
       state.form = action.payload
-      localStorage.setItem('form', JSON.stringify(state.form))
+      localStorage.setItem('form', state.form)
     },
     deleteTime(state, action) {
       state.time = null
@@ -64,5 +64,6 @@ export const getDateSelected = (state) => state.checkout.dateSelected
 export const getTime = (state) => state.checkout.time
 export const getVerified = (state) => state.checkout.verified
 export const getForm = (state) => state.checkout.form
-export const isCheckoutCalendarValid = (state) => (state.checkout.dateSelected &&  state.checkout.time)
+export const isCheckoutCalendarValid = (state) =>
+  state.checkout.dateSelected && state.checkout.time
 export default checkoutSlice.reducer

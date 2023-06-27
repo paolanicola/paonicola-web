@@ -21,11 +21,11 @@ const Checkout = () => {
   const stepCurrent = withCalendar
     ? {
         0: <CalendarCheckout />,
-        1: <FormPatientOrder />,
+        1: <FormPatientOrder withCalendar={withCalendar} />,
         2: <PaymentMethods />,
       }
     : {
-        1: <FormPatientOrder />,
+        1: <FormPatientOrder withCalendar={withCalendar} />,
         2: <PaymentMethods />,
       }
 

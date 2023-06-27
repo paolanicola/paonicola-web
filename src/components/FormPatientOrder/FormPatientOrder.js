@@ -8,7 +8,7 @@ import {
 } from '../../features/checkout/checkoutSlice'
 import { nextStep } from '../../features/stepsCheckout/stepsSlice'
 
-function FormPatientOrder() {
+function FormPatientOrder({ withCalendar }) {
   const dispatch = useDispatch()
   const { step } = useSelector((state) => state.step)
 
@@ -36,7 +36,9 @@ function FormPatientOrder() {
   return (
     <div className='form-container'>
       <p className='form-title'>
-        Datos de la persona que realizará la compra y tomará el turno
+        {withCalendar
+          ? 'Datos de la persona que realizará la compra y tomará el turno'
+          : 'Datos de la persona que realizará la compra'}
       </p>
       <div className='caja'>
         <form

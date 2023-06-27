@@ -82,7 +82,6 @@ function CartTotal() {
   let variantBack = ''
   let variantNext = ''
   let actionBack = ''
-  let actionNext = ''
   let typeBack = ''
   let typeNext = ''
   let formNext = ''
@@ -93,7 +92,6 @@ function CartTotal() {
     variantBack = 'carrito-finalizar__oculto'
     variantNext = 'carrito-finalizar'
     variantNext += hora !== null ? '' : ' disabled'
-    actionNext = () => handleNextStep()
     typeNext = 'submit'
   }
 
@@ -103,7 +101,6 @@ function CartTotal() {
       : 'carrito-finalizar__oculto'
     variantNext = 'carrito-finalizar'
     actionBack = () => handleBackStep()
-    actionNext = ''
     typeNext = 'submit'
     formNext = 'formularioTurno'
   }
@@ -129,6 +126,13 @@ function CartTotal() {
       }
     }
   }, [method, step])
+
+  const handleOnClick = (event) => {
+    if (step === 0) {
+      event.preventDefault()
+      handleNextStep()
+    }
+  }
 
   return (
     <div className='carrito-total-container'>
@@ -172,7 +176,7 @@ function CartTotal() {
           Atrás
         </button>
         <button
-          onClick={actionNext}
+          onClick={handleOnClick}
           type={typeNext}
           form={formNext}
           className={variantNext}
