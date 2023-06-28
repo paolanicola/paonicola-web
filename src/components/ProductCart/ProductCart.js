@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
 import { formatNumber, countProductInCart } from '../../utils/utils'
 import { messages } from '../../utils/messages'
+import { deleteDateSelected } from '../../features/checkout/checkoutSlice'
 
 function ProductCart({ product }) {
   const cart = useSelector((state) => state.cart)
@@ -63,6 +64,13 @@ function ProductCart({ product }) {
 
   const handleOnError = (event) => (event.target.src = img1)
 
+  const handleDeleteButton = () => {
+    handleRemoveFromCart(product)
+    if (product.category === 'Consultas Online') {
+      dispatch(deleteDateSelected())
+    }
+  }
+
   return (
     <div className='carrito-card'>
       <div className='carrito-img'>
@@ -77,10 +85,7 @@ function ProductCart({ product }) {
       <div className='carrito-content'>
         <div className='content-title'>
           <p className='content-title__h6'>{product.name}</p>
-          <button
-            onClick={() => handleRemoveFromCart(product)}
-            className='content-delete'
-          >
+          <button onClick={handleDeleteButton} className='content-delete'>
             <FontAwesomeIcon className='delete-icon' icon={faTrashAlt} />
           </button>
         </div>
