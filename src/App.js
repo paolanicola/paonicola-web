@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import {
@@ -20,8 +21,16 @@ import Contact from './pages/contact'
 import Faq from './pages/faq'
 import NotFound from './pages/notFound'
 import './stylesheets/application.scss'
+import { cartItemsExpired } from './utils/utils'
 
 function App() {
+  useEffect(() => {
+    if (cartItemsExpired()) {
+      localStorage.removeItem('cartItems')
+      localStorage.removeItem('lastProductAddedTimestamp')
+    }
+  }, [])
+
   return (
     <BrowserRouter>
       <ScrollToTop />
