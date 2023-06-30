@@ -132,3 +132,19 @@
     justify-content: space-between;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .footer-container-botton {
+    flex-direction: column;
+
+    .footer-container-botton-left {
+      border-bottom: 1px solid $gray;
+      width: 9rem;
+      padding-bottom: 0.6rem;
+    }
+
+    h3 {
+      display: none;
+    }
+  }
+}
