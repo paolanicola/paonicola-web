@@ -128,6 +128,10 @@ function CartTotal() {
       event.preventDefault()
       handleNextStep()
     }
+
+    if (step === 1) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 
   return (
