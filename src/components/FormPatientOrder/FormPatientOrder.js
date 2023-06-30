@@ -8,7 +8,7 @@ import {
 } from '../../features/checkout/checkoutSlice'
 import { nextStep } from '../../features/stepsCheckout/stepsSlice'
 
-function FormPatientOrder() {
+function FormPatientOrder({ withCalendar }) {
   const dispatch = useDispatch()
   const { step } = useSelector((state) => state.step)
 
@@ -33,10 +33,21 @@ function FormPatientOrder() {
     clearErrors()
   }, [clearErrors, step])
 
+  const handleInputChange = (event) => {
+    dispatch(
+      updateForm({
+        ...form,
+        [event.target.name]: event.target.value,
+      })
+    )
+  }
+
   return (
     <div className='form-container'>
       <p className='form-title'>
-        Datos de la persona que realizará la compra y tomará el turno
+        {withCalendar
+          ? 'Datos de la persona que realizará la compra y tomará el turno'
+          : 'Datos de la persona que realizará la compra'}
       </p>
       <div className='caja'>
         <form
@@ -49,6 +60,7 @@ function FormPatientOrder() {
               <label>Nombre</label>
               <input
                 className={errors.nombre && 'input_error'}
+                name='nombre'
                 type='text'
                 defaultValue={form?.nombre}
                 {...register('nombre', {
@@ -56,6 +68,7 @@ function FormPatientOrder() {
                     value: true,
                     message: 'Nombre requerido',
                   },
+                  onChange: handleInputChange,
                   pattern: {
                     value: /^[a-z ,.'-]+$/i,
                     message: 'Formato incorrecto, solo letras',
@@ -79,6 +92,7 @@ function FormPatientOrder() {
                     value: true,
                     message: 'Apellido requerido',
                   },
+                  onChange: handleInputChange,
                   pattern: {
                     value: /^[a-z ,.'-]+$/i,
                     message: 'Formato incorrecto, solo letras',
@@ -103,6 +117,7 @@ function FormPatientOrder() {
                 value: true,
                 message: 'Email requerido',
               },
+              onChange: handleInputChange,
               pattern: {
                 value:
                   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
@@ -117,15 +132,17 @@ function FormPatientOrder() {
           )}
 
           <p>
-            <label>Telefono</label>
+            <label>Teléfono</label>
           </p>
           <input
             className={errors.telefono && 'input_error'}
             type='number'
+            onChange={handleInputChange}
             defaultValue={form?.telefono}
             {...register('telefono', {
               required: { value: true, message: 'Telefono requerido' },
               valueAsNumber: { value: true, message: 'Solo ingrese numeros' },
+              onChange: handleInputChange,
             })}
           />
           {errors.telefono && (

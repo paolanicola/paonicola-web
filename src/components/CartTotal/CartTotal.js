@@ -11,7 +11,6 @@ import {
   getTime,
   isCheckoutCalendarValid,
   resetCartState,
-  updateForm,
   updateVerified,
 } from '../../features/checkout/checkoutSlice'
 import {
@@ -70,9 +69,6 @@ function CartTotal() {
       setVariantMP('carrito-finalizar__oculto ')
       dispatch(updateVerified(false))
     }
-    if (step === 1) {
-      dispatch(updateForm(null))
-    }
     dispatch(setMethod(''))
     dispatch(backStep())
   }
@@ -82,7 +78,6 @@ function CartTotal() {
   let variantBack = ''
   let variantNext = ''
   let actionBack = ''
-  let actionNext = ''
   let typeBack = ''
   let typeNext = ''
   let formNext = ''
@@ -93,7 +88,6 @@ function CartTotal() {
     variantBack = 'carrito-finalizar__oculto'
     variantNext = 'carrito-finalizar'
     variantNext += hora !== null ? '' : ' disabled'
-    actionNext = () => handleNextStep()
     typeNext = 'submit'
   }
 
@@ -103,7 +97,6 @@ function CartTotal() {
       : 'carrito-finalizar__oculto'
     variantNext = 'carrito-finalizar'
     actionBack = () => handleBackStep()
-    actionNext = ''
     typeNext = 'submit'
     formNext = 'formularioTurno'
   }
@@ -129,6 +122,17 @@ function CartTotal() {
       }
     }
   }, [method, step])
+
+  const handleOnClick = (event) => {
+    if (step === 0) {
+      event.preventDefault()
+      handleNextStep()
+    }
+
+    if (step === 1) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   return (
     <div className='carrito-total-container'>
@@ -172,7 +176,7 @@ function CartTotal() {
           Atrás
         </button>
         <button
-          onClick={actionNext}
+          onClick={handleOnClick}
           type={typeNext}
           form={formNext}
           className={variantNext}

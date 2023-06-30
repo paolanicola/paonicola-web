@@ -82,7 +82,7 @@ function Filters({ term, searchKeyWord }) {
               classNamePrefix='react-select'
               options={optionsCat}
               onChange={handleFilterCategory}
-              placeholder={'Seleccionar Categoria'}
+              placeholder={'Seleccionar Categoría'}
             />
           </div>
         </div>

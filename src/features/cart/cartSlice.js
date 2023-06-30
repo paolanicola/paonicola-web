@@ -25,6 +25,10 @@ const cartSlice = createSlice({
       }
 
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
+      localStorage.setItem(
+        'lastProductAddedTimestamp',
+        new Date().toISOString()
+      )
     },
     removeFromCart(state, action) {
       const nextCartItems = state.cartItems.filter(

@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   date: '',
-  dateSelected: null,
+  dateSelected: localStorage.getItem('dateSelected')
+    ? JSON.parse(localStorage.getItem('dateSelected'))
+    : null,
   time: null,
   form: localStorage.getItem('form')
     ? JSON.parse(localStorage.getItem('form'))
@@ -22,6 +24,7 @@ const checkoutSlice = createSlice({
     updateDateSelected(state, { payload }) {
       state.dateSelected = payload
       state.time = null
+      localStorage.setItem('dateSelected', JSON.stringify(state.dateSelected))
     },
     updateTime(state, action) {
       state.time = action.payload
@@ -37,9 +40,14 @@ const checkoutSlice = createSlice({
     deleteTime(state, action) {
       state.time = null
     },
+    deleteDateSelected(state, action) {
+      state.dateSelected = null
+      localStorage.setItem('dateSelected', state.dateSelected)
+    },
     resetCartState(state, action) {
       state.date = null
-      localStorage.setItem('date', JSON.stringify(state.date))
+      state.dateSelected = null
+      localStorage.setItem('dateSelected', JSON.stringify(state.dateSelected))
       state.time = null
       state.verified = false
       localStorage.setItem('verified', JSON.stringify(state.verified))
@@ -55,6 +63,7 @@ export const {
   updateTime,
   updateVerified,
   deleteTime,
+  deleteDateSelected,
   updateForm,
   resetCartState,
 } = checkoutSlice.actions
@@ -64,5 +73,6 @@ export const getDateSelected = (state) => state.checkout.dateSelected
 export const getTime = (state) => state.checkout.time
 export const getVerified = (state) => state.checkout.verified
 export const getForm = (state) => state.checkout.form
-export const isCheckoutCalendarValid = (state) => (state.checkout.dateSelected &&  state.checkout.time)
+export const isCheckoutCalendarValid = (state) =>
+  state.checkout.dateSelected && state.checkout.time
 export default checkoutSlice.reducer
