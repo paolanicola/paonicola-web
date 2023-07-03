@@ -148,8 +148,8 @@ function CartTotal() {
                 </td>
                 <td className='carrito-total-item-price text-right'>
                   {product.currency}{' '}
-                  {product.promo
-                    ? formatNumber(product.promoPrice)
+                  {product.active_promo
+                    ? formatNumber(product.promo_price)
                     : formatNumber(product.price)}
                 </td>
               </tr>

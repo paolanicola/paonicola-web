@@ -76,7 +76,7 @@ function ProductCart({ product }) {
       <div className='carrito-img'>
         <img
           className='img-source'
-          src={product.displayThumbnail}
+          src={product.thumbnail}
           onError={handleOnError}
           alt=''
         />
@@ -143,8 +143,8 @@ function ProductCart({ product }) {
             )}
             <p className='content-precio-text'>
               {product.currency}{' '}
-              {product.promo
-                ? formatNumber(product.promoPrice * product.cartQuantity)
+              {product.active_promo
+                ? formatNumber(product.promo_price * product.cartQuantity)
                 : formatNumber(product.price * product.cartQuantity)}
             </p>
           </div>

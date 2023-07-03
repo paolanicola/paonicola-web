@@ -44,7 +44,7 @@ export default function ProductView({ product }) {
           <div className='view-img-container'>
             <img
               className='view-img-source'
-              src={product.displayThumbnail}
+              src={product.thumbnail}
               onError={handleOnError}
               alt=''
             />
@@ -64,12 +64,12 @@ export default function ProductView({ product }) {
             <h4 className='price'>
               {product.currency}{' '}
               {product.promo
-                ? formatNumber(product.promoPrice)
+                ? formatNumber(product.promo_price)
                 : formatNumber(product.price)}
             </h4>
           </div>
           <div className=' view-detail-raiting'> </div>
-          <div className='view-detail-important'>{product.warningNote}</div>
+          <div className='view-detail-important'>{product.important_note}</div>
           <div className='view-detail-description'> {product.description} </div>
 
           <div className='view-detail-button' onClick={handleAddToCartView}>
