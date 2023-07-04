@@ -62,15 +62,15 @@ const productSlice = createSlice({
         case 'mayor':
           state.productsAvailable = prodsAvailable.sort(
             (a, b) =>
-              (b.promo ? b.promoPrice : b.price) -
-              (a.promo ? a.promoPrice : a.price)
+              (b.active_promo ? b.promo_price : b.price) -
+              (a.active_promo ? a.promo_price : a.price)
           )
           break
         case 'menor':
           state.productsAvailable = prodsAvailable.sort(
             (a, b) =>
-              (a.promo ? a.promoPrice : a.price) -
-              (b.promo ? b.promoPrice : b.price)
+              (a.active_promo ? a.promo_price : a.price) -
+              (b.active_promo ? b.promo_price : b.price)
           )
           break
         case 'a-z':

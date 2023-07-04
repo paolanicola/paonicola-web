@@ -62,15 +62,15 @@ function Product({ product }) {
           <div className='img-container'>
             <img
               className='img-source'
-              src={product.displayThumbnail}
+              src={product.thumbnail}
               alt=''
               onError={handleOnError}
             />
           </div>
-          {product.promo && (
+          {product.active_promo && (
             <div className='sale-text bold'>
               {`${Math.floor(
-                ((product.price - product.promoPrice) / product.price) * -100
+                ((product.price - product.promo_price) / product.price) * -100
               )}%`}
             </div>
           )}
@@ -89,17 +89,17 @@ function Product({ product }) {
             <h4 className='card-product-text__name'>{product.name}</h4>
           </NavLink>
           <div className='card-product-text__price'>
-            {product.promo ? (
+            {product.active_promo ? (
               <h4 className=' card-product-price__tachado '>
-                {product.currency} {formatNumber(product.price)}
+                $ {formatNumber(product.price)}
               </h4>
             ) : (
               ''
             )}
             <h4>
-              {product.currency}{' '}
-              {product.promo
-                ? formatNumber(product.promoPrice)
+              ${' '}
+              {product.active_promo
+                ? formatNumber(product.promo_price)
                 : formatNumber(product.price)}
             </h4>
           </div>
