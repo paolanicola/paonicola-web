@@ -77,7 +77,7 @@ function Cart() {
                         {product.name} x {product.cartQuantity}
                       </td>
                       <td className='carrito-total-td text-right '>
-                        {product.currency}{' '}
+                        ${' '}
                         {product.active_promo
                           ? formatNumber(product.promo_price)
                           : formatNumber(product.price)}

@@ -89,15 +89,15 @@ function Product({ product }) {
             <h4 className='card-product-text__name'>{product.name}</h4>
           </NavLink>
           <div className='card-product-text__price'>
-            {product.promo ? (
+            {product.active_promo ? (
               <h4 className=' card-product-price__tachado '>
-                {product.currency} {formatNumber(product.price)}
+                $ {formatNumber(product.price)}
               </h4>
             ) : (
               ''
             )}
             <h4>
-              {product.currency}{' '}
+              ${' '}
               {product.active_promo
                 ? formatNumber(product.promo_price)
                 : formatNumber(product.price)}

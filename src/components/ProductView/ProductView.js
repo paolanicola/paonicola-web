@@ -54,16 +54,16 @@ export default function ProductView({ product }) {
           <h4 className='view-detail-title'>{product.name}</h4>
           <div className='view-category'>{product.category}</div>
           <div className='view-detail-price'>
-            {product.promo ? (
+            {product.active_promo ? (
               <h4 className='price-off card-product-price__tachado '>
-                {product.currency} {formatNumber(product.price)}
+                $ {formatNumber(product.price)}
               </h4>
             ) : (
               ''
             )}
             <h4 className='price'>
-              {product.currency}{' '}
-              {product.promo
+              ${' '}
+              {product.active_promo
                 ? formatNumber(product.promo_price)
                 : formatNumber(product.price)}
             </h4>
