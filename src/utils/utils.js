@@ -19,3 +19,13 @@ export const cartItemsExpired = () => {
   }
   return itemsExpired
 }
+
+export const cleanLocalStorage = () => {
+  localStorage.removeItem('dateSelected')
+  localStorage.removeItem('stepCurrent')
+  localStorage.removeItem('cartItems')
+  localStorage.removeItem('verified')
+  localStorage.removeItem('form')
+  localStorage.removeItem('selectedId')
+  localStorage.removeItem('lastProductAddedTimestamp')
+}

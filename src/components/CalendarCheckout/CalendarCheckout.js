@@ -9,7 +9,8 @@ import {
   getTime,
   updateDate,
   updateDateSelected,
-  updateTime
+  updateTime,
+  updateSelectedAppointmentId,
 } from '../../features/checkout/checkoutSlice'
 import {
   createDateFromDateString,
@@ -17,7 +18,8 @@ import {
   getNewMonthViewByDate,
   getOptionsTime,
   nextAvailableDate,
-  tileDisabled
+  tileDisabled,
+  getAppointmentId,
 } from './utils'
 
 const CalendarCheckout = ({ appointments }) => {
@@ -42,20 +44,28 @@ const CalendarCheckout = ({ appointments }) => {
     }
   }, [appointments, dispatch, localDate])
 
-  const onClick = (value) => {
-    const date =  value.toISOString()
-    dispatch(updateDate(date))
-    dispatch(updateDateSelected(date))
-    
+  const handleOnClickDay = (value) => {
+    const stringDate = value.toISOString()
+    // dispatch(updateDate(stringDate))
+    dispatch(updateDateSelected(stringDate))
     setValue(value)
   }
 
   const handleTimeSelect = (e) => {
-    dispatch(updateTime(e.value))
+    const newTime = e.value
+    dispatch(updateTime(newTime))
+
+    // get appointment id based on date and time
+    const selectedAppointmentId = getAppointmentId(
+      appointments,
+      dateSelected.split('T')[0],
+      newTime
+    )
+    dispatch(updateSelectedAppointmentId(selectedAppointmentId))
   }
 
-  const changeViewMonth = ( view, action) => {
-    if (action !== 'onChange' && view === 'month') {
+  const changeViewMonth = (view, action) => {
+    if (action !== 'onChange') {
       const date = getNewMonthViewByDate(
         appointments,
         new Date(localDate),
@@ -68,30 +78,36 @@ const CalendarCheckout = ({ appointments }) => {
   }
 
   const handleOnActiveStartDateChange = ({ action, view }) =>
-    changeViewMonth( view, action)
+    changeViewMonth(view, action)
 
-  const selectedDate = (dateSelected && time) ? `${dateSelected.split('T')[0]} ${time}`: ''
+  const dateTimeSelected =
+    (dateSelected !== null
+      ? `${dateSelected.split('T')[0].split('-')[2]}/${
+          dateSelected.split('T')[0].split('-')[1]
+        }/${dateSelected.split('T')[0].split('-')[0]}`
+      : '') + (time !== null ? ` ${time}` : '')
 
   return (
     <div className='wizard-body'>
       <div className='step initial active'>
-        <h5 className='calendar-title'>
-          Seleccioná la fecha y hora para tu turno: {selectedDate}
-        </h5>
+        <h4 className='calendar-title'>
+          Seleccioná la fecha y hora para tu turno: {dateTimeSelected}
+        </h4>
         <div className='calendar-time-picker-container'>
           <div className='calendar-picker-container'>
             <Calendar
               locale='es'
               className=''
               view='month'
+              minDetail='month'
               tileDisabled={({ date, view }) =>
                 tileDisabled(appointments, { date, view })
               }
-              value={value}
-              onChange={setValue}
-              maxDate={createDateFromDateString(appointments[appointments.length - 1].date)}
+              maxDate={createDateFromDateString(
+                appointments[appointments.length - 1].date
+              )}
               minDate={new Date(nextAvailableDate(appointments))}
-              onClickDay={(value, event) => onClick(value, event)}
+              onClickDay={handleOnClickDay}
               onActiveStartDateChange={handleOnActiveStartDateChange}
               activeStartDate={value}
               next2Label=''
@@ -105,11 +121,12 @@ const CalendarCheckout = ({ appointments }) => {
                 classNamePrefix='react-selectC'
                 isSearchable={false}
                 placeholder='Select a time'
-                options={getOptionsTime(appointments, localDate)}
+                options={
+                  dateSelected ? getOptionsTime(appointments, dateSelected) : []
+                }
                 menuIsOpen
                 onChange={handleTimeSelect}
                 isDisabled={!dateSelected}
-                {... time ? { defaultValue: { label: time, value: time } }: {}}
               />
             </div>
           </div>

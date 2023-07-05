@@ -6,6 +6,9 @@ const initialState = {
     ? JSON.parse(localStorage.getItem('dateSelected'))
     : null,
   time: null,
+  selectedAppointmentId: localStorage.getItem('selectedAppointmentId')
+    ? localStorage.getItem('selectedAppointmentId')
+    : null,
   form: localStorage.getItem('form')
     ? JSON.parse(localStorage.getItem('form'))
     : null,
@@ -37,6 +40,10 @@ const checkoutSlice = createSlice({
       state.form = action.payload
       localStorage.setItem('form', JSON.stringify(state.form))
     },
+    updateSelectedAppointmentId(state, action) {
+      state.selectedAppointmentId = action.payload
+      localStorage.setItem('selectedAppointmentId', state.selectedAppointmentId)
+    },
     deleteTime(state, action) {
       state.time = null
     },
@@ -66,10 +73,13 @@ export const {
   deleteDateSelected,
   updateForm,
   resetCartState,
+  updateSelectedAppointmentId,
 } = checkoutSlice.actions
 
 export const getDate = (state) => state.checkout.date
 export const getDateSelected = (state) => state.checkout.dateSelected
+export const getSelectedAppointmentId = (state) =>
+  state.checkout.selectedAppointmentId
 export const getTime = (state) => state.checkout.time
 export const getVerified = (state) => state.checkout.verified
 export const getForm = (state) => state.checkout.form

@@ -12,6 +12,8 @@ import {
   isCheckoutCalendarValid,
   resetCartState,
   updateVerified,
+  getSelectedAppointmentId,
+  getForm,
 } from '../../features/checkout/checkoutSlice'
 import {
   backStep,
@@ -21,6 +23,7 @@ import {
 import { setMethod } from '../../features/validators'
 import { formatNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
+import { apiCallBegan } from '../../features/apiCalls'
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
@@ -33,6 +36,8 @@ function CartTotal() {
   const isCheckoutCalendarReady = useSelector(isCheckoutCalendarValid)
   const [variantTrans, setVariantTrans] = useState('carrito-finalizar__oculto ')
   const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
+  const selectedAppointmentId = useSelector(getSelectedAppointmentId)
+  const personalData = useSelector(getForm)
 
   useEffect(() => {
     if (!withCalendar && step === 0) {
@@ -49,10 +54,33 @@ function CartTotal() {
   }
 
   const handleEnd = () => {
-    // Limpieza de todo
-    // Limpiar el carrito
+    const data = {
+      payment_type: method,
+      schedule_id: selectedAppointmentId,
+      product_ids_and_quantities: products.map((product) => [
+        product.id,
+        product.cartQuantity,
+      ]),
+      patient_info: {
+        email: personalData.email,
+        name: personalData.name,
+        lastname: personalData.lastname,
+        phone: personalData.phone,
+      },
+    }
+
+    dispatch(
+      apiCallBegan({
+        url: `${process.env.REACT_APP_API_BASE_URL}/orders`,
+        method: 'POST',
+        data: data,
+        // onStart: appointmentsRequested.type,
+        // onSuccess: appointmentsReceived.type,
+        // onError: appointmentsRequestFailed.type,
+      })
+    )
+
     dispatch(deleteCartItems())
-    // limpiar step cart state limpiar validators limpiar
     dispatch(resetStep())
     dispatch(resetCartState())
     setVariantTrans('carrito-finalizar__oculto')
@@ -116,7 +144,7 @@ function CartTotal() {
         setVariantTrans('carrito-finalizar__oculto')
         setVariantMP('carrito-finalizar')
       }
-      if (method === 'Trans') {
+      if (method === 'deposit') {
         setVariantTrans('carrito-finalizar')
         setVariantMP('carrito-finalizar__oculto')
       }
