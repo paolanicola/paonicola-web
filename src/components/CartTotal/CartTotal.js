@@ -12,8 +12,8 @@ import {
   isCheckoutCalendarValid,
   resetCartState,
   updateVerified,
-  getSelectedAppointmentId,
   getForm,
+  getSelectedAppointmentId,
 } from '../../features/checkout/checkoutSlice'
 import {
   backStep,
@@ -23,7 +23,7 @@ import {
 import { setMethod } from '../../features/validators'
 import { formatNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
-import { apiCallBegan } from '../../features/apiCalls'
+import { submitOrder } from '../../features/cartTotal'
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
@@ -54,32 +54,8 @@ function CartTotal() {
   }
 
   const handleEnd = () => {
-    const data = {
-      payment_type: method,
-      schedule_id: selectedAppointmentId,
-      product_ids_and_quantities: products.map((product) => [
-        product.id,
-        product.cartQuantity,
-      ]),
-      patient_info: {
-        email: personalData.email,
-        name: personalData.name,
-        lastname: personalData.lastname,
-        phone: personalData.phone,
-      },
-    }
-
-    dispatch(
-      apiCallBegan({
-        url: `${process.env.REACT_APP_API_BASE_URL}/orders`,
-        method: 'POST',
-        data: data,
-        // onStart: appointmentsRequested.type,
-        // onSuccess: appointmentsReceived.type,
-        // onError: appointmentsRequestFailed.type,
-      })
-    )
-
+    const schedule_id = withCalendar ? selectedAppointmentId : null
+    dispatch(submitOrder(method, schedule_id, personalData, products))
     dispatch(deleteCartItems())
     dispatch(resetStep())
     dispatch(resetCartState())
