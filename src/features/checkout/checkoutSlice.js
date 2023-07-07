@@ -53,13 +53,15 @@ const checkoutSlice = createSlice({
     },
     resetCartState(state, action) {
       state.date = null
+      state.time = null
       state.dateSelected = null
       localStorage.setItem('dateSelected', JSON.stringify(state.dateSelected))
-      state.time = null
       state.verified = false
       localStorage.setItem('verified', JSON.stringify(state.verified))
       state.form = null
       localStorage.setItem('form', JSON.stringify(state.form))
+      state.selectedAppointmentId = null
+      localStorage.setItem('selectedAppointmentId', state.selectedAppointmentId)
     },
   },
 })

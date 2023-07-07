@@ -80,6 +80,7 @@ const CalendarCheckout = ({ appointments }) => {
   const handleOnActiveStartDateChange = ({ action, view }) =>
     changeViewMonth(view, action)
 
+  // iso string to human readable date and time
   const dateTimeSelected =
     (dateSelected !== null
       ? `${dateSelected.split('T')[0].split('-')[2]}/${

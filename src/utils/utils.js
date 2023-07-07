@@ -25,8 +25,8 @@ export const cleanLocalStorage = () => {
   localStorage.removeItem('stepCurrent')
   localStorage.removeItem('cartItems')
   localStorage.removeItem('verified')
+  localStorage.removeItem('selectedAppointmentId')
   localStorage.removeItem('form')
-  localStorage.removeItem('selectedId')
   localStorage.removeItem('lastProductAddedTimestamp')
 }
 
