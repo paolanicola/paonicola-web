@@ -11,6 +11,7 @@ export const initialState = {
   orderData: {},
   loading: false,
   success: false,
+  errors: {},
 }
 
 const orderReducer = createReducer(initialState, {
@@ -26,6 +27,7 @@ const orderReducer = createReducer(initialState, {
   [orderRequestFailed.type]: (state, action) => {
     state.loading = false
     state.success = false
+    state.errors = { ...action.payload }
   },
 })
 

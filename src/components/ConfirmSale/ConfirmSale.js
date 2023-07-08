@@ -19,7 +19,8 @@ export default function ConfirmSale() {
   }, [cart, dispatch])
 
   useEffect(() => {
-    if (!loading && !success) {
+    // if api call is not in progress and there are no error messages
+    if (!loading && Object.keys(order.errors).length === 0) {
       navigate('/')
     }
   })
@@ -28,8 +29,8 @@ export default function ConfirmSale() {
     return <div className='spinner'></div>
   } else if (success) {
     return <OrderSuccess orderData={order.orderData} />
-  } else if (!success && Object.keys(order.orderData).length === 0) {
-    return <OrderFailure />
+  } else if (Object.keys(order.errors).length !== 0) {
+    return <OrderFailure errors={order.errors.errors} />
   } else {
     return null
   }
