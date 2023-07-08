@@ -19,10 +19,10 @@ export default function ConfirmSale() {
   }, [cart, dispatch])
 
   useEffect(() => {
-    if (!loading && !success && Object.keys(order.orderData).length === 0) {
+    if (!loading && !success) {
       navigate('/')
     }
-  }, [loading, success, order.orderData, navigate])
+  })
 
   if (loading) {
     return <div className='spinner'></div>
