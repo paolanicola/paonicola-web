@@ -10,28 +10,29 @@ export default function ConfirmSale() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const cart = useSelector((state) => state.cart)
-  const order = useSelector(getOrder)
-  const loading = order.loading
-  const success = order.success
+  const { loading, success, errors, orderData } = useSelector(getOrder)
 
   useEffect(() => {
     dispatch(getTotals())
   }, [cart, dispatch])
 
   useEffect(() => {
-    // if api call is not in progress and there are no error messages
-    if (!loading && Object.keys(order.errors).length === 0) {
+    if (!loading && !success && Object.keys(errors).length === 0) {
       navigate('/')
     }
   })
 
   if (loading) {
     return <div className='spinner'></div>
-  } else if (success) {
-    return <OrderSuccess orderData={order.orderData} />
-  } else if (Object.keys(order.errors).length !== 0) {
-    return <OrderFailure errors={order.errors.errors} />
-  } else {
-    return null
   }
+
+  if (success) {
+    return <OrderSuccess orderData={orderData} />
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return <OrderFailure errors={errors.errors} />
+  }
+
+  return null
 }
