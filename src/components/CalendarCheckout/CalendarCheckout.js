@@ -46,7 +46,6 @@ const CalendarCheckout = ({ appointments }) => {
 
   const handleOnClickDay = (value) => {
     const stringDate = value.toISOString()
-    // dispatch(updateDate(stringDate))
     dispatch(updateDateSelected(stringDate))
     setValue(value)
   }

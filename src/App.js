@@ -20,6 +20,7 @@ import Changes from './pages/changes'
 import Contact from './pages/contact'
 import Faq from './pages/faq'
 import NotFound from './pages/notFound'
+import Error from './pages/error'
 import './stylesheets/application.scss'
 import { cartItemsExpired, cleanLocalStorage } from './utils/utils'
 
@@ -66,6 +67,7 @@ function App() {
             <Route path='mercadopago/pending' element={<MercadopagoFailed />} />
           </Route>
           <Route path='*' element={<NotFound />} />
+          <Route path='error' element={<Error />} />
         </Routes>
       </div>
     </BrowserRouter>

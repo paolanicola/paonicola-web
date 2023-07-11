@@ -13,6 +13,7 @@ export const initialState = {
   loadSuccess: false,
   success: false,
   preference: '',
+  failed: false,
 }
 
 const appointmentsReducer = createReducer(initialState, {
@@ -31,6 +32,7 @@ const appointmentsReducer = createReducer(initialState, {
     state.loading = false
     state.success = false
     state.loadSuccess = false
+    state.failed = true
   },
 })
 
@@ -49,3 +51,4 @@ export const loadAppointments = () => (dispatch) => {
 
 export default appointmentsReducer
 export const getAllAppointments = (state) => state.schedules.appointments
+export const getAllAppointmentsFailed = (state) => state.schedules.failed
