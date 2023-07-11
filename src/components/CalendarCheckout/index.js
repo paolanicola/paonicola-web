@@ -17,7 +17,7 @@ const Index = () => {
   useEffect(() => {
     dispatch(loadAppointments())
     failed && navigate('/error')
-  }, [dispatch, failed])
+  }, [dispatch, failed, navigate])
 
   return appointments.length > 0 ? (
     <CalendarCheckout appointments={appointments} />
