@@ -6,6 +6,7 @@ import api from './middleware/api'
 import productsReducer from './products'
 import stepReducer from './stepsCheckout/stepsSlice'
 import validatorsReducer from './validators'
+import orderReducer from './cartTotal'
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     step: stepReducer,
     schedules: appointmentsReducer,
     checkout: checkoutReducer,
+    order: orderReducer,
   },
   middleware: [...getDefaultMiddleware(), api],
 })

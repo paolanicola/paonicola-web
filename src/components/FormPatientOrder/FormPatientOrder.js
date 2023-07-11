@@ -59,11 +59,10 @@ function FormPatientOrder({ withCalendar }) {
             <div className='form-row-name'>
               <label>Nombre</label>
               <input
-                className={errors.nombre && 'input_error'}
-                name='nombre'
+                className={errors.name && 'input_error'}
                 type='text'
-                defaultValue={form?.nombre}
-                {...register('nombre', {
+                defaultValue={form?.name}
+                {...register('name', {
                   required: {
                     value: true,
                     message: 'Nombre requerido',
@@ -75,19 +74,19 @@ function FormPatientOrder({ withCalendar }) {
                   },
                 })}
               />
-              {errors.nombre && (
-                <span className={errors.nombre && 'span_error'}>
-                  {errors.nombre.message}
+              {errors.name && (
+                <span className={errors.name && 'span_error'}>
+                  {errors.name.message}
                 </span>
               )}
             </div>
             <div className='form-row-lastName'>
               <label>Apellido</label>
               <input
-                className={errors.apellido && 'input_error'}
+                className={errors.lastname && 'input_error'}
                 type='text'
-                defaultValue={form?.apellido}
-                {...register('apellido', {
+                defaultValue={form?.lastname}
+                {...register('lastname', {
                   required: {
                     value: true,
                     message: 'Apellido requerido',
@@ -99,9 +98,9 @@ function FormPatientOrder({ withCalendar }) {
                   },
                 })}
               />
-              {errors.apellido && (
-                <span className={errors.apellido && 'span_error'}>
-                  {errors.apellido.message}
+              {errors.lastname && (
+                <span className={errors.lastname && 'span_error'}>
+                  {errors.lastname.message}
                 </span>
               )}
             </div>
@@ -135,19 +134,19 @@ function FormPatientOrder({ withCalendar }) {
             <label>Teléfono</label>
           </p>
           <input
-            className={errors.telefono && 'input_error'}
+            className={errors.phone && 'input_error'}
             type='number'
             onChange={handleInputChange}
-            defaultValue={form?.telefono}
-            {...register('telefono', {
-              required: { value: true, message: 'Telefono requerido' },
-              valueAsNumber: { value: true, message: 'Solo ingrese numeros' },
+            defaultValue={form?.phone}
+            {...register('phone', {
+              required: { value: true, message: 'Teléfono requerido' },
+              valueAsNumber: { value: true, message: 'Solo ingrese números' },
               onChange: handleInputChange,
             })}
           />
-          {errors.telefono && (
-            <span className={errors.telefono && 'span_error'}>
-              {errors.telefono.message}
+          {errors.phone && (
+            <span className={errors.phone && 'span_error'}>
+              {errors.phone.message}
             </span>
           )}
         </form>

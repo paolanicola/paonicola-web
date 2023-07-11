@@ -19,7 +19,7 @@ const api =
         params: '',
         url,
         method,
-        data
+        data,
       })
       // Specific Api call
       if (onSuccess) dispatch({ type: onSuccess, payload: response.data })
@@ -32,11 +32,15 @@ const api =
         error.response.status === 401
       )
         // General api error
-        dispatch(actions.apiCallFailed(error.response ? error.response.data : error.message))
+        dispatch(
+          actions.apiCallFailed(
+            error.response ? error.response.data : error.message
+          )
+        )
 
       // Sepecific API error handling.
       if (onError) {
-        let errorMessage = 'error'
+        let errorMessage = 'Error: '
         if (error.response) errorMessage = error.response.data
         dispatch({ type: onError, payload: errorMessage })
       }

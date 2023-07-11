@@ -6,17 +6,14 @@ import { setMethod } from '../../features/validators'
 
 function PaymentMethods() {
   const dispatch = useDispatch()
-  const {
-    register,
-    handleSubmit,
-  } = useForm()
+  const { register, handleSubmit } = useForm()
   const onSubmit = (data) => null
 
   const PaymentMP = () => {
     dispatch(setMethod('MP'))
   }
   const PaymentTrans = () => {
-    dispatch(setMethod('Trans'))
+    dispatch(setMethod('deposit'))
   }
 
   return (
@@ -52,8 +49,9 @@ function PaymentMethods() {
               <p className='block-title'>Transferencia Bancaria</p>
               <div className='block-description'>
                 <p className='description-text'>
-                  Realizá una transferencia al cbu que te indicaré al finalizar la compra. La compra
-                  se efectuará una vez que me envíes el comprobante de pago.
+                  Realizá una transferencia al cbu que te indicaré al finalizar
+                  la compra. La compra se efectuará una vez que me envíes el
+                  comprobante de pago.
                 </p>
               </div>
             </div>

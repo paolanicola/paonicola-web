@@ -21,13 +21,12 @@ import Contact from './pages/contact'
 import Faq from './pages/faq'
 import NotFound from './pages/notFound'
 import './stylesheets/application.scss'
-import { cartItemsExpired } from './utils/utils'
+import { cartItemsExpired, cleanLocalStorage } from './utils/utils'
 
 function App() {
   useEffect(() => {
     if (cartItemsExpired()) {
-      localStorage.removeItem('cartItems')
-      localStorage.removeItem('lastProductAddedTimestamp')
+      cleanLocalStorage()
     }
   }, [])
 

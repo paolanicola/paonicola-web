@@ -12,6 +12,8 @@ import {
   isCheckoutCalendarValid,
   resetCartState,
   updateVerified,
+  getForm,
+  getSelectedAppointmentId,
 } from '../../features/checkout/checkoutSlice'
 import {
   backStep,
@@ -21,6 +23,7 @@ import {
 import { setMethod } from '../../features/validators'
 import { formatNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
+import { submitOrder } from '../../features/cartTotal'
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
@@ -33,6 +36,8 @@ function CartTotal() {
   const isCheckoutCalendarReady = useSelector(isCheckoutCalendarValid)
   const [variantTrans, setVariantTrans] = useState('carrito-finalizar__oculto ')
   const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
+  const selectedAppointmentId = useSelector(getSelectedAppointmentId)
+  const personalData = useSelector(getForm)
 
   useEffect(() => {
     if (!withCalendar && step === 0) {
@@ -49,10 +54,9 @@ function CartTotal() {
   }
 
   const handleEnd = () => {
-    // Limpieza de todo
-    // Limpiar el carrito
+    const schedule_id = withCalendar ? selectedAppointmentId : null
+    dispatch(submitOrder(method, schedule_id, personalData, products))
     dispatch(deleteCartItems())
-    // limpiar step cart state limpiar validators limpiar
     dispatch(resetStep())
     dispatch(resetCartState())
     setVariantTrans('carrito-finalizar__oculto')
@@ -116,7 +120,7 @@ function CartTotal() {
         setVariantTrans('carrito-finalizar__oculto')
         setVariantMP('carrito-finalizar')
       }
-      if (method === 'Trans') {
+      if (method === 'deposit') {
         setVariantTrans('carrito-finalizar')
         setVariantMP('carrito-finalizar__oculto')
       }
