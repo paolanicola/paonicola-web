@@ -5,7 +5,7 @@ export const messages = {
   cartAlreadyHasCalendarProduct:
     'El carrito ya contiene el máximo de productos de esta categoría',
   cartProductQuantityUpdated: 'Cantidad de productos actualizada',
-  timeMissing: 'Por favor, seleccione un horario',
+  appoitmentMissing: 'Por favor, seleccione un turno',
   paymentMethodMissing: 'Por favor, seleccione un método de pago',
   submitFormConfirmation: 'Mensaje enviado',
 }

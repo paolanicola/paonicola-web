@@ -2278,6 +2278,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mercadopago/sdk-js@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@mercadopago/sdk-js@npm:0.0.3"
+  checksum: 748bc582841e3d5b4d42f6fc84257500ad22db578defbf952ca299469cc5c0c2370e5a9a10c4df84172d50ff5ebfddd4b6040eeca5a730a312e9ed2fd06d4a66
+  languageName: node
+  linkType: hard
+
+"@mercadopago/sdk-react@npm:^0.0.12":
+  version: 0.0.12
+  resolution: "@mercadopago/sdk-react@npm:0.0.12"
+  dependencies:
+    "@mercadopago/sdk-js": ^0.0.3
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 0c2a3ab3d82224aa7f5e5b4e75459f2fafa4fdd79b7bdf93e08b2d2b0af3f58d482ff7942c95e459930c8816dfb4cf3e3a5123b4c1eb85b803997f789375c354
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -11523,6 +11542,7 @@ __metadata:
     "@fortawesome/fontawesome-svg-core": ^1.2.36
     "@fortawesome/free-solid-svg-icons": ^5.15.4
     "@fortawesome/react-fontawesome": ^0.1.16
+    "@mercadopago/sdk-react": ^0.0.12
     "@reduxjs/toolkit": ^1.7.1
     "@testing-library/jest-dom": ^5.16.1
     "@testing-library/react": ^11.2.7
