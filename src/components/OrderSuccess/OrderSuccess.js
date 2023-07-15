@@ -1,17 +1,31 @@
+import { useEffect, useState } from 'react'
 import {
   isoDateToSpanishString,
   formatNumber,
   getDisplayPaymentMethod,
 } from '../../utils/utils'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
-const OrderSuccess = ({ orderData }) => {
-  const spanishPurchaseDate = isoDateToSpanishString(orderData.created_at)
-  const spanishAppointmentDate = isoDateToSpanishString(
-    orderData.appointment_date
-  )
+const OrderSuccess = () => {
+  const { orderId } = useParams()
+  const [orderData, setOrderData] = useState(null)
 
-  return (
-    <>
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_BASE_URL}/orders/${orderId}`)
+      .then((response) => {
+        setOrderData(response.data)
+      })
+  })
+
+  if (orderData === null) return <div className='spinner'></div>
+  else {
+    const spanishPurchaseDate = isoDateToSpanishString(orderData.created_at)
+    const spanishAppointmentDate = isoDateToSpanishString(
+      orderData.appointment_date
+    )
+    return (
       <section className='confirm'>
         <h3 className='confirm__h3'>¡Tu compra fue realizada con éxito!</h3>
         <div className='confirm__data-sale'>
@@ -74,8 +88,8 @@ const OrderSuccess = ({ orderData }) => {
           </h5>
         </div>
       </section>
-    </>
-  )
+    )
+  }
 }
 
 export default OrderSuccess

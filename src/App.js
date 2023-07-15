@@ -23,6 +23,7 @@ import NotFound from './pages/notFound'
 import Error from './pages/error'
 import './stylesheets/application.scss'
 import { cartItemsExpired, cleanLocalStorage } from './utils/utils'
+import OrderSuccess from './components/OrderSuccess'
 
 function App() {
   useEffect(() => {
@@ -61,11 +62,34 @@ function App() {
             <Route path='contacto' element={<Contact />} />
             <Route path='carrito' element={<Cart />} />
             <Route path='checkout' element={<Checkout />}></Route>
-            <Route path='checkout/confirm' element={<ConfirmSale />} />
             <Route path='mercadopago/succes' element={<MercadopagoSuccess />} />
             <Route path='mercadopago/failed' element={<MercadopagoFailed />} />
             <Route path='mercadopago/pending' element={<MercadopagoFailed />} />
           </Route>
+          <Route
+            path='checkout/confirm'
+            element={
+              <>
+                <Header />
+                <HeaderTitle customTitle='Compra finalizada' />
+                <ConfirmSale />
+                <Outlet /> <SectionFooter />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path='checkout/confirm/:orderId'
+            element={
+              <>
+                <Header />
+                <HeaderTitle customTitle='Compra finalizada' />
+                <OrderSuccess />
+                <Outlet /> <SectionFooter />
+                <Footer />
+              </>
+            }
+          />
           <Route path='*' element={<NotFound />} />
           <Route path='error' element={<Error />} />
         </Routes>
