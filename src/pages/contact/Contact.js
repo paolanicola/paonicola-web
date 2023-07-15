@@ -154,7 +154,9 @@ export default function Contact() {
 
             <div className='contact-buton-right'>
               <ReCAPTCHA
-                sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY}
+                sitekey={
+                  process.env.REACT_APP_RECAPTCHA_SITEKEY ?? 'invalid-key'
+                }
                 onChange={handleRecaptchaChange}
               />
               <input

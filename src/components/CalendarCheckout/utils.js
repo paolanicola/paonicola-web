@@ -1,11 +1,3 @@
-export const createDateFromDateString = (dateString) => {
-  const year = parseInt(dateString.substr(0, 4))
-  const month = parseInt(dateString.substr(5, 2)) - 1
-  const day = parseInt(dateString.substr(8, 2))
-
-  return new Date(year, month, day)
-}
-
 // Return next available date as a string
 export const nextAvailableDate = (appointments) => {
   const now = new Date()
@@ -112,4 +104,14 @@ export const getAppointmentId = (appointments, date, time) => {
     }
   }
   return null
+}
+
+export const newUtcDate = (stringDate) => {
+  const [year, month, day] = stringDate.split('-').map(Number)
+
+  return new Date(
+    year,
+    month - 1, // Month (JavaScript are 0-indexed, so we subtract 1)
+    day
+  )
 }

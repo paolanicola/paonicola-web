@@ -145,12 +145,21 @@ select {
 .react-select__menu-list {
   background-color: white;
   border: solid 2px $primary;
-  margin-top: -0.9rem;
+  margin-top: -0.7rem;
 }
 
 .react-select__option {
   border-top: solid 2px $primary;
   padding: 0.75rem 1rem;
+
+  &:first-child {
+    border-top: none;
+    margin-top: -4px;
+  }
+
+  &:last-child {
+    margin-bottom: -4px;
+  }
 }
 //----------------------fin select custom
 

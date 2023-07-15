@@ -13,13 +13,13 @@ import {
   updateSelectedAppointmentId,
 } from '../../features/checkout/checkoutSlice'
 import {
-  createDateFromDateString,
   dateExistsInAppointments,
   getNewMonthViewByDate,
   getOptionsTime,
   nextAvailableDate,
   tileDisabled,
   getAppointmentId,
+  newUtcDate,
 } from './utils'
 
 const CalendarCheckout = ({ appointments }) => {
@@ -32,20 +32,21 @@ const CalendarCheckout = ({ appointments }) => {
   useEffect(() => {
     if (!localDate) {
       const nextDate = nextAvailableDate(appointments)
-      setValue(new Date(nextDate))
+      setValue(newUtcDate(nextDate))
       dispatch(updateDate(nextDate))
     } else if (dateExistsInAppointments(appointments, localDate)) {
-      setValue(new Date(localDate))
+      setValue(newUtcDate(localDate))
       dispatch(updateDate(localDate))
     } else {
       const nextDate = nextAvailableDate(appointments)
-      setValue(new Date(nextDate))
+      setValue(newUtcDate(nextDate))
       dispatch(updateDate(nextDate))
     }
   }, [appointments, dispatch, localDate])
 
   const handleOnClickDay = (value) => {
     const stringDate = value.toISOString()
+    // dispatch(updateDate(stringDate))
     dispatch(updateDateSelected(stringDate))
     setValue(value)
   }
@@ -67,12 +68,13 @@ const CalendarCheckout = ({ appointments }) => {
     if (action !== 'onChange') {
       const date = getNewMonthViewByDate(
         appointments,
-        new Date(localDate),
+        newUtcDate(localDate),
         view,
         action
       )
-      setValue(new Date(date))
+      setValue(newUtcDate(date))
       dispatch(updateDate(date))
+      console.log({ date })
     }
   }
 
@@ -100,18 +102,15 @@ const CalendarCheckout = ({ appointments }) => {
               className=''
               view='month'
               minDetail='month'
+              showNeighboringMonth={false}
               tileDisabled={({ date, view }) =>
                 tileDisabled(appointments, { date, view })
               }
-              maxDate={createDateFromDateString(
-                appointments[appointments.length - 1].date
-              )}
-              minDate={new Date(nextAvailableDate(appointments))}
+              maxDate={newUtcDate(appointments[appointments.length - 1].date)}
+              minDate={newUtcDate(nextAvailableDate(appointments))}
               onClickDay={handleOnClickDay}
               onActiveStartDateChange={handleOnActiveStartDateChange}
               activeStartDate={value}
-              next2Label=''
-              prev2Label=''
             />
           </div>
           <div className='calendar-time-container'>
