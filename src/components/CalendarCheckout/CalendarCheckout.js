@@ -11,6 +11,8 @@ import {
   updateDateSelected,
   updateTime,
   updateSelectedAppointmentId,
+  deleteDateSelected,
+  deleteTime,
 } from '../../features/checkout/checkoutSlice'
 import {
   dateExistsInAppointments,
@@ -18,8 +20,8 @@ import {
   getOptionsTime,
   nextAvailableDate,
   tileDisabled,
-  getAppointmentId,
   newUtcDate,
+  isoStringToHumanReadable,
 } from './utils'
 
 const CalendarCheckout = ({ appointments }) => {
@@ -52,16 +54,9 @@ const CalendarCheckout = ({ appointments }) => {
   }
 
   const handleTimeSelect = (e) => {
-    const newTime = e.value
+    const newTime = e.label
     dispatch(updateTime(newTime))
-
-    // get appointment id based on date and time
-    const selectedAppointmentId = getAppointmentId(
-      appointments,
-      dateSelected.split('T')[0],
-      newTime
-    )
-    dispatch(updateSelectedAppointmentId(selectedAppointmentId))
+    dispatch(updateSelectedAppointmentId(e.value))
   }
 
   const changeViewMonth = (view, action) => {
@@ -74,7 +69,8 @@ const CalendarCheckout = ({ appointments }) => {
       )
       setValue(newUtcDate(date))
       dispatch(updateDate(date))
-      console.log({ date })
+      dispatch(deleteDateSelected())
+      dispatch(deleteTime())
     }
   }
 
@@ -82,12 +78,7 @@ const CalendarCheckout = ({ appointments }) => {
     changeViewMonth(view, action)
 
   // iso string to human readable date and time
-  const dateTimeSelected =
-    (dateSelected !== null
-      ? `${dateSelected.split('T')[0].split('-')[2]}/${
-          dateSelected.split('T')[0].split('-')[1]
-        }/${dateSelected.split('T')[0].split('-')[0]}`
-      : '') + (time !== null ? ` ${time}` : '')
+  const dateTimeSelected = isoStringToHumanReadable(dateSelected, time)
 
   return (
     <div className='wizard-body'>

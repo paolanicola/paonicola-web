@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { FormPatientOrder, PaymentMethods } from '..'
 import { getTotals, isCartWithCalendar } from '../../features/cart/cartSlice'
-import { getDateSelected } from '../../features/checkout/checkoutSlice'
+import { getSelectedAppointmentId } from '../../features/checkout/checkoutSlice'
 import CalendarCheckout from '../CalendarCheckout'
 import CartTotal from '../CartTotal/CartTotal'
 import Steps from '../Steps/Steps'
@@ -15,14 +15,14 @@ const Checkout = () => {
   const cart = useSelector((state) => state.cart)
   const withCalendar = useSelector(isCartWithCalendar)
   const { step } = useSelector((state) => state.step)
-  const dateSelected = useSelector(getDateSelected)
+  const selectedAppointmentId = useSelector(getSelectedAppointmentId)
 
   useEffect(() => {
     dispatch(getTotals())
-    if (dateSelected === null && withCalendar) {
+    if (selectedAppointmentId === null && withCalendar) {
       dispatch(resetStep())
     }
-  }, [cart, dateSelected, dispatch, withCalendar])
+  }, [cart, selectedAppointmentId, dispatch, withCalendar])
 
   const stepCurrent = withCalendar
     ? {

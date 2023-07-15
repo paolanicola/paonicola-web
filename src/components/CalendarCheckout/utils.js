@@ -40,8 +40,8 @@ const isSameDate = (date1, date2) => {
 export const getOptionsTime = (appointments, localDate) => {
   const result = appointments
     .filter((appointment) => isSameDate(appointment.date, localDate))
-    .map(({ available_hours }) => ({
-      value: available_hours,
+    .map(({ available_hours, id }) => ({
+      value: id,
       label: available_hours,
     }))
 
@@ -113,5 +113,17 @@ export const newUtcDate = (stringDate) => {
     year,
     month - 1, // Month (JavaScript are 0-indexed, so we subtract 1)
     day
+  )
+}
+
+export const isoStringToHumanReadable = (isoString, time) => {
+  return (
+    (isoString !== null
+      ? `${isoString.split('T')[0].split('-')[2]}/${
+          isoString.split('T')[0].split('-')[1]
+        }/${isoString.split('T')[0].split('-')[0]}`
+      : '') +
+    ' ' +
+    (time ?? '')
   )
 }

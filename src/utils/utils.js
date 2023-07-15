@@ -21,7 +21,6 @@ export const cartItemsExpired = () => {
 }
 
 export const cleanLocalStorage = () => {
-  localStorage.removeItem('dateSelected')
   localStorage.removeItem('stepCurrent')
   localStorage.removeItem('cartItems')
   localStorage.removeItem('verified')
