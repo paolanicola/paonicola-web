@@ -65,31 +65,12 @@ function App() {
             <Route path='mercadopago/succes' element={<MercadopagoSuccess />} />
             <Route path='mercadopago/failed' element={<MercadopagoFailed />} />
             <Route path='mercadopago/pending' element={<MercadopagoFailed />} />
+            <Route path='checkout/confirm' element={<ConfirmSale />} />
+            <Route
+              path='checkout/confirm/:orderId'
+              element={<OrderSuccess />}
+            />
           </Route>
-          <Route
-            path='checkout/confirm'
-            element={
-              <>
-                <Header />
-                <HeaderTitle customTitle='Compra finalizada' />
-                <ConfirmSale />
-                <Outlet /> <SectionFooter />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path='checkout/confirm/:orderId'
-            element={
-              <>
-                <Header />
-                <HeaderTitle customTitle='Compra finalizada' />
-                <OrderSuccess />
-                <Outlet /> <SectionFooter />
-                <Footer />
-              </>
-            }
-          />
           <Route path='*' element={<NotFound />} />
           <Route path='error' element={<Error />} />
         </Routes>

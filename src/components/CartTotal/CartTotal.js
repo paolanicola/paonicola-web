@@ -121,7 +121,7 @@ function CartTotal() {
 
   useEffect(() => {
     if (step === 2) {
-      if (method === 'MP') {
+      if (method === 'mercadopago') {
         setVariantTrans('carrito-finalizar__oculto')
         setVariantMP('carrito-finalizar')
       }
@@ -180,27 +180,29 @@ function CartTotal() {
         </tbody>
       </table>
 
-      {/* <CardPayment
-        initialization={{
-          amount: 100,
-          preferenceId: '207446753-ea3adb2e-a4f2-41dd-a656-11cb01b8772c',
-        }}
-        customization={{
-          paymentMethods: {
-            creditCard: 'all',
-            debitCard: 'all',
-          },
-          visual: {
-            style: {
-              theme: 'default', // | 'dark' | 'bootstrap' | 'flat'
-              successColor: 'green',
+      {method === 'mercadopago' && step === 2 && (
+        <CardPayment
+          initialization={{
+            amount: 100,
+            preferenceId: '207446753-ea3adb2e-a4f2-41dd-a656-11cb01b8772c',
+          }}
+          customization={{
+            paymentMethods: {
+              creditCard: 'all',
+              debitCard: 'all',
             },
-          },
-        }}
-        onSubmit={async (param) => {
-          console.log(param)
-        }}
-      /> */}
+            visual: {
+              style: {
+                theme: 'default', // | 'dark' | 'bootstrap' | 'flat'
+                successColor: 'green',
+              },
+            },
+          }}
+          onSubmit={async (param) => {
+            console.log(param)
+          }}
+        />
+      )}
 
       <div className='carrito-total-buttons back'>
         <button onClick={actionBack} type={typeBack} className={variantBack}>

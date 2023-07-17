@@ -6,8 +6,10 @@ import {
 } from '../../utils/utils'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const OrderSuccess = () => {
+  const navigate = useNavigate()
   const { orderId } = useParams()
   const [orderData, setOrderData] = useState(null)
 
@@ -17,7 +19,10 @@ const OrderSuccess = () => {
       .then((response) => {
         setOrderData(response.data)
       })
-  })
+      .catch((error) => {
+        navigate('/error')
+      })
+  }, [orderId, navigate])
 
   if (orderData === null) return <div className='spinner'></div>
   else {

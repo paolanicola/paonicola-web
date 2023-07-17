@@ -10,7 +10,7 @@ function HeaderTitle({ customTitle }) {
   }, [dispatch])
 
   function formatTitle(title) {
-    if (title.length === 3) {
+    if (title.length <= 3) {
       return title.toUpperCase()
     } else {
       return title
@@ -21,16 +21,21 @@ function HeaderTitle({ customTitle }) {
   }
 
   const location = useLocation()
-  const currentPagePath = location.pathname.replace(/^\/|\/$/g, '') // Remove leading and trailing slashes
-  const pageTitle = customTitle || formatTitle(currentPagePath)
+  const pattern = /^\/([^/]+)(?:\/|$)/ // grabs from the first slash until the second one if exists
+  const match = location.pathname.match(pattern)
+  let title = ''
+  if (match) {
+    title = match[1]
+  }
+  const formattedTitle = customTitle || formatTitle(title)
 
   return (
     <>
-      {pageTitle !== 'home' && (
+      {title !== 'home' && title !== '' && (
         <div className='encabezado__container'>
           <div className='encabezado__container-title'>
             <div className='title__container'>
-              <h1 className='title__container-h1'>{pageTitle}</h1>
+              <h1 className='title__container-h1'>{formattedTitle}</h1>
             </div>
           </div>
         </div>

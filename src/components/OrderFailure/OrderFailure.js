@@ -1,5 +1,5 @@
 const OrderFailure = ({ errors }) => {
-  // Displaying all error messages
+  // Displaying all error messages coming from the api
   const errorMessages = Object.entries(errors).flatMap(
     ([key, messages]) => messages
   )
