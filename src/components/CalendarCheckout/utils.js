@@ -1,11 +1,3 @@
-export const createDateFromDateString = (dateString) => {
-  const year = parseInt(dateString.substr(0, 4))
-  const month = parseInt(dateString.substr(5, 2)) - 1
-  const day = parseInt(dateString.substr(8, 2))
-
-  return new Date(year, month, day)
-}
-
 // Return next available date as a string
 export const nextAvailableDate = (appointments) => {
   const now = new Date()
@@ -48,8 +40,8 @@ const isSameDate = (date1, date2) => {
 export const getOptionsTime = (appointments, localDate) => {
   const result = appointments
     .filter((appointment) => isSameDate(appointment.date, localDate))
-    .map(({ available_hours }) => ({
-      value: available_hours,
+    .map(({ available_hours, id }) => ({
+      value: id,
       label: available_hours,
     }))
 
@@ -112,4 +104,26 @@ export const getAppointmentId = (appointments, date, time) => {
     }
   }
   return null
+}
+
+export const newUtcDate = (stringDate) => {
+  const [year, month, day] = stringDate.split('-').map(Number)
+
+  return new Date(
+    year,
+    month - 1, // Month (JavaScript are 0-indexed, so we subtract 1)
+    day
+  )
+}
+
+export const isoStringToHumanReadable = (isoString, time) => {
+  return (
+    (isoString !== null
+      ? `${isoString.split('T')[0].split('-')[2]}/${
+          isoString.split('T')[0].split('-')[1]
+        }/${isoString.split('T')[0].split('-')[0]}`
+      : '') +
+    ' ' +
+    (time ?? '')
+  )
 }

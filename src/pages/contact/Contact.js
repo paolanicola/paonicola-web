@@ -4,19 +4,35 @@ import { ReactComponent as InstagramBrand } from '../../assets/images/header/ins
 import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg'
 import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg'
 import { messages } from '../../utils/messages'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 import { toast } from 'react-toastify'
 
 export default function Contact() {
   const [send, setSend] = useState(false)
+  const [recaptchaSucceeded, setRecaptchaSucceeded] = useState(false)
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
   const onSubmit = (data) => {
-    toast.success(messages.submitFormConfirmation)
     setSend(true)
+  }
+
+  const handleFormSubmit = (event) => {
+    if (recaptchaSucceeded) {
+      toast.success(messages.submitFormConfirmation)
+      handleSubmit(onSubmit)
+    } else {
+      event.preventDefault()
+      toast.error('Por favor, completa el reCAPTCHA.')
+    }
+  }
+
+  const handleRecaptchaChange = (value) => {
+    setRecaptchaSucceeded(true)
   }
 
   return (
@@ -68,11 +84,7 @@ export default function Contact() {
         </div>
       ) : (
         <div className='contact-right one animate fadeRight'>
-          <form
-            id='formContact'
-            className='form'
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form id='formContact' className='form' onSubmit={handleFormSubmit}>
             <div className='form'>
               <div className='form-name'>
                 <p className='contact-right-label'>
@@ -139,7 +151,14 @@ export default function Contact() {
                 {errors.textarea.message}
               </span>
             )}
+
             <div className='contact-buton-right'>
+              <ReCAPTCHA
+                sitekey={
+                  process.env.REACT_APP_RECAPTCHA_SITEKEY ?? 'invalid-key'
+                }
+                onChange={handleRecaptchaChange}
+              />
               <input
                 type='submit'
                 className='btn-primary right'

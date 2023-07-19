@@ -10,7 +10,7 @@ function PaymentMethods() {
   const onSubmit = (data) => null
 
   const PaymentMP = () => {
-    dispatch(setMethod('MP'))
+    dispatch(setMethod('mercadopago'))
   }
   const PaymentTrans = () => {
     dispatch(setMethod('deposit'))

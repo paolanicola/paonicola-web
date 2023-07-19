@@ -90,7 +90,7 @@ export default function Header() {
         </div>
 
         <div className='menu__logo'>
-          <Link to='home'>
+          <Link to='/home'>
             <img src={LogoWebp} className='menu__logo__svg' alt='logo' />
           </Link>
         </div>
@@ -139,7 +139,7 @@ export default function Header() {
 
           <div className='menu__right'>
             <div className='menu__item menu__link' onClick={closeSidebar}>
-              <PrimaryButton actionText='Tienda Online' href='tienda' />
+              <PrimaryButton actionText='Tienda Online' href='/tienda' />
             </div>
             <div className='menu__item menu__link left-redes'>
               <div className='menu__redes '>

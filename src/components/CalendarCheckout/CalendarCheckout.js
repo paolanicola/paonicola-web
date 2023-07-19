@@ -11,15 +11,17 @@ import {
   updateDateSelected,
   updateTime,
   updateSelectedAppointmentId,
+  deleteDateSelected,
+  deleteTime,
 } from '../../features/checkout/checkoutSlice'
 import {
-  createDateFromDateString,
   dateExistsInAppointments,
   getNewMonthViewByDate,
   getOptionsTime,
   nextAvailableDate,
   tileDisabled,
-  getAppointmentId,
+  newUtcDate,
+  isoStringToHumanReadable,
 } from './utils'
 
 const CalendarCheckout = ({ appointments }) => {
@@ -32,14 +34,14 @@ const CalendarCheckout = ({ appointments }) => {
   useEffect(() => {
     if (!localDate) {
       const nextDate = nextAvailableDate(appointments)
-      setValue(new Date(nextDate))
+      setValue(newUtcDate(nextDate))
       dispatch(updateDate(nextDate))
     } else if (dateExistsInAppointments(appointments, localDate)) {
-      setValue(new Date(localDate))
+      setValue(newUtcDate(localDate))
       dispatch(updateDate(localDate))
     } else {
       const nextDate = nextAvailableDate(appointments)
-      setValue(new Date(nextDate))
+      setValue(newUtcDate(nextDate))
       dispatch(updateDate(nextDate))
     }
   }, [appointments, dispatch, localDate])
@@ -52,28 +54,23 @@ const CalendarCheckout = ({ appointments }) => {
   }
 
   const handleTimeSelect = (e) => {
-    const newTime = e.value
+    const newTime = e.label
     dispatch(updateTime(newTime))
-
-    // get appointment id based on date and time
-    const selectedAppointmentId = getAppointmentId(
-      appointments,
-      dateSelected.split('T')[0],
-      newTime
-    )
-    dispatch(updateSelectedAppointmentId(selectedAppointmentId))
+    dispatch(updateSelectedAppointmentId(e.value))
   }
 
   const changeViewMonth = (view, action) => {
     if (action !== 'onChange') {
       const date = getNewMonthViewByDate(
         appointments,
-        new Date(localDate),
+        newUtcDate(localDate),
         view,
         action
       )
-      setValue(new Date(date))
+      setValue(newUtcDate(date))
       dispatch(updateDate(date))
+      dispatch(deleteDateSelected())
+      dispatch(deleteTime())
     }
   }
 
@@ -81,12 +78,7 @@ const CalendarCheckout = ({ appointments }) => {
     changeViewMonth(view, action)
 
   // iso string to human readable date and time
-  const dateTimeSelected =
-    (dateSelected !== null
-      ? `${dateSelected.split('T')[0].split('-')[2]}/${
-          dateSelected.split('T')[0].split('-')[1]
-        }/${dateSelected.split('T')[0].split('-')[0]}`
-      : '') + (time !== null ? ` ${time}` : '')
+  const dateTimeSelected = isoStringToHumanReadable(dateSelected, time)
 
   return (
     <div className='wizard-body'>
@@ -101,18 +93,15 @@ const CalendarCheckout = ({ appointments }) => {
               className=''
               view='month'
               minDetail='month'
+              showNeighboringMonth={false}
               tileDisabled={({ date, view }) =>
                 tileDisabled(appointments, { date, view })
               }
-              maxDate={createDateFromDateString(
-                appointments[appointments.length - 1].date
-              )}
-              minDate={new Date(nextAvailableDate(appointments))}
+              maxDate={newUtcDate(appointments[appointments.length - 1].date)}
+              minDate={newUtcDate(nextAvailableDate(appointments))}
               onClickDay={handleOnClickDay}
               onActiveStartDateChange={handleOnActiveStartDateChange}
               activeStartDate={value}
-              next2Label=''
-              prev2Label=''
             />
           </div>
           <div className='calendar-time-container'>

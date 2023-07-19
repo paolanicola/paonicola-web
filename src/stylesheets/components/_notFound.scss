@@ -6,8 +6,13 @@
   justify-content: center;
   align-items: center;
 
-  background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
+  background: white url('../../assets/images/sobre-mi/fondo-sobremi.png')
+    no-repeat center bottom;
   background-size: 500%;
+
+  h3 {
+    text-align: center;
+  }
 }
 
 .notfound-link {
@@ -20,7 +25,8 @@
 
 @media screen and (min-width: 400px) {
   .notfound-container {
-    background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
+    background: white url('../../assets/images/sobre-mi/fondo-sobremi.png')
+      no-repeat center bottom;
     background-size: 275%;
   }
 }

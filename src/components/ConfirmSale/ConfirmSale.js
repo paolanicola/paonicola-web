@@ -2,9 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTotals } from '../../features/cart/cartSlice'
 import { getOrder } from '../../features/cartTotal'
-import OrderSuccess from '../OrderSuccess'
 import OrderFailure from '../OrderFailure'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 
 export default function ConfirmSale() {
   const dispatch = useDispatch()
@@ -27,7 +26,7 @@ export default function ConfirmSale() {
   }
 
   if (success) {
-    return <OrderSuccess orderData={orderData} />
+    return <Navigate to={`/checkout/confirm/${orderData.order_id}`} />
   }
 
   if (Object.keys(errors).length > 0) {

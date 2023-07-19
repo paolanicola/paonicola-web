@@ -24,6 +24,7 @@ import { setMethod } from '../../features/validators'
 import { formatNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
 import { submitOrder } from '../../features/cartTotal'
+import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react'
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
@@ -38,6 +39,9 @@ function CartTotal() {
   const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
   const selectedAppointmentId = useSelector(getSelectedAppointmentId)
   const personalData = useSelector(getForm)
+  initMercadoPago(process.env.REACT_APP_MERCADOPAGO_PUBLIC_KEY, {
+    locale: 'es-AR',
+  })
 
   useEffect(() => {
     if (!withCalendar && step === 0) {
@@ -49,13 +53,14 @@ function CartTotal() {
 
   const handleNextStep = () => {
     if (withCalendar && horario === null) {
-      handleVerificationSelectMethod(messages.timeMissing)
+      handleVerificationSelectMethod(messages.appoitmentMissing)
     } else dispatch(nextStep())
   }
 
   const handleEnd = () => {
     const schedule_id = withCalendar ? selectedAppointmentId : null
     dispatch(submitOrder(method, schedule_id, personalData, products))
+
     dispatch(deleteCartItems())
     dispatch(resetStep())
     dispatch(resetCartState())
@@ -116,7 +121,7 @@ function CartTotal() {
 
   useEffect(() => {
     if (step === 2) {
-      if (method === 'MP') {
+      if (method === 'mercadopago') {
         setVariantTrans('carrito-finalizar__oculto')
         setVariantMP('carrito-finalizar')
       }
@@ -174,6 +179,30 @@ function CartTotal() {
           </tr>
         </tbody>
       </table>
+
+      {method === 'mercadopago' && step === 2 && (
+        <CardPayment
+          initialization={{
+            amount: 100,
+            preferenceId: '207446753-ea3adb2e-a4f2-41dd-a656-11cb01b8772c',
+          }}
+          customization={{
+            paymentMethods: {
+              creditCard: 'all',
+              debitCard: 'all',
+            },
+            visual: {
+              style: {
+                theme: 'default', // | 'dark' | 'bootstrap' | 'flat'
+                successColor: 'green',
+              },
+            },
+          }}
+          onSubmit={async (param) => {
+            console.log(param)
+          }}
+        />
+      )}
 
       <div className='carrito-total-buttons back'>
         <button onClick={actionBack} type={typeBack} className={variantBack}>

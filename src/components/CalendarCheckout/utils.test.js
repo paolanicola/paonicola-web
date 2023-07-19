@@ -7,13 +7,28 @@ import {
   getAppointmentId,
 } from './utils'
 
-describe('nextAvailableDate', () => {
+describe('nextAvailableDateShouldBeNull', () => {
   test('returns next available date should be null', () => {
     const appointments = [{ date: '2022-06-22' }]
 
     const result = nextAvailableDate(appointments)
 
     expect(result).toBe(null)
+  })
+})
+
+describe('nextAvailableDate', () => {
+  test('returns next available date', () => {
+    const appointments = [
+      { id: 3348, date: '2027-04-01', available_hours: '19:30' },
+      { id: 3343, date: '2027-07-07', available_hours: '18:00' },
+      { id: 3345, date: '2027-07-07', available_hours: '18:30' },
+      { id: 3344, date: '2027-08-01', available_hours: '18:30' },
+    ]
+
+    const result = nextAvailableDate(appointments)
+
+    expect(result).toBe('2027-04-01')
   })
 })
 

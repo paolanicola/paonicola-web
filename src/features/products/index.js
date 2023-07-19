@@ -21,6 +21,7 @@ const initialState = {
   loadSuccess: false,
   success: false,
   preference: '',
+  failed: false,
 }
 
 const productSlice = createSlice({
@@ -43,6 +44,7 @@ const productSlice = createSlice({
       state.loading = false
       state.success = false
       state.loadSuccess = false
+      state.failed = true
     },
     [filterByCategory]: (state, action) => {
       state.filterCategory = action.payload

@@ -20,8 +20,10 @@ import Changes from './pages/changes'
 import Contact from './pages/contact'
 import Faq from './pages/faq'
 import NotFound from './pages/notFound'
+import Error from './pages/error'
 import './stylesheets/application.scss'
 import { cartItemsExpired, cleanLocalStorage } from './utils/utils'
+import OrderSuccess from './components/OrderSuccess'
 
 function App() {
   useEffect(() => {
@@ -42,7 +44,7 @@ function App() {
                 <Header />
                 <ToastContainer
                   position='bottom-right'
-                  autoClose={5000}
+                  autoClose={1000}
                   pauseOnFocusLoss={false}
                   limit={3}
                 />
@@ -60,12 +62,17 @@ function App() {
             <Route path='contacto' element={<Contact />} />
             <Route path='carrito' element={<Cart />} />
             <Route path='checkout' element={<Checkout />}></Route>
-            <Route path='checkout/confirm' element={<ConfirmSale />} />
             <Route path='mercadopago/succes' element={<MercadopagoSuccess />} />
             <Route path='mercadopago/failed' element={<MercadopagoFailed />} />
             <Route path='mercadopago/pending' element={<MercadopagoFailed />} />
+            <Route path='checkout/confirm' element={<ConfirmSale />} />
+            <Route
+              path='checkout/confirm/:orderId'
+              element={<OrderSuccess />}
+            />
           </Route>
           <Route path='*' element={<NotFound />} />
+          <Route path='error' element={<Error />} />
         </Routes>
       </div>
     </BrowserRouter>

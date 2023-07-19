@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
 import { formatNumber, countProductInCart } from '../../utils/utils'
 import { messages } from '../../utils/messages'
-import { deleteDateSelected } from '../../features/checkout/checkoutSlice'
+import { deleteSelectedAppointmentId } from '../../features/checkout/checkoutSlice'
 
 function ProductCart({ product }) {
   const cart = useSelector((state) => state.cart)
@@ -67,7 +67,7 @@ function ProductCart({ product }) {
   const handleDeleteButton = () => {
     handleRemoveFromCart(product)
     if (product.category === 'Consultas Online') {
-      dispatch(deleteDateSelected())
+      dispatch(deleteSelectedAppointmentId())
     }
   }
 

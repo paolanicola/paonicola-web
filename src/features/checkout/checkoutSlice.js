@@ -2,9 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   date: '',
-  dateSelected: localStorage.getItem('dateSelected')
-    ? JSON.parse(localStorage.getItem('dateSelected'))
-    : null,
+  dateSelected: null,
   time: null,
   selectedAppointmentId: localStorage.getItem('selectedAppointmentId')
     ? localStorage.getItem('selectedAppointmentId')
@@ -27,7 +25,6 @@ const checkoutSlice = createSlice({
     updateDateSelected(state, { payload }) {
       state.dateSelected = payload
       state.time = null
-      localStorage.setItem('dateSelected', JSON.stringify(state.dateSelected))
     },
     updateTime(state, action) {
       state.time = action.payload
@@ -44,18 +41,20 @@ const checkoutSlice = createSlice({
       state.selectedAppointmentId = action.payload
       localStorage.setItem('selectedAppointmentId', state.selectedAppointmentId)
     },
-    deleteTime(state, action) {
+    deleteTime(state) {
       state.time = null
     },
-    deleteDateSelected(state, action) {
+    deleteDateSelected(state) {
       state.dateSelected = null
-      localStorage.setItem('dateSelected', state.dateSelected)
+    },
+    deleteSelectedAppointmentId(state) {
+      state.selectedAppointmentId = null
+      localStorage.setItem('selectedAppointmentId', state.selectedAppointmentId)
     },
     resetCartState(state, action) {
       state.date = null
       state.time = null
       state.dateSelected = null
-      localStorage.setItem('dateSelected', JSON.stringify(state.dateSelected))
       state.verified = false
       localStorage.setItem('verified', JSON.stringify(state.verified))
       state.form = null
@@ -73,6 +72,7 @@ export const {
   updateVerified,
   deleteTime,
   deleteDateSelected,
+  deleteSelectedAppointmentId,
   updateForm,
   resetCartState,
   updateSelectedAppointmentId,

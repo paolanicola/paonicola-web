@@ -2278,6 +2278,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mercadopago/sdk-js@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@mercadopago/sdk-js@npm:0.0.3"
+  checksum: 748bc582841e3d5b4d42f6fc84257500ad22db578defbf952ca299469cc5c0c2370e5a9a10c4df84172d50ff5ebfddd4b6040eeca5a730a312e9ed2fd06d4a66
+  languageName: node
+  linkType: hard
+
+"@mercadopago/sdk-react@npm:^0.0.12":
+  version: 0.0.12
+  resolution: "@mercadopago/sdk-react@npm:0.0.12"
+  dependencies:
+    "@mercadopago/sdk-js": ^0.0.3
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 0c2a3ab3d82224aa7f5e5b4e75459f2fafa4fdd79b7bdf93e08b2d2b0af3f58d482ff7942c95e459930c8816dfb4cf3e3a5123b4c1eb85b803997f789375c354
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -11523,6 +11542,7 @@ __metadata:
     "@fortawesome/fontawesome-svg-core": ^1.2.36
     "@fortawesome/free-solid-svg-icons": ^5.15.4
     "@fortawesome/react-fontawesome": ^0.1.16
+    "@mercadopago/sdk-react": ^0.0.12
     "@reduxjs/toolkit": ^1.7.1
     "@testing-library/jest-dom": ^5.16.1
     "@testing-library/react": ^11.2.7
@@ -11534,6 +11554,7 @@ __metadata:
     react-datepicker: ^4.6.0
     react-datetime-picker: ^3.4.3
     react-dom: ^17.0.2
+    react-google-recaptcha: ^3.1.0
     react-hook-form: ^7.29.0
     react-icons: ^4.3.1
     react-redux: ^7.2.6
@@ -12811,7 +12832,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.0, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -13029,6 +13050,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-async-script@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "react-async-script@npm:1.2.0"
+  dependencies:
+    hoist-non-react-statics: ^3.3.0
+    prop-types: ^15.5.0
+  peerDependencies:
+    react: ">=16.4.1"
+  checksum: 303890eeaf9e18d59fca77f9c891bf3b52d2ec9ea88f0af9d19c160a1f101b447c5104ca46e2dd84c19de756d4797f1f054d041b888a3d57204d9145f4b1b532
+  languageName: node
+  linkType: hard
+
 "react-calendar@npm:^3.3.1, react-calendar@npm:^3.7.0":
   version: 3.9.0
   resolution: "react-calendar@npm:3.9.0"
@@ -13199,6 +13232,18 @@ __metadata:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 40cf34d353748576d348d59d70686e0107298553c2d43cbb1ba4f62541124c7b3e23162165176432fb13617f6673285ab7123e29ec4929d7d5ba57a3d1c3824c
+  languageName: node
+  linkType: hard
+
+"react-google-recaptcha@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "react-google-recaptcha@npm:3.1.0"
+  dependencies:
+    prop-types: ^15.5.0
+    react-async-script: ^1.2.0
+  peerDependencies:
+    react: ">=16.4.1"
+  checksum: 9dc64daf9684d979b1f66d97e00a42c9ceaa9b9fe8b29c4d02d77edf86781e2008f2ae1bef14509351ff3b2ffbcc26463f0d88dd612d7280b455b8c07101e663
   languageName: node
   linkType: hard
 
