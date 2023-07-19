@@ -39,7 +39,7 @@ function CartTotal() {
   const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
   const selectedAppointmentId = useSelector(getSelectedAppointmentId)
   const personalData = useSelector(getForm)
-  initMercadoPago('TEST-94c7b04c-6ca8-478b-b3a8-85199c019b3b', {
+  initMercadoPago(process.env.REACT_APP_MERCADOPAGO_PUBLIC_KEY, {
     locale: 'es-AR',
   })
 
