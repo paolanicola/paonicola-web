@@ -64,8 +64,13 @@
   left: 49%;
   top: 50%;
   transform: translate(-50%, -50%);
-
   animation: spin 1s ease infinite;
+
+  &.spinnerMercadoPago {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
 }
 @keyframes spin {
   0% {

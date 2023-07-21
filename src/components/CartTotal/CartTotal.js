@@ -143,6 +143,45 @@ function CartTotal() {
     }
   }
 
+  // mercadopago begin
+
+  const initialization = {
+    amount: 100,
+  }
+
+  const onSubmit = async (formData) => {
+    // callback llamado al hacer clic en el botón enviar datos
+    return new Promise((resolve, reject) => {
+      fetch(`${process.env.REACT_APP_API_BASE_URL}/process_payment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          // recibir el resultado del pago
+          resolve()
+        })
+        .catch((error) => {
+          // manejar la respuesta de error al intentar crear el pago
+          reject()
+        })
+    })
+  }
+
+  const onError = async (error) => {
+    // callback llamado para todos los casos de error de Brick
+    console.log(error)
+  }
+
+  const onReady = async () => {
+    // dispatch(mercadoPagoReady)
+  }
+
+  // mercadopago end
+
   return (
     <div className='carrito-total-container'>
       <h5 className='carrito-total-titulo'>Total del carrito</h5>
@@ -181,26 +220,12 @@ function CartTotal() {
       </table>
 
       {method === 'mercadopago' && step === 2 && (
+        // {isLoading && <div className='spinner spinnerMercadoPago'></div>}
         <CardPayment
-          initialization={{
-            amount: 100,
-            preferenceId: '207446753-ea3adb2e-a4f2-41dd-a656-11cb01b8772c',
-          }}
-          customization={{
-            paymentMethods: {
-              creditCard: 'all',
-              debitCard: 'all',
-            },
-            visual: {
-              style: {
-                theme: 'default', // | 'dark' | 'bootstrap' | 'flat'
-                successColor: 'green',
-              },
-            },
-          }}
-          onSubmit={async (param) => {
-            console.log(param)
-          }}
+          initialization={initialization}
+          onSubmit={onSubmit}
+          onReady={onReady}
+          onError={onError}
         />
       )}
 
