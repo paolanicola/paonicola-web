@@ -138,10 +138,8 @@ function CartTotal() {
       event.preventDefault()
       handleNextStep()
     }
-
-    if (step === 1) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
+    // if user is using a mobile device, scroll to top after clicking on "next"
+    window.innerWidth < 768 && window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   // mercadopago begin
