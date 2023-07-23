@@ -8,7 +8,7 @@ import {
   getProductsAvailables,
   loadProducts,
 } from '../../features/products'
-import { whatsAppNumber, whatsAppUrl } from '../../utils/utils'
+import { whatsAppNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
 
 const Products = () => {
