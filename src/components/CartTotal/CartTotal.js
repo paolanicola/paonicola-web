@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {
   deleteCartItems,
@@ -48,6 +48,7 @@ function CartTotal() {
     locale: 'es-AR',
   })
   const mercadoPagoIsLoading = useSelector(methodIsLoading)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!withCalendar && step === 0) {
@@ -152,7 +153,7 @@ function CartTotal() {
   // mercadopago begin
 
   const initialization = {
-    amount: 100,
+    amount: cart.cartTotalAmount,
   }
 
   const onSubmit = async (formData) => {
@@ -168,7 +169,9 @@ function CartTotal() {
         .then((response) => response.json())
         .then((response) => {
           // recibir el resultado del pago
+          handleEnd()
           resolve()
+          navigate('/checkout/confirm')
         })
         .catch((error) => {
           // manejar la respuesta de error al intentar crear el pago
@@ -270,9 +273,7 @@ function CartTotal() {
         >
           Pagar
         </Link>
-        <a href={preference} onClick={actionEnd} className={variantMP}>
-          Pagar
-        </a>
+
         <div className=''></div>
       </div>
     </div>
