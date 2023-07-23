@@ -8,4 +8,5 @@ export const messages = {
   appoitmentMissing: 'Por favor, seleccione un turno',
   paymentMethodMissing: 'Por favor, seleccione un método de pago',
   submitFormConfirmation: 'Mensaje enviado',
+  genericErrorMessage: 'Ups, ha habido un error',
 }

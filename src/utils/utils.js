@@ -65,3 +65,8 @@ export const getDisplayPaymentMethod = (paymentType) => {
     return 'Desconocido'
   }
 }
+
+export const whatsAppUrl =
+  'https://api.whatsapp.com/send?phone=5492216248895&text=Hola%21%20Estoy%20buscando%20reservar%20un%20turno.&source=&data=&app_absent='
+
+export const whatsAppNumber = '221-6248895'

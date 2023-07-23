@@ -12,6 +12,7 @@ import LogoWebp from '../../assets/images/header/paola_logo.webp'
 
 import { useSelector } from 'react-redux'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { whatsAppUrl } from '../../utils/utils'
 
 export default function Header() {
   const navigate = useNavigate()
@@ -161,7 +162,7 @@ export default function Header() {
                 </a>
                 <a
                   className='menu__redes__link'
-                  href='https://api.whatsapp.com/send?phone=5492216248895&text=Hola%21%20Estoy%20buscando%20reservar%20un%20turno.&source=&data=&app_absent='
+                  href={whatsAppUrl}
                   target='_blank'
                   rel='noopener noreferrer'
                 >

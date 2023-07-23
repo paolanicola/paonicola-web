@@ -7,6 +7,7 @@ import { messages } from '../../utils/messages'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 import { toast } from 'react-toastify'
+import { whatsAppNumber, whatsAppUrl } from '../../utils/utils'
 
 export default function Contact() {
   const [send, setSend] = useState(false)
@@ -44,13 +45,9 @@ export default function Contact() {
           </p>
           <ul>
             <li className='contact-link'>
-              <a
-                href='https://api.whatsapp.com/send?phone=5492216248895&text=Hola%21%20Estoy%20buscando%20reservar%20un%20turno.&source=&data=&app_absent='
-                target='_blank'
-                rel='noopener noreferrer'
-              >
+              <a href={whatsAppUrl} target='_blank' rel='noopener noreferrer'>
                 <WhatsappBrand className='contact-icon' />
-                <p className='contact-icon-info'>221-6248895</p>
+                <p className='contact-icon-info'>{whatsAppNumber}</p>
               </a>
             </li>
             <li className='contact-link'>

@@ -8,6 +8,8 @@ import {
   getProductsAvailables,
   loadProducts,
 } from '../../features/products'
+import { whatsAppNumber, whatsAppUrl } from '../../utils/utils'
+import { messages } from '../../utils/messages'
 
 const Products = () => {
   const dispatch = useDispatch()
@@ -44,7 +46,11 @@ const Products = () => {
   }
 
   if (failed) {
-    return <div className='product-notFound'>Ups, ha habido un error</div>
+    return (
+      <p className='product-notFound'>
+        {messages.genericErrorMessage}. Contactarse al {whatsAppNumber}
+      </p>
+    )
   }
 
   const renderProducts =
