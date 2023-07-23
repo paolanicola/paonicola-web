@@ -20,7 +20,12 @@ import {
   nextStep,
   resetStep,
 } from '../../features/stepsCheckout/stepsSlice'
-import { setMethod } from '../../features/validators'
+import {
+  getMethod,
+  mercadoPagoLoadSuccess,
+  methodIsLoading,
+  resetMethod,
+} from '../../features/validators'
 import { formatNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
 import { submitOrder } from '../../features/cartTotal'
@@ -28,7 +33,7 @@ import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react'
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
-  const { data: method } = useSelector((state) => state.validators)
+  const method = useSelector(getMethod)
   const { preference } = useSelector((state) => state.products)
   const products = useSelector(getAllProductsCart)
   const dispatch = useDispatch()
@@ -42,6 +47,7 @@ function CartTotal() {
   initMercadoPago(process.env.REACT_APP_MERCADOPAGO_PUBLIC_KEY, {
     locale: 'es-AR',
   })
+  const mercadoPagoIsLoading = useSelector(methodIsLoading)
 
   useEffect(() => {
     if (!withCalendar && step === 0) {
@@ -78,7 +84,7 @@ function CartTotal() {
       setVariantMP('carrito-finalizar__oculto ')
       dispatch(updateVerified(false))
     }
-    dispatch(setMethod(''))
+    dispatch(resetMethod)
     dispatch(backStep())
   }
 
@@ -177,7 +183,7 @@ function CartTotal() {
   }
 
   const onReady = async () => {
-    // dispatch(mercadoPagoReady)
+    dispatch(mercadoPagoLoadSuccess())
   }
 
   // mercadopago end
@@ -219,8 +225,11 @@ function CartTotal() {
         </tbody>
       </table>
 
+      {mercadoPagoIsLoading && (
+        <div className='spinner spinnerMercadoPago'></div>
+      )}
+
       {method === 'mercadopago' && step === 2 && (
-        // {isLoading && <div className='spinner spinnerMercadoPago'></div>}
         <CardPayment
           initialization={initialization}
           onSubmit={onSubmit}

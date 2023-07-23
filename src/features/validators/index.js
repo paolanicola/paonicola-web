@@ -1,40 +1,55 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
 
 // ACTIONS
-const methodRequested = createAction('method/requested')
+const methodDepositReceived = createAction('method/received')
+const mercadoPagoRequested = createAction('method/mercadoPagoRequested')
+const mercadoPagoReceived = createAction('method/mercadoPagoReceived')
 const methodRequestFailed = createAction('method/requestFailed')
-const methodReceived = createAction('method/received')
+const resetMethodAction = createAction('method/resetMethod')
 
 // REDUCER
 export const initialState = {
-  data: '',
+  method: '',
   loading: false,
-  loadSuccess: false,
-  success: false
+  success: false,
 }
 
 const validatorsReducer = createReducer(initialState, {
-  [methodRequested.type]: (state) => {
+  [methodDepositReceived.type]: (state, action) => {
+    state.loading = false
+    state.success = true
+    state.method = 'deposit'
+  },
+  [mercadoPagoRequested.type]: (state) => {
     state.loading = true
     state.success = false
-    state.loadSuccess = false
+    state.method = 'mercadopago'
   },
-  [methodReceived.type]: (state, action) => {
-    state.loading = false
-    state.loadSuccess = true
-    state.success = true
-    state.data = action.payload
-  },
-  [methodRequestFailed.type]: (state, action) => {
+  [mercadoPagoReceived.type]: (state) => {
     state.loading = false
     state.success = false
-    state.loadSuccess = false
-  }
+    state.method = 'mercadopago'
+  },
+  [methodRequestFailed.type]: (state) => {
+    state.loading = false
+    state.success = false
+  },
+  [resetMethodAction.type]: (state) => {
+    state.loading = false
+    state.success = false
+    state.method = ''
+  },
 })
 
 export default validatorsReducer
 // PUBLIC ACTIONS
 
-export const setMethod = (a) => (dispatch) =>  dispatch(methodReceived(a))
-export const getMethod = () => (dispatch) => dispatch()
-export const loadMethod = () => (dispatch) => dispatch()
+export const setMethodMercadoPago = () => (dispatch) =>
+  dispatch(mercadoPagoRequested())
+export const setMethodDeposit = () => (dispatch) =>
+  dispatch(methodDepositReceived())
+export const mercadoPagoLoadSuccess = () => (dispatch) =>
+  dispatch(mercadoPagoReceived())
+export const getMethod = (state) => state.validators.method
+export const methodIsLoading = (state) => state.validators.loading
+export const resetMethod = () => (dispatch) => dispatch(resetMethodAction())

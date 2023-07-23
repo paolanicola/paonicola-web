@@ -2,7 +2,10 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { ReactComponent as MercadoPago } from '../../assets/images/tienda/mercadopago.svg'
-import { setMethod } from '../../features/validators'
+import {
+  setMethodMercadoPago,
+  setMethodDeposit,
+} from '../../features/validators'
 
 function PaymentMethods() {
   const dispatch = useDispatch()
@@ -10,10 +13,10 @@ function PaymentMethods() {
   const onSubmit = (data) => null
 
   const PaymentMP = () => {
-    dispatch(setMethod('mercadopago'))
+    dispatch(setMethodMercadoPago())
   }
   const PaymentTrans = () => {
-    dispatch(setMethod('deposit'))
+    dispatch(setMethodDeposit())
   }
 
   return (
