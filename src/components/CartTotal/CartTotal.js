@@ -34,14 +34,12 @@ import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react'
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
   const method = useSelector(getMethod)
-  const { preference } = useSelector((state) => state.products)
   const products = useSelector(getAllProductsCart)
   const dispatch = useDispatch()
   const { step } = useSelector((state) => state.step)
   const withCalendar = useSelector(isCartWithCalendar)
   const isCheckoutCalendarReady = useSelector(isCheckoutCalendarValid)
   const [variantTrans, setVariantTrans] = useState('carrito-finalizar__oculto ')
-  const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
   const selectedAppointmentId = useSelector(getSelectedAppointmentId)
   const personalData = useSelector(getForm)
   initMercadoPago(process.env.REACT_APP_MERCADOPAGO_PUBLIC_KEY, {
@@ -72,7 +70,6 @@ function CartTotal() {
     dispatch(resetStep())
     dispatch(resetCartState())
     setVariantTrans('carrito-finalizar__oculto')
-    setVariantMP('carrito-finalizar__oculto')
   }
 
   const handleVerificationSelectMethod = (text) => {
@@ -82,10 +79,9 @@ function CartTotal() {
   const handleBackStep = () => {
     if (step === 2) {
       setVariantTrans('carrito-finalizar__oculto ')
-      setVariantMP('carrito-finalizar__oculto ')
       dispatch(updateVerified(false))
     }
-    dispatch(resetMethod)
+    dispatch(resetMethod())
     dispatch(backStep())
   }
 
@@ -130,11 +126,9 @@ function CartTotal() {
     if (step === 2) {
       if (method === 'mercadopago') {
         setVariantTrans('carrito-finalizar__oculto')
-        setVariantMP('carrito-finalizar')
       }
       if (method === 'deposit') {
         setVariantTrans('carrito-finalizar')
-        setVariantMP('carrito-finalizar__oculto')
       }
     }
   }, [method, step])

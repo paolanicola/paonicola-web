@@ -12,7 +12,6 @@ export const initialState = {
   loading: false,
   loadSuccess: false,
   success: false,
-  preference: '',
   failed: false,
 }
 

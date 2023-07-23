@@ -106,7 +106,7 @@ function Cart() {
             <div className='next1'>
               <Link
                 to='/checkout'
-                onClick={dispatch(resetMethod)}
+                onClick={dispatch(resetMethod())}
                 className='  carrito-finalizar '
               >
                 Finalizar compra
