@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 import { ReactComponent as InstagramBrand } from '../../assets/images/header/instagram-brands.svg'
 import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg'
 import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg'
-import { messages } from '../../utils/messages'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 import { toast } from 'react-toastify'
@@ -23,11 +22,10 @@ export default function Contact() {
   }
 
   const handleFormSubmit = (event) => {
+    event.preventDefault()
     if (recaptchaSucceeded) {
-      toast.success(messages.submitFormConfirmation)
-      handleSubmit(onSubmit)
+      handleSubmit(onSubmit)()
     } else {
-      event.preventDefault()
       toast.error('Por favor, completa el reCAPTCHA.')
     }
   }
