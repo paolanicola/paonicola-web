@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 // Return next available date as a string
 export const nextAvailableDate = (appointments) => {
   const now = new Date()
@@ -106,14 +108,8 @@ export const getAppointmentId = (appointments, date, time) => {
   return null
 }
 
-export const newUtcDate = (stringDate) => {
-  const [year, month, day] = stringDate.split('-').map(Number)
-
-  return new Date(
-    year,
-    month - 1, // Month (JavaScript are 0-indexed, so we subtract 1)
-    day
-  )
+export const newDate = (stringDate) => {
+  return dayjs(stringDate).toDate()
 }
 
 export const isoStringToHumanReadable = (isoString, time) => {

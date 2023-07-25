@@ -20,7 +20,7 @@ import {
   getOptionsTime,
   nextAvailableDate,
   tileDisabled,
-  newUtcDate,
+  newDate,
   isoStringToHumanReadable,
 } from './utils'
 
@@ -34,14 +34,14 @@ const CalendarCheckout = ({ appointments }) => {
   useEffect(() => {
     if (!localDate) {
       const nextDate = nextAvailableDate(appointments)
-      setValue(newUtcDate(nextDate))
+      setValue(newDate(nextDate))
       dispatch(updateDate(nextDate))
     } else if (dateExistsInAppointments(appointments, localDate)) {
-      setValue(newUtcDate(localDate))
+      setValue(newDate(localDate))
       dispatch(updateDate(localDate))
     } else {
       const nextDate = nextAvailableDate(appointments)
-      setValue(newUtcDate(nextDate))
+      setValue(newDate(nextDate))
       dispatch(updateDate(nextDate))
     }
   }, [appointments, dispatch, localDate])
@@ -63,11 +63,11 @@ const CalendarCheckout = ({ appointments }) => {
     if (action !== 'onChange') {
       const date = getNewMonthViewByDate(
         appointments,
-        newUtcDate(localDate),
+        newDate(localDate),
         view,
         action
       )
-      setValue(newUtcDate(date))
+      setValue(newDate(date))
       dispatch(updateDate(date))
       dispatch(deleteDateSelected())
       dispatch(deleteTime())
@@ -97,8 +97,8 @@ const CalendarCheckout = ({ appointments }) => {
               tileDisabled={({ date, view }) =>
                 tileDisabled(appointments, { date, view })
               }
-              maxDate={newUtcDate(appointments[appointments.length - 1].date)}
-              minDate={newUtcDate(nextAvailableDate(appointments))}
+              maxDate={newDate(appointments[appointments.length - 1].date)}
+              minDate={newDate(nextAvailableDate(appointments))}
               onClickDay={handleOnClickDay}
               onActiveStartDateChange={handleOnActiveStartDateChange}
               activeStartDate={value}
