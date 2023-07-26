@@ -7,12 +7,10 @@ import {
   Footer,
   Header,
   HeaderTitle,
-  MercadopagoSuccess,
   Products,
   SectionFooter,
 } from './components'
 import ConfirmSale from './components/ConfirmSale/ConfirmSale'
-import MercadopagoFailed from './components/MercadopagoFailed'
 import ScrollToTop from './components/ScrollToTop'
 import About from './pages/About'
 import Home from './pages/Home/Home'
@@ -62,9 +60,6 @@ function App() {
             <Route path='contacto' element={<Contact />} />
             <Route path='carrito' element={<Cart />} />
             <Route path='checkout' element={<Checkout />}></Route>
-            <Route path='mercadopago/succes' element={<MercadopagoSuccess />} />
-            <Route path='mercadopago/failed' element={<MercadopagoFailed />} />
-            <Route path='mercadopago/pending' element={<MercadopagoFailed />} />
             <Route path='checkout/confirm' element={<ConfirmSale />} />
             <Route
               path='checkout/confirm/:orderId'

@@ -59,7 +59,7 @@ export const getDisplayPaymentMethod = (paymentType) => {
   if (paymentType === 'deposit') {
     return 'Transferencia bancaria'
   } else if (paymentType === 'mercadopago') {
-    return 'Mercadopago'
+    return 'Mercado Pago'
   } else {
     // Handle other payment types or invalid values here
     return 'Desconocido'

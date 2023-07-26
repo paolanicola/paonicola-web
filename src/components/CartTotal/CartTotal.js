@@ -29,7 +29,11 @@ import {
 import { formatNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
 import { submitOrder } from '../../features/cartTotal'
-import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react'
+import {
+  initMercadoPago,
+  CardPayment,
+  StatusScreen,
+} from '@mercadopago/sdk-react'
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
@@ -47,6 +51,7 @@ function CartTotal() {
   })
   const mercadoPagoIsLoading = useSelector(methodIsLoading)
   const navigate = useNavigate()
+  const [mercadoPagoPaymentId, setMercadoPagoPaymentId] = useState(null)
 
   useEffect(() => {
     if (!withCalendar && step === 0) {
@@ -142,7 +147,7 @@ function CartTotal() {
     window.innerWidth < 768 && window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  // mercadopago begin
+  // mercadoPago begin
 
   const initialization = {
     amount: cart.cartTotalAmount,
@@ -158,15 +163,21 @@ function CartTotal() {
         },
         body: JSON.stringify(formData),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          response.json()
+          setMercadoPagoPaymentId({ paymentId: response.id })
+        })
         .then((response) => {
           // recibir el resultado del pago
-          handleEnd()
-          resolve()
-          navigate('/checkout/confirm')
+          if (response.ok) {
+            handleEnd()
+            resolve()
+            navigate('/checkout/confirm')
+          }
         })
         .catch((error) => {
           // manejar la respuesta de error al intentar crear el pago
+          navigate('/error')
           reject()
         })
     })
@@ -181,7 +192,18 @@ function CartTotal() {
     dispatch(mercadoPagoLoadSuccess())
   }
 
-  // mercadopago end
+  const statusOnError = async (error) => {
+    // callback llamado solicitada para todos los casos de error de Brick
+    console.log(error)
+  }
+  const statusOnReady = async () => {
+    /*
+   Callback llamado cuando Brick está listo.
+   Aquí puede ocultar cargamentos de su sitio, por ejemplo.
+ */
+  }
+
+  // mercadoPago end
 
   return (
     <div className='carrito-total-container'>
@@ -230,6 +252,14 @@ function CartTotal() {
           onSubmit={onSubmit}
           onReady={onReady}
           onError={onError}
+        />
+      )}
+
+      {mercadoPagoPaymentId && (
+        <StatusScreen
+          initialization={mercadoPagoPaymentId}
+          onReady={statusOnReady}
+          onError={statusOnError}
         />
       )}
 
