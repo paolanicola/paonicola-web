@@ -116,7 +116,6 @@ const CalendarCheckout = ({ appointments }) => {
                 }
                 menuIsOpen
                 onChange={handleTimeSelect}
-                isDisabled={!dateSelected}
               />
             </div>
           </div>

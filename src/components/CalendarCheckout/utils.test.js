@@ -4,7 +4,6 @@ import {
   getOptionsTime,
   nextAvailableDate,
   tileDisabled,
-  getAppointmentId,
 } from './utils'
 
 describe('nextAvailableDateShouldBeNull', () => {
@@ -95,17 +94,17 @@ describe('tileDisabled', () => {
 describe('getOptionsTime', () => {
   test('returns available hours for the given date', () => {
     const appointments = [
-      { date: '2023-06-22', available_hours: '10:00' },
-      { date: '2023-06-22', available_hours: '12:00' },
-      { date: '2023-06-23', available_hours: '14:00' },
+      { date: '2023-06-22', available_hours: '10:00', id: 3383 },
+      { date: '2023-06-22', available_hours: '12:00', id: 3384 },
+      { date: '2023-06-23', available_hours: '14:00', id: 3385 },
     ]
     const localDate = '2023-06-22'
 
     const result = getOptionsTime(appointments, localDate)
 
     expect(result).toEqual([
-      { value: '10:00', label: '10:00' },
-      { value: '12:00', label: '12:00' },
+      { value: 3383, label: '10:00' },
+      { value: 3384, label: '12:00' },
     ])
   })
 })
@@ -214,32 +213,4 @@ describe('getNewMonthViewByDate', () => {
   })
 
   // Add more tests for other scenarios if needed
-})
-
-describe('getAppointmentId', () => {
-  const appointments = [
-    { id: 3327, date: '2026-07-05', available_hours: '06:00' },
-    { id: 3330, date: '2026-07-06', available_hours: '07:30' },
-    { id: 3336, date: '2027-03-03', available_hours: '08:30' },
-  ]
-
-  test('returns appointment ID 3327 for date "2026-07-05" and time "06:00"', () => {
-    const result = getAppointmentId(appointments, '2026-07-05', '06:00')
-    expect(result).toBe(3327)
-  })
-
-  test('returns appointment ID 3330 for date "2026-07-06" and time "07:30"', () => {
-    const result = getAppointmentId(appointments, '2026-07-06', '07:30')
-    expect(result).toBe(3330)
-  })
-
-  test('returns appointment ID 3336 for date "2027-03-03" and time "08:30"', () => {
-    const result = getAppointmentId(appointments, '2027-03-03', '08:30')
-    expect(result).toBe(3336)
-  })
-
-  test('returns null for non-existent date and time', () => {
-    const result = getAppointmentId(appointments, '2026-07-07', '09:00')
-    expect(result).toBe(null)
-  })
 })
