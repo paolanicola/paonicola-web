@@ -156,7 +156,7 @@ function CartTotal() {
   const onSubmit = async (formData) => {
     // callback llamado al hacer clic en el botón enviar datos
     return new Promise((resolve, reject) => {
-      fetch(`${process.env.REACT_APP_API_BASE_URL}/process_payment`, {
+      fetch(`${process.env.REACT_APP_API_BASE_URL}/orders/process_payment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -166,13 +166,11 @@ function CartTotal() {
         .then((response) => {
           response.json()
           setMercadoPagoPaymentId({ paymentId: response.id })
-        })
-        .then((response) => {
-          // recibir el resultado del pago
+          console.log({ response })
           if (response.ok) {
             handleEnd()
-            resolve()
             navigate('/checkout/confirm')
+            resolve()
           }
         })
         .catch((error) => {
