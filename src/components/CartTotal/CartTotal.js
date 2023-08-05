@@ -52,6 +52,8 @@ function CartTotal() {
   const mercadoPagoIsLoading = useSelector(methodIsLoading)
   const navigate = useNavigate()
   const [mercadoPagoPaymentId, setMercadoPagoPaymentId] = useState(null)
+  const [mercadoPagoPaymentFailed, setMercadoPagoPaymentFailed] =
+    useState(false)
 
   useEffect(() => {
     if (!withCalendar && step === 0) {
@@ -67,9 +69,17 @@ function CartTotal() {
     } else dispatch(nextStep())
   }
 
-  const handleEnd = () => {
-    const schedule_id = withCalendar ? selectedAppointmentId : null
-    dispatch(submitOrder(method, schedule_id, personalData, products))
+  const handleEnd = (mercadoPagoPaymentId = 'null') => {
+    const scheduleId = withCalendar ? selectedAppointmentId : null
+    dispatch(
+      submitOrder(
+        method,
+        scheduleId,
+        personalData,
+        products,
+        mercadoPagoPaymentId
+      )
+    )
 
     dispatch(deleteCartItems())
     dispatch(resetStep())
@@ -163,14 +173,15 @@ function CartTotal() {
         },
         body: JSON.stringify(formData),
       })
+        .then((response) => response.json())
         .then((response) => {
-          response.json()
-          setMercadoPagoPaymentId({ paymentId: response.id })
-          console.log({ response })
-          if (response.ok) {
-            handleEnd()
+          setMercadoPagoPaymentId(response.id)
+          if (response.status === 'approved') {
+            handleEnd(response.id)
             navigate('/checkout/confirm')
             resolve()
+          } else {
+            setMercadoPagoPaymentFailed(true)
           }
         })
         .catch((error) => {
@@ -199,6 +210,10 @@ function CartTotal() {
    Callback llamado cuando Brick está listo.
    Aquí puede ocultar cargamentos de su sitio, por ejemplo.
  */
+  }
+
+  const handleRetryPayment = () => {
+    setMercadoPagoPaymentId(null)
   }
 
   // mercadoPago end
@@ -240,11 +255,11 @@ function CartTotal() {
         </tbody>
       </table>
 
-      {mercadoPagoIsLoading && (
+      {mercadoPagoIsLoading && !mercadoPagoPaymentId && (
         <div className='spinner spinnerMercadoPago'></div>
       )}
 
-      {method === 'mercadopago' && step === 2 && (
+      {method === 'mercadopago' && step === 2 && !mercadoPagoPaymentId && (
         <CardPayment
           initialization={initialization}
           onSubmit={onSubmit}
@@ -253,9 +268,9 @@ function CartTotal() {
         />
       )}
 
-      {mercadoPagoPaymentId && (
+      {method === 'mercadopago' && step === 2 && mercadoPagoPaymentId && (
         <StatusScreen
-          initialization={mercadoPagoPaymentId}
+          initialization={{ paymentId: mercadoPagoPaymentId }}
           onReady={statusOnReady}
           onError={statusOnError}
         />
@@ -265,6 +280,11 @@ function CartTotal() {
         <button onClick={actionBack} type={typeBack} className={variantBack}>
           Atrás
         </button>
+        {method === 'mercadopago' && mercadoPagoPaymentFailed && (
+          <button onClick={handleRetryPayment} className={variantBack}>
+            Reintentar
+          </button>
+        )}
         <button
           onClick={handleOnClick}
           type={typeNext}
