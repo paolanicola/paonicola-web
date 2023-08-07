@@ -34,9 +34,9 @@ describe('nextAvailableDate', () => {
 describe('dateExistsInAppointments', () => {
   test('returns true if date exists in appointments', () => {
     const appointments = [
-      { date: '2023-06-22' },
-      { date: '2023-06-23' },
-      { date: '2023-06-24' },
+      { date: '2023-06-22', available_hours: '10:00', id: 3383 },
+      { date: '2023-06-23', available_hours: '10:00', id: 3384 },
+      { date: '2023-06-24', available_hours: '10:00', id: 3385 },
     ]
     const localDate = '2023-06-23'
 
@@ -47,9 +47,9 @@ describe('dateExistsInAppointments', () => {
 
   test('returns false if date does not exist in appointments', () => {
     const appointments = [
-      { date: '2023-06-22' },
-      { date: '2023-06-23' },
-      { date: '2023-06-24' },
+      { date: '2023-06-22', available_hours: '10:00', id: 3383 },
+      { date: '2023-06-23', available_hours: '12:00', id: 3384 },
+      { date: '2023-06-24', available_hours: '14:00', id: 3385 },
     ]
     const localDate = '2023-06-25'
 
@@ -62,11 +62,11 @@ describe('dateExistsInAppointments', () => {
 describe('tileDisabled', () => {
   test('returns false if there is an appointment on the date (month view)', () => {
     const appointments = [
-      { date: '2023-06-22' },
-      { date: '2023-06-23' },
-      { date: '2023-06-24' },
+      { date: '2023-06-22', available_hours: '10:00', id: 3383 },
+      { date: '2023-06-23', available_hours: '12:00', id: 3384 },
+      { date: '2023-06-24', available_hours: '14:00', id: 3385 },
     ]
-    const date = new Date('2023-06-22')
+    const date = '2023-06-22'
     const view = 'month'
 
     const result = tileDisabled(appointments, { date, view })
@@ -76,11 +76,11 @@ describe('tileDisabled', () => {
 
   test('returns true if there is no appointment on the date (month view)', () => {
     const appointments = [
-      { date: '2023-06-22' },
-      { date: '2023-06-23' },
-      { date: '2023-06-24' },
+      { date: '2023-06-22', available_hours: '10:00', id: 3383 },
+      { date: '2023-06-23', available_hours: '12:00', id: 3384 },
+      { date: '2023-06-24', available_hours: '14:00', id: 3385 },
     ]
-    const date = new Date('2023-06-25')
+    const date = '2023-06-25'
     const view = 'month'
 
     const result = tileDisabled(appointments, { date, view })
@@ -112,11 +112,11 @@ describe('getOptionsTime', () => {
 describe('getNewMonthViewByDate', () => {
   test('returns the next month view date', () => {
     const appointments = [
-      { date: '2023-06-22' },
-      { date: '2023-06-23' },
-      { date: '2023-07-01' },
+      { date: '2023-06-22', available_hours: '10:00', id: 3383 },
+      { date: '2023-06-23', available_hours: '12:00', id: 3384 },
+      { date: '2023-07-01', available_hours: '14:00', id: 3385 },
     ]
-    const activeStartDate = new Date('2023-06-01')
+    const activeStartDate = '2023-06-01'
     const view = 'month'
     const action = 'next'
 
@@ -132,11 +132,11 @@ describe('getNewMonthViewByDate', () => {
 
   test('returns the next month view date 2', () => {
     const appointments = [
-      { date: '2023-06-22' },
-      { date: '2023-06-23' },
-      { date: '2023-09-01' },
+      { date: '2023-06-22', available_hours: '10:00', id: 3383 },
+      { date: '2023-06-23', available_hours: '12:00', id: 3384 },
+      { date: '2023-09-01', available_hours: '14:00', id: 3385 },
     ]
-    const activeStartDate = new Date('2023-07-01')
+    const activeStartDate = '2023-07-01'
     const view = 'month'
     const action = 'next'
 
@@ -152,12 +152,12 @@ describe('getNewMonthViewByDate', () => {
 
   test('returns the next month view date different year', () => {
     const appointments = [
-      { date: '2023-06-22' },
-      { date: '2023-06-23' },
-      { date: '2023-08-01' },
-      { date: '2024-01-01' },
+      { date: '2023-06-22', available_hours: '10:00', id: 3383 },
+      { date: '2023-06-23', available_hours: '10:00', id: 3384 },
+      { date: '2023-08-01', available_hours: '10:00', id: 3385 },
+      { date: '2024-01-01', available_hours: '10:00', id: 3386 },
     ]
-    const activeStartDate = new Date('2023-09-01')
+    const activeStartDate = '2023-09-01'
     const view = 'month'
     const action = 'next'
 
@@ -173,12 +173,12 @@ describe('getNewMonthViewByDate', () => {
 
   test('returns the next month view date different year v2', () => {
     const appointments = [
-      { date: '2023-06-22' },
-      { date: '2023-06-23' },
-      { date: '2023-08-01' },
-      { date: '2024-02-01' },
+      { date: '2023-06-22', available_hours: '10:00', id: 3383 },
+      { date: '2023-06-23', available_hours: '10:00', id: 3384 },
+      { date: '2023-08-01', available_hours: '10:00', id: 3385 },
+      { date: '2024-02-01', available_hours: '10:00', id: 3386 },
     ]
-    const activeStartDate = new Date('2023-09-01')
+    const activeStartDate = '2023-09-01'
     const view = 'month'
     const action = 'next'
 
@@ -194,11 +194,11 @@ describe('getNewMonthViewByDate', () => {
 
   test('returns the previous month view date', () => {
     const appointments = [
-      { date: '2023-06-22' },
-      { date: '2023-06-23' },
-      { date: '2023-05-31' },
+      { date: '2023-06-22', available_hours: '10:00', id: 3383 },
+      { date: '2023-06-23', available_hours: '12:00', id: 3384 },
+      { date: '2023-05-31', available_hours: '14:00', id: 3385 },
     ]
-    const activeStartDate = new Date('2023-06-01')
+    const activeStartDate = '2023-06-01'
     const view = 'month'
     const action = 'prev'
 
