@@ -1,7 +1,4 @@
 import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc' // Import the UTC plugin
-
-dayjs.extend(utc) // Enable the UTC plugin
 
 // Return next available date as a string
 export const nextAvailableDate = (appointments) => {
@@ -92,7 +89,7 @@ export const getNewMonthViewByDate = (
 }
 
 export const newDate = (stringDate) => {
-  return dayjs.utc(stringDate).toDate()
+  return dayjs(stringDate).toDate()
 }
 
 export const isoStringToHumanReadable = (isoString, time) => {
