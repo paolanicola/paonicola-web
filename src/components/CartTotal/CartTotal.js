@@ -87,6 +87,13 @@ function CartTotal() {
     setVariantTrans('carrito-finalizar__oculto')
   }
 
+  const handleMercadoPagoEnd = () => {
+    dispatch(deleteCartItems())
+    dispatch(resetStep())
+    dispatch(resetCartState())
+    setVariantTrans('carrito-finalizar__oculto')
+  }
+
   const handleVerificationSelectMethod = (text) => {
     toast.warning(text)
   }
@@ -164,25 +171,45 @@ function CartTotal() {
   }
 
   const onSubmit = async (formData) => {
-    // callback llamado al hacer clic en el botón enviar datos
     return new Promise((resolve, reject) => {
+      const orderData = {
+        payment_type: method,
+        schedule_id: withCalendar ? selectedAppointmentId : null,
+        product_ids_and_quantities: products.map((product) => [
+          product.id,
+          product.cartQuantity,
+        ]),
+        patient_info: {
+          email: personalData.email,
+          name: personalData.name,
+          lastname: personalData.lastname,
+          phone: personalData.phone,
+        },
+      }
+      const data = {
+        orderData: orderData,
+        mercadoPagoData: JSON.stringify(formData),
+      }
+      console.log({ data })
       fetch(`${process.env.REACT_APP_API_BASE_URL}/orders/process_payment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: data,
       })
         .then((response) => response.json())
         .then((response) => {
-          setMercadoPagoPaymentId(response.id)
-          if (response.status === 'approved') {
-            handleEnd(response.id)
-            navigate('/checkout/confirm')
-            resolve()
-          } else {
-            setMercadoPagoPaymentFailed(true)
-          }
+          console.log({ response })
+          resolve()
+          // response.id ?? setMercadoPagoPaymentId(response.id)
+          // if (response.status === 'approved') {
+          //   handleMercadoPagoEnd()
+          //   navigate('/checkout/confirm')
+          //   resolve()
+          // } else {
+          //   setMercadoPagoPaymentFailed(true)
+          // }
         })
         .catch((error) => {
           // manejar la respuesta de error al intentar crear el pago
