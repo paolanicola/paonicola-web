@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {
   deleteCartItems,
@@ -20,28 +20,40 @@ import {
   nextStep,
   resetStep,
 } from '../../features/stepsCheckout/stepsSlice'
-import { setMethod } from '../../features/validators'
+import {
+  getMethod,
+  mercadoPagoLoadSuccess,
+  methodIsLoading,
+  resetMethod,
+} from '../../features/validators'
 import { formatNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
 import { submitOrder } from '../../features/cartTotal'
-import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react'
+import {
+  initMercadoPago,
+  CardPayment,
+  StatusScreen,
+} from '@mercadopago/sdk-react'
 
 function CartTotal() {
   const cart = useSelector((state) => state.cart)
-  const { data: method } = useSelector((state) => state.validators)
-  const { preference } = useSelector((state) => state.products)
+  const method = useSelector(getMethod)
   const products = useSelector(getAllProductsCart)
   const dispatch = useDispatch()
   const { step } = useSelector((state) => state.step)
   const withCalendar = useSelector(isCartWithCalendar)
   const isCheckoutCalendarReady = useSelector(isCheckoutCalendarValid)
   const [variantTrans, setVariantTrans] = useState('carrito-finalizar__oculto ')
-  const [variantMP, setVariantMP] = useState('carrito-finalizar__oculto')
   const selectedAppointmentId = useSelector(getSelectedAppointmentId)
   const personalData = useSelector(getForm)
   initMercadoPago(process.env.REACT_APP_MERCADOPAGO_PUBLIC_KEY, {
     locale: 'es-AR',
   })
+  const mercadoPagoIsLoading = useSelector(methodIsLoading)
+  const navigate = useNavigate()
+  const [mercadoPagoPaymentId, setMercadoPagoPaymentId] = useState(null)
+  const [mercadoPagoPaymentFailed, setMercadoPagoPaymentFailed] =
+    useState(false)
 
   useEffect(() => {
     if (!withCalendar && step === 0) {
@@ -57,15 +69,29 @@ function CartTotal() {
     } else dispatch(nextStep())
   }
 
-  const handleEnd = () => {
-    const schedule_id = withCalendar ? selectedAppointmentId : null
-    dispatch(submitOrder(method, schedule_id, personalData, products))
+  const handleEnd = (mercadoPagoPaymentId = 'null') => {
+    const scheduleId = withCalendar ? selectedAppointmentId : null
+    dispatch(
+      submitOrder(
+        method,
+        scheduleId,
+        personalData,
+        products,
+        mercadoPagoPaymentId
+      )
+    )
 
     dispatch(deleteCartItems())
     dispatch(resetStep())
     dispatch(resetCartState())
     setVariantTrans('carrito-finalizar__oculto')
-    setVariantMP('carrito-finalizar__oculto')
+  }
+
+  const handleMercadoPagoEnd = () => {
+    dispatch(deleteCartItems())
+    dispatch(resetStep())
+    dispatch(resetCartState())
+    setVariantTrans('carrito-finalizar__oculto')
   }
 
   const handleVerificationSelectMethod = (text) => {
@@ -75,10 +101,9 @@ function CartTotal() {
   const handleBackStep = () => {
     if (step === 2) {
       setVariantTrans('carrito-finalizar__oculto ')
-      setVariantMP('carrito-finalizar__oculto ')
       dispatch(updateVerified(false))
     }
-    dispatch(setMethod(''))
+    dispatch(resetMethod())
     dispatch(backStep())
   }
 
@@ -123,11 +148,9 @@ function CartTotal() {
     if (step === 2) {
       if (method === 'mercadopago') {
         setVariantTrans('carrito-finalizar__oculto')
-        setVariantMP('carrito-finalizar')
       }
       if (method === 'deposit') {
         setVariantTrans('carrito-finalizar')
-        setVariantMP('carrito-finalizar__oculto')
       }
     }
   }, [method, step])
@@ -137,11 +160,90 @@ function CartTotal() {
       event.preventDefault()
       handleNextStep()
     }
-
-    if (step === 1) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
+    // if user is using a mobile device, scroll to top after clicking on "next"
+    window.innerWidth < 768 && window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  // mercadoPago begin
+
+  const initialization = {
+    amount: cart.cartTotalAmount,
+  }
+
+  const onSubmit = async (formData) => {
+    return new Promise((resolve, reject) => {
+      const orderData = {
+        payment_type: method,
+        schedule_id: withCalendar ? selectedAppointmentId : null,
+        product_ids_and_quantities: products.map((product) => [
+          product.id,
+          product.cartQuantity,
+        ]),
+        patient_info: {
+          email: personalData.email,
+          name: personalData.name,
+          lastname: personalData.lastname,
+          phone: personalData.phone,
+        },
+      }
+      const data = {
+        orderData: orderData,
+        mercadoPagoData: JSON.stringify(formData),
+      }
+      console.log({ data })
+      fetch(`${process.env.REACT_APP_API_BASE_URL}/orders/process_payment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log({ response })
+          resolve()
+          // response.id ?? setMercadoPagoPaymentId(response.id)
+          // if (response.status === 'approved') {
+          //   handleMercadoPagoEnd()
+          //   navigate('/checkout/confirm')
+          //   resolve()
+          // } else {
+          //   setMercadoPagoPaymentFailed(true)
+          // }
+        })
+        .catch((error) => {
+          // manejar la respuesta de error al intentar crear el pago
+          navigate('/error')
+          reject()
+        })
+    })
+  }
+
+  const onError = async (error) => {
+    // callback llamado para todos los casos de error de Brick
+    console.log(error)
+  }
+
+  const onReady = async () => {
+    dispatch(mercadoPagoLoadSuccess())
+  }
+
+  const statusOnError = async (error) => {
+    // callback llamado solicitada para todos los casos de error de Brick
+    console.log(error)
+  }
+  const statusOnReady = async () => {
+    /*
+   Callback llamado cuando Brick está listo.
+   Aquí puede ocultar cargamentos de su sitio, por ejemplo.
+ */
+  }
+
+  const handleRetryPayment = () => {
+    setMercadoPagoPaymentId(null)
+  }
+
+  // mercadoPago end
 
   return (
     <div className='carrito-total-container'>
@@ -180,27 +282,24 @@ function CartTotal() {
         </tbody>
       </table>
 
-      {method === 'mercadopago' && step === 2 && (
+      {mercadoPagoIsLoading && !mercadoPagoPaymentId && (
+        <div className='spinner spinnerMercadoPago'></div>
+      )}
+
+      {method === 'mercadopago' && step === 2 && !mercadoPagoPaymentId && (
         <CardPayment
-          initialization={{
-            amount: 100,
-            preferenceId: '207446753-ea3adb2e-a4f2-41dd-a656-11cb01b8772c',
-          }}
-          customization={{
-            paymentMethods: {
-              creditCard: 'all',
-              debitCard: 'all',
-            },
-            visual: {
-              style: {
-                theme: 'default', // | 'dark' | 'bootstrap' | 'flat'
-                successColor: 'green',
-              },
-            },
-          }}
-          onSubmit={async (param) => {
-            console.log(param)
-          }}
+          initialization={initialization}
+          onSubmit={onSubmit}
+          onReady={onReady}
+          onError={onError}
+        />
+      )}
+
+      {method === 'mercadopago' && step === 2 && mercadoPagoPaymentId && (
+        <StatusScreen
+          initialization={{ paymentId: mercadoPagoPaymentId }}
+          onReady={statusOnReady}
+          onError={statusOnError}
         />
       )}
 
@@ -208,6 +307,11 @@ function CartTotal() {
         <button onClick={actionBack} type={typeBack} className={variantBack}>
           Atrás
         </button>
+        {method === 'mercadopago' && mercadoPagoPaymentFailed && (
+          <button onClick={handleRetryPayment} className={variantBack}>
+            Reintentar
+          </button>
+        )}
         <button
           onClick={handleOnClick}
           type={typeNext}
@@ -236,9 +340,7 @@ function CartTotal() {
         >
           Pagar
         </Link>
-        <a href={preference} onClick={actionEnd} className={variantMP}>
-          Pagar
-        </a>
+
         <div className=''></div>
       </div>
     </div>

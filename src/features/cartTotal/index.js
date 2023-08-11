@@ -34,10 +34,12 @@ const orderReducer = createReducer(initialState, {
 // PUBLIC ACTIONS
 
 export const submitOrder =
-  (method, schedule_id, personalData, products) => (dispatch) => {
+  (method, scheduleId, personalData, products, mercadoPagoPaymentId) =>
+  (dispatch) => {
     const data = {
+      mercadopago_payment_id: mercadoPagoPaymentId,
       payment_type: method,
-      schedule_id: schedule_id,
+      schedule_id: scheduleId,
       product_ids_and_quantities: products.map((product) => [
         product.id,
         product.cartQuantity,

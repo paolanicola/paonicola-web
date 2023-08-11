@@ -2,7 +2,10 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { ReactComponent as MercadoPago } from '../../assets/images/tienda/mercadopago.svg'
-import { setMethod } from '../../features/validators'
+import {
+  setMethodMercadoPago,
+  setMethodDeposit,
+} from '../../features/validators'
 
 function PaymentMethods() {
   const dispatch = useDispatch()
@@ -10,17 +13,17 @@ function PaymentMethods() {
   const onSubmit = (data) => null
 
   const PaymentMP = () => {
-    dispatch(setMethod('mercadopago'))
+    dispatch(setMethodMercadoPago())
   }
   const PaymentTrans = () => {
-    dispatch(setMethod('deposit'))
+    dispatch(setMethodDeposit())
   }
 
   return (
     <div className='payment-container'>
       <h5 className='payment-title'>Seleccioná el método de pago</h5>
       <form className='payment-form' onSubmit={handleSubmit(onSubmit)}>
-        <div className='payment-block' onClick={PaymentMP}>
+        {/* <div className='payment-block' onClick={PaymentMP}>
           <label className='block-label block-selected'>
             <input
               className='block-radio'
@@ -34,7 +37,7 @@ function PaymentMethods() {
               <MercadoPago />
             </div>
           </label>
-        </div>
+        </div> */}
 
         <div className='payment-block' onClick={PaymentTrans}>
           <label className='block-label block-selected'>

@@ -4,6 +4,7 @@ import { ReactComponent as InstagramSvg } from '../../assets/images/footer/insta
 import { ReactComponent as MailSvg } from '../../assets/images/footer/mail-footer.svg'
 import { ReactComponent as PaolaSvg } from '../../assets/images/footer/paola-nicola.svg'
 import { ReactComponent as WhatsappSvg } from '../../assets/images/footer/whatsapp-footer.svg'
+import { whatsAppUrl } from '../../utils/utils'
 
 export default function Footer() {
   return (
@@ -68,7 +69,7 @@ export default function Footer() {
                   <li>
                     <a
                       className='footer__link'
-                      href='https://api.whatsapp.com/send?phone=5492216248895&text=Hola%21%20Estoy%20buscando%20reservar%20un%20turno.&source=&data=&app_absent='
+                      href={whatsAppUrl}
                       target='_blank'
                       rel='noopener noreferrer'
                     >

@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form'
 import { ReactComponent as InstagramBrand } from '../../assets/images/header/instagram-brands.svg'
 import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg'
 import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg'
-import { messages } from '../../utils/messages'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 import { toast } from 'react-toastify'
+import { whatsAppNumber, whatsAppUrl } from '../../utils/utils'
 
 export default function Contact() {
   const [send, setSend] = useState(false)
@@ -22,11 +22,10 @@ export default function Contact() {
   }
 
   const handleFormSubmit = (event) => {
+    event.preventDefault()
     if (recaptchaSucceeded) {
-      toast.success(messages.submitFormConfirmation)
-      handleSubmit(onSubmit)
+      handleSubmit(onSubmit)()
     } else {
-      event.preventDefault()
       toast.error('Por favor, completa el reCAPTCHA.')
     }
   }
@@ -44,13 +43,9 @@ export default function Contact() {
           </p>
           <ul>
             <li className='contact-link'>
-              <a
-                href='https://api.whatsapp.com/send?phone=5492216248895&text=Hola%21%20Estoy%20buscando%20reservar%20un%20turno.&source=&data=&app_absent='
-                target='_blank'
-                rel='noopener noreferrer'
-              >
+              <a href={whatsAppUrl} target='_blank' rel='noopener noreferrer'>
                 <WhatsappBrand className='contact-icon' />
-                <p className='contact-icon-info'>221-6248895</p>
+                <p className='contact-icon-info'>{whatsAppNumber}</p>
               </a>
             </li>
             <li className='contact-link'>

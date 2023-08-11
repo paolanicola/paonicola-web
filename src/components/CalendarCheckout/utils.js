@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 // Return next available date as a string
 export const nextAvailableDate = (appointments) => {
   const now = new Date()
@@ -17,35 +19,24 @@ export const dateExistsInAppointments = (appointments, localDate) => {
 }
 
 export const tileDisabled = (appointments, { date, view }) => {
-  const formattedDate = date.toISOString().split('T')[0]
+  const formattedDate = dayjs(date).format('YYYY-MM-DD')
+
   if (view === 'month') {
-    return !appointments.some(
-      (appointment) => appointment.date === formattedDate
+    return !appointments.some((appointment) =>
+      dayjs(appointment.date).isSame(formattedDate, 'day')
     )
   }
 
   return true
 }
 
-const isSameDate = (date1, date2) => {
-  const d1 = new Date(date1)
-  const d2 = new Date(date2)
-
-  d1.setUTCHours(0, 0, 0, 0)
-  d2.setUTCHours(0, 0, 0, 0)
-
-  return d1.getTime() === d2.getTime()
-}
-
 export const getOptionsTime = (appointments, localDate) => {
-  const result = appointments
-    .filter((appointment) => isSameDate(appointment.date, localDate))
+  return appointments
+    .filter((appointment) => dayjs(appointment.date).isSame(localDate, 'date'))
     .map(({ available_hours, id }) => ({
       value: id,
       label: available_hours,
     }))
-
-  return result
 }
 
 // Return date string
@@ -55,34 +46,34 @@ export const getNewMonthViewByDate = (
   view,
   action
 ) => {
-  const date = new Date(activeStartDate)
+  const date = dayjs(activeStartDate)
 
   if (view === 'month') {
     if (action === 'next') {
-      date.setUTCMonth(date.getUTCMonth())
+      date.add(1, 'month')
     } else if (action === 'prev') {
-      date.setUTCMonth(date.getUTCMonth())
+      date.subtract(1, 'month')
     }
   }
 
   const availableDates = appointments
     .map((appointment) => appointment.date)
     .filter((appointmentDate) => {
-      const dateObj = new Date(appointmentDate)
+      const dateObj = dayjs(appointmentDate)
       if (action === 'next') {
         return (
-          dateObj > activeStartDate &&
-          dateObj.getUTCMonth() !== date.getUTCMonth()
+          dateObj.isAfter(activeStartDate, 'day') &&
+          !dateObj.isSame(date, 'month')
         )
       } else if (action === 'prev') {
         return (
-          dateObj < activeStartDate &&
-          dateObj.getUTCMonth() !== date.getUTCMonth()
+          dateObj.isBefore(activeStartDate, 'day') &&
+          !dateObj.isSame(date, 'month')
         )
       }
       return false
     })
-    .sort((a, b) => new Date(a) - new Date(b))
+    .sort((a, b) => dayjs(a).diff(b))
 
   if (action === 'next') {
     return availableDates.length > 0
@@ -97,33 +88,11 @@ export const getNewMonthViewByDate = (
   }
 }
 
-export const getAppointmentId = (appointments, date, time) => {
-  for (const appointment of appointments) {
-    if (appointment.date === date && appointment.available_hours === time) {
-      return appointment.id
-    }
-  }
-  return null
-}
-
-export const newUtcDate = (stringDate) => {
-  const [year, month, day] = stringDate.split('-').map(Number)
-
-  return new Date(
-    year,
-    month - 1, // Month (JavaScript are 0-indexed, so we subtract 1)
-    day
-  )
+export const newDate = (stringDate) => {
+  return dayjs(stringDate).toDate()
 }
 
 export const isoStringToHumanReadable = (isoString, time) => {
-  return (
-    (isoString !== null
-      ? `${isoString.split('T')[0].split('-')[2]}/${
-          isoString.split('T')[0].split('-')[1]
-        }/${isoString.split('T')[0].split('-')[0]}`
-      : '') +
-    ' ' +
-    (time ?? '')
-  )
+  const date = isoString ? dayjs(isoString).format('DD/MM/YYYY') : ''
+  return `${date} ${time ?? ''}`
 }

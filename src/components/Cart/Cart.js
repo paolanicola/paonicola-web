@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { getAllProductsCart, getTotals } from '../../features/cart/cartSlice'
 import { resetCartState } from '../../features/checkout/checkoutSlice'
 import { resetStep } from '../../features/stepsCheckout/stepsSlice'
-import { setMethod } from '../../features/validators'
+import { resetMethod } from '../../features/validators'
 import { formatNumber } from '../../utils/utils'
 import ProductCart from '../ProductCart/ProductCart'
 
@@ -106,7 +106,7 @@ function Cart() {
             <div className='next1'>
               <Link
                 to='/checkout'
-                onClick={dispatch(setMethod(''))}
+                onClick={dispatch(resetMethod())}
                 className='  carrito-finalizar '
               >
                 Finalizar compra
