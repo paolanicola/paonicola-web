@@ -23,7 +23,7 @@ function PaymentMethods() {
     <div className='payment-container'>
       <h5 className='payment-title'>Seleccioná el método de pago</h5>
       <form className='payment-form' onSubmit={handleSubmit(onSubmit)}>
-        <div className='payment-block' onClick={PaymentMP}>
+        {/* <div className='payment-block' onClick={PaymentMP}>
           <label className='block-label block-selected'>
             <input
               className='block-radio'
@@ -37,7 +37,7 @@ function PaymentMethods() {
               <MercadoPago />
             </div>
           </label>
-        </div>
+        </div> */}
 
         <div className='payment-block' onClick={PaymentTrans}>
           <label className='block-label block-selected'>

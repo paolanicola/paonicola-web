@@ -7,6 +7,8 @@ import {
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { whatsAppUrl } from '../../utils/utils'
+import { whatsAppNumber } from '../../utils/utils'
 
 const OrderSuccess = () => {
   const navigate = useNavigate()
@@ -78,18 +80,20 @@ const OrderSuccess = () => {
             Para hacer efectiva tu compra, realizá el pago la siguiente cuenta:
           </p>
           <h6 className='data__transfer-cbu'>
-            CBU: 0000123456789123 / Alias test.test.test <br />
-            Titular: Paola Nicola <br />
-            Banco Provincia <br />
+            CVU: 0000003100040321195999 <br />
+            Titular: PAOLA VANESA, NICOLA <br />
+            Mercado Pago <br />
           </h6>
           <h5 className='data__transfer-text-important '>
             IMPORTANTE: Si no recibís un e-mail de confirmación, por favor,
             revisá tu casilla de spam.
             <br />
-            Ante cualquier inconveniente, escribime a
-            <a href='mailto:' className='data__transfer-email'>
-              EMAIL
-            </a>
+            Ante cualquier inconveniente, escribime por WhatsApp:
+            <div className='confirm__data-transfer'>
+              <a href={whatsAppUrl} className='data__transfer-email'>
+                <h6 className='data__transfer-title'>🌐 {whatsAppNumber}</h6>
+              </a>
+            </div>
           </h5>
         </div>
       </section>
