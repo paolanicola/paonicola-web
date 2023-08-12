@@ -96,3 +96,7 @@ export const isoStringToHumanReadable = (isoString, time) => {
   const date = isoString ? dayjs(isoString).format('DD/MM/YYYY') : ''
   return `${date} ${time ?? ''}`
 }
+
+export const yesterdayDate = () => {
+  return dayjs().subtract(1, 'day').toDate()
+}

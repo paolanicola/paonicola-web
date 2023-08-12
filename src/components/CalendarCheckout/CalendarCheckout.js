@@ -22,6 +22,7 @@ import {
   tileDisabled,
   newDate,
   isoStringToHumanReadable,
+  yesterdayDate,
 } from './utils'
 
 const CalendarCheckout = ({ appointments }) => {
@@ -48,7 +49,6 @@ const CalendarCheckout = ({ appointments }) => {
 
   const handleOnClickDay = (value) => {
     const stringDate = value.toISOString()
-    // dispatch(updateDate(stringDate))
     dispatch(updateDateSelected(stringDate))
     setValue(value)
   }
@@ -97,9 +97,8 @@ const CalendarCheckout = ({ appointments }) => {
               tileDisabled={({ date, view }) =>
                 tileDisabled(appointments, { date, view })
               }
-              maxDate={newDate(appointments[appointments.length - 1].date)}
-              minDate={newDate(nextAvailableDate(appointments))}
               onClickDay={handleOnClickDay}
+              minDate={yesterdayDate()}
               onActiveStartDateChange={handleOnActiveStartDateChange}
               activeStartDate={value}
             />
