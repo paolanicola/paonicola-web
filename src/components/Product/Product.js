@@ -77,7 +77,7 @@ function Product({ product }) {
           <div className='label-text black'>{product.category}</div>
           <div className='card-product-overlay'>
             <div className='botonn1' onClick={() => setShow(true)}>
-              <PrimaryButton size='md' href='#' actionText='Vista rapida' />
+              <PrimaryButton size='md' href='#' actionText='Vista rápida' />
             </div>
             <div onClick={() => handleAddToCart()} className='botonn'>
               <PrimaryButton href='/tienda' actionText='Añadir al carrito' />
