@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import PrimaryButton from '../PrimaryButton/PrimaryButton'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -85,9 +85,9 @@ function Product({ product }) {
           </div>
         </div>
         <div className='card-product-text'>
-          <NavLink to={`/producto/${product.id}`}>
+          <div style={{ cursor: 'pointer' }} onClick={() => setShow(true)}>
             <h4 className='card-product-text__name'>{product.name}</h4>
-          </NavLink>
+          </div>
           <div className='card-product-text__price'>
             {product.active_promo ? (
               <h4 className=' card-product-price__tachado '>
