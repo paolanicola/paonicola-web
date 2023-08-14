@@ -70,7 +70,11 @@ export default function ProductView({ product }) {
           </div>
           <div className=' view-detail-raiting'> </div>
           <div className='view-detail-important'>{product.important_note}</div>
-          <div className='view-detail-description'> {product.description} </div>
+          <textarea
+            className='view-detail-description'
+            value={product.description}
+            readOnly
+          ></textarea>
 
           <div className='view-detail-button' onClick={handleAddToCartView}>
             <PrimaryButton href='/tienda' actionText='Añadir al carrito' />
