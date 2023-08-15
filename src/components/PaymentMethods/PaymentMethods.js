@@ -23,7 +23,7 @@ function PaymentMethods() {
     <div className='payment-container'>
       <h5 className='payment-title'>Seleccioná el método de pago</h5>
       <form className='payment-form' onSubmit={handleSubmit(onSubmit)}>
-        {/* <div className='payment-block' onClick={PaymentMP}>
+        <div className='payment-block' onClick={PaymentMP}>
           <label className='block-label block-selected'>
             <input
               className='block-radio'
@@ -33,11 +33,11 @@ function PaymentMethods() {
               value='mercadopago'
             />
             <div className='block-data'>
-              <p className='block-title'>Tarjeta de debito/credito</p>
+              <p className='block-title'>Tarjeta de débito/crédito</p>
               <MercadoPago />
             </div>
           </label>
-        </div> */}
+        </div>
 
         <div className='payment-block' onClick={PaymentTrans}>
           <label className='block-label block-selected'>
@@ -52,7 +52,7 @@ function PaymentMethods() {
               <p className='block-title'>Transferencia Bancaria</p>
               <div className='block-description'>
                 <p className='description-text'>
-                  Realizá una transferencia al cbu que te indicaré al finalizar
+                  Realizá una transferencia al CBU que te indicaré al finalizar
                   la compra. La compra se efectuará una vez que me envíes el
                   comprobante de pago.
                 </p>

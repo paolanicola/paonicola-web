@@ -188,7 +188,7 @@ function CartTotal() {
       }
       const data = {
         orderData: orderData,
-        mercadoPagoData: JSON.stringify(formData),
+        mercadoPagoData: formData,
       }
       console.log({ data })
       fetch(`${process.env.REACT_APP_API_BASE_URL}/orders/process_payment`, {
@@ -196,20 +196,20 @@ function CartTotal() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: data,
+        body: JSON.stringify(data),
       })
         .then((response) => response.json())
         .then((response) => {
           console.log({ response })
           resolve()
-          // response.id ?? setMercadoPagoPaymentId(response.id)
-          // if (response.status === 'approved') {
-          //   handleMercadoPagoEnd()
-          //   navigate('/checkout/confirm')
-          //   resolve()
-          // } else {
-          //   setMercadoPagoPaymentFailed(true)
-          // }
+          response.id && setMercadoPagoPaymentId(response.id)
+          if (response.status === 'approved') {
+            handleMercadoPagoEnd()
+            navigate(`/checkout/confirm/${response.id}`)
+            resolve()
+          } else {
+            setMercadoPagoPaymentFailed(true)
+          }
         })
         .catch((error) => {
           // manejar la respuesta de error al intentar crear el pago
