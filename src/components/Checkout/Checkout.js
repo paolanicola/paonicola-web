@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import 'react-calendar/dist/Calendar.css'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -16,6 +16,11 @@ const Checkout = () => {
   const withCalendar = useSelector(isCartWithCalendar)
   const { step } = useSelector((state) => state.step)
   const selectedAppointmentId = useSelector(getSelectedAppointmentId)
+  const cartTotalRef = useRef(null)
+
+  const handlePaymentMethodChangedToMercadoPago = () => {
+    cartTotalRef.current.scrollIntoView({ behavior: 'smooth' })
+  }
 
   useEffect(() => {
     dispatch(getTotals())
@@ -28,11 +33,23 @@ const Checkout = () => {
     ? {
         0: <CalendarCheckout />,
         1: <FormPatientOrder withCalendar={withCalendar} />,
-        2: <PaymentMethods />,
+        2: (
+          <PaymentMethods
+            paymentMethodChangedToMercadoPago={
+              handlePaymentMethodChangedToMercadoPago
+            }
+          />
+        ),
       }
     : {
         1: <FormPatientOrder withCalendar={withCalendar} />,
-        2: <PaymentMethods />,
+        2: (
+          <PaymentMethods
+            paymentMethodChangedToMercadoPago={
+              handlePaymentMethodChangedToMercadoPago
+            }
+          />
+        ),
       }
 
   return (
@@ -43,7 +60,7 @@ const Checkout = () => {
             <Steps />
             <div className='row-body'>
               {stepCurrent[step]}
-              <CartTotal />
+              <CartTotal ref={cartTotalRef} />
             </div>
           </div>
         </div>

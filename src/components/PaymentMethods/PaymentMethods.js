@@ -7,13 +7,14 @@ import {
   setMethodDeposit,
 } from '../../features/validators'
 
-function PaymentMethods() {
+function PaymentMethods({ paymentMethodChangedToMercadoPago }) {
   const dispatch = useDispatch()
   const { register, handleSubmit } = useForm()
   const onSubmit = (data) => null
 
   const PaymentMP = () => {
     dispatch(setMethodMercadoPago())
+    paymentMethodChangedToMercadoPago()
   }
   const PaymentTrans = () => {
     dispatch(setMethodDeposit())

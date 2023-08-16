@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -35,7 +41,18 @@ import {
   StatusScreen,
 } from '@mercadopago/sdk-react'
 
-function CartTotal() {
+const CartTotal = forwardRef((props, ref) => {
+  const cartTotalRef = useRef(null)
+
+  useImperativeHandle(ref, () => ({
+    scrollIntoView: () => {
+      // only in mobile devices
+      if (window.innerWidth <= 768 && cartTotalRef.current) {
+        cartTotalRef.current.scrollIntoView({ behavior: 'smooth' })
+      }
+    },
+  }))
+
   const cart = useSelector((state) => state.cart)
   const method = useSelector(getMethod)
   const products = useSelector(getAllProductsCart)
@@ -246,7 +263,7 @@ function CartTotal() {
   // mercadoPago end
 
   return (
-    <div className='carrito-total-container'>
+    <div ref={cartTotalRef} className='carrito-total-container'>
       <h5 className='carrito-total-titulo'>Total del carrito</h5>
 
       <table className='carrito-total-items' cellPadding='0' cellSpacing='0'>
@@ -345,6 +362,6 @@ function CartTotal() {
       </div>
     </div>
   )
-}
+})
 
 export default CartTotal
