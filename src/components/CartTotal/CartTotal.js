@@ -69,8 +69,9 @@ const CartTotal = forwardRef((props, ref) => {
   const mercadoPagoIsLoading = useSelector(methodIsLoading)
   const navigate = useNavigate()
   const [mercadoPagoPaymentId, setMercadoPagoPaymentId] = useState(null)
-  const [mercadoPagoPaymentFailed, setMercadoPagoPaymentFailed] =
-    useState(false)
+  const [mercadoPagoPaymentFailed, setMercadoPagoPaymentFailed] = useState(
+    false
+  )
 
   useEffect(() => {
     if (!withCalendar && step === 0) {
@@ -219,12 +220,15 @@ const CartTotal = forwardRef((props, ref) => {
         .then((response) => {
           console.log({ response })
           resolve()
-          response.id && setMercadoPagoPaymentId(response.id)
-          if (response.status === 'approved') {
+          response.mercado_pago_id &&
+            setMercadoPagoPaymentId(response.mercado_pago_id)
+          console.log({ response })
+          if (response.status === 'done') {
             handleMercadoPagoEnd()
-            navigate(`/checkout/confirm/${response.id}`)
+            navigate(`/checkout/confirm/${response.order_id}`)
             resolve()
           } else {
+            toast.error(response.message, { autoClose: 5000 })
             setMercadoPagoPaymentFailed(true)
           }
         })
