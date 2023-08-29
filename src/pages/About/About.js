@@ -42,11 +42,11 @@ export default function About() {
               <div className='about-row-text'>
                 <h5 className='about-text'>
                   Soy Paola Nicola. Nací en Chacabuco, Pcia. De Bs As, y
-                  actualmente vivo en La Plata.
+                  actualmente viajo por el mundo y trabajo de manera remota.
                   <br />
                   <br />
                   Me recibí en 2015 obteniendo el título de Licenciada en
-                  Nutrición, MP 3268
+                  Nutrición, MP 14044
                 </h5>
               </div>
               <div className='about-row-text'>

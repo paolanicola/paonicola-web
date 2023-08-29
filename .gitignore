@@ -26,3 +26,5 @@ yarn-error.log*
 
 application.css
 application.css.map
+
+.vscode/
