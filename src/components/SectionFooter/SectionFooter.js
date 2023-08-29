@@ -12,8 +12,7 @@ function SectionFooter() {
             <div className='section__texts'>
               <h5>Días y horarios de atención</h5>
               <p>
-                <strong>Solo con turno previo.</strong> Lunes, martes, miércoles
-                y viernes de 17 a 20 hs. Sábados de 10 a 14 hs.
+                <strong>Solo con turno previo.</strong> Lunes a viernes.
               </p>
             </div>
           </div>
@@ -21,10 +20,7 @@ function SectionFooter() {
             <PagoSvg className='section__image' />
             <div className='section__texts'>
               <h5>Formas de pago</h5>
-              <p>
-                En consultorio: Efectivo, Mercado Pago (código QR), o con
-                tarjetas de crédito/débito. Servicios online: Mercado Pago.
-              </p>
+              <p>Servicios online: Mercado Pago / Transferencia Bancaria.</p>
             </div>
           </div>
           <div className='flex-row'>

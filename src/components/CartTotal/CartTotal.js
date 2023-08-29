@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -35,7 +41,18 @@ import {
   StatusScreen,
 } from '@mercadopago/sdk-react'
 
-function CartTotal() {
+const CartTotal = forwardRef((props, ref) => {
+  const cartTotalRef = useRef(null)
+
+  useImperativeHandle(ref, () => ({
+    scrollIntoView: () => {
+      // only in mobile devices
+      if (window.innerWidth <= 768 && cartTotalRef.current) {
+        cartTotalRef.current.scrollIntoView({ behavior: 'smooth' })
+      }
+    },
+  }))
+
   const cart = useSelector((state) => state.cart)
   const method = useSelector(getMethod)
   const products = useSelector(getAllProductsCart)
@@ -52,8 +69,9 @@ function CartTotal() {
   const mercadoPagoIsLoading = useSelector(methodIsLoading)
   const navigate = useNavigate()
   const [mercadoPagoPaymentId, setMercadoPagoPaymentId] = useState(null)
-  const [mercadoPagoPaymentFailed, setMercadoPagoPaymentFailed] =
-    useState(false)
+  const [mercadoPagoPaymentFailed, setMercadoPagoPaymentFailed] = useState(
+    false
+  )
 
   useEffect(() => {
     if (!withCalendar && step === 0) {
@@ -188,7 +206,7 @@ function CartTotal() {
       }
       const data = {
         orderData: orderData,
-        mercadoPagoData: JSON.stringify(formData),
+        mercadoPagoData: formData,
       }
       console.log({ data })
       fetch(`${process.env.REACT_APP_API_BASE_URL}/orders/process_payment`, {
@@ -196,20 +214,23 @@ function CartTotal() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: data,
+        body: JSON.stringify(data),
       })
         .then((response) => response.json())
         .then((response) => {
           console.log({ response })
           resolve()
-          // response.id ?? setMercadoPagoPaymentId(response.id)
-          // if (response.status === 'approved') {
-          //   handleMercadoPagoEnd()
-          //   navigate('/checkout/confirm')
-          //   resolve()
-          // } else {
-          //   setMercadoPagoPaymentFailed(true)
-          // }
+          response.mercado_pago_id &&
+            setMercadoPagoPaymentId(response.mercado_pago_id)
+          console.log({ response })
+          if (response.status === 'done') {
+            handleMercadoPagoEnd()
+            navigate(`/checkout/confirm/${response.order_id}`)
+            resolve()
+          } else {
+            toast.error(response.message, { autoClose: 5000 })
+            setMercadoPagoPaymentFailed(true)
+          }
         })
         .catch((error) => {
           // manejar la respuesta de error al intentar crear el pago
@@ -246,7 +267,7 @@ function CartTotal() {
   // mercadoPago end
 
   return (
-    <div className='carrito-total-container'>
+    <div ref={cartTotalRef} className='carrito-total-container'>
       <h5 className='carrito-total-titulo'>Total del carrito</h5>
 
       <table className='carrito-total-items' cellPadding='0' cellSpacing='0'>
@@ -345,6 +366,6 @@ function CartTotal() {
       </div>
     </div>
   )
-}
+})
 
 export default CartTotal

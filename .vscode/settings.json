@@ -8,5 +8,6 @@
   "prettier.singleQuote": true,
   "prettier.jsxSingleQuote": true,
   "typescript.validate.enable": false,
-  "typescript.suggestionActions.enabled": false
+  "typescript.suggestionActions.enabled": false,
+  "git-blame.gitWebUrl": ""
 }

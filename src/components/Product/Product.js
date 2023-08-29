@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import PrimaryButton from '../PrimaryButton/PrimaryButton'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -77,7 +77,7 @@ function Product({ product }) {
           <div className='label-text black'>{product.category}</div>
           <div className='card-product-overlay'>
             <div className='botonn1' onClick={() => setShow(true)}>
-              <PrimaryButton size='md' href='#' actionText='Vista rapida' />
+              <PrimaryButton size='md' href='#' actionText='Vista rápida' />
             </div>
             <div onClick={() => handleAddToCart()} className='botonn'>
               <PrimaryButton href='/tienda' actionText='Añadir al carrito' />
@@ -85,9 +85,9 @@ function Product({ product }) {
           </div>
         </div>
         <div className='card-product-text'>
-          <NavLink to={`/producto/${product.id}`}>
+          <div style={{ cursor: 'pointer' }} onClick={() => setShow(true)}>
             <h4 className='card-product-text__name'>{product.name}</h4>
-          </NavLink>
+          </div>
           <div className='card-product-text__price'>
             {product.active_promo ? (
               <h4 className=' card-product-price__tachado '>
