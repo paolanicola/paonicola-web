@@ -25,12 +25,13 @@
     "react-redux": "^7.2.6",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "6",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.1",
     "react-select": "^5.2.1",
     "react-toastify": "^8.1.0",
     "redux": "^4.1.2",
     "sass": "^1.44.0",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "webpack": "^5.97.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -59,6 +60,10 @@
     ]
   },
   "engines": {
-    "node": "16.x"
+    "node": "20.x"
+  },
+  "packageManager": "yarn@4.5.1+sha512.341db9396b6e289fecc30cd7ab3af65060e05ebff4b3b47547b278b9e67b08f485ecd8c79006b405446262142c7a38154445ef7f17c1d5d1de7d90bf9ce7054d",
+  "devDependencies": {
+    "eslint-config-react-app": "^7.0.1"
   }
 }
