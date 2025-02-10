@@ -3284,6 +3284,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^17.0.5":
+  version: 17.0.45
+  resolution: "@types/node@npm:17.0.45"
+  checksum: 10c0/0db377133d709b33a47892581a21a41cd7958f22723a3cc6c71d55ac018121382de42fbfc7970d5ae3e7819dbe5f40e1c6a5174aedf7e7964e9cb8fa72b580b0
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.2
   resolution: "@types/parse-json@npm:4.0.2"
@@ -3379,6 +3386,15 @@ __metadata:
   version: 0.12.0
   resolution: "@types/retry@npm:0.12.0"
   checksum: 10c0/7c5c9086369826f569b83a4683661557cab1361bac0897a1cefa1a915ff739acd10ca0d62b01071046fe3f5a3f7f2aec80785fe283b75602dc6726781ea3e328
+  languageName: node
+  linkType: hard
+
+"@types/sax@npm:^1.2.1":
+  version: 1.2.7
+  resolution: "@types/sax@npm:1.2.7"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/d077a761a0753b079bf8279b3993948030ca86ed9125437b9b29c1de40db9b2deb7fddc369f014b58861d450e8b8cc75f163aa29dc8cea81952efbfd859168cf
   languageName: node
   linkType: hard
 
@@ -4054,7 +4070,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arg@npm:^5.0.2":
+"arg@npm:^5.0.0, arg@npm:^5.0.2":
   version: 5.0.2
   resolution: "arg@npm:5.0.2"
   checksum: 10c0/ccaf86f4e05d342af6666c569f844bec426595c567d32a8289715087825c2ca7edd8a3d204e4d2fb2aa4602e09a57d0c13ea8c9eea75aac3dbb4af5514e6800e
@@ -10293,11 +10309,13 @@ __metadata:
     react-redux: "npm:^7.2.6"
     react-responsive-carousel: "npm:^3.2.23"
     react-router-dom: "npm:6"
+    react-router-sitemap: "npm:^1.2.0"
     react-scripts: "npm:^5.0.1"
     react-select: "npm:^5.2.1"
     react-toastify: "npm:^8.1.0"
     redux: "npm:^4.1.2"
     sass: "npm:^1.44.0"
+    sitemap: "npm:^8.0.0"
     web-vitals: "npm:^1.1.2"
     webpack: "npm:^5.97.1"
   languageName: unknown
@@ -11890,6 +11908,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-router-sitemap@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "react-router-sitemap@npm:1.2.0"
+  dependencies:
+    sitemap: "npm:^1.6.0"
+  peerDependencies:
+    react: ^15.1.0 || ^16.0.0
+    react-router: ^2.3.0 || ^3.2.1 || ^4.3.0
+  checksum: 10c0/dc369b4670ce66844a4a69cca992ac424ac7ab34f7236978bf8b361618eb296fc740375e7ce3ef516489ef92763ef1db9eabc79c80d92154fe1def245f7180ed
+  languageName: node
+  linkType: hard
+
 "react-router@npm:6.29.0":
   version: 6.29.0
   resolution: "react-router@npm:6.29.0"
@@ -12576,6 +12606,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sax@npm:^1.2.4":
+  version: 1.4.1
+  resolution: "sax@npm:1.4.1"
+  checksum: 10c0/6bf86318a254c5d898ede6bd3ded15daf68ae08a5495a2739564eb265cd13bcc64a07ab466fb204f67ce472bb534eb8612dac587435515169593f4fffa11de7c
+  languageName: node
+  linkType: hard
+
 "sax@npm:~1.2.4":
   version: 1.2.4
   resolution: "sax@npm:1.2.4"
@@ -12888,6 +12925,30 @@ __metadata:
   version: 1.0.5
   resolution: "sisteransi@npm:1.0.5"
   checksum: 10c0/230ac975cca485b7f6fe2b96a711aa62a6a26ead3e6fb8ba17c5a00d61b8bed0d7adc21f5626b70d7c33c62ff4e63933017a6462942c719d1980bb0b1207ad46
+  languageName: node
+  linkType: hard
+
+"sitemap@npm:^1.6.0":
+  version: 1.13.0
+  resolution: "sitemap@npm:1.13.0"
+  dependencies:
+    underscore: "npm:^1.7.0"
+    url-join: "npm:^1.1.0"
+  checksum: 10c0/71f51ac50f3fbcf9774a74018c67f6499ab6cd924acf8d3ed3acb437a6f916e003cb05ceab55b759b52c0e952e4f550abdac399e1d96933300731909682f0aa1
+  languageName: node
+  linkType: hard
+
+"sitemap@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "sitemap@npm:8.0.0"
+  dependencies:
+    "@types/node": "npm:^17.0.5"
+    "@types/sax": "npm:^1.2.1"
+    arg: "npm:^5.0.0"
+    sax: "npm:^1.2.4"
+  bin:
+    sitemap: dist/cli.js
+  checksum: 10c0/adaabfb1f27e3c76ba25f9a16dcb02ff17dd2ecbd1b2dbe2608a6770eff37bd71f7d21c10df6824917453bc4da2c2790fd85ee6424d75699bd053e3422d2ef5c
   languageName: node
   linkType: hard
 
@@ -13902,6 +13963,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"underscore@npm:^1.7.0":
+  version: 1.13.7
+  resolution: "underscore@npm:1.13.7"
+  checksum: 10c0/fad2b4aac48847674aaf3c30558f383399d4fdafad6dd02dd60e4e1b8103b52c5a9e5937e0cc05dacfd26d6a0132ed0410ab4258241240757e4a4424507471cd
+  languageName: node
+  linkType: hard
+
 "undici-types@npm:~6.20.0":
   version: 6.20.0
   resolution: "undici-types@npm:6.20.0"
@@ -14029,6 +14097,13 @@ __metadata:
   dependencies:
     punycode: "npm:^2.1.0"
   checksum: 10c0/4ef57b45aa820d7ac6496e9208559986c665e49447cb072744c13b66925a362d96dd5a46c4530a6b8e203e5db5fe849369444440cb22ecfc26c679359e5dfa3c
+  languageName: node
+  linkType: hard
+
+"url-join@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "url-join@npm:1.1.0"
+  checksum: 10c0/813a22d0f91600e2f029f06018eb006e34607cf26d829bfdb3ec0650b3c16b94ca6303c1ce84997bd81534909b9460fa54d6be44c0751ff6a2c818ac9165bfb0
   languageName: node
   linkType: hard
 
