@@ -19,6 +19,7 @@ import Contact from './pages/contact'
 import Faq from './pages/faq'
 import NotFound from './pages/notFound'
 import Error from './pages/error'
+import ProductDetail from './components/ProductDetail/ProductDetail'
 import './stylesheets/application.scss'
 import { cartItemsExpired, cleanLocalStorage } from './utils/utils'
 import OrderSuccess from './components/OrderSuccess'
@@ -54,6 +55,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path='home' element={<Home />} />
             <Route path='tienda' element={<Products />} />
+            <Route path='producto/:productId' element={<ProductDetail />} />
             <Route path='sobre-mi' element={<About />} />
             <Route path='cambios-reales' element={<Changes />} />
             <Route path='faq' element={<Faq />} />

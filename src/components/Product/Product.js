@@ -8,7 +8,6 @@ import {
   getTotals,
   isCartWithCalendar,
 } from '../../features/cart/cartSlice'
-import Modal from '../Modal/Modal'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -47,16 +46,11 @@ function Product({ product }) {
   useEffect(() => {
     dispatch(getTotals())
   }, [cart, dispatch])
-  //modal
-  const [show, setShow] = useState(false)
-  //toast
 
   const handleOnError = (event) => (event.target.src = img1)
 
   return (
     <>
-      <Modal onClose={() => setShow(false)} show={show} product={product} />
-
       <div className='card-product-container'>
         <div className='card-product-img'>
           <div className='img-container'>
@@ -76,18 +70,18 @@ function Product({ product }) {
           )}
           <div className='label-text black'>{product.category}</div>
           <div className='card-product-overlay'>
-            <div className='botonn1' onClick={() => setShow(true)}>
-              <PrimaryButton size='md' href='#' actionText='Vista rápida' />
-            </div>
+            <Link to={`/producto/${product.id}`} className='botonn1'>
+              <PrimaryButton size="md" actionText="Vista rápida" />
+            </Link>
             <div onClick={() => handleAddToCart()} className='botonn'>
               <PrimaryButton href='/tienda' actionText='Añadir al carrito' />
             </div>
           </div>
         </div>
         <div className='card-product-text'>
-          <div style={{ cursor: 'pointer' }} onClick={() => setShow(true)}>
+          <Link to={`/producto/${product.id}`} style={{ cursor: 'pointer', textDecoration: 'none', color: 'inherit' }}>
             <h4 className='card-product-text__name'>{product.name}</h4>
-          </div>
+          </Link>
           <div className='card-product-text__price'>
             {product.active_promo ? (
               <h4 className=' card-product-price__tachado '>
@@ -105,22 +99,15 @@ function Product({ product }) {
           </div>
         </div>
         <div className='botones-mobile'>
-          <Link
-            to=''
-            onClick={() => setShow(true)}
-            className='botones-mobile-view'
-            title='Vista rápida'
-          >
-            {/* <View /> */}
-            Ver
+          <Link to={`/producto/${product.id}`} className='botones-mobile-view'>
+            <PrimaryButton size="sm" actionText="Ver" />
           </Link>
           <button
             onClick={() => handleAddToCart()}
             className='botones-mobile-addToCart'
             title='Añadir al carrito'
           >
-            {/* <AddToCart /> */}
-            Añadir al Carrito
+            <PrimaryButton size="sm" actionText="Añadir al Carrito" />
           </button>
         </div>
       </div>

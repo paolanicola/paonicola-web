@@ -86,6 +86,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 10px; // Espacio entre botones
   opacity: 0;
   display: none;
 }
@@ -94,9 +95,14 @@
   opacity: 1;
 }
 
-.botonn1 {
-  transform: translateX(20px);
-  transform: translatey(-10px);
+// Eliminamos las transformaciones específicas de botonn1 para que sea igual a botonn
+.botonn1, .botonn {
+  // Estilos iguales para ambos botones
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 .card-product-text {
@@ -143,6 +149,13 @@
   color: $primary;
   font-weight: bold;
   font-size: 1.3rem;
+  text-decoration: none;
+  
+  &:hover {
+    background-color: $primary;
+    color: white;
+    transition: all 0.3s ease;
+  }
 }
 
 .botones-mobile-addToCart {

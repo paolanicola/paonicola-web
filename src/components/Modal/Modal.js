@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { ReactComponent as Close } from '../../assets/images/header/nav-close.svg'
-import ProductView from '../ProductView/ProductView'
+import ProductDetail from '../ProductDetail/ProductDetail'
 
 export default function Modal(props) {
   const closeOnEscapeKeyDown = (e) => {
@@ -17,8 +17,6 @@ export default function Modal(props) {
     }
   }, [closeOnEscapeKeyDown])
 
- 
-
   return (
     <>
       <div className={`modal-container ${props.show ? 'show' : ''}`} onClick={props.onClose}>
@@ -29,7 +27,7 @@ export default function Modal(props) {
                 <Close className='a' />
               </label>
             </div>
-            <ProductView product={props.product} />
+            <ProductDetail product={props.product} />
           </div>
         </div>
       </div>
