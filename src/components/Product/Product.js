@@ -74,7 +74,7 @@ function Product({ product }) {
               <PrimaryButton size="md" actionText="Vista rápida" />
             </Link>
             <div onClick={() => handleAddToCart()} className='botonn'>
-              <PrimaryButton href='/tienda' actionText='Añadir al carrito' />
+              <PrimaryButton href='/tienda' actionText='Añadir a carrito' />
             </div>
           </div>
         </div>
@@ -100,14 +100,14 @@ function Product({ product }) {
         </div>
         <div className='botones-mobile'>
           <Link to={`/producto/${product.id}`} className='botones-mobile-view'>
-            <PrimaryButton size="sm" actionText="Ver" />
+            <PrimaryButton size="sm" actionText="Ver Producto" />
           </Link>
           <button
             onClick={() => handleAddToCart()}
             className='botones-mobile-addToCart'
-            title='Añadir al carrito'
+            title='Añadir a carrito'
           >
-            <PrimaryButton size="sm" actionText="Añadir al Carrito" />
+            <PrimaryButton size="sm" actionText="Añadir a Carrito" />
           </button>
         </div>
       </div>

@@ -3,7 +3,11 @@ const routes = [
   "/tienda",
   "/home",
   "/sobre-mi",
-  "/contacto"
+  "/contacto",
+  "/carrito",
+  "/checkout",
+  "/faq",
+  "/cambios-reales"
 ];
 
-module.exports = routes; // ✅ Compatible con Node.js
+module.exports = routes;

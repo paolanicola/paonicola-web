@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import PrimaryButton from '../PrimaryButton/PrimaryButton'
-
 import { toast } from 'react-toastify'
 import { addToCart, isCartWithCalendar } from '../../features/cart/cartSlice'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
 import { formatNumber, countProductInCart } from '../../utils/utils'
 import img1 from '../../assets/images/tienda/producto-ejemplo.jpg'
 import { messages } from '../../utils/messages'
-import { getProductsAvailables, loadProducts } from '../../features/products'
+import { loadProduct, getCurrentProduct, isLoadingProduct } from '../../features/products'
 
 const ProductDetail = () => {
   const { productId } = useParams()
@@ -17,16 +16,47 @@ const ProductDetail = () => {
   const cart = useSelector((state) => state.cart)
   const stepLocal = useSelector((state) => state.step.step)
   const cartAlreadyHasCalendarProduct = useSelector(isCartWithCalendar)
-  const products = useSelector(getProductsAvailables)
+  const product = useSelector(getCurrentProduct)
+  const loading = useSelector(isLoadingProduct)
+  
+  // Estado local para controlar si ya intentamos cargar
+  const [hasAttemptedLoad, setHasAttemptedLoad] = useState(false)
 
   useEffect(() => {
-    dispatch(loadProducts())
-  }, [dispatch])
+    console.log('🔄 ProductDetail useEffect - Loading product:', productId)
+    dispatch(loadProduct(productId))
+    setHasAttemptedLoad(true)
+  }, [dispatch, productId])
 
-  const product = products.find(p => p.id.toString() === productId)
+  console.log('📊 ProductDetail render state:', { 
+    loading, 
+    product: product ? 'exists' : 'null',
+    hasAttemptedLoad,
+    productId 
+  })
 
+  // Mostrar loading SI está cargando O si aún no intentamos cargar
+  if (loading || !hasAttemptedLoad) {
+    return (
+      <div className='product-detail-container'>
+        <div className='product-detail-loading'>Cargando producto...</div>
+      </div>
+    )
+  }
+
+  // Solo redirigir si terminó de cargar Y no hay producto Y ya intentamos cargarlo
+  if (!loading && !product && hasAttemptedLoad) {
+    console.log('⚠️ Product not found, redirecting...')
+    return <Navigate to="/tienda" replace />
+  }
+
+  // Si aún no tenemos producto pero estamos cargando, mostrar loading
   if (!product) {
-    return <Navigate to="/404" replace />
+    return (
+      <div className='product-detail-container'>
+        <div className='product-detail-loading'>Cargando producto...</div>
+      </div>
+    )
   }
 
   const handleAddToCart = () => {
@@ -105,7 +135,7 @@ const ProductDetail = () => {
           
           <div className='detail-actions'>
             <div onClick={handleAddToCart}>
-              <PrimaryButton actionText='Añadir al carrito' />
+              <PrimaryButton actionText='Añadir a carrito' />
             </div>
           </div>
           

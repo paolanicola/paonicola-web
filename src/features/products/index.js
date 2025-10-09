@@ -6,6 +6,10 @@ import { apiCallBegan } from '../apiCalls'
 const productsRequested = 'requested'
 const productsRequestFailed = 'requestFailed'
 const productsReceived = 'received'
+// Product individual actions
+const productRequested = 'productRequested'
+const productRequestFailed = 'productRequestFailed'
+const productReceived = 'productReceived'
 // Category action
 const filterByCategory = 'filterByCategory'
 const orderProducts = 'orderProducts'
@@ -15,9 +19,11 @@ const ALL_CATEGORIES = 'Todas las categorías'
 const initialState = {
   allProducts: [],
   productsAvailable: [],
+  currentProduct: null,
   filterCategory: '',
   orderProducts: '',
   loading: false,
+  loadingProduct: false,
   loadSuccess: false,
   success: false,
   failed: false,
@@ -44,6 +50,20 @@ const productSlice = createSlice({
       state.success = false
       state.loadSuccess = false
       state.failed = true
+    },
+    [productRequested]: (state) => {
+      state.loadingProduct = true
+      state.currentProduct = null // ← Limpia el producto anterior
+    },
+    [productReceived]: (state, action) => {
+      console.log('📦 productReceived payload:', action.payload) // ← Debug
+      state.loadingProduct = false
+      state.currentProduct = action.payload
+    },
+    [productRequestFailed]: (state, action) => {
+      console.error('❌ productRequestFailed:', action.payload) // ← Debug
+      state.loadingProduct = false
+      state.currentProduct = null
     },
     [filterByCategory]: (state, action) => {
       state.filterCategory = action.payload
@@ -93,7 +113,12 @@ const productsRequestedAction = productSlice.actions[productsRequested]
 const productsRequestFailedAction = productSlice.actions[productsRequestFailed]
 const productsReceivedAction = productSlice.actions[productsReceived]
 
+const productRequestedAction = productSlice.actions[productRequested]
+const productRequestFailedAction = productSlice.actions[productRequestFailed]
+const productReceivedAction = productSlice.actions[productReceived]
+
 export const loadProducts = () => (dispatch, getState) => {
+  console.log('🔄 loadProducts dispatched') // ← Debug
   dispatch(
     apiCallBegan({
       url: `${process.env.REACT_APP_API_BASE_URL}/products`,
@@ -104,12 +129,28 @@ export const loadProducts = () => (dispatch, getState) => {
   )
 }
 
+export const loadProduct = (productId) => (dispatch, getState) => {
+  console.log('🔄 loadProduct dispatched for ID:', productId) // ← Debug
+  dispatch(
+    apiCallBegan({
+      url: `${process.env.REACT_APP_API_BASE_URL}/products/${productId}`,
+      onStart: productRequestedAction.type,
+      onSuccess: productReceivedAction.type,
+      onError: productRequestFailedAction.type,
+    })
+  )
+}
+
 // Selectors
 export const getAllProducts = (state) => state.products
 
 export const getProductsAvailables = (state) => {
   return state.products.productsAvailable
 }
+
+export const getCurrentProduct = (state) => state.products.currentProduct
+
+export const isLoadingProduct = (state) => state.products.loadingProduct
 
 export const getCategories = (state) =>
   Object.values(
@@ -126,4 +167,5 @@ export const {
   filterByCategory: setCategoryFilter,
   orderProducts: setOrderProducts,
 } = productSlice.actions
+
 export default productSlice.reducer

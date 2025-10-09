@@ -1,6 +1,11 @@
 import axios from 'axios'
 import * as actions from '../apiCalls'
 
+const apiClient = axios.create({
+  baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001/api',
+  timeout: 10000,
+})
+
 const api =
   ({ dispatch }) =>
   (next) =>
@@ -9,39 +14,59 @@ const api =
 
     const { url, method, data, onStart, onSuccess, onError } = action.payload
 
-    if (onStart) dispatch({ type: onStart })
+    console.log('🌐 API Middleware - Action:', action.payload)
+
+    if (onStart) {
+      console.log('▶️ Dispatching onStart:', onStart)
+      dispatch({ type: onStart })
+    }
 
     next(action)
 
     try {
-      const response = await axios.request({
-        baseURL: '',
-        params: '',
+      console.log('📡 Making request to:', `${apiClient.defaults.baseURL}${url}`)
+      
+      const response = await apiClient.request({
         url,
-        method,
+        method: method || 'get',
         data,
       })
-      // Specific Api call
-      if (onSuccess) dispatch({ type: onSuccess, payload: response.data })
-      else dispatch(actions.apiCallSuccess(response.data))
+
+      console.log('✅ API Response:', {
+        status: response.status,
+        data: response.data,
+        dataType: typeof response.data,
+      })
+
+      if (onSuccess) {
+        console.log('🎯 Dispatching onSuccess:', onSuccess, 'with payload:', response.data)
+        dispatch({ type: onSuccess, payload: response.data })
+      } else {
+        dispatch(actions.apiCallSuccess(response.data))
+      }
     } catch (error) {
-      // Refresh token
+      console.error('❌ API Error:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+      })
+
       if (
         action.payload.onSuccess !== 'auth/loggedOut' &&
         error.response &&
         error.response.status === 401
-      )
-        // General api error
+      ) {
         dispatch(
           actions.apiCallFailed(
             error.response ? error.response.data : error.message
           )
         )
+      }
 
-      // Sepecific API error handling.
       if (onError) {
         let errorMessage = 'Error: '
         if (error.response) errorMessage = error.response.data
+        console.log('🔴 Dispatching onError:', onError, 'with payload:', errorMessage)
         dispatch({ type: onError, payload: errorMessage })
       }
     }
