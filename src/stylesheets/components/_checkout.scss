@@ -1,4 +1,4 @@
-.react-calendar {
+react-calendar {
   width: 80%;
 }
 .react-calendar__navigation {
@@ -13,18 +13,21 @@
 .react-calendar__tile--active {
   background-color: $primary;
 }
+
 // estilos
 
 .first-section {
 }
+
 .first-section-checkout {
-  padding-top: 0;
+  padding-top: 2rem; // ← CAMBIADO: agregado padding superior
   width: 1328px;
   max-width: 100%;
   margin: auto;
-  margin-top: -8rem;
+  margin-top: 0; // ← CAMBIADO: era -8rem, ahora 0
   margin-bottom: 4rem;
 }
+
 .container-checkout {
   width: 80%;
   margin: auto;
@@ -38,8 +41,6 @@
 //wizard body start
 .wizard-body {
   min-height: 415px;
-}
-.wizard-body {
   transition: all 0.3s cubic-bezier(0.68, -0.3, 0.37, 0.6);
 }
 
@@ -51,10 +52,17 @@
 }
 
 @media screen and (min-width: 978px) {
+  .first-section-checkout {
+    padding-top: 3rem; // ← Más espacio en pantallas grandes
+  }
 }
 
 @media screen and (min-width: 1400px) {
   .container-checkout {
     width: 100%;
+  }
+  
+  .first-section-checkout {
+    padding-top: 4rem; // ← Aún más espacio en pantallas muy grandes
   }
 }
