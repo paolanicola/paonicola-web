@@ -12,7 +12,7 @@ export default function PrimaryButton({ actionText, href, to, onClick }) {
   }
 
   // Si es un link externo
-  if (href) {
+  if (href && !onClick) {
     return (
       <a href={href} className="primary-button" target="_blank" rel="noopener noreferrer">
         <p>{actionText}</p>

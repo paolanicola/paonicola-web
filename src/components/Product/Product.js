@@ -73,8 +73,8 @@ function Product({ product }) {
             <Link to={`/producto/${product.id}`} className='botonn1'>
               <PrimaryButton size="md" actionText="Vista rápida" />
             </Link>
-            <div onClick={() => handleAddToCart()} className='botonn'>
-              <PrimaryButton href='/tienda' actionText='Añadir a carrito' />
+            <div className='botonn'>
+              <PrimaryButton href='/tienda' actionText='Añadir a carrito' onClick={handleAddToCart}/>
             </div>
           </div>
         </div>
