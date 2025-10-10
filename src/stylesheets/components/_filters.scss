@@ -15,7 +15,6 @@ select {
   width: 90%;
   margin-bottom: 2rem;
   padding: 0;
-  //margin-top: -5rem;
 }
 
 .search {
@@ -43,7 +42,6 @@ select {
   max-width: 100%;
   order: 2;
   position: relative;
-  //padding: 0 1rem;
 }
 
 .container-categories {
@@ -51,11 +49,14 @@ select {
   min-width: 0;
   order: 1;
   padding-right: 1rem;
+  position: relative; // ← AGREGADO: Necesario para que z-index funcione
+  z-index: 5; // ← AGREGADO: Mayor que container-order
 }
 
 .container-order {
   width: 100%;
-  //padding: 0 1rem;
+  position: relative; // ← AGREGADO: Necesario para que z-index funcione
+  z-index: 1; // ← AGREGADO: Menor que container-categories
 }
 
 .container-search {
@@ -89,25 +90,17 @@ select {
   }
 }
 
-.container-categorias {
-}
-
-.container-order {
-}
-
 //----------------css To Select custom
 
 .react-select-container {
   width: 100%;
-  z-index: 3;
+  z-index: inherit; // ← CAMBIADO: hereda el z-index del contenedor padre
 }
 
 .react-select__control {
   display: flex;
   border: solid 2px $primary;
-}
-
-.react-select__control--is--focused {
+  background-color: white;
 }
 
 .react-select__indicator-separator {
@@ -117,13 +110,10 @@ select {
 .react-select__value-container {
   font-size: 1em;
   font-weight: 400;
-
-  .react-select__input-container {
-  }
 }
 
 .react-select__input {
-  background-color: tomato;
+  background-color: transparent;
 }
 
 .react-select__indicators {
@@ -131,15 +121,15 @@ select {
 }
 
 .react-select__indicator {
-  //background: url(../../assets/images/tienda/loupe.svg) no-repeat 80% center;
   width: 2.5rem;
 }
 
 .react-select__menu {
-  background-color: violet;
-  width: 100px;
+  background-color: white;
+  width: 100%; // ← CAMBIADO: era 100px, ahora 100%
   margin: 0;
   padding: 0;
+  z-index: 10; // ← AGREGADO: Asegura que el dropdown esté por encima
 }
 
 .react-select__menu-list {
@@ -149,6 +139,7 @@ select {
 }
 
 .react-select__option {
+  background-color: white;
   border-top: solid 2px $primary;
   padding: 0.75rem 1rem;
 
@@ -160,14 +151,18 @@ select {
   &:last-child {
     margin-bottom: -4px;
   }
+  
+  // Agregar hover state
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+  }
 }
+
 //----------------------fin select custom
 
 //queryes------------------------------------------------------------------------
 @media screen and (min-width: 370px) {
-  .container-buscadores {
-  }
-
   .container-search {
     width: 15%;
     .search:focus {
@@ -177,12 +172,14 @@ select {
 
   .container-categories {
     width: 75%;
+    min-width: 0;
+    order: 1;
+    padding-right: 1rem;
+    z-index: 5; // ← Mantener z-index
   }
 }
 
 @media screen and (min-width: 575px) {
-  .container-buscadores {
-  }
   .container-search {
     width: 7%;
     .search:focus {
@@ -192,11 +189,10 @@ select {
 
   .container-categories {
     width: 85%;
-  }
-}
-
-@media screen and (min-width: 680px) {
-  .container-buscadores {
+    min-width: 0;
+    order: 1;
+    padding-right: 1rem;
+    z-index: 5; // ← Mantener z-index
   }
 }
 
@@ -217,18 +213,20 @@ select {
 
   .container-categories {
     width: 45%;
+    min-width: 0;
     order: 2;
+    padding-right: 1rem;
+    z-index: 5; // ← Mantener z-index
   }
 
   .container-order {
     width: 30%;
-
-    //padding: 0 1rem;
+    z-index: 1; // ← Mantener z-index menor
   }
+  
   .container-search {
     .search {
       background-color: white;
-      //background-position: right !important;
       background-position: 95%;
       transition: none;
       position: absolute;
@@ -242,15 +240,8 @@ select {
 
     .search:focus {
       position: sticky;
-
       max-width: 100%;
-
       transition: none;
     }
-  }
-}
-
-@media screen and (min-width: 992px) {
-  .container-buscadores {
   }
 }
