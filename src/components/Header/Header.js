@@ -91,7 +91,7 @@ export default function Header() {
         </div>
 
         <div className='menu__logo'>
-          <Link to='/home'>
+          <Link to='/tienda'>
             <img src={LogoWebp} className='menu__logo__svg' alt='logo' />
           </Link>
         </div>
