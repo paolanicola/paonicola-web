@@ -14,8 +14,9 @@ function PaymentMethods({ paymentMethodChangedToMercadoPago }) {
 
   const PaymentMP = () => {
     dispatch(setMethodMercadoPago())
-    paymentMethodChangedToMercadoPago()
+    // No llamamos a paymentMethodChangedToMercadoPago porque ya no usamos el formulario inline
   }
+  
   const PaymentTrans = () => {
     dispatch(setMethodDeposit())
   }
@@ -24,7 +25,7 @@ function PaymentMethods({ paymentMethodChangedToMercadoPago }) {
     <div className='payment-container'>
       <h5 className='payment-title'>Seleccioná el método de pago</h5>
       <form className='payment-form' onSubmit={handleSubmit(onSubmit)}>
-        {/* <div className='payment-block' onClick={PaymentMP}>
+        <div className='payment-block' onClick={PaymentMP}>
           <label className='block-label block-selected'>
             <input
               className='block-radio'
@@ -34,13 +35,18 @@ function PaymentMethods({ paymentMethodChangedToMercadoPago }) {
               value='mercadopago'
             />
             <div className='block-data'>
-              <p className='block-title'>Tarjeta de débito/crédito</p>
+              <p className='block-title'>Mercado Pago</p>
               <MercadoPago />
+              <div className='block-description'>
+                <p className='description-text'>
+                  Pagá con tarjeta de débito/crédito, dinero en cuenta de Mercado Pago o efectivo.
+                </p>
+              </div>
             </div>
           </label>
-        </div> */}
+        </div>
 
-        { <div className='payment-block' onClick={PaymentTrans}>
+        <div className='payment-block' onClick={PaymentTrans}>
           <label className='block-label block-selected'>
             <input
               className='block-radio'
@@ -60,7 +66,7 @@ function PaymentMethods({ paymentMethodChangedToMercadoPago }) {
               </div>
             </div>
           </label>
-        </div> }
+        </div>
         <input type='submit' hidden />
       </form>
     </div>

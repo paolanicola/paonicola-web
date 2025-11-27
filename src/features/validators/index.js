@@ -2,8 +2,7 @@ import { createAction, createReducer } from '@reduxjs/toolkit'
 
 // ACTIONS
 const methodDepositReceived = createAction('method/received')
-const mercadoPagoRequested = createAction('method/mercadoPagoRequested')
-const mercadoPagoReceived = createAction('method/mercadoPagoReceived')
+const mercadoPagoSelected = createAction('method/mercadoPagoSelected')
 const methodRequestFailed = createAction('method/requestFailed')
 const resetMethodAction = createAction('method/resetMethod')
 
@@ -20,14 +19,9 @@ const validatorsReducer = createReducer(initialState, {
     state.success = true
     state.method = 'deposit'
   },
-  [mercadoPagoRequested.type]: (state) => {
-    state.loading = true
-    state.success = false
-    state.method = 'mercadopago'
-  },
-  [mercadoPagoReceived.type]: (state) => {
+  [mercadoPagoSelected.type]: (state) => {
     state.loading = false
-    state.success = false
+    state.success = true
     state.method = 'mercadopago'
   },
   [methodRequestFailed.type]: (state) => {
@@ -42,14 +36,12 @@ const validatorsReducer = createReducer(initialState, {
 })
 
 export default validatorsReducer
-// PUBLIC ACTIONS
 
+// PUBLIC ACTIONS
 export const setMethodMercadoPago = () => (dispatch) =>
-  dispatch(mercadoPagoRequested())
+  dispatch(mercadoPagoSelected())
 export const setMethodDeposit = () => (dispatch) =>
   dispatch(methodDepositReceived())
-export const mercadoPagoLoadSuccess = () => (dispatch) =>
-  dispatch(mercadoPagoReceived())
 export const getMethod = (state) => state.validators.method
 export const methodIsLoading = (state) => state.validators.loading
 export const resetMethod = () => (dispatch) => dispatch(resetMethodAction())

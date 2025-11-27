@@ -20,6 +20,7 @@ import Faq from './pages/faq'
 import NotFound from './pages/notFound'
 import Error from './pages/error'
 import ProductDetail from './components/ProductDetail/ProductDetail'
+import MercadoPagoReturn from './components/MercadoPagoReturn'
 import './stylesheets/application.scss'
 import { cartItemsExpired, cleanLocalStorage } from './utils/utils'
 import OrderSuccess from './components/OrderSuccess'
@@ -67,6 +68,10 @@ function App() {
               path='checkout/confirm/:orderId'
               element={<OrderSuccess />}
             />
+            {/* Rutas de retorno de Mercado Pago */}
+            <Route path='procesoDePago/exitoso' element={<MercadoPagoReturn />} />
+            <Route path='procesoDePago/fallido' element={<MercadoPagoReturn />} />
+            <Route path='procesoDePago/pendiente' element={<MercadoPagoReturn />} />
           </Route>
           <Route path='*' element={<NotFound />} />
           <Route path='error' element={<Error />} />

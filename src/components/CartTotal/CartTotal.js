@@ -28,25 +28,17 @@ import {
 } from '../../features/stepsCheckout/stepsSlice'
 import {
   getMethod,
-  mercadoPagoLoadSuccess,
-  methodIsLoading,
   resetMethod,
 } from '../../features/validators'
 import { formatNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
 import { submitOrder } from '../../features/cartTotal'
-import {
-  initMercadoPago,
-  CardPayment,
-  StatusScreen,
-} from '@mercadopago/sdk-react'
 
 const CartTotal = forwardRef((props, ref) => {
   const cartTotalRef = useRef(null)
 
   useImperativeHandle(ref, () => ({
     scrollIntoView: () => {
-      // only in mobile devices
       if (window.innerWidth <= 768 && cartTotalRef.current) {
         cartTotalRef.current.scrollIntoView({ behavior: 'smooth' })
       }
@@ -60,18 +52,11 @@ const CartTotal = forwardRef((props, ref) => {
   const { step } = useSelector((state) => state.step)
   const withCalendar = useSelector(isCartWithCalendar)
   const isCheckoutCalendarReady = useSelector(isCheckoutCalendarValid)
-  const [variantTrans, setVariantTrans] = useState('carrito-finalizar__oculto ')
+  const [variantTrans, setVariantTrans] = useState('carrito-finalizar__oculto')
+  const [isProcessing, setIsProcessing] = useState(false)
   const selectedAppointmentId = useSelector(getSelectedAppointmentId)
   const personalData = useSelector(getForm)
-  initMercadoPago(process.env.REACT_APP_MERCADOPAGO_PUBLIC_KEY, {
-    locale: 'es-AR',
-  })
-  const mercadoPagoIsLoading = useSelector(methodIsLoading)
   const navigate = useNavigate()
-  const [mercadoPagoPaymentId, setMercadoPagoPaymentId] = useState(null)
-  const [mercadoPagoPaymentFailed, setMercadoPagoPaymentFailed] = useState(
-    false
-  )
 
   useEffect(() => {
     if (!withCalendar && step === 0) {
@@ -87,29 +72,77 @@ const CartTotal = forwardRef((props, ref) => {
     } else dispatch(nextStep())
   }
 
-  const handleEnd = (mercadoPagoPaymentId = 'null') => {
-    const scheduleId = withCalendar ? selectedAppointmentId : null
-    dispatch(
-      submitOrder(
-        method,
-        scheduleId,
-        personalData,
-        products,
-        mercadoPagoPaymentId
-      )
-    )
+  const handleEnd = async () => {
+    if (isProcessing) return
+    
+    setIsProcessing(true)
+    
+    try {
+      const scheduleId = withCalendar ? selectedAppointmentId : null
+      
+      // Crear la orden
+      const orderData = {
+        order: {
+          payment_type: method,
+          appointment_id: scheduleId,
+          product_ids_and_quantities: products.map((product) => [
+            product.id,
+            product.cartQuantity,
+          ]),
+          patient_info: {
+            email: personalData.email,
+            name: personalData.name,
+            lastname: personalData.lastname,
+            phone: personalData.phone,
+          },
+        }
+      }
 
-    dispatch(deleteCartItems())
-    dispatch(resetStep())
-    dispatch(resetCartState())
-    setVariantTrans('carrito-finalizar__oculto')
-  }
+      console.log('🚀 Sending order data:', orderData)
 
-  const handleMercadoPagoEnd = () => {
-    dispatch(deleteCartItems())
-    dispatch(resetStep())
-    dispatch(resetCartState())
-    setVariantTrans('carrito-finalizar__oculto')
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      })
+
+      const data = await response.json()
+      
+      console.log('📦 Response from backend:', data)
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error al crear la orden')
+      }
+
+      // Si es Mercado Pago, redirigir al checkout
+      if (method === 'mercadopago') {
+        if (data.mercadopago_init_point) {
+          console.log('💳 Redirecting to MercadoPago:', data.mercadopago_init_point)
+          
+          // Limpiar el carrito antes de redirigir
+          dispatch(deleteCartItems())
+          dispatch(resetStep())
+          dispatch(resetCartState())
+          
+          // Redirigir a Mercado Pago
+          window.location.href = data.mercadopago_init_point
+        } else {
+          throw new Error('No se recibió el link de pago de MercadoPago')
+        }
+      } else {
+        // Para transferencias bancarias, ir a la página de confirmación
+        dispatch(deleteCartItems())
+        dispatch(resetStep())
+        dispatch(resetCartState())
+        navigate(`/checkout/confirm/${data.order_id}`)
+      }
+    } catch (error) {
+      console.error('❌ Error creating order:', error)
+      toast.error(error.message || 'Error al procesar la orden')
+      setIsProcessing(false)
+    }
   }
 
   const handleVerificationSelectMethod = (text) => {
@@ -118,7 +151,7 @@ const CartTotal = forwardRef((props, ref) => {
 
   const handleBackStep = () => {
     if (step === 2) {
-      setVariantTrans('carrito-finalizar__oculto ')
+      setVariantTrans('carrito-finalizar__oculto')
       dispatch(updateVerified(false))
     }
     dispatch(resetMethod())
@@ -154,7 +187,7 @@ const CartTotal = forwardRef((props, ref) => {
   }
 
   if (step === 2) {
-    variantBack = 'carrito-finalizar carrito-finalizar-next '
+    variantBack = 'carrito-finalizar carrito-finalizar-next'
     variantNext = 'carrito-finalizar__oculto'
     actionBack = () => handleBackStep()
     actionVerificationMethod = () =>
@@ -163,13 +196,10 @@ const CartTotal = forwardRef((props, ref) => {
   }
 
   useEffect(() => {
-    if (step === 2) {
-      if (method === 'mercadopago') {
-        setVariantTrans('carrito-finalizar__oculto')
-      }
-      if (method === 'deposit') {
-        setVariantTrans('carrito-finalizar')
-      }
+    if (step === 2 && method !== '') {
+      setVariantTrans('carrito-finalizar')
+    } else {
+      setVariantTrans('carrito-finalizar__oculto')
     }
   }, [method, step])
 
@@ -178,93 +208,8 @@ const CartTotal = forwardRef((props, ref) => {
       event.preventDefault()
       handleNextStep()
     }
-    // if user is using a mobile device, scroll to top after clicking on "next"
     window.innerWidth < 768 && window.scrollTo({ top: 0, behavior: 'smooth' })
   }
-
-  // mercadoPago begin
-
-  const initialization = {
-    amount: cart.cartTotalAmount,
-  }
-
-  const onSubmit = async (formData) => {
-    return new Promise((resolve, reject) => {
-      const orderData = {
-        payment_type: method,
-        schedule_id: withCalendar ? selectedAppointmentId : null,
-        product_ids_and_quantities: products.map((product) => [
-          product.id,
-          product.cartQuantity,
-        ]),
-        patient_info: {
-          email: personalData.email,
-          name: personalData.name,
-          lastname: personalData.lastname,
-          phone: personalData.phone,
-        },
-      }
-      const data = {
-        orderData: orderData,
-        mercadoPagoData: formData,
-      }
-      console.log({ data })
-      fetch(`${process.env.REACT_APP_API_BASE_URL}/orders/process_payment`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          console.log({ response })
-          resolve()
-          response.mercado_pago_id &&
-            setMercadoPagoPaymentId(response.mercado_pago_id)
-          console.log({ response })
-          if (response.status === 'done') {
-            handleMercadoPagoEnd()
-            navigate(`/checkout/confirm/${response.order_id}`)
-            resolve()
-          } else {
-            toast.error(response.message, { autoClose: 5000 })
-            setMercadoPagoPaymentFailed(true)
-          }
-        })
-        .catch((error) => {
-          // manejar la respuesta de error al intentar crear el pago
-          navigate('/error')
-          reject()
-        })
-    })
-  }
-
-  const onError = async (error) => {
-    // callback llamado para todos los casos de error de Brick
-    console.log(error)
-  }
-
-  const onReady = async () => {
-    dispatch(mercadoPagoLoadSuccess())
-  }
-
-  const statusOnError = async (error) => {
-    // callback llamado solicitada para todos los casos de error de Brick
-    console.log(error)
-  }
-  const statusOnReady = async () => {
-    /*
-   Callback llamado cuando Brick está listo.
-   Aquí puede ocultar cargamentos de su sitio, por ejemplo.
- */
-  }
-
-  const handleRetryPayment = () => {
-    setMercadoPagoPaymentId(null)
-  }
-
-  // mercadoPago end
 
   return (
     <div ref={cartTotalRef} className='carrito-total-container'>
@@ -296,43 +241,21 @@ const CartTotal = forwardRef((props, ref) => {
           <tr className='carrito-resume'>
             <td className='carrito-resume-title'>Total</td>
             <td className='carrito-resume-price text-right'>
-              {' '}
               $ {formatNumber(cart.cartTotalAmount)}
             </td>
           </tr>
         </tbody>
       </table>
 
-      {mercadoPagoIsLoading && !mercadoPagoPaymentId && (
+      {isProcessing && (
         <div className='spinner spinnerMercadoPago'></div>
-      )}
-
-      {method === 'mercadopago' && step === 2 && !mercadoPagoPaymentId && (
-        <CardPayment
-          initialization={initialization}
-          onSubmit={onSubmit}
-          onReady={onReady}
-          onError={onError}
-        />
-      )}
-
-      {method === 'mercadopago' && step === 2 && mercadoPagoPaymentId && (
-        <StatusScreen
-          initialization={{ paymentId: mercadoPagoPaymentId }}
-          onReady={statusOnReady}
-          onError={statusOnError}
-        />
       )}
 
       <div className='carrito-total-buttons back'>
         <button onClick={actionBack} type={typeBack} className={variantBack}>
           Atrás
         </button>
-        {method === 'mercadopago' && mercadoPagoPaymentFailed && (
-          <button onClick={handleRetryPayment} className={variantBack}>
-            Reintentar
-          </button>
-        )}
+        
         <button
           onClick={handleOnClick}
           type={typeNext}
@@ -341,6 +264,7 @@ const CartTotal = forwardRef((props, ref) => {
         >
           Siguiente
         </button>
+        
         {(!withCalendar || (withCalendar && isCheckoutCalendarReady)) && (
           <button
             onClick={actionVerificationMethod}
@@ -354,13 +278,13 @@ const CartTotal = forwardRef((props, ref) => {
           </button>
         )}
 
-        <Link
-          to='/checkout/confirm'
+        <button
           onClick={actionEnd}
+          disabled={isProcessing}
           className={variantTrans}
         >
-          Pagar
-        </Link>
+          {isProcessing ? 'Procesando...' : 'Pagar'}
+        </button>
 
         <div className=''></div>
       </div>
