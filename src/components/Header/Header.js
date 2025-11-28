@@ -110,6 +110,13 @@ export default function Header() {
             </div>
             <NavLink
               className='menu__item menu__link'
+              to='/'
+              onClick={closeSidebar}
+            >
+              <p className='underlined'>Inicio</p>
+            </NavLink>
+            <NavLink
+              className='menu__item menu__link'
               to='/sobre-mi'
               onClick={closeSidebar}
             >
