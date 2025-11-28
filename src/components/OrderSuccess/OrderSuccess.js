@@ -88,7 +88,9 @@ const OrderSuccess = () => {
                 <p className='data__list-title'>ESTADO</p>
                 <p className='data__list-description'>
                   {orderData.status === 'paid' ? 'Pagado' : 
+                   orderData.status === 'done' ? 'Completado' : 
                    orderData.status === 'pending' ? 'Pendiente' : 
+                   orderData.status === 'canceled' ? 'Cancelado' : 
                    orderData.status}
                 </p>
               </li>
@@ -97,7 +99,7 @@ const OrderSuccess = () => {
         </div>
 
         {/* Mostrar instrucciones de transferencia solo si NO es Mercado Pago o si el pago no está aprobado */}
-        {!isMercadoPago && (
+        {!isMercadoPago && ! orderData.status === 'done' && (
           <div className='confirm__data-transfer'>
             <p className='data__transfer-title '>
               Para hacer efectiva tu compra, realizá el pago a la siguiente cuenta:
