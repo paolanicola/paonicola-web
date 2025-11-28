@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import {
   isoDateToSpanishString,
   formatNumber,
@@ -7,13 +7,21 @@ import {
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { resetCartState } from '../../features/checkout/checkoutSlice'
+import { deleteCartItems } from '../../features/cart/cartSlice'
+import { resetStep } from '../../features/stepsCheckout/stepsSlice'
 import { whatsAppUrl } from '../../utils/utils'
 import { whatsAppNumber } from '../../utils/utils'
 
 const OrderSuccess = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const { orderId } = useParams()
   const [orderData, setOrderData] = useState(null)
+  
+  // Ref para evitar limpiar múltiples veces
+  const cartCleared = useRef(false)
 
   useEffect(() => {
     axios
@@ -26,6 +34,23 @@ const OrderSuccess = () => {
       })
   }, [orderId, navigate])
 
+  // Limpiar carrito cuando la orden está confirmada
+  useEffect(() => {
+    if (orderData && orderData.status === 'done' && !cartCleared.current) {
+      console.log('✅ Orden confirmada (done), limpiando carrito...')
+      
+      // Limpiar carrito
+      dispatch(deleteCartItems())
+      dispatch(resetStep())
+      dispatch(resetCartState())
+      
+      // Marcar como limpiado
+      cartCleared.current = true
+      
+      console.log('🧹 Carrito limpiado')
+    }
+  }, [orderData, dispatch])
+
   if (orderData === null) return <div className='spinner'></div>
   else {
     const spanishPurchaseDate = isoDateToSpanishString(orderData.created_at)
@@ -33,7 +58,7 @@ const OrderSuccess = () => {
       ? isoDateToSpanishString(orderData.appointment_date)
       : null
     const isMercadoPago = orderData.payment_type === 'mercadopago'
-    const isPaid = orderData.status === 'paid'
+    const isPaid = orderData.status === 'done' // Cambiado de 'paid' a 'done'
 
     return (
       <section className='confirm'>
@@ -87,8 +112,7 @@ const OrderSuccess = () => {
               <li className='data__list-li-not'>
                 <p className='data__list-title'>ESTADO</p>
                 <p className='data__list-description'>
-                  {orderData.status === 'paid' ? 'Pagado' : 
-                   orderData.status === 'done' ? 'Completado' : 
+                  {orderData.status === 'done' ? 'Completado' : 
                    orderData.status === 'pending' ? 'Pendiente' : 
                    orderData.status === 'canceled' ? 'Cancelado' : 
                    orderData.status}
@@ -98,8 +122,8 @@ const OrderSuccess = () => {
           </ul>
         </div>
 
-        {/* Mostrar instrucciones de transferencia solo si NO es Mercado Pago o si el pago no está aprobado */}
-        {!isMercadoPago && ! orderData.status === 'done' && (
+        {/* Mostrar instrucciones de transferencia solo si NO es Mercado Pago Y el pago NO está completado */}
+        {!isMercadoPago && orderData.status !== 'done' && (
           <div className='confirm__data-transfer'>
             <p className='data__transfer-title '>
               Para hacer efectiva tu compra, realizá el pago a la siguiente cuenta:
@@ -123,8 +147,8 @@ const OrderSuccess = () => {
           </div>
         )}
 
-        {/* Mensaje especial para Mercado Pago */}
-        {isMercadoPago && isPaid && (
+        {/* Mensaje especial para Mercado Pago o pagos completados */}
+        {(isMercadoPago || isPaid) && orderData.status === 'done' && (
           <div className='confirm__data-transfer'>
             <h5 className='data__transfer-text-important '>
               ¡Gracias por tu compra! Tu pago fue procesado exitosamente.
