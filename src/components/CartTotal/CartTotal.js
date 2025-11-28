@@ -6,7 +6,7 @@ import React, {
   useRef,
 } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {
   deleteCartItems,
@@ -32,7 +32,6 @@ import {
 } from '../../features/validators'
 import { formatNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
-import { submitOrder } from '../../features/cartTotal'
 
 const CartTotal = forwardRef((props, ref) => {
   const cartTotalRef = useRef(null)
@@ -126,7 +125,7 @@ const CartTotal = forwardRef((props, ref) => {
         dispatch(resetCartState())
         
         // Mostrar mensaje de éxito
-        toast.success('¡Reserva confirmada exitosamente!')
+        toast.success('Orden confirmada exitosamente!')
         
         // Redirigir a confirmación
         navigate(`/checkout/confirm/${data.order_id}`)

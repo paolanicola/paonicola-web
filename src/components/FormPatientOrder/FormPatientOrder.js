@@ -99,10 +99,10 @@ function FormPatientOrder({ withCalendar }) {
       dispatch(resetCartState())
       
       // Mostrar mensaje de éxito
-      toast.success('¡Reserva confirmada exitosamente!')
+      toast.success('Orden confirmada exitosamente!')
       
-      // Redirigir a confirmación
-      navigate(`/checkout/confirm/${responseData.order_id}`)
+      // Redirigir a confirmación (replace para evitar que Cart redirija)
+      navigate(`/checkout/confirm/${responseData.order_id}`, { replace: true })
       
     } catch (error) {
       console.error('❌ Error creating free order:', error)

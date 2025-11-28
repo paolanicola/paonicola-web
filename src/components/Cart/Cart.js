@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import { getAllProductsCart, getTotals } from '../../features/cart/cartSlice'
-import { resetCartState } from '../../features/checkout/checkoutSlice'
-import { resetStep } from '../../features/stepsCheckout/stepsSlice'
 import { resetMethod } from '../../features/validators'
 import { formatNumber } from '../../utils/utils'
 import ProductCart from '../ProductCart/ProductCart'
@@ -14,24 +12,29 @@ function Cart() {
   const products = useSelector(getAllProductsCart)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     dispatch(getTotals())
   }, [cart, dispatch])
 
   // 🛒 Redirigir a tienda si el carrito está vacío
+  // PERO NO si venimos de checkout (para evitar conflicto con órdenes gratis)
   useEffect(() => {
     if (cart.cartItems.length === 0) {
-      navigate('/tienda')
+      // Solo redirigir si NO venimos de checkout/confirm
+      const fromCheckout = location.state?.fromCheckout
+      const isCheckoutPath = location.pathname.includes('/checkout')
+      
+      if (!fromCheckout && !isCheckoutPath) {
+        const timer = setTimeout(() => {
+          navigate('/tienda')
+        }, 100) // Pequeño delay para que otras navegaciones tomen prioridad
+        
+        return () => clearTimeout(timer)
+      }
     }
-  }, [cart.cartItems.length, navigate])
-
-  const handleContinueBuy = (event) => {
-    event.preventDefault()
-    dispatch(resetStep())
-    dispatch(resetCartState())
-    navigate('/tienda')
-  }
+  }, [cart.cartItems.length, navigate, location])
 
   let renderProducts = ''
   renderProducts =

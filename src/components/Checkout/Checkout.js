@@ -23,7 +23,11 @@ const Checkout = () => {
   }
 
   useEffect(() => {
+    // Si no hay items, no hacer nada
+    if (cart.cartItems.length === 0) return
+
     dispatch(getTotals())
+
     if (selectedAppointmentId === null && withCalendar) {
       dispatch(resetStep())
     }
