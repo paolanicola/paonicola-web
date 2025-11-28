@@ -46,7 +46,7 @@ function PaymentMethods({ paymentMethodChangedToMercadoPago }) {
           </label>
         </div>
 
-        <div className='payment-block' onClick={PaymentTrans}>
+        {/* <div className='payment-block' onClick={PaymentTrans}>
           <label className='block-label block-selected'>
             <input
               className='block-radio'
@@ -66,7 +66,7 @@ function PaymentMethods({ paymentMethodChangedToMercadoPago }) {
               </div>
             </div>
           </label>
-        </div>
+        </div> */}
         <input type='submit' hidden />
       </form>
     </div>
