@@ -116,15 +116,30 @@ const CartTotal = forwardRef((props, ref) => {
         throw new Error(data.error || 'Error al crear la orden')
       }
 
+      // 🎁 Si el total es 0, confirmar directamente sin pago
+      if (cart.totalCartAmount === 0) {
+        console.log('🎁 Free order - confirming directly')
+        
+        // Limpiar carrito
+        dispatch(deleteCartItems())
+        dispatch(resetStep())
+        dispatch(resetCartState())
+        
+        // Mostrar mensaje de éxito
+        toast.success('¡Reserva confirmada exitosamente!')
+        
+        // Redirigir a confirmación
+        navigate(`/checkout/confirm/${data.order_id}`)
+        return
+      }
+
       // Si es Mercado Pago, redirigir al checkout
       if (method === 'mercadopago') {
         if (data.mercadopago_init_point) {
           console.log('💳 Redirecting to MercadoPago:', data.mercadopago_init_point)
           
-          // Limpiar el carrito antes de redirigir
-          dispatch(deleteCartItems())
-          dispatch(resetStep())
-          dispatch(resetCartState())
+          // 🎯 IMPORTANTE: NO limpiar el carrito antes de redirigir
+          // El carrito se limpiará cuando el usuario regrese después de pagar
           
           // Redirigir a Mercado Pago
           window.location.href = data.mercadopago_init_point
