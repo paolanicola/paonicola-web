@@ -37,6 +37,9 @@ const OrderSuccess = () => {
 
     return (
       <section className='confirm'>
+        <br/>
+        <br/>
+        <br/>
         <h3 className='confirm__h3'>
           {isPaid || isMercadoPago 
             ? '¡Tu compra fue realizada con éxito!' 
