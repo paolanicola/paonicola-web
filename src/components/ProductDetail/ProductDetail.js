@@ -3,7 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import PrimaryButton from '../PrimaryButton/PrimaryButton'
 import { toast } from 'react-toastify'
-import { addToCart, isCartWithCalendar } from '../../features/cart/cartSlice'
+import { addToCart, isCartWithCalendar, getTotals } from '../../features/cart/cartSlice'
 import { backStep } from '../../features/stepsCheckout/stepsSlice'
 import { formatNumber, countProductInCart } from '../../utils/utils'
 import img1 from '../../assets/images/tienda/producto-ejemplo.jpg'
@@ -27,6 +27,10 @@ const ProductDetail = () => {
     dispatch(loadProduct(productId))
     setHasAttemptedLoad(true)
   }, [dispatch, productId])
+
+  useEffect(() => {
+    dispatch(getTotals())
+  }, [cart, dispatch])
 
   console.log('📊 ProductDetail render state:', { 
     loading, 
@@ -125,19 +129,29 @@ const ProductDetail = () => {
               <strong>Nota importante:</strong> {product.important_note}
             </div>
           )}
-          
+
+          {/* Botón ANTES de la descripción */}
+          <div className='detail-actions'>
+            <div onClick={handleAddToCart}>
+              <PrimaryButton actionText='Añadir a carrito' />
+            </div>
+          </div>
+
+          {/* Descripción */}
           <div className='detail-description'>
             <h3>Descripción</h3>
             <div className='description-content'>
               {product.description}
             </div>
           </div>
-          
-          <div className='detail-actions'>
+
+          {/* Botón DESPUÉS de la descripción */}
+          <div className='detail-actions detail-actions--bottom'>
             <div onClick={handleAddToCart}>
-              <PrimaryButton actionText='Añadir a carrito' />
+              <PrimaryButton actionText='¡Quiero sentirme mejor!' />
             </div>
           </div>
+
           
           {product.stock <= 5 && product.stock > 0 && (
             <div className='stock-warning'>
