@@ -1,7 +1,7 @@
 import React from 'react'
 import { philosophy } from '../homeContent'
-import Kicker from '../ui/Kicker'
-import RichText from '../ui/RichText'
+import Kicker from '../../../components/ui/Kicker'
+import RichText from '../../../components/ui/RichText'
 
 export default function Philosophy() {
   return (

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { faMinus, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   addToCart,
   decreaseCart,
@@ -19,6 +17,8 @@ import { formatNumber, countProductInCart } from '../../utils/utils'
 import { messages } from '../../utils/messages'
 import { deleteSelectedAppointmentId } from '../../features/checkout/checkoutSlice'
 
+// One cart row (design 7b): image, category kicker, name, qty stepper,
+// eliminar and serif price. Behavior unchanged from the legacy card.
 function ProductCart({ product }) {
   const cart = useSelector((state) => state.cart)
   const stepLocal = useSelector((state) => state.step.step)
@@ -71,83 +71,71 @@ function ProductCart({ product }) {
     }
   }
 
-  return (
-    <div className='carrito-card'>
-      <div className='carrito-img'>
-        <img
-          className='img-source'
-          src={product.thumbnail}
-          onError={handleOnError}
-          alt=''
-        />
-      </div>
+  const decreaseDisabled = product.cartQuantity === 1
+  const increaseDisabled =
+    product.cartQuantity >= product.stock ||
+    (product.category === 'Consultas Online' && cartAlreadyHasCalendarProduct)
 
-      <div className='carrito-content'>
-        <div className='content-title'>
-          <p className='content-title__h6'>{product.name}</p>
-          <button onClick={handleDeleteButton} className='content-delete'>
-            <FontAwesomeIcon className='delete-icon' icon={faTrashAlt} />
+  const lineTotal =
+    (product.active_promo ? product.promo_price : product.price) *
+    product.cartQuantity
+
+  return (
+    <div className='carrito-item' data-testid='carrito-item'>
+      <img
+        className='carrito-item__img'
+        src={product.thumbnail}
+        onError={handleOnError}
+        alt={product.name}
+      />
+
+      <div className='carrito-item__info'>
+        <span className='carrito-item__category'>{product.category}</span>
+        <span className='carrito-item__name'>{product.name}</span>
+        {product.description && (
+          <span className='carrito-item__desc'>{product.description}</span>
+        )}
+        <div className='carrito-item__controls'>
+          <div className='carrito-item__qty' aria-label='Cantidad'>
+            <button
+              type='button'
+              onClick={() => handleDecreaseCart(product)}
+              className='carrito-item__qty-btn'
+              disabled={decreaseDisabled}
+              aria-label='Restar uno'
+            >
+              −
+            </button>
+            <span className='carrito-item__qty-value'>{product.cartQuantity}</span>
+            <button
+              type='button'
+              onClick={() => handleIncreaseCart()}
+              className='carrito-item__qty-btn'
+              disabled={increaseDisabled}
+              aria-label='Sumar uno'
+            >
+              +
+            </button>
+          </div>
+          <button
+            type='button'
+            onClick={handleDeleteButton}
+            className='carrito-item__remove'
+          >
+            Eliminar
           </button>
         </div>
-        <div className='content-description'>
-          <p className='content-descripcion-corta-carrito'>
-            {product.description}
-          </p>
-        </div>
+      </div>
 
-        <div className='content-botton-precio'>
-          <div className='content-quantity-selector'>
-            <button
-              onClick={() => handleDecreaseCart(product)}
-              className={
-                product.cartQuantity === 1
-                  ? 'btn-disabled btn-quantity'
-                  : 'btn-quantity'
-              }
-            >
-              <FontAwesomeIcon icon={faMinus} />
-            </button>
-
-            <input
-              className='quantity'
-              min='0'
-              name='quantity'
-              value={product.cartQuantity}
-              type='number'
-              readOnly
-            />
-
-            <button
-              onClick={() => handleIncreaseCart()}
-              className={
-                product.cartQuantity >= product.stock ||
-                (product.category === 'Consultas Online' &&
-                  cartAlreadyHasCalendarProduct)
-                  ? 'btn-disabled btn-quantity'
-                  : 'btn-quantity'
-              }
-            >
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-          </div>
-          <div className='content-precio'>
-            {product.active_promo ? (
-              <p className='content-precio-text'>
-                <span className=' card-product-price__tachado '>
-                  $ {formatNumber(product.price * product.cartQuantity)}
-                </span>
-              </p>
-            ) : (
-              ''
-            )}
-            <p className='content-precio-text'>
-              ${' '}
-              {product.active_promo
-                ? formatNumber(product.promo_price * product.cartQuantity)
-                : formatNumber(product.price * product.cartQuantity)}
-            </p>
-          </div>
-        </div>
+      <div className='carrito-item__price'>
+        {product.active_promo && (
+          <span className='carrito-item__price-original'>
+            $ {formatNumber(product.price * product.cartQuantity)}
+          </span>
+        )}
+        <span className='carrito-item__price-current'>
+          $ {formatNumber(lineTotal)}
+        </span>
       </div>
     </div>
   )

@@ -5,6 +5,7 @@
 
 // Global Styles
 @import 'base/variables';
+@import 'base/theme';
 
 // Base components
 @import 'base/typography';
@@ -27,12 +28,8 @@
 @import 'components/app';
 @import 'components/section-footer';
 @import 'components/footer';
-@import 'components/products';
 @import 'components/header-title';
-@import 'components/product';
-@import 'components/filters';
 @import 'components/cart';
-@import 'components/productCart';
 @import 'components/checkout';
 @import 'components/steps';
 @import 'components/calendarCheckout';
@@ -45,8 +42,8 @@
 @import 'components/changes';
 @import 'components/about';
 @import 'components/home';
-@import 'components/productDetail';
-@import 'components/modal';
+@import 'components/tienda';
+@import 'components/producto';
 @import 'components/notFound';
 @import 'components/confirmSale';
 @import 'components/orderFailure';

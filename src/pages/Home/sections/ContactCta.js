@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { contact } from '../homeContent'
-import PillButton from '../ui/PillButton'
+import PillButton from '../../../components/ui/PillButton'
 
 /**
  * Home contact block. The real contact flow (with reCAPTCHA) lives on /contacto,

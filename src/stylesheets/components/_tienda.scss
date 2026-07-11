@@ -1,0 +1,379 @@
+/*------------------------------------*\
+    # Tienda — "Rediseño de página web" (design Turno 11a)
+    Mobile-first; desktop rows kick in at $pn-bp.
+\*------------------------------------*/
+
+.tienda {
+  background: $pn-cream;
+  font-family: $pn-font;
+  color: $pn-navy;
+  padding-bottom: 48px;
+  @media (min-width: $pn-bp) {
+    padding-bottom: 70px;
+  }
+
+  h1,
+  p {
+    margin: 0;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &__status {
+    font-family: $pn-font;
+    text-align: center;
+    padding: 80px 22px;
+    color: $pn-muted;
+  }
+
+  /* ---------- Header ---------- */
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    // extra top padding so the centered kicker clears the overhanging logo
+    padding: 76px 22px 22px;
+    @media (min-width: $pn-bp) {
+      padding: 84px 56px 26px;
+    }
+  }
+
+  &__title {
+    font-size: 27px;
+    font-weight: 700;
+    color: $pn-navy;
+    @media (min-width: $pn-bp) {
+      font-size: 36px;
+    }
+  }
+
+  &__subtitle {
+    font-size: 15px;
+    color: $pn-muted;
+    max-width: 520px;
+    @media (min-width: $pn-bp) {
+      font-size: 17px;
+    }
+  }
+
+  /* ---------- Filter chips ---------- */
+  &__filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 22px 28px;
+    @media (min-width: $pn-bp) {
+      padding: 0 56px 32px;
+    }
+  }
+
+  /* ---------- Sections ---------- */
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 0 22px 40px;
+    @media (min-width: $pn-bp) {
+      padding: 0 56px 44px;
+    }
+  }
+
+  &__section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  &__section-hint {
+    font-size: 12px;
+    color: $pn-gray-soft;
+  }
+
+  &__rows {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------- Featured program card (navy) ---------- */
+  .tienda-featured {
+    position: relative;
+    background: $pn-navy;
+    border-radius: 20px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    @media (min-width: $pn-bp) {
+      grid-template-columns: 220px 1fr auto;
+      align-items: center;
+      gap: 32px;
+    }
+
+    &__badge {
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: $pn-mint;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 12px;
+      @media (min-width: $pn-bp) {
+        right: 32px;
+      }
+    }
+
+    &__media img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+      @media (min-width: $pn-bp) {
+        width: 220px;
+      }
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    &__name {
+      font-size: 19px;
+      font-weight: 700;
+      color: #fff;
+      @media (min-width: $pn-bp) {
+        font-size: 21px;
+      }
+    }
+
+    &__desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: $pn-navy-muted;
+      max-width: 480px;
+    }
+
+    &__buy {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+      @media (min-width: $pn-bp) {
+        align-items: flex-end;
+      }
+    }
+
+    &__installments {
+      font-size: 12px;
+      color: $pn-mint-bright;
+      white-space: nowrap;
+    }
+
+    &__cta {
+      margin-top: 6px;
+    }
+
+    &__note {
+      font-size: 11px;
+      color: #9fb0ac;
+      max-width: 200px;
+      @media (min-width: $pn-bp) {
+        text-align: right;
+        max-width: 180px;
+      }
+    }
+
+    // white featured price
+    .tienda-price__current {
+      color: #fff;
+    }
+  }
+
+  /* ---------- Membership card ---------- */
+  .tienda-membership {
+    background: $pn-offwhite;
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    @media (min-width: $pn-bp) {
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
+    }
+
+    &__icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 12px;
+      background: #f3ecf7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+
+    &__info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    &__name {
+      font-size: 17px;
+      font-weight: 700;
+      color: $pn-navy;
+      @media (min-width: $pn-bp) {
+        font-size: 19px;
+      }
+    }
+
+    &__desc {
+      font-size: 14px;
+      line-height: 1.5;
+      color: $pn-gray;
+      max-width: 560px;
+    }
+
+    &__buy {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      @media (min-width: $pn-bp) {
+        align-items: flex-end;
+        white-space: nowrap;
+      }
+    }
+
+    &__note {
+      font-size: 12px;
+      color: $pn-gray;
+    }
+  }
+
+  /* ---------- Product rows (kits / descargables / generic) ---------- */
+  .tienda-row {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    grid-template-areas:
+      'media info'
+      'media buy';
+    gap: 10px 20px;
+    align-items: center;
+    padding: 20px 4px;
+    border-bottom: 1px solid $pn-border;
+    @media (min-width: $pn-bp) {
+      display: flex;
+      gap: 20px;
+    }
+
+    &__media {
+      grid-area: media;
+      img {
+        width: 72px;
+        height: 72px;
+        object-fit: cover;
+        border-radius: 12px;
+        display: block;
+      }
+    }
+
+    &__info {
+      grid-area: info;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    &__name {
+      font-size: 15px;
+      font-weight: 700;
+      color: $pn-navy;
+      @media (min-width: $pn-bp) {
+        font-size: 16px;
+      }
+      &:hover {
+        color: $pn-mint-deep;
+      }
+    }
+
+    &__desc {
+      font-size: 13px;
+      color: $pn-gray;
+    }
+
+    &__action {
+      white-space: nowrap;
+    }
+
+    // price + action share the second row on mobile
+    .tienda-price,
+    &__action {
+      grid-area: buy;
+      justify-self: start;
+    }
+    .tienda-price {
+      margin-right: auto;
+    }
+    &__action {
+      justify-self: end;
+      @media (min-width: $pn-bp) {
+        justify-self: auto;
+      }
+    }
+  }
+
+  /* ---------- Prices ---------- */
+  .tienda-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.15;
+    white-space: nowrap;
+    @media (min-width: $pn-bp) {
+      align-items: flex-end;
+    }
+
+    &__original {
+      font-size: 12px;
+      color: #b7bfbd;
+      text-decoration: line-through;
+    }
+
+    &__current {
+      font-family: $pn-font-serif;
+      font-weight: 600;
+      color: $pn-navy;
+    }
+
+    &__suffix {
+      font-size: 14px;
+      font-weight: 500;
+      color: $pn-gray;
+    }
+
+    &--sm .tienda-price__current {
+      font-size: 19px;
+    }
+    &--md .tienda-price__current {
+      font-size: 24px;
+    }
+    &--lg .tienda-price__current {
+      font-size: 28px;
+    }
+  }
+}

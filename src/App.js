@@ -7,19 +7,19 @@ import {
   Footer,
   Header,
   HeaderTitle,
-  Products,
   SectionFooter,
 } from './components'
 import ConfirmSale from './components/ConfirmSale/ConfirmSale'
 import ScrollToTop from './components/ScrollToTop'
 import About from './pages/About'
 import Home from './pages/Home/Home'
+import Tienda from './pages/Tienda'
+import Producto from './pages/Producto'
 import Changes from './pages/changes'
 import Contact from './pages/contact'
 import Faq from './pages/faq'
 import NotFound from './pages/notFound'
 import Error from './pages/error'
-import ProductDetail from './components/ProductDetail/ProductDetail'
 import MercadoPagoReturn from './components/MercadoPagoReturn'
 import './stylesheets/application.scss'
 import { cartItemsExpired, cleanLocalStorage } from './utils/utils'
@@ -55,8 +55,8 @@ function App() {
           >
             <Route index element={<Home />} />
             <Route path='home' element={<Home />} />
-            <Route path='tienda' element={<Products />} />
-            <Route path='producto/:productId' element={<ProductDetail />} />
+            <Route path='tienda' element={<Tienda />} />
+            <Route path='producto/:productId' element={<Producto />} />
             <Route path='sobre-mi' element={<About />} />
             <Route path='cambios-reales' element={<Changes />} />
             <Route path='faq' element={<Faq />} />

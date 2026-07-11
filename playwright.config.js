@@ -11,7 +11,9 @@ module.exports = defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  // The dev Rails backend (single process, small DB pool) chokes above ~4
+  // parallel contexts; keep local parallelism modest.
+  workers: process.env.CI ? 1 : 4,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: process.env.E2E_BASE_URL || 'http://localhost:3000',

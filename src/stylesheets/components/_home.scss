@@ -3,33 +3,29 @@
     Mobile-first. Desktop layout kicks in at $home-bp.
 \*------------------------------------*/
 
-// Design tokens (scoped to Home so the shared palette is left untouched)
-$home-navy: #1f3a44;
-$home-navy-soft: #3d4e4a;
-$home-cream: #fbf3f4;
-$home-offwhite: #fffdfc;
-$home-mint: #5fa88c;
-$home-mint-soft: #e1f0e9;
-$home-mint-deep: #2e6b54;
-$home-rosa: #c48e96;
-$home-rosa-soft: #f1e1e3;
-$home-body: #5c6b67;
-$home-body-2: #3d4e4a;
-$home-muted: #6e7a76;
+// Aliases over the shared theme tokens (see base/_theme.scss)
+$home-navy: $pn-navy;
+$home-navy-soft: $pn-navy-soft;
+$home-cream: $pn-cream;
+$home-offwhite: $pn-offwhite;
+$home-mint: $pn-mint;
+$home-mint-soft: $pn-mint-soft;
+$home-mint-deep: $pn-mint-deep;
+$home-rosa: $pn-rosa;
+$home-rosa-soft: $pn-rosa-soft;
+$home-body: $pn-body;
+$home-body-2: $pn-navy-soft;
+$home-muted: $pn-muted;
 $home-testimonial-text: #4e5a57;
-$home-navy-text: #e4eae8;
-$home-navy-muted: #c9d5d2;
-$home-faint: #a79399;
+$home-navy-text: $pn-navy-text;
+$home-navy-muted: $pn-navy-muted;
+$home-faint: $pn-faint;
 
-$home-font: 'Manrope', 'Nunito Sans', sans-serif;
-$home-bp: 900px; // single desktop breakpoint
+$home-font: $pn-font;
+$home-bp: $pn-bp; // single desktop breakpoint
 
-// Full-width color band with its own inner padding (mobile → desktop)
 @mixin home-band {
-  padding: 40px 22px;
-  @media (min-width: $home-bp) {
-    padding: 76px 56px;
-  }
+  @include pn-band;
 }
 
 .home {
@@ -59,76 +55,8 @@ $home-bp: 900px; // single desktop breakpoint
     }
   }
 
-  /* ---------- Rich text paragraphs ---------- */
-  .home-rich {
-    font-size: 15px;
-    line-height: 1.7;
-    color: $home-body;
 
-    &--lead {
-      font-size: 16px;
-      line-height: 1.55;
-      color: $home-navy;
-      font-weight: 600;
-      @media (min-width: $home-bp) {
-        font-size: 17px;
-        line-height: 1.5;
-      }
-    }
 
-    &__strong {
-      color: $home-navy;
-      font-weight: 700;
-    }
-  }
-
-  /* ---------- Kicker ---------- */
-  .home-kicker {
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    color: $home-mint;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  /* ---------- Pill buttons ---------- */
-  .home-pill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-family: $home-font;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 14px 24px;
-    border-radius: 26px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    text-decoration: none;
-    line-height: 1;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    @media (min-width: $home-bp) {
-      font-size: 15px;
-      padding: 15px 26px;
-    }
-
-    &--solid {
-      background: $home-navy;
-      color: #fff;
-      &:hover {
-        box-shadow: 0 8px 20px rgba(31, 58, 68, 0.24);
-        transform: translateY(-1px);
-      }
-    }
-
-    &--outline {
-      background: transparent;
-      border-color: $home-navy;
-      color: $home-navy;
-      &:hover {
-        background: rgba(31, 58, 68, 0.06);
-      }
-    }
-  }
 
   /* ---------- Hero ---------- */
   &__hero {
@@ -169,7 +97,7 @@ $home-bp: 900px; // single desktop breakpoint
     flex-wrap: wrap;
     gap: 12px;
     margin-top: 6px;
-    .home-pill {
+    .pn-pill {
       flex: 1 1 auto;
       @media (min-width: $home-bp) {
         flex: 0 0 auto;
@@ -438,7 +366,7 @@ $home-bp: 900px; // single desktop breakpoint
       gap: 24px;
     }
     // Slightly looser leading for the long personal story
-    .home-rich {
+    .pn-rich {
       line-height: 1.8;
       color: $home-body-2;
     }

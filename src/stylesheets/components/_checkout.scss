@@ -66,3 +66,60 @@ react-calendar {
     padding-top: 4rem; // ← Aún más espacio en pantallas muy grandes
   }
 }
+/*------------------------------------*\
+    # Checkout reskin — design 14a palette over the existing flow
+    (markup untouched: Steps + FormPatientOrder + PaymentMethods + CartTotal)
+\*------------------------------------*/
+
+.first-section-checkout {
+  background: $pn-cream;
+  font-family: $pn-font;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  legend,
+  .form-title,
+  .payment-title,
+  .block-title {
+    font-family: $pn-font;
+    color: $pn-navy;
+  }
+
+  .form-control,
+  input,
+  textarea,
+  select {
+    font-family: $pn-font;
+    border-radius: 10px;
+    border-color: $pn-border;
+  }
+
+  // Primary actions inside the flow take the navy pill look
+  .btn,
+  button[type='submit'],
+  .wizard-next,
+  .wizard-subm {
+    font-family: $pn-font;
+  }
+
+  // Summary card echoes the design's bordered panel
+  .carrito-total-container {
+    background: $pn-offwhite;
+    border-radius: 18px;
+    border-top: 3px solid $pn-navy;
+  }
+
+  .carrito-total-titulo,
+  .carrito-resume-title {
+    font-family: $pn-font-serif;
+    color: $pn-navy;
+  }
+
+  .carrito-resume-price {
+    font-family: $pn-font-serif;
+    color: $pn-navy;
+  }
+}

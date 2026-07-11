@@ -63,13 +63,11 @@ const cartSlice = createSlice({
     getTotals(state, action) {
       let { total, quantity } = state.cartItems.reduce(
         (cartTotal, cartItem) => {
-          const { price, promo, promoPrice, cartQuantity } = cartItem
-          let itemTotal = 0
-          if (promo) {
-            itemTotal = promoPrice * cartQuantity
-          } else {
-            itemTotal = price * cartQuantity
-          }
+          // NOTE: the API serializes promos as active_promo / promo_price
+          const { price, active_promo, promo_price, cartQuantity } = cartItem
+          const unitPrice =
+            active_promo && promo_price != null ? promo_price : price
+          const itemTotal = unitPrice * cartQuantity
           cartTotal.total += itemTotal
           cartTotal.quantity += cartQuantity
 

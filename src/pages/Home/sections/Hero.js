@@ -1,8 +1,8 @@
 import React from 'react'
 import { hero } from '../homeContent'
 import heroImg from '../../../assets/images/home/paola-hero.jpg'
-import RichText from '../ui/RichText'
-import PillButton from '../ui/PillButton'
+import RichText from '../../../components/ui/RichText'
+import PillButton from '../../../components/ui/PillButton'
 import WellbeingCard from '../ui/WellbeingCard'
 
 export default function Hero() {

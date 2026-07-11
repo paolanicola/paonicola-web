@@ -29,9 +29,13 @@ function HeaderTitle({ customTitle }) {
   }
   const formattedTitle = customTitle || formatTitle(title)
 
+  // Redesigned pages bring their own header (design "Rediseño de página web"),
+  // so the legacy encabezado band is suppressed there.
+  const REDESIGNED = ['home', 'tienda', 'producto', 'carrito', 'checkout']
+
   return (
     <>
-      {title !== 'home' && title !== '' && (
+      {!REDESIGNED.includes(title) && title !== '' && (
         <div className='encabezado__container'>
           <div className='encabezado__container-title'>
             <div className='title__container'>
