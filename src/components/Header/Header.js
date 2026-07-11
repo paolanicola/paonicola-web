@@ -13,11 +13,14 @@ import LogoWebp from '../../assets/images/header/paola_logo.webp'
 import { useSelector } from 'react-redux'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { whatsAppUrl } from '../../utils/utils'
+import { getPatient, isLoggedIn } from '../../features/portal/portalSlice'
 
 export default function Header() {
   const navigate = useNavigate()
 
   const { cartTotalQuantity } = useSelector((state) => state.cart)
+  const patientLogged = useSelector(isLoggedIn)
+  const patient = useSelector(getPatient)
 
   const [sidebar, setSidebar] = useState(false)
 
@@ -146,6 +149,15 @@ export default function Header() {
           </div>
 
           <div className='menu__right'>
+            <NavLink
+              className='menu__item menu__link'
+              to={patientLogged ? '/portal' : '/ingresar'}
+              onClick={closeSidebar}
+            >
+              <p className='underlined'>
+                {patientLogged ? `Hola, ${patient?.name}` : 'Iniciar sesión'}
+              </p>
+            </NavLink>
             <div className='menu__item menu__link' onClick={closeSidebar}>
               <PrimaryButton actionText='Tienda Online' href='/tienda' />
             </div>

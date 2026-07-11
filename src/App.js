@@ -11,10 +11,14 @@ import {
 } from './components'
 import ConfirmSale from './components/ConfirmSale/ConfirmSale'
 import ScrollToTop from './components/ScrollToTop'
+import RequirePatient from './components/RequirePatient'
 import About from './pages/About'
 import Home from './pages/Home/Home'
 import Tienda from './pages/Tienda'
 import Producto from './pages/Producto'
+import Ingresar from './pages/Ingresar'
+import Portal from './pages/Portal'
+import PortalCategoria from './pages/PortalCategoria'
 import Changes from './pages/changes'
 import Contact from './pages/contact'
 import Faq from './pages/faq'
@@ -57,6 +61,23 @@ function App() {
             <Route path='home' element={<Home />} />
             <Route path='tienda' element={<Tienda />} />
             <Route path='producto/:productId' element={<Producto />} />
+            <Route path='ingresar' element={<Ingresar />} />
+            <Route
+              path='portal'
+              element={
+                <RequirePatient>
+                  <Portal />
+                </RequirePatient>
+              }
+            />
+            <Route
+              path='portal/categoria/:categoryId'
+              element={
+                <RequirePatient>
+                  <PortalCategoria />
+                </RequirePatient>
+              }
+            />
             <Route path='sobre-mi' element={<About />} />
             <Route path='cambios-reales' element={<Changes />} />
             <Route path='faq' element={<Faq />} />

@@ -7,6 +7,7 @@ import productsReducer from './products'
 import stepReducer from './stepsCheckout/stepsSlice'
 import validatorsReducer from './validators'
 import orderReducer from './cartTotal'
+import portalReducer from './portal/portalSlice'
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     schedules: appointmentsReducer,
     checkout: checkoutReducer,
     order: orderReducer,
+    portal: portalReducer,
   },
   middleware: [...getDefaultMiddleware(), api],
 })
