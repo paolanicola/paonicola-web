@@ -1,683 +1,527 @@
-.home-container {
-  //max-width: 90%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+/*------------------------------------*\
+    # Home — "Rediseño Home" (design Turno 6 / 6a)
+    Mobile-first. Desktop layout kicks in at $home-bp.
+\*------------------------------------*/
+
+// Design tokens (scoped to Home so the shared palette is left untouched)
+$home-navy: #1f3a44;
+$home-navy-soft: #3d4e4a;
+$home-cream: #fbf3f4;
+$home-offwhite: #fffdfc;
+$home-mint: #5fa88c;
+$home-mint-soft: #e1f0e9;
+$home-mint-deep: #2e6b54;
+$home-rosa: #c48e96;
+$home-rosa-soft: #f1e1e3;
+$home-body: #5c6b67;
+$home-body-2: #3d4e4a;
+$home-muted: #6e7a76;
+$home-testimonial-text: #4e5a57;
+$home-navy-text: #e4eae8;
+$home-navy-muted: #c9d5d2;
+$home-faint: #a79399;
+
+$home-font: 'Manrope', 'Nunito Sans', sans-serif;
+$home-bp: 900px; // single desktop breakpoint
+
+// Full-width color band with its own inner padding (mobile → desktop)
+@mixin home-band {
+  padding: 40px 22px;
+  @media (min-width: $home-bp) {
+    padding: 76px 56px;
+  }
 }
 
-//MAIN---------------------------------------------
-.home-main {
-  //margin-top: $header-height;
-  margin-top: 0 !important;
-  height: auto;
+.home {
+  background: $home-cream;
+  font-family: $home-font;
+  color: $home-navy;
+  overflow-x: hidden;
 
-  &::before {
-    content: '';
-    display: block;
-    background: url('../../assets/images/home/IMG_1229.jpeg') no-repeat center;
-    height: 70vh;
-    min-height: 470px;
-    background-size: cover;
+  // Scoped resets so global typography/link margins don't leak in
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+  a {
+    margin: 0;
   }
 
-  .home-main-container {
-    .home-main-row {
-      padding-bottom: 1rem;
-      .title-home-containers {
-        background: url('../../assets/images/home/encabezado-fondo.png') no-repeat center right #f6dada;
-        display: flex;
-        justify-content: center;
-        margin: -4rem 2rem 0;
-        height: auto;
-        padding: 2rem 1rem;
-        text-align: center;
-        background-size: 90%;
-        max-width: 80%;
+  // Section titles shared between Testimonios / Contacto
+  &__section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: $home-navy;
+    @media (min-width: $home-bp) {
+      font-size: 27px;
+    }
+  }
 
-        .home-main-title {
-          color: #5a585a;
-          font-weight: 800;
-          text-transform: uppercase;
-          padding: 0;
-          font-size: 1.7rem;
-          margin: 0;
-        }
+  /* ---------- Rich text paragraphs ---------- */
+  .home-rich {
+    font-size: 15px;
+    line-height: 1.7;
+    color: $home-body;
+
+    &--lead {
+      font-size: 16px;
+      line-height: 1.55;
+      color: $home-navy;
+      font-weight: 600;
+      @media (min-width: $home-bp) {
+        font-size: 17px;
+        line-height: 1.5;
       }
     }
-  }
-}
 
-.one {
-  -webkit-animation-delay: 1s;
-  -moz-animation-delay: 1s;
-  animation-delay: 1s;
-}
-
-.animate {
-  animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-  -webkit-animation-duration: 1s;
-}
-@keyframes fadeRight {
-  from {
-    opacity: 0;
-    -webkit-transform: translate(5px, 0, 0);
-    -moz-transform: translate(5px, 0, 0);
-    -o-transform: translate(5px, 0, 0);
-    transform: translateX(5px, 0, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: translate(0, 0, 0);
-    -moz-transform: translate(0, 0, 0);
-    -o-transform: translate(0, 0, 0);
-    transform: translateX(0, 0, 0);
-  }
-}
-
-.fadeRight {
-  -webkit-animation-name: fadeRight;
-  -moz-animation-name: fadeRight;
-  -o-animation-name: fadeRight;
-  animation-name: fadeRight;
-}
-
-//SERVICES------------------------------------------
-.home-services {
-  // background-color: palegreen;
-  background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
-  background-size: 300%;
-}
-
-.services-items {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 0 auto;
-  max-width: 90%;
-  flex-flow: row wrap;
-}
-
-.services-item-row {
-  // background-color: paleturquoise;
-  display: flex;
-  justify-content: center;
-  padding: 5px;
-  width: 45%;
-}
-
-.services-button-container {
-  //background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
-  //background-size: 300%;
-  padding-bottom: 10rem;
-  display: flex;
-  justify-content: center;
-  .container-btn-sobre-mi {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-  }
-}
-
-.btt {
-  @extend %btn-primary;
-  @extend %btn-md;
-  width: 100% !important;
-  height: 25px;
-}
-
-.services-item-about {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  h5 {
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    font-size: 1.2rem;
-  }
-}
-.services-title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 150px;
-  position: relative;
-  width: 97%;
-  margin: 0 auto;
-
-  &::after {
-    content: ' ';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: 0 auto;
-    width: 80%;
-    height: 100%;
-    z-index: 2;
-    background: url(../../assets/images/encabezado/fondo-tit-sobremi.svg) no-repeat center;
-    background-size: contain;
-  }
-
-  h2 {
-    position: relative;
-    z-index: 4;
-    font-size: 3rem;
-    color: #f2bcbd;
-    font-weight: 200 !important;
-  }
-}
-
-//SHOP---------------------------------------------
-.home-shop {
-  background-color: palevioletred;
-}
-
-.home-shop {
-  background: $lila;
-  padding-top: 0;
-  padding-bottom: 8rem;
-  .shop-container-menu-tienda {
-    margin-top: 3rem;
-    .item-shop-title,
-    .item-shop-title-h3 {
-      text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-      color: white;
+    &__strong {
+      color: $home-navy;
       font-weight: 700;
-      text-transform: uppercase;
-      margin: 0;
-      font-size: 1.2rem;
-    }
-    .item-shop-title-h3 {
-      font-size: 1.5rem;
     }
   }
 
-  .menu-top-grid,
-  .menu-mid-grid {
-    //background-color: palegreen;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    margin: 0 auto;
-    max-width: 90%;
-    flex-flow: row wrap;
+  /* ---------- Kicker ---------- */
+  .home-kicker {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: $home-mint;
+    font-weight: 700;
+    text-transform: uppercase;
   }
 
-  .item-tienda-home {
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    padding-bottom: 1rem;
-    width: 45%;
-    height: 150px;
-  }
-
-  .item {
-    display: flex;
+  /* ---------- Pill buttons ---------- */
+  .home-pill {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    padding: 0 1rem;
-  }
-
-  .item-tienda-home-lg {
-    width: 95%;
-    height: 468px;
-    .item {
-      padding: 0;
-      margin: 0;
-    }
-  }
-
-  .item-tienda-home-mosaicos {
-    background: white url('../../assets/images/tienda/bg-mosaicos.jpg') no-repeat center;
-    background-size: cover;
-  }
-
-  .item-tienda-home-recetarios {
-    background: white url('../../assets/images/tienda/bg-recetarios.jpg') no-repeat center;
-    background-size: cover;
-  }
-
-  .item-tienda-home-pack {
-    background: white url('../../assets/images/tienda/bg-pack-ahorro.jpg') no-repeat center;
-    background-size: cover;
-  }
-
-  .item-tienda-home-guias {
-    background: white url('../../assets/images/tienda/bg-guias.jpg') no-repeat center;
-    background-size: cover;
-  }
-
-  .item-tienda-home-consultas {
-    background: white url('../../assets/images/tienda/bg-consultas.jpg') no-repeat center;
-    background-size: cover;
-  }
-}
-
-.home-shop {
-  .item-tienda-home-lg {
-    height: 300px;
-  }
-}
-
-.shop-container-title-top {
-  position: absolute;
-}
-
-.title-section-card {
-  font-weight: 900;
-  background-color: white;
-  display: inline-block;
-  margin: -5rem 0 0;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  padding: 1rem 2rem;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
-  line-height: 1;
-  font-size: 2.3rem;
-}
-.title-section-card-rosa {
-  color: $lila;
-}
-
-.shop-botton-link {
-  // background-color: black;
-  display: flex;
-  justify-content: center;
-}
-
-.shop-button-go {
-  @extend %btn-primary;
-  @extend %btn-md;
-  margin-top: 1rem;
-  font-size: 2rem;
-  padding: 10px 32px;
-  margin: 16px 0 0;
-  background-color: $primary;
-  color: white !important;
-  border: none;
-
-  &:hover {
-    background-color: $primary-light;
-  }
-}
-
-//CHANGES------------------------------------------
-.home-changes {
-  //background-color: plum;
-  //height: 200px;
-  position: relative;
-}
-.h2 {
-  background: white url('../../assets/images/transformaciones/transformaciones-fondo.jpg') no-repeat center;
-  background-size: cover;
-  text-align: center;
-  margin-top: 3rem;
-  position: relative;
-  height: 294px;
-  padding: 5rem 0;
-  margin: 0;
-  z-index: 1;
-}
-
-.transformaciones {
-  //background-color: palegreen;
-  //position: relative;
-  z-index: 1;
-  color: $primary;
-  font-size: 2.3rem;
-  font-weight: 400;
-  margin: 0 0 0.5rem;
-  padding: 2.1rem;
-  position: relative;
-  &::after {
-    content: ' ';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: url('../../assets/images/transformaciones/tranformaciones-fondo-tit.svg') no-repeat center;
-    background-size: contain;
-  }
-}
-
-.botontransfo {
-  text-decoration: none;
-  display: inline-block;
-  margin: 2rem;
-  padding: 1rem 2rem;
-  border: solid 3px white;
-  color: white;
-  font-weight: 900;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  font-size: 1.3rem;
-}
-
-.botontransfo:hover {
-  opacity: 0.5;
-}
-
-//FLORES-----------------------------------------------
-.flores-faq {
-  height: 130px;
-  width: 100%;
-  background: url('../../assets/images/faq/fondo-faq.png') no-repeat center bottom;
-  background-size: contain;
-}
-
-//FAQ--------------------------------------------------
-.home-faq {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  background-color: $gray;
-  padding-top: 0;
-  padding-bottom: 8rem;
-  .faq-container {
-    width: 80%;
-    margin: 0 auto;
-    .title-section-card-b {
-      font-size: 2rem;
-    }
-    .faq-container-button {
-      display: flex;
-      justify-content: center;
-    }
-  }
-  h3 {
-    color: white;
-    font-weight: 900;
-    font-size: 2.5rem;
-    margin: 0 auto;
-    margin-top: 5rem;
-    margin-bottom: 0.5rem;
-    width: 80%;
-  }
-}
-.faq-container-button {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-.button-faq {
-  @extend %btn-primary;
-  @extend %btn-md;
-  margin-top: 1rem;
-  width: 115px !important;
-  height: 40px !important;
-  font-size: 2rem;
-  padding: 16px 32px;
-  margin: 16px 0 0;
-  //max-width: 50%;
-  display: flex;
-  justify-content: center;
-  background-color: $primary-light;
-  color: $gray !important;
-  &:hover {
-    opacity: 0.8;
-  }
-}
-
-.faq-text-top {
-  .title-section-card-b {
-    font-weight: 900;
-    background-color: white;
-    display: inline-block;
-    margin: -5rem 0 0;
-    position: relative;
-    z-index: 2;
-    padding: 1rem 2rem;
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+    font-family: $home-font;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 24px;
+    border-radius: 26px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
     line-height: 1;
-    font-size: 2.3rem;
-  }
-}
-
-.title-section-card-gris {
-  color: $gray;
-}
-
-@media screen and (min-width: 575px) {
-  .services-button-container {
-    //background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
-    background-size: 200%;
-  }
-
-  .servicios-home {
-    background-size: 300%;
-  }
-
-  .home-services {
-    background-size: 200%;
-  }
-
-  .home-main {
-    // margin-top: $header-height;
-    position: relative;
-    padding: 0;
-    height: calc(100vh - 147px);
-    margin-bottom: 5rem;
-    &::before {
-      content: '';
-      width: 60%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 0;
-      height: calc(100vh - 147px);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    @media (min-width: $home-bp) {
+      font-size: 15px;
+      padding: 15px 26px;
     }
-    .home-main-container {
-      .home-main-row {
-        .title-home-containers {
-          background-size: contain;
-          width: 45%;
-          position: absolute;
-          top: 0;
-          right: 0;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          text-align: left;
-          z-index: 1;
-          height: calc(80vh - 147px);
-          margin: 2rem 5rem 0 0;
 
-          .home-main-title {
-            font-size: 2.1rem !important;
-            padding: 0 0.5rem !important;
-            margin-bottom: 1rem !important;
-            border-bottom: none !important;
-          }
-        }
+    &--solid {
+      background: $home-navy;
+      color: #fff;
+      &:hover {
+        box-shadow: 0 8px 20px rgba(31, 58, 68, 0.24);
+        transform: translateY(-1px);
+      }
+    }
+
+    &--outline {
+      background: transparent;
+      border-color: $home-navy;
+      color: $home-navy;
+      &:hover {
+        background: rgba(31, 58, 68, 0.06);
       }
     }
   }
 
-  .services-items {
-    flex-flow: row nowrap;
-  }
-
-  .services-item-about {
-    h5 {
-      font-size: 1.5rem;
+  /* ---------- Hero ---------- */
+  &__hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 28px 22px 40px;
+    @media (min-width: $home-bp) {
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      padding: 40px 56px 70px;
     }
   }
 
-  //SHOP------------------------------------------------
-
-  .item-tienda-home {
-    .item {
-      .item-shop-title {
-        font-size: 1.5rem;
-      }
-    }
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .home-services {
-    padding-bottom: 5rem;
-  }
-
-  .services-items {
-    width: 70%;
-  }
-
-  .item-img {
-    //width: 258px;
-    height: auto;
-  }
-
-  .services-button-container {
-    //background: white url('../../assets/images/sobre-mi/fondo-sobremi.png') no-repeat center bottom;
-    background-size: 100%;
-  }
-
-  .services-title {
-    &::before {
-      content: ' ';
-      display: block;
-      width: 100%;
-
-      height: 2px;
-      background: $primary;
-      position: absolute;
-      top: 50%;
-      left: 0;
-      z-index: 1;
-    }
-
-    &::after {
-      width: 60%;
-      height: 100%;
-      top: 20%;
-      max-height: 60%;
-    }
-
-    h2 {
-      font-size: 4rem;
-      font-weight: 300 !important;
-    }
-  }
-  //SHOP---------------------------------------------
-
-  .menu-top-grid,
-  .menu-mid-grid {
-    //background-color: palegreen;
-    width: 75%;
-  }
-
-  .menu-top-grid {
-    .item-tienda-home {
-      width: 45%;
-      height: 218px;
-    }
-  }
-
-  .item {
-  }
-
-  .menu-mid-grid {
-    .item-tienda-home-lg {
-      width: 95%;
-      height: 455px;
-      max-height: 100%;
-
-      .item-tienda-home-consultas {
-      }
-    }
-  }
-  .title-section-card {
-    font-size: 3.75rem;
-  }
-  //CHANGES---------------------------------------------
-  .transformaciones {
-    font-size: 4rem;
-
-    &::before {
-      content: ' ';
-      display: block;
-      width: 100%;
-      height: 2px;
-      background: $primary;
-      position: absolute;
-      top: 50%;
-      left: 0;
-      z-index: -1;
-    }
-  }
-
-  .botontransfo {
-    font-size: 1.5rem;
-  }
-
-  .flores-faq {
-    height: 207px;
-  }
-
-  //FAQ-------------------------------------------------
-  .faq-text-top {
-    .title-section-card-b {
-      font-size: 4rem !important;
-    }
-    h3 {
-      font-size: 3rem;
-    }
-  }
-}
-
-@media screen and (min-width: 1080px) {
-  .btt {
-    font-size: 1.4rem;
-    padding: 1rem;
-  }
-
-  .home-services {
-    background-size: 100%;
-  }
-  //SHOP---------------------------------------------
-  .shop-container-menu-tienda {
+  &__hero-copy {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 90%;
-    margin: 0 auto;
-  }
-  .menu-top {
-    //background-color: palegreen;
-    width: 70%;
-  }
-  .menu-mid {
-    width: 35%;
-  }
-  .menu-top-grid,
-  .menu-mid-grid {
-    width: 100%;
-  }
-
-  .menu-top-grid {
-    .item-tienda-home {
-      width: 45%;
+    flex-direction: column;
+    gap: 16px;
+    @media (min-width: $home-bp) {
+      gap: 20px;
     }
   }
-  //CHANGES---------------------------------------------
-  .botontransfo {
-    font-size: 2rem;
+
+  &__hero-title {
+    font-size: 27px;
+    line-height: 1.25;
+    font-weight: 700;
+    color: $home-navy;
+    @media (min-width: $home-bp) {
+      font-size: 36px;
+      line-height: 1.3;
+    }
+  }
+
+  &__hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 6px;
+    .home-pill {
+      flex: 1 1 auto;
+      @media (min-width: $home-bp) {
+        flex: 0 0 auto;
+      }
+    }
+  }
+
+  &__hero-media {
+    position: relative;
+  }
+
+  &__hero-image {
+    border-radius: 20px;
+    overflow: hidden;
+    height: 320px;
+    @media (min-width: $home-bp) {
+      height: 420px;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+  }
+
+  /* ---------- Wellbeing floating card ---------- */
+  .home-wellbeing {
+    position: absolute;
+    bottom: -16px;
+    right: 12px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 12px 28px rgba(31, 58, 68, 0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 150px;
+    @media (min-width: $home-bp) {
+      bottom: -20px;
+      right: -20px;
+      border-radius: 16px;
+      padding: 18px 20px;
+      width: 180px;
+      gap: 10px;
+    }
+
+    &__head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      @media (min-width: $home-bp) {
+        gap: 10px;
+      }
+    }
+
+    &__score {
+      background: $home-mint-soft;
+      color: $home-mint-deep;
+      font-size: 14px;
+      font-weight: 800;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @media (min-width: $home-bp) {
+        font-size: 16px;
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    &__label {
+      font-size: 11px;
+      font-weight: 700;
+      color: $home-navy;
+      @media (min-width: $home-bp) {
+        font-size: 12px;
+      }
+    }
+
+    &__bars {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      @media (min-width: $home-bp) {
+        gap: 6px;
+      }
+    }
+
+    &__track {
+      height: 5px;
+      border-radius: 3px;
+      @media (min-width: $home-bp) {
+        height: 6px;
+      }
+      &--mint {
+        background: $home-mint-soft;
+      }
+      &--rosa {
+        background: $home-rosa-soft;
+      }
+    }
+
+    &__fill {
+      height: 100%;
+      border-radius: 3px;
+      &--mint {
+        background: $home-mint;
+      }
+      &--rosa {
+        background: $home-rosa;
+      }
+    }
+  }
+
+  /* ---------- Testimonios ---------- */
+  &__testimonials {
+    @include home-band;
+    background: $home-offwhite;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    @media (min-width: $home-bp) {
+      gap: 36px;
+    }
+    .home__section-title {
+      @media (min-width: $home-bp) {
+        text-align: center;
+      }
+    }
+  }
+
+  &__testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    @media (min-width: $home-bp) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+  }
+
+  .home-testimonial {
+    margin: 0;
+    background: $home-cream;
+    border-radius: 16px;
+    padding: 18px;
+    @media (min-width: $home-bp) {
+      padding: 26px;
+    }
+    &__quote {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.55;
+      color: $home-testimonial-text;
+      @media (min-width: $home-bp) {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+    }
+    &__author {
+      margin-top: 10px;
+      font-weight: 700;
+      color: $home-navy;
+      @media (min-width: $home-bp) {
+        margin-top: 14px;
+      }
+    }
+  }
+
+  /* ---------- No es para vos (navy band) ---------- */
+  &__notforyou {
+    background: $home-navy;
+    padding: 48px 22px;
+    display: flex;
+    justify-content: center;
+    @media (min-width: $home-bp) {
+      padding: 90px 56px;
+    }
+  }
+
+  &__notforyou-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 700px;
+    width: 100%;
+    @media (min-width: $home-bp) {
+      gap: 24px;
+    }
+  }
+
+  &__notforyou-title {
+    font-size: 22px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.35;
+    @media (min-width: $home-bp) {
+      font-size: 29px;
+    }
+  }
+
+  &__notforyou-subtitle {
+    font-size: 15px;
+    color: $home-navy-muted;
+    @media (min-width: $home-bp) {
+      font-size: 16px;
+    }
+  }
+
+  &__notforyou-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 4px;
+    @media (min-width: $home-bp) {
+      gap: 16px;
+      margin-top: 8px;
+    }
+  }
+
+  .home-disqualifier {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    &__mark {
+      color: $home-rosa;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.6;
+      flex-shrink: 0;
+    }
+    &__text {
+      font-size: 15px;
+      line-height: 1.6;
+      color: $home-navy-text;
+    }
+  }
+
+  /* ---------- Por qué acompaño (story) ---------- */
+  &__philosophy {
+    @include home-band;
+    background: $home-offwhite;
+    display: flex;
+    justify-content: center;
+    @media (min-width: $home-bp) {
+      padding: 80px 56px;
+    }
+  }
+
+  &__philosophy-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 760px;
+    width: 100%;
+    @media (min-width: $home-bp) {
+      gap: 24px;
+    }
+    // Slightly looser leading for the long personal story
+    .home-rich {
+      line-height: 1.8;
+      color: $home-body-2;
+    }
+  }
+
+  &__philosophy-title {
+    font-size: 22px;
+    color: $home-navy;
+    font-weight: 700;
+    @media (min-width: $home-bp) {
+      font-size: 28px;
+    }
+  }
+
+  /* ---------- Contacto ---------- */
+  &__contact {
+    @include home-band;
+    background: $home-offwhite;
+    border-top: 1px solid $home-rosa-soft;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    @media (min-width: $home-bp) {
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+    }
+  }
+
+  &__contact-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    @media (min-width: $home-bp) {
+      gap: 16px;
+    }
+  }
+
+  &__contact-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: $home-muted;
+    max-width: 380px;
+  }
+
+  &__contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    &-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: $home-muted;
+    }
+    &-input {
+      background: $home-cream;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      height: 46px;
+      padding: 0 16px;
+      font-family: $home-font;
+      font-size: 14px;
+      color: $home-navy;
+      transition: border-color 0.15s ease;
+      &:focus {
+        border-color: $home-mint;
+        outline: none;
+      }
+      &--area {
+        height: 92px;
+        padding: 12px 16px;
+        resize: vertical;
+      }
+    }
+  }
+
+  &__contact-submit {
+    align-self: flex-start;
+    margin-top: 4px;
   }
 }
