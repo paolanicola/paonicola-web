@@ -1,0 +1,248 @@
+/*------------------------------------*\
+    # Header global — design 6a/11a (wordmark + nav + pill navy + carrito)
+\*------------------------------------*/
+
+.pn-header {
+  position: sticky;
+  top: 0;
+  z-index: $menu-z-index;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #fff;
+  border-bottom: 1px solid $pn-line;
+  padding: 14px 18px;
+  font-family: $pn-font;
+  transition: padding 0.2s ease, box-shadow 0.2s ease;
+  @media (min-width: $pn-bp) {
+    gap: 28px;
+    padding: 18px 56px;
+  }
+
+  &--scrolled {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: 0 6px 20px rgba(31, 58, 68, 0.07);
+  }
+
+  /* ---------- hamburguesa (solo mobile) ---------- */
+  &__menu-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: 0;
+    padding: 6px 4px;
+    cursor: pointer;
+    span {
+      width: 20px;
+      height: 2px;
+      background: $pn-navy;
+      display: block;
+    }
+    @media (min-width: $pn-bp) {
+      display: none;
+    }
+  }
+
+  /* ---------- wordmark ---------- */
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    text-decoration: none;
+    margin-right: auto;
+    @media (min-width: $pn-bp) {
+      margin-right: 0;
+    }
+  }
+
+  &__kicker {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: $pn-mint;
+    font-weight: 600;
+    @media (min-width: $pn-bp) {
+      font-size: 10px;
+    }
+  }
+
+  &__name {
+    font-size: 19px;
+    font-weight: 700;
+    color: $pn-navy;
+    white-space: nowrap;
+    @media (min-width: $pn-bp) {
+      font-size: 23px;
+    }
+  }
+
+  /* ---------- nav desktop ---------- */
+  &__nav {
+    display: none;
+    @media (min-width: $pn-bp) {
+      display: flex;
+      gap: 24px;
+      margin-right: auto;
+    }
+  }
+
+  &__link {
+    font-size: 14px;
+    color: $pn-navy-soft;
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    &:hover {
+      color: $pn-navy;
+    }
+    &--active {
+      color: $pn-navy;
+      font-weight: 700;
+      border-bottom-color: $pn-navy;
+    }
+  }
+
+  /* ---------- acciones ---------- */
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    @media (min-width: $pn-bp) {
+      gap: 20px;
+    }
+  }
+
+  &__session {
+    display: none;
+    font-size: 14px;
+    color: $pn-navy;
+    text-decoration: none;
+    white-space: nowrap;
+    &:hover {
+      color: $pn-mint-deep;
+    }
+    @media (min-width: $pn-bp) {
+      display: inline;
+    }
+  }
+
+  &__store {
+    display: none !important;
+    @media (min-width: $pn-bp) {
+      display: inline-flex !important;
+    }
+  }
+
+  &__socials {
+    display: none;
+    @media (min-width: $pn-bp) {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    a {
+      display: flex;
+      color: #8a9aa6;
+      svg {
+        width: 18px;
+        height: 18px;
+        fill: #8a9aa6;
+      }
+      &:hover svg {
+        fill: $pn-navy;
+      }
+    }
+  }
+
+  &__cart {
+    position: relative;
+    background: none;
+    border: 0;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+    .nro-carrito {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background: $pn-rosa;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 16px;
+      height: 16px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+    }
+  }
+
+  /* ---------- drawer mobile ---------- */
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(31, 58, 68, 0.35);
+    z-index: -1;
+  }
+
+  &__drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(300px, 82vw);
+    background: $pn-cream;
+    padding: 72px 26px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform: translateX(-105%);
+    transition: transform 0.25s ease;
+    box-shadow: 14px 0 40px rgba(31, 58, 68, 0.16);
+    z-index: -1;
+
+    &--open {
+      transform: translateX(0);
+    }
+
+    @media (min-width: $pn-bp) {
+      display: none;
+    }
+  }
+
+  &__drawer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  &__drawer-link {
+    font-size: 17px;
+    font-weight: 600;
+    color: $pn-navy;
+    text-decoration: none;
+  }
+
+  &__drawer-foot {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+
+    .pn-header__session {
+      display: inline;
+    }
+    .pn-header__socials {
+      display: flex;
+      gap: 14px;
+    }
+  }
+}

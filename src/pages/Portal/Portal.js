@@ -25,9 +25,11 @@ export default function Portal() {
     dispatch(fetchLibrary())
   }, [dispatch])
 
-  const handleLogout = async () => {
-    await dispatch(logout())
+  const handleLogout = () => {
+    // navegar primero: si el token se limpia con el guard montado,
+    // RequirePatient gana la carrera y redirige a /ingresar
     navigate('/')
+    dispatch(logout())
   }
 
   const openResource = (resource) => {

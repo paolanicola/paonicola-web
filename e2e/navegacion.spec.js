@@ -6,8 +6,8 @@ test.describe('Navegación global', () => {
     test.skip(!isMobile, 'hamburguesa solo visible en mobile')
 
     await page.goto('/')
-    await page.locator('.navBar__icon__svg--none').click()
-    const menu = page.locator('.navBar__menu--active')
+    await page.locator('.pn-header__menu-btn').click()
+    const menu = page.locator('.pn-header__drawer--open')
     await expect(menu).toBeVisible()
 
     await menu.getByRole('link', { name: 'FAQ' }).click()
@@ -18,7 +18,7 @@ test.describe('Navegación global', () => {
     test.skip(Boolean(isMobile), 'nav expandido solo en desktop')
 
     await page.goto('/')
-    await page.locator('.navBar').getByRole('link', { name: 'Contacto' }).click()
+    await page.locator('.pn-header__nav').getByRole('link', { name: 'Contacto' }).click()
     await expect(page).toHaveURL(/\/contacto$/)
   })
 
@@ -37,9 +37,9 @@ test.describe('Navegación global', () => {
     await expect(page).toHaveURL(/\/home$/)
   })
 
-  test('el logo del header lleva a la tienda', async ({ page }) => {
+  test('el wordmark del header lleva al inicio (design 6a)', async ({ page }) => {
     await page.goto('/faq')
-    await page.locator('.menu__logo a').click()
-    await expect(page).toHaveURL(/\/tienda$/)
+    await page.locator('.pn-header__brand').click()
+    await expect(page).toHaveURL(/\/$/)
   })
 })

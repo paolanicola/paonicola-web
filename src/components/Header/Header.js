@@ -1,202 +1,141 @@
-/* eslint-disable eqeqeq */
-import React, { useEffect, useRef, useState } from 'react'
-import { PrimaryButton } from '..'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { ReactComponent as InstagramBrand } from '../../assets/images/header/instagram-brands.svg'
 import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg'
 import { ReactComponent as ShoppingBag } from '../../assets/images/header/shopping-bag.svg'
 import { ReactComponent as WhatsappBrand } from '../../assets/images/header/whatsapp-brands.svg'
-
-import navClose from '../../assets/images/header/nav-close.svg'
-import navOpen from '../../assets/images/header/nav-open.svg'
-import LogoWebp from '../../assets/images/header/paola_logo.webp'
-
-import { useSelector } from 'react-redux'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import PillButton from '../ui/PillButton'
 import { whatsAppUrl } from '../../utils/utils'
 import { getPatient, isLoggedIn } from '../../features/portal/portalSlice'
 
+const NAV_LINKS = [
+  { label: 'Inicio', to: '/' },
+  { label: 'Sobre Mí', to: '/sobre-mi' },
+  { label: 'Cambios Reales', to: '/cambios-reales' },
+  { label: 'FAQ', to: '/faq' },
+  { label: 'Contacto', to: '/contacto' },
+]
+
+// Header global (design 6a/11a): wordmark con matrícula, nav, sesión,
+// Tienda Online en pill navy y carrito con contador. Mobile: hamburguesa + drawer.
 export default function Header() {
   const navigate = useNavigate()
-
   const { cartTotalQuantity } = useSelector((state) => state.cart)
   const patientLogged = useSelector(isLoggedIn)
   const patient = useSelector(getPatient)
 
-  const [sidebar, setSidebar] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
-  const showSidebar = () => setSidebar(!sidebar)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY >= 60)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
-  const closeSidebar = () => setSidebar(!sidebar)
+  const closeDrawer = () => setDrawerOpen(false)
 
-  const handleMoveToCart = () => {
-    if (sidebar) {
-      closeSidebar()
-    }
+  const handleCart = () => {
+    closeDrawer()
     navigate('/carrito')
   }
-  const [size, setSize] = useState(false)
 
-  useEffect(() => {
-    const changeNavbarSize = () => {
-      if (window.scrollY >= 60) {
-        setSize(true)
-      }
-    }
-    // clean up code
-    window.removeEventListener('scroll', changeNavbarSize)
-    window.addEventListener('scroll', changeNavbarSize)
-    return () => window.removeEventListener('scroll', changeNavbarSize)
-  }, [])
+  const sessionLink = (
+    <NavLink
+      className='pn-header__session'
+      to={patientLogged ? '/portal' : '/ingresar'}
+      onClick={closeDrawer}
+    >
+      {patientLogged ? `Hola, ${patient?.name}` : 'Iniciar sesión'}
+    </NavLink>
+  )
 
-  useEffect(() => {
-    const changeNavbarSizeF = () => {
-      if (window.scrollY < 59) {
-        setSize(false)
-      }
-    }
-    window.addEventListener('scroll', changeNavbarSizeF)
-    return () => window.removeEventListener('scroll', changeNavbarSizeF)
-  }, [])
-
-  const wrapperRef = useRef(null)
-  const wrapperRefIcon = useRef(null)
-
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside, false)
-    return () => {
-      document.removeEventListener('click', handleClickOutside, false)
-    }
-  }, [wrapperRef])
-  const handleClickOutside = (event) => {
-    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-      if (
-        wrapperRefIcon.current.className ==
-          'navBar__icon__svg navBar__icon__svg--none fixed' &&
-        !wrapperRefIcon.current.contains(event.target)
-      ) {
-        //setIsVisible(false);
-        setSidebar(false)
-      } else {
-        setSidebar(true)
-      }
-    }
-  }
+  const socials = (
+    <div className='pn-header__socials'>
+      <a href='https://www.instagram.com/nutricion.paonicola/' target='_blank' rel='noopener noreferrer' aria-label='Instagram'>
+        <InstagramBrand />
+      </a>
+      <a href='mailto:nutricionista.nicola@gmail.com' aria-label='Escribir correo'>
+        <MailBrand />
+      </a>
+      <a href={whatsAppUrl} target='_blank' rel='noopener noreferrer' aria-label='WhatsApp'>
+        <WhatsappBrand />
+      </a>
+    </div>
+  )
 
   return (
-    <>
-      <div className={size ? 'navBar header--resize' : 'navBar'}>
-        <div
-          ref={wrapperRefIcon}
-          className='navBar__icon__svg navBar__icon__svg--none fixed'
-          onClick={showSidebar}
-        >
-          <img className='img-icono-close-open' src={navOpen} alt='' />
-        </div>
+    <header className={`pn-header${scrolled ? ' pn-header--scrolled' : ''}`}>
+      <button
+        type='button'
+        className='pn-header__menu-btn'
+        aria-label={drawerOpen ? 'Cerrar menú' : 'Abrir menú'}
+        aria-expanded={drawerOpen}
+        onClick={() => setDrawerOpen((open) => !open)}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
 
-        <div className='menu__logo'>
-          <Link to='/tienda'>
-            <img src={LogoWebp} className='menu__logo__svg' alt='logo' />
-          </Link>
-        </div>
+      <Link to='/' className='pn-header__brand' onClick={closeDrawer}>
+        <span className='pn-header__kicker'>NUTRICIONISTA · MP 14.044</span>
+        <span className='pn-header__name'>Paola Nicola</span>
+      </Link>
 
-        <div
-          ref={wrapperRef}
-          className={
-            sidebar ? 'navBar__menu navBar__menu--active' : 'navBar__menu'
-          }
-        >
-          <div className='menu__left'>
-            <div className='pepe' onClick={closeSidebar}>
-              <div className='container__icon__close'>
-                <img className='img-icono-close-open' src={navClose} alt='' />
-              </div>
-            </div>
-            <NavLink
-              className='menu__item menu__link'
-              to='/'
-              onClick={closeSidebar}
-            >
-              <p className='underlined'>Inicio</p>
-            </NavLink>
-            <NavLink
-              className='menu__item menu__link'
-              to='/sobre-mi'
-              onClick={closeSidebar}
-            >
-              <p className='underlined'>Sobre Mi</p>
-            </NavLink>
-            <NavLink
-              className='menu__item menu__link '
-              to='/cambios-reales'
-              onClick={closeSidebar}
-            >
-              <p className=' underlined'>Cambios Reales</p>
-            </NavLink>
-            <NavLink
-              className='menu__item menu__link'
-              to='/faq'
-              onClick={closeSidebar}
-            >
-              <p className=' underlined'>FAQ</p>
-            </NavLink>
-            <NavLink
-              className='menu__item menu__link'
-              to='/contacto'
-              onClick={closeSidebar}
-            >
-              <p className=' underlined '>Contacto</p>
-            </NavLink>
-          </div>
+      <nav className='pn-header__nav' aria-label='principal'>
+        {NAV_LINKS.map((link) => (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            end={link.to === '/'}
+            className={({ isActive }) =>
+              `pn-header__link${isActive ? ' pn-header__link--active' : ''}`
+            }
+          >
+            {link.label}
+          </NavLink>
+        ))}
+      </nav>
 
-          <div className='menu__right'>
-            <NavLink
-              className='menu__item menu__link'
-              to={patientLogged ? '/portal' : '/ingresar'}
-              onClick={closeSidebar}
-            >
-              <p className='underlined'>
-                {patientLogged ? `Hola, ${patient?.name}` : 'Iniciar sesión'}
-              </p>
-            </NavLink>
-            <div className='menu__item menu__link' onClick={closeSidebar}>
-              <PrimaryButton actionText='Tienda Online' href='/tienda' />
-            </div>
-            <div className='menu__item menu__link left-redes'>
-              <div className='menu__redes '>
-                <a
-                  className='menu__redes__link'
-                  href='https://www.instagram.com/nutricion.paonicola/'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  <InstagramBrand className='menu__redes__icono' />
-                </a>
-                <a
-                  className='menu__redes__link'
-                  href='mailto:nutricionista.nicola@gmail.com'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  <MailBrand className='menu__redes__icono' />
-                </a>
-                <a
-                  className='menu__redes__link'
-                  href={whatsAppUrl}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  <WhatsappBrand className='menu__redes__icono' />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className='pn-header__actions'>
+        {sessionLink}
+        <PillButton to='/tienda' variant='solid' small className='pn-header__store'>
+          Tienda Online
+        </PillButton>
+        {socials}
+        <button type='button' className='pn-header__cart' aria-label='Carrito' onClick={handleCart}>
+          <span className='nro-carrito'>{cartTotalQuantity}</span>
+          <ShoppingBag />
+        </button>
+      </div>
 
-        <div onClick={() => handleMoveToCart()} className='navBar__icon__svg'>
-          <div className='nro-carrito'>{cartTotalQuantity}</div>
-          <ShoppingBag className='' />
+      {drawerOpen && (
+        <div className='pn-header__overlay' onClick={closeDrawer} aria-hidden='true' />
+      )}
+      <div className={`pn-header__drawer${drawerOpen ? ' pn-header__drawer--open' : ''}`}>
+        <nav className='pn-header__drawer-nav' aria-label='menú móvil'>
+          {NAV_LINKS.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.to === '/'}
+              className='pn-header__drawer-link'
+              onClick={closeDrawer}
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+        <div className='pn-header__drawer-foot'>
+          {sessionLink}
+          <PillButton to='/tienda' variant='solid' small onClick={closeDrawer}>
+            Tienda Online
+          </PillButton>
+          {socials}
         </div>
       </div>
-    </>
+    </header>
   )
 }
