@@ -44,9 +44,19 @@ test.describe('Navegación global', () => {
     await page.locator('.pn-header__nav').getByRole('link', { name: 'Testimonios' }).click()
     await expect(page).toHaveURL(/\/#testimonios$/)
     await expect(page.locator('#testimonios')).toBeInViewport()
+    // el item clickeado queda subrayado (activo) y "Inicio" no compite
+    await expect(
+      page.locator('.pn-header__nav').getByRole('link', { name: 'Testimonios' })
+    ).toHaveClass(/--active/)
+    await expect(
+      page.locator('.pn-header__nav').getByRole('link', { name: 'Inicio' })
+    ).not.toHaveClass(/--active/)
 
     await page.locator('.pn-header__nav').getByRole('link', { name: 'Por qué acompaño así' }).click()
     await expect(page.locator('#por-que-acompano')).toBeInViewport()
+    await expect(
+      page.locator('.pn-header__nav').getByRole('link', { name: 'Por qué acompaño así' })
+    ).toHaveClass(/--active/)
   })
 
   test('el wordmark del header lleva al inicio (design 6a)', async ({ page }) => {

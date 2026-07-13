@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ReactComponent as InstagramBrand } from '../../assets/images/header/instagram-brands.svg'
 import { ReactComponent as MailBrand } from '../../assets/images/header/mail.svg'
 import { ReactComponent as ShoppingBag } from '../../assets/images/header/shopping-bag.svg'
@@ -23,6 +23,7 @@ const NAV_LINKS = [
 // Tienda Online en pill navy y carrito con contador. Mobile: hamburguesa + drawer.
 export default function Header() {
   const navigate = useNavigate()
+  const { pathname, hash } = useLocation()
   const { cartTotalQuantity } = useSelector((state) => state.cart)
   const patientLogged = useSelector(isLoggedIn)
   const patient = useSelector(getPatient)
@@ -43,14 +44,22 @@ export default function Header() {
     navigate('/carrito')
   }
 
+  // activo: anclas → en el inicio con ese hash; Inicio → inicio sin hash;
+  // páginas → prefijo de ruta
+  const isLinkActive = (link) => {
+    if (link.anchor) return pathname === '/' && hash === link.to.slice(1)
+    if (link.to === '/') return pathname === '/' && hash === ''
+    return pathname.startsWith(link.to)
+  }
+
   const sessionLink = (
-    <NavLink
+    <Link
       className='pn-header__session'
       to={patientLogged ? '/portal' : '/ingresar'}
       onClick={closeDrawer}
     >
       {patientLogged ? `Hola, ${patient?.name}` : 'Iniciar sesión'}
-    </NavLink>
+    </Link>
   )
 
   const socials = (
@@ -87,24 +96,15 @@ export default function Header() {
       </Link>
 
       <nav className='pn-header__nav' aria-label='principal'>
-        {NAV_LINKS.map((link) =>
-          link.anchor ? (
-            <Link key={link.to} to={link.to} className='pn-header__link'>
-              {link.label}
-            </Link>
-          ) : (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === '/'}
-              className={({ isActive }) =>
-                `pn-header__link${isActive ? ' pn-header__link--active' : ''}`
-              }
-            >
-              {link.label}
-            </NavLink>
-          )
-        )}
+        {NAV_LINKS.map((link) => (
+          <Link
+            key={link.to}
+            to={link.to}
+            className={`pn-header__link${isLinkActive(link) ? ' pn-header__link--active' : ''}`}
+          >
+            {link.label}
+          </Link>
+        ))}
       </nav>
 
       <div className='pn-header__actions'>

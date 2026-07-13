@@ -20,13 +20,28 @@ export default function Footer() {
           <div className='footer-container-menu'>
             <ul className='footer-container-menu-ul'>
               <li>
-                <Link to='home' className='footer__link'>
-                  Home
+                <Link to='/' className='footer__link'>
+                  Inicio
                 </Link>
               </li>
               <li>
-                <Link to='/cambios-reales' className='footer__link'>
-                  Cambios reales
+                <Link to='/#por-que-acompano' className='footer__link'>
+                  Por qué acompaño así
+                </Link>
+              </li>
+              <li>
+                <Link to='/#testimonios' className='footer__link'>
+                  Testimonios
+                </Link>
+              </li>
+              <li>
+                <Link to='/tienda' className='footer__link'>
+                  Tienda online
+                </Link>
+              </li>
+              <li>
+                <Link to='/ingresar' className='footer__link'>
+                  Portal de pacientes
                 </Link>
               </li>
               <li>
@@ -37,11 +52,6 @@ export default function Footer() {
               <li>
                 <Link to='/contacto' className='footer__link'>
                   Contacto
-                </Link>
-              </li>
-              <li>
-                <Link to='tienda' className='footer__link'>
-                  Solicitar turno
                 </Link>
               </li>
               <li>
