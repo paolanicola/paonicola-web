@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default function PrimaryButton({ actionText, href, to, onClick }) {
   // Si es un link interno de react-router
-  if (to || (href && href.startsWith('/')) && !onClick) {
+  if (to || ((href && href.startsWith('/')) && !onClick)) {
     return (
       <Link to={to || href} className="primary-button">
         <p>{actionText}</p>

@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux'
 import { ReactComponent as MercadoPago } from '../../assets/images/tienda/mercadopago.svg'
 import {
   setMethodMercadoPago,
-  setMethodDeposit,
 } from '../../features/validators'
 
 function PaymentMethods({ paymentMethodChangedToMercadoPago }) {
@@ -16,10 +15,8 @@ function PaymentMethods({ paymentMethodChangedToMercadoPago }) {
     dispatch(setMethodMercadoPago())
     // No llamamos a paymentMethodChangedToMercadoPago porque ya no usamos el formulario inline
   }
-  
-  const PaymentTrans = () => {
-    dispatch(setMethodDeposit())
-  }
+  // Transferencia está deshabilitada en la UI; al reactivarla:
+  // const PaymentTrans = () => dispatch(setMethodDeposit())
 
   return (
     <div className='payment-container'>
