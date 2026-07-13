@@ -1,28 +1,30 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Kicker from '../../components/ui/Kicker'
-import useAddToCart from '../../hooks/useAddToCart'
+import CompraDirecta from '../../components/CompraDirecta'
 import { getAllProducts, loadProducts } from '../../features/products'
 import { whatsAppNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
-import { TIENDA_COPY, SECTIONS, GENERIC_SECTION } from './tiendaConfig'
-import ProgramSection from './sections/ProgramSection'
+import { TIENDA_COPY, FILTERS, SECTIONS, GENERIC_SECTION } from './tiendaConfig'
+import ProgramasSection from './sections/ProgramasSection'
+import KitCardsSection from './sections/KitCardsSection'
 import MembershipSection from './sections/MembershipSection'
 import RowsSection from './sections/RowsSection'
 
 const SECTION_COMPONENTS = {
-  featured: ProgramSection,
+  programas: ProgramasSection,
+  kitCards: KitCardsSection,
   membership: MembershipSection,
   rows: RowsSection,
   downloads: RowsSection,
 }
 
-// Container: loads the catalog, groups it by category and renders one
-// design section per category, filterable through the chips row.
+// Container (Tienda Rediseño): carga el catálogo, lo agrupa por categoría y
+// renderiza una sección por categoría. Compra directa vía modal — sin carrito.
 export default function Tienda() {
   const dispatch = useDispatch()
-  const onAdd = useAddToCart()
   const [activeFilter, setActiveFilter] = useState(TIENDA_COPY.allFilter)
+  const [buyProduct, setBuyProduct] = useState(null)
   const { allProducts, loading, failed } = useSelector(getAllProducts)
 
   useEffect(() => {
@@ -39,8 +41,8 @@ export default function Tienda() {
     [allProducts]
   )
 
-  // Configured sections first (design order), then any extra category as a
-  // generic rows section so admin-created categories still render.
+  // Secciones configuradas primero (orden del diseño), después cualquier
+  // categoría extra del admin como filas genéricas (solo visibles en "Todo").
   const sections = useMemo(() => {
     const configured = SECTIONS.filter((s) => byCategory[s.category]?.length)
     const known = new Set(SECTIONS.map((s) => s.category))
@@ -50,11 +52,14 @@ export default function Tienda() {
     return [...configured, ...extras]
   }, [byCategory])
 
-  const filters = [TIENDA_COPY.allFilter, ...sections.map((s) => s.category)]
-  const visibleSections =
-    activeFilter === TIENDA_COPY.allFilter
-      ? sections
-      : sections.filter((s) => s.category === activeFilter)
+  const activeCategories = useMemo(() => {
+    const filter = FILTERS.find((f) => f.label === activeFilter)
+    return filter?.categories ? new Set(filter.categories) : null
+  }, [activeFilter])
+
+  const visibleSections = activeCategories
+    ? sections.filter((s) => activeCategories.has(s.category))
+    : sections
 
   if (loading) {
     return <div className='tienda__status'>{TIENDA_COPY.loading}</div>
@@ -76,15 +81,15 @@ export default function Tienda() {
       </header>
 
       <div className='tienda__filters' role='group' aria-label='Filtrar por categoría'>
-        {filters.map((filter) => (
+        {FILTERS.map(({ label }) => (
           <button
-            key={filter}
+            key={label}
             type='button'
-            className={`pn-chip${filter === activeFilter ? ' pn-chip--active' : ''}`}
-            aria-pressed={filter === activeFilter}
-            onClick={() => setActiveFilter(filter)}
+            className={`pn-chip${label === activeFilter ? ' pn-chip--active' : ''}`}
+            aria-pressed={label === activeFilter}
+            onClick={() => setActiveFilter(label)}
           >
-            {filter}
+            {label}
           </button>
         ))}
       </div>
@@ -96,10 +101,15 @@ export default function Tienda() {
             key={section.category}
             section={section}
             products={byCategory[section.category]}
-            onAdd={onAdd}
+            onBuy={setBuyProduct}
+            onAdd={setBuyProduct}
           />
         )
       })}
+
+      {buyProduct && (
+        <CompraDirecta product={buyProduct} onClose={() => setBuyProduct(null)} />
+      )}
     </main>
   )
 }

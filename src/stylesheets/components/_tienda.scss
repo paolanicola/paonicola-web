@@ -21,6 +21,11 @@
     color: inherit;
   }
 
+  // los pills-link no heredan: el color lo define su variante
+  a.pn-pill--solid { color: #fff; }
+  a.pn-pill--outline,
+  a.pn-pill--light { color: $pn-navy; }
+
   &__status {
     font-family: $pn-font;
     text-align: center;
@@ -99,102 +104,295 @@
     flex-direction: column;
   }
 
-  /* ---------- Featured program card (navy) ---------- */
+  &__section-note {
+    font-size: 12px;
+    color: $pn-gray-soft;
+    margin: 12px 0 0;
+  }
+
+  /* ---------- Featured program card (Tienda Rediseño: blanca) ---------- */
   .tienda-featured {
     position: relative;
-    background: $pn-navy;
+    background: $pn-offwhite;
+    border: 1px solid $pn-border;
     border-radius: 20px;
-    padding: 24px;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
     @media (min-width: $pn-bp) {
-      grid-template-columns: 220px 1fr auto;
-      align-items: center;
-      gap: 32px;
-    }
-
-    &__badge {
-      position: absolute;
-      top: -12px;
-      right: 24px;
-      background: $pn-mint;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 12px;
-      @media (min-width: $pn-bp) {
-        right: 32px;
-      }
+      grid-template-columns: 440px 1fr;
     }
 
     &__media img {
       width: 100%;
-      height: 180px;
+      height: 220px;
       object-fit: cover;
-      border-radius: 14px;
       display: block;
       @media (min-width: $pn-bp) {
-        width: 220px;
+        height: 100%;
+        min-height: 340px;
       }
+    }
+
+    &__body {
+      padding: 26px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+      @media (min-width: $pn-bp) {
+        padding: 38px 44px;
+      }
+    }
+
+    &__badges {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    &__badge {
+      background: $pn-rosa-soft;
+      color: $pn-rosa-deep;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    &__name {
+      font-family: $pn-font-serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: $pn-navy;
+      @media (min-width: $pn-bp) {
+        font-size: 28px;
+      }
+    }
+
+    &__tagline {
+      font-size: 15px;
+      font-weight: 700;
+      color: $pn-rosa-deep;
+      margin: 0;
+    }
+
+    &__desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: $pn-body;
+      margin: 0;
+    }
+
+    &__price {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    &__installments {
+      font-size: 13px;
+      color: $pn-gray;
+    }
+
+    &__ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    &__note {
+      font-size: 12px;
+      color: $pn-gray-soft;
+    }
+  }
+
+  /* ---------- Banda navy Programa Grupal ---------- */
+  .tienda-grupal {
+    background: $pn-navy;
+    border-radius: 20px;
+    padding: 26px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+    @media (min-width: $pn-bp) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 38px 44px;
     }
 
     &__info {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 8px;
+    }
+
+    &__kicker {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: $pn-mint-bright;
+      font-weight: 700;
+      text-transform: uppercase;
     }
 
     &__name {
-      font-size: 19px;
-      font-weight: 700;
+      font-family: $pn-font-serif;
+      font-size: 22px;
+      font-weight: 600;
       color: #fff;
-      @media (min-width: $pn-bp) {
-        font-size: 21px;
+
+      &:hover {
+        color: $pn-mint-bright;
       }
     }
 
     &__desc {
       font-size: 14px;
-      line-height: 1.65;
+      line-height: 1.7;
       color: $pn-navy-muted;
-      max-width: 480px;
+      max-width: 520px;
+      margin: 0;
     }
 
     &__buy {
       display: flex;
       flex-direction: column;
-      gap: 6px;
       align-items: flex-start;
+      gap: 10px;
+      flex-shrink: 0;
       @media (min-width: $pn-bp) {
         align-items: flex-end;
       }
     }
 
-    &__installments {
+    &__price {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    &__cupos {
       font-size: 12px;
       color: $pn-mint-bright;
-      white-space: nowrap;
+      font-weight: 700;
+    }
+
+    &__ctas {
+      display: flex;
+      gap: 10px;
+      align-items: center;
     }
 
     &__cta {
-      margin-top: 6px;
-    }
+      background: #fff;
+      color: $pn-navy;
+      border: none;
+      font-family: $pn-font;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 13px 24px;
+      border-radius: 24px;
+      cursor: pointer;
 
-    &__note {
-      font-size: 11px;
-      color: #9fb0ac;
-      max-width: 200px;
-      @media (min-width: $pn-bp) {
-        text-align: right;
-        max-width: 180px;
+      &:hover {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+        transform: translateY(-1px);
       }
     }
 
-    // white featured price
-    .tienda-price__current {
-      color: #fff;
+    &__more {
+      background: transparent;
+      color: $pn-mint-bright;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: underline;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+  /* ---------- Kits en tarjetas ---------- */
+  .tienda-kits {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    @media (min-width: $pn-bp) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .tienda-kit {
+    background: $pn-offwhite;
+    border: 1px solid $pn-border;
+    border-radius: 16px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &__promo {
+      align-self: flex-start;
+      background: $pn-mint-soft;
+      color: $pn-mint-deep;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    &__name {
+      font-family: $pn-font-serif;
+      font-size: 19px;
+      font-weight: 600;
+      color: $pn-navy;
+
+      &:hover {
+        color: $pn-mint-deep;
+      }
+    }
+
+    &__desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: $pn-body;
+      flex: 1;
+      margin: 0;
+    }
+
+    &__buy {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+      gap: 12px;
+    }
+
+    &__cta {
+      background: transparent;
+      color: $pn-navy;
+      border: 1px solid $pn-navy;
+      font-family: $pn-font;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(31, 58, 68, 0.06);
+      }
     }
   }
 

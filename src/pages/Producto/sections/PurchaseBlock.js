@@ -1,14 +1,12 @@
 import React from 'react'
 import PillButton from '../../../components/ui/PillButton'
 import ProductPrice from '../../Tienda/ui/ProductPrice'
-import useAddToCart from '../../../hooks/useAddToCart'
 
 /**
- * Closing buy block (designs 12a/17a/21a): optional badge/tagline, live
- * price (promo-aware, from the API product), CTA and WhatsApp note.
+ * Closing buy block de los kits/productos genéricos: badge/tagline opcional,
+ * precio vivo (con promo, desde la API), CTA de compra directa y nota.
  */
-export default function PurchaseBlock({ product, purchase }) {
-  const onAdd = useAddToCart()
+export default function PurchaseBlock({ product, purchase, onBuy }) {
   return (
     <section className='producto__purchase' data-testid='purchase-block'>
       {purchase.badge && (
@@ -23,7 +21,7 @@ export default function PurchaseBlock({ product, purchase }) {
           {product.important_note}
         </span>
       )}
-      <PillButton variant='solid' onClick={() => onAdd(product)}>
+      <PillButton variant='solid' onClick={onBuy}>
         {purchase.cta}
       </PillButton>
       {purchase.note && (

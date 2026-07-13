@@ -29,14 +29,15 @@ test.describe('Panel de administración', () => {
     await expect(page.locator('body.active_admin')).toBeVisible()
   }
 
-  // Borra todas las filas del index `url` que contengan `rowText` (con confirm).
+  // Borra todas las filas del index `url` que contengan `rowText`,
+  // confirmando en el modal propio del rediseño (.pn-modal).
   async function deleteAllRows(page, url, rowText) {
     for (let i = 0; i < 5; i++) {
       await page.goto(url)
       const row = page.locator('tbody tr', { hasText: rowText }).first()
       if ((await row.count()) === 0) return
-      page.once('dialog', (d) => d.accept())
       await row.getByRole('link', { name: /eliminar|delete/i }).click()
+      await page.locator('.pn-modal__ok').click()
       await page.waitForLoadState('networkidle')
     }
   }
@@ -124,11 +125,12 @@ test.describe('Panel de administración', () => {
     await page.goto(
       `${ADMIN}/admin/library_categories?q%5Bname_cont%5D=${encodeURIComponent(categoryName(testInfo))}`
     )
-    page.once('dialog', (d) => d.accept())
     await page
       .locator('tbody tr', { hasText: categoryName(testInfo) })
       .getByRole('link', { name: /eliminar|delete/i })
       .click()
+    // modal de confirmación del rediseño
+    await page.locator('.pn-modal__ok').click()
 
     await expect(page.getByText('No se puede eliminar')).toBeVisible()
     // sigue existiendo

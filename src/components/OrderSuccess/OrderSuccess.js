@@ -1,175 +1,110 @@
 import { useEffect, useState, useRef } from 'react'
-import {
-  isoDateToSpanishString,
-  formatNumber,
-  getDisplayPaymentMethod,
-} from '../../utils/utils'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { resetCartState } from '../../features/checkout/checkoutSlice'
 import { deleteCartItems } from '../../features/cart/cartSlice'
 import { resetStep } from '../../features/stepsCheckout/stepsSlice'
-import { whatsAppUrl } from '../../utils/utils'
-import { whatsAppNumber } from '../../utils/utils'
+import {
+  isoDateToSpanishString,
+  formatNumber,
+  whatsAppUrl,
+  whatsAppNumber,
+} from '../../utils/utils'
 
+// Página post-pago (Tienda Rediseño): check + "Qué sigue" en pasos.
+// Sigue viviendo en /checkout/confirm/:orderId — acá vuelve Mercado Pago.
 const OrderSuccess = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { orderId } = useParams()
   const [orderData, setOrderData] = useState(null)
-  
-  // Ref para evitar limpiar múltiples veces
   const cartCleared = useRef(false)
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_BASE_URL}/orders/${orderId}`)
-      .then((response) => {
-        setOrderData(response.data)
-      })
-      .catch((error) => {
-        navigate('/error')
-      })
+      .then((response) => setOrderData(response.data))
+      .catch(() => navigate('/error'))
   }, [orderId, navigate])
 
-  // Limpiar carrito cuando la orden está confirmada
+  // Limpia el carrito legacy apenas la orden queda confirmada
   useEffect(() => {
     if (orderData && orderData.status === 'done' && !cartCleared.current) {
-      console.log('✅ Orden confirmada (done), limpiando carrito...')
-      
-      // Limpiar carrito
       dispatch(deleteCartItems())
       dispatch(resetStep())
       dispatch(resetCartState())
-      
-      // Marcar como limpiado
       cartCleared.current = true
-      
-      console.log('🧹 Carrito limpiado')
     }
   }, [orderData, dispatch])
 
-  if (orderData === null) return <div className='spinner'></div>
-  else {
-    const spanishPurchaseDate = isoDateToSpanishString(orderData.created_at)
-    const spanishAppointmentDate = orderData.appointment_date 
-      ? isoDateToSpanishString(orderData.appointment_date)
-      : null
-    const isMercadoPago = orderData.payment_type === 'mercadopago'
-    const isPaid = orderData.status === 'done' // Cambiado de 'paid' a 'done'
+  if (orderData === null) return <div className='spinner' />
 
-    return (
-      <section className='confirm'>
-        <br/>
-        <br/>
-        <br/>
-        <h3 className='confirm__h3'>
-          {isPaid || isMercadoPago 
-            ? '¡Tu compra fue realizada con éxito!' 
-            : '¡Tu pedido fue registrado!'}
-        </h3>
-        <div className='confirm__data-sale'>
-          <div className='data__nro '>
-            <h6 className='data__nro-title'>NÚMERO DE PEDIDO:</h6>
-            <h4 className='data__nro-number'>#{orderData.order_id}</h4>
-          </div>
-          <ul className='data__list'>
-            <li className='data__list-li'>
-              <p className='data__list-title'>FECHA DE COMPRA</p>
-              <p className='data__list-description'>
-                {spanishPurchaseDate.split('-')[0]}
-              </p>
-            </li>
-            {spanishAppointmentDate && (
-              <li className='data__list-li'>
-                <p className='data__list-title'>FECHA DEL TURNO</p>
-                <p className='data__list-description'>
-                  {spanishAppointmentDate}
-                </p>
-              </li>
-            )}
-            <li className='data__list-li'>
-              <p className='data__list-title'>EMAIL</p>
-              <p className='data__list-description'>
-                {orderData.patient.email}
-              </p>
-            </li>
-            <li className='data__list-li'>
-              <p className='data__list-title'>TOTAL</p>
-              <p className='data__list-description'>
-                $ {formatNumber(orderData.total_price)}
-              </p>
-            </li>
-            <li className='data__list-li-not'>
-              <p className='data__list-title'>MÉTODO DE PAGO</p>
-              <p className='data__list-description'>
-                {getDisplayPaymentMethod(orderData.payment_type)}
-              </p>
-            </li>
-            {orderData.status && (
-              <li className='data__list-li-not'>
-                <p className='data__list-title'>ESTADO</p>
-                <p className='data__list-description'>
-                  {orderData.status === 'done' ? 'Completado' : 
-                   orderData.status === 'pending' ? 'Pendiente' : 
-                   orderData.status === 'canceled' ? 'Cancelado' : 
-                   orderData.status}
-                </p>
-              </li>
-            )}
-          </ul>
+  const isMercadoPago = orderData.payment_type === 'mercadopago'
+  const isPaid = orderData.status === 'done'
+  const isPendingDeposit = !isMercadoPago && orderData.status !== 'done'
+  const appointmentDate = orderData.appointment_date
+    ? isoDateToSpanishString(orderData.appointment_date)
+    : null
+
+  const steps = [
+    'Te escribimos hoy mismo por WhatsApp para darte la bienvenida.',
+    appointmentDate
+      ? `Tu primer encuentro quedó agendado: ${appointmentDate}. Recibís el link de la videollamada por WhatsApp.`
+      : 'El acceso al material se habilita apenas se acredita el pago — revisá tu correo (y la casilla de spam).',
+    appointmentDate
+      ? 'Ya tenés acceso a la biblioteca de material del portal durante todo el programa.'
+      : `Cualquier duda, escribinos por WhatsApp: ${whatsAppNumber}.`,
+  ]
+
+  return (
+    <main className='gracias' data-testid='gracias'>
+      <div className='gracias__check' aria-hidden='true'>✓</div>
+      <h1 className='gracias__title'>
+        {isPendingDeposit
+          ? '¡Tu pedido fue registrado!'
+          : appointmentDate
+            ? '¡Listo! Tu lugar está reservado.'
+            : '¡Listo! Ya es tuyo.'}
+      </h1>
+      <p className='gracias__subtitle'>
+        Pedido #{orderData.order_id} · ${formatNumber(orderData.total_price)}
+        {isPaid && isMercadoPago && ' — pago acreditado vía Mercado Pago'}
+        {orderData.patient?.email && ` · ${orderData.patient.email}`}
+      </p>
+
+      {isPendingDeposit ? (
+        <div className='gracias__card'>
+          <span className='gracias__card-kicker'>Cómo completar tu compra</span>
+          <p className='gracias__transfer'>
+            Realizá la transferencia y envianos el comprobante por WhatsApp:
+          </p>
+          <p className='gracias__cbu'>
+            CVU: 0000003100040321195999
+            <br />
+            Titular: PAOLA VANESA, NICOLA — Mercado Pago
+          </p>
+          <a className='gracias__whatsapp' href={whatsAppUrl}>
+            Enviar comprobante · {whatsAppNumber}
+          </a>
         </div>
+      ) : (
+        <div className='gracias__card'>
+          <span className='gracias__card-kicker'>Qué sigue</span>
+          {steps.map((text, i) => (
+            <div key={i} className='gracias__step'>
+              <span className='gracias__step-n'>{i + 1}</span>
+              <span className='gracias__step-text'>{text}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
-        {/* Mostrar instrucciones de transferencia solo si NO es Mercado Pago Y el pago NO está completado */}
-        {!isMercadoPago && orderData.status !== 'done' && (
-          <div className='confirm__data-transfer'>
-            <p className='data__transfer-title '>
-              Para hacer efectiva tu compra, realizá el pago a la siguiente cuenta:
-            </p>
-            <h6 className='data__transfer-cbu'>
-              CVU: 0000003100040321195999 <br />
-              Titular: PAOLA VANESA, NICOLA <br />
-              Mercado Pago <br />
-            </h6>
-            <h5 className='data__transfer-text-important '>
-              IMPORTANTE: Si no recibís un e-mail de confirmación, por favor,
-              revisá tu casilla de spam.
-              <br />
-              Ante cualquier inconveniente, escribime por WhatsApp:
-              <div className='confirm__data-transfer'>
-                <a href={whatsAppUrl} className='data__transfer-email'>
-                  <h6 className='data__transfer-title'>🌐 {whatsAppNumber}</h6>
-                </a>
-              </div>
-            </h5>
-          </div>
-        )}
-
-        {/* Mensaje especial para Mercado Pago o pagos completados */}
-        {(isMercadoPago || isPaid) && orderData.status === 'done' && (
-          <div className='confirm__data-transfer'>
-            <h5 className='data__transfer-text-important '>
-              ¡Gracias por tu compra! Tu pago fue procesado exitosamente.
-              <br />
-              Recibirás un email de confirmación en los próximos minutos.
-              <br />
-              Si no recibís el correo, revisá tu casilla de spam.
-              <br />
-              <br />
-              Ante cualquier inconveniente, escribime por WhatsApp:
-              <div className='confirm__data-transfer'>
-                <a href={whatsAppUrl} className='data__transfer-email'>
-                  <h6 className='data__transfer-title'>🌐 {whatsAppNumber}</h6>
-                </a>
-              </div>
-            </h5>
-          </div>
-        )}
-      </section>
-    )
-  }
+      <Link to='/tienda' className='gracias__back'>
+        Volver a la tienda
+      </Link>
+    </main>
+  )
 }
 
 export default OrderSuccess

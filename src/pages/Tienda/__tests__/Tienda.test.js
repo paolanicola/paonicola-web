@@ -3,24 +3,42 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
+import axios from 'axios'
 import Tienda from '../Tienda'
 import productsReducer from '../../../features/products'
 import cartReducer from '../../../features/cart/cartSlice'
 import stepReducer from '../../../features/stepsCheckout/stepsSlice'
 
+jest.mock('axios')
+
 const PRODUCTS = [
   {
     id: 1,
     name: 'Método Regula — programa 1 a 1 de 12 semanas',
-    description: 'Consulta inicial, plan personalizado.',
-    important_note: 'o 3 cuotas de $185.000',
+    description: 'Acompañamiento personalizado de 12 semanas.',
+    important_note: 'pago único',
     price: 499000,
     active_promo: false,
     promo_price: null,
     download_url: null,
     stock: 50,
     category: 'Programa online',
+    requires_appointment: true,
     thumbnail: '/img/tienda/metodo-regula.png',
+  },
+  {
+    id: 5,
+    name: 'Programa Grupal Regula',
+    description: 'Regulá tu alimentación, tu estrés y tu energía en 4 semanas.',
+    important_note: 'Precio especial primera edición',
+    price: 99000,
+    active_promo: false,
+    promo_price: null,
+    download_url: null,
+    stock: 12,
+    category: 'Programa online',
+    requires_appointment: false,
+    thumbnail: '/img/tienda/grupal.png',
   },
   {
     id: 2,
@@ -33,6 +51,7 @@ const PRODUCTS = [
     download_url: null,
     stock: 999,
     category: 'Membresía',
+    requires_appointment: false,
     thumbnail: '/img/tienda/habitos.png',
   },
   {
@@ -45,6 +64,7 @@ const PRODUCTS = [
     download_url: null,
     stock: 999,
     category: 'Kits',
+    requires_appointment: false,
     thumbnail: '/img/tienda/kit-rendimiento.png',
   },
   {
@@ -57,6 +77,7 @@ const PRODUCTS = [
     download_url: '/descargables/compras-saludables.pdf',
     stock: 999,
     category: 'Descargable gratuito',
+    requires_appointment: false,
     thumbnail: '/img/tienda/compras.png',
   },
 ]
@@ -90,20 +111,27 @@ function renderTienda() {
   return store
 }
 
-describe('Tienda', () => {
-  it('renders header and one section per category', () => {
+describe('Tienda (Tienda Rediseño)', () => {
+  beforeEach(() => {
+    axios.get.mockResolvedValue({ data: [] })
+  })
+
+  it('renders header and the design sections', () => {
     renderTienda()
     expect(
       screen.getByRole('heading', { name: 'Elegí cómo empezar' })
     ).toBeInTheDocument()
     expect(screen.getByTestId('tienda-featured')).toBeInTheDocument()
+    expect(screen.getByTestId('tienda-grupal')).toBeInTheDocument()
     expect(screen.getByTestId('tienda-membership')).toBeInTheDocument()
-    expect(screen.getAllByTestId('tienda-row')).toHaveLength(2) // kit + descargable
+    expect(screen.getAllByTestId('tienda-kit')).toHaveLength(1)
+    expect(screen.getAllByTestId('tienda-row')).toHaveLength(1) // descargable
   })
 
-  it('shows the installments note on the featured program', () => {
+  it('shows the payment note and cupos on programas', () => {
     renderTienda()
-    expect(screen.getByText('o 3 cuotas de $185.000')).toBeInTheDocument()
+    expect(screen.getByText('pago único')).toBeInTheDocument()
+    expect(screen.getByText('Quedan 12 cupos')).toBeInTheDocument()
   })
 
   it('shows promo strikethrough pricing on kits', () => {
@@ -114,23 +142,47 @@ describe('Tienda', () => {
 
   it('renders a direct download link for free downloadables', () => {
     renderTienda()
-    const link = screen.getByRole('link', { name: 'Descargar' })
+    const link = screen.getByRole('link', { name: 'Descargar gratis' })
     expect(link).toHaveAttribute('href', '/descargables/compras-saludables.pdf')
   })
 
-  it('filters sections through the chips', () => {
+  it('filters sections through the design chips', () => {
     renderTienda()
     fireEvent.click(screen.getByRole('button', { name: 'Kits' }))
     expect(screen.queryByTestId('tienda-featured')).not.toBeInTheDocument()
-    expect(screen.getAllByTestId('tienda-row')).toHaveLength(1)
-    fireEvent.click(screen.getByRole('button', { name: 'Todo' }))
+    expect(screen.queryByTestId('tienda-membership')).not.toBeInTheDocument()
+    expect(screen.getAllByTestId('tienda-kit')).toHaveLength(1)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Programas' }))
     expect(screen.getByTestId('tienda-featured')).toBeInTheDocument()
+    expect(screen.getByTestId('tienda-grupal')).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Gratis' }))
+    expect(screen.getAllByTestId('tienda-row')).toHaveLength(1)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Todo' }))
+    expect(screen.getByTestId('tienda-membership')).toBeInTheDocument()
   })
 
-  it('adds a product to the cart', () => {
+  it('opens the direct-buy modal from a kit (paso 2, sin calendario)', () => {
+    renderTienda()
+    fireEvent.click(screen.getByRole('button', { name: 'Comprar' }))
+    expect(screen.getByTestId('compra-directa')).toBeInTheDocument()
+    expect(screen.getByText('Compra directa · sin carrito')).toBeInTheDocument()
+    expect(screen.getByTestId('cd-pay')).toBeDisabled() // sin datos aún
+  })
+
+  it('opens the calendar step for the 1:1 program', () => {
+    renderTienda()
+    fireEvent.click(screen.getByRole('button', { name: 'Empezar ahora' }))
+    expect(screen.getByTestId('compra-directa')).toBeInTheDocument()
+    expect(screen.getByText('Elegí tu primer turno')).toBeInTheDocument()
+    expect(screen.getByText('Paso 1 de 2')).toBeInTheDocument()
+  })
+
+  it('never adds to the legacy cart', () => {
     const store = renderTienda()
-    fireEvent.click(screen.getByRole('button', { name: 'Agregar al carrito' }))
-    expect(store.getState().cart.cartItems).toHaveLength(1)
-    expect(store.getState().cart.cartItems[0].id).toBe(1)
+    fireEvent.click(screen.getByRole('button', { name: 'Comprar' }))
+    expect(store.getState().cart.cartItems).toHaveLength(0)
   })
 })

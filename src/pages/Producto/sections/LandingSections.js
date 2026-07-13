@@ -1,14 +1,49 @@
 import React from 'react'
 import Kicker from '../../../components/ui/Kicker'
+import ProductPrice from '../../Tienda/ui/ProductPrice'
 
-/** Hero: kicker + headline + tagline + product image (designs 12a/17a/21a). */
-export function LandingHero({ landing, product }) {
+/**
+ * Hero: kicker + headline (+ sub) + precio/badge + CTA de compra directa +
+ * imagen (Tienda Rediseño; antes designs 12a/17a/21a).
+ */
+export function LandingHero({ landing, product, onBuy }) {
   return (
     <section className='producto__hero'>
       <div className='producto__hero-copy'>
         <Kicker>{landing.kicker}</Kicker>
         <h1 className='producto__headline'>{landing.headline}</h1>
         {landing.tagline && <p className='producto__tagline'>{landing.tagline}</p>}
+        {landing.subheadline && (
+          <p className='producto__subheadline'>{landing.subheadline}</p>
+        )}
+        {landing.heroCta && (
+          <>
+            <div className='producto__hero-price'>
+              <ProductPrice product={product} size='lg' />
+              {product.important_note &&
+                product.important_note.toLowerCase() !==
+                  landing.heroBadge?.toLowerCase() && (
+                  <span>{product.important_note}</span>
+                )}
+              {landing.heroBadge && (
+                <span className='producto__hero-badge'>{landing.heroBadge}</span>
+              )}
+            </div>
+            <div className='producto__hero-ctas'>
+              <button
+                type='button'
+                className='producto__hero-cta'
+                data-testid='hero-buy'
+                onClick={onBuy}
+              >
+                {landing.heroCta}
+              </button>
+              {landing.heroNote && (
+                <span className='producto__hero-note'>{landing.heroNote}</span>
+              )}
+            </div>
+          </>
+        )}
       </div>
       <img
         className='producto__hero-img'
@@ -49,7 +84,10 @@ export function PhilosophyBand({ paragraphs }) {
     <section className='producto__philosophy'>
       <div className='producto__philosophy-inner'>
         {paragraphs.map((p, i) => (
-          <p key={i} className={`producto__navy-p${p.lead ? ' producto__navy-p--lead' : ''}`}>
+          <p
+            key={i}
+            className={`producto__navy-p${p.lead ? ' producto__navy-p--lead' : ''}${p.accent ? ' producto__navy-p--accent' : ''}`}
+          >
             {p.text}
           </p>
         ))}

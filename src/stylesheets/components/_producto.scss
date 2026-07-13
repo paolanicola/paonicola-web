@@ -322,4 +322,356 @@
       color: $pn-gray-soft;
     }
   }
+
+  /* ---------- Tienda Rediseño: hero con precio + CTA ---------- */
+  &__subheadline {
+    font-size: 16px;
+    line-height: 1.7;
+    color: $pn-body;
+    margin: 0;
+  }
+
+  &__hero-price {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 6px;
+
+    span {
+      font-size: 13px;
+      color: $pn-gray;
+    }
+  }
+
+  &__hero-badge {
+    background: $pn-rosa-soft;
+    color: $pn-rosa-deep;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  &__hero-ctas {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  &__hero-cta,
+  &__closing-cta {
+    background: $pn-navy;
+    color: #fff;
+    border: none;
+    font-family: $pn-font;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 15px 28px;
+    border-radius: 26px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 8px 20px rgba(31, 58, 68, 0.24);
+      transform: translateY(-1px);
+    }
+  }
+
+  &__hero-note {
+    font-size: 12px;
+    color: $pn-gray-soft;
+    max-width: 220px;
+  }
+
+  &__navy-p--accent {
+    color: $pn-mint-bright !important;
+  }
+
+  &__section-title {
+    font-family: $pn-font-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: $pn-navy;
+    margin: 0 0 20px;
+    @media (min-width: $pn-bp) {
+      font-size: 26px;
+    }
+  }
+
+  /* ---------- Qué incluye en tarjetas ---------- */
+  &__inc-cards {
+    background: $pn-offwhite;
+    @include pn-band;
+  }
+
+  &__inc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 968px;
+    @media (min-width: $pn-bp) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &__inc-card {
+    background: $pn-cream;
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__inc-card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__inc-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: $pn-navy;
+  }
+
+  &__inc-card-detail {
+    font-size: 14px;
+    line-height: 1.6;
+    color: $pn-body;
+    padding-left: 26px;
+  }
+
+  /* ---------- Testimonios ---------- */
+  &__testimonials {
+    @include pn-band;
+  }
+
+  &__testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 4px;
+    @media (min-width: $pn-bp) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  &__testimonial {
+    background: $pn-offwhite;
+    border: 1px solid $pn-border;
+    border-radius: 16px;
+    padding: 26px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+
+    blockquote {
+      font-size: 14px;
+      line-height: 1.7;
+      color: $pn-navy-soft;
+      font-style: italic;
+      margin: 0;
+      flex: 1;
+    }
+
+    figcaption {
+      font-size: 13px;
+      font-weight: 700;
+      color: $pn-navy;
+    }
+  }
+
+  &__testimonial-quote {
+    font-family: $pn-font-serif;
+    font-size: 30px;
+    color: $pn-rosa;
+    line-height: 0.5;
+    margin-top: 8px;
+  }
+
+  /* ---------- FAQ acordeón ---------- */
+  &__faqs {
+    @include pn-band;
+    max-width: 760px;
+  }
+
+  &__faqs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__faq {
+    background: $pn-offwhite;
+    border: 1px solid $pn-border;
+    border-radius: 14px;
+    overflow: hidden;
+
+    button {
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: $pn-font;
+      font-size: 15px;
+      font-weight: 700;
+      color: $pn-navy;
+      padding: 18px 24px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    p {
+      margin: 0;
+      padding: 0 24px 18px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: $pn-body;
+    }
+  }
+
+  &__faq-mark {
+    color: $pn-mint;
+    font-size: 18px;
+  }
+
+  /* ---------- Cierre navy de compra ---------- */
+  &__closing {
+    background: $pn-navy;
+    @include pn-band;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+
+  &__closing-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: $pn-rosa-soft;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  &__closing-title {
+    font-family: $pn-font-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    max-width: 620px;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  &__closing-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+
+    .tienda-price__current {
+      color: #fff;
+    }
+
+    span {
+      font-size: 14px;
+      color: $pn-navy-muted;
+    }
+  }
+
+  &__closing-cta {
+    background: #fff;
+    color: $pn-navy;
+
+    &:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  &__closing-note {
+    font-size: 12px;
+    color: $pn-gray-soft;
+  }
+
+  /* ---------- Cross link grupal → 1:1 ---------- */
+  &__crosslink {
+    padding: 0 22px 40px;
+    font-size: 14px;
+    color: $pn-body;
+    @media (min-width: $pn-bp) {
+      padding: 0 56px 50px;
+    }
+
+    a {
+      color: $pn-mint-deep;
+      font-weight: 700;
+    }
+  }
+
+  /* ---------- Barra sticky de compra ---------- */
+  &__sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $pn-offwhite;
+    border-top: 1px solid $pn-border;
+    padding: 12px 22px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 -4px 16px rgba(31, 58, 68, 0.08);
+    z-index: 100;
+    @media (min-width: $pn-bp) {
+      padding: 12px 56px;
+    }
+  }
+
+  &__sticky-info {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  &__sticky-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: $pn-navy;
+  }
+
+  &__sticky-note {
+    font-size: 12px;
+    color: $pn-gray;
+  }
+
+  &__sticky-cta {
+    background: $pn-navy;
+    color: #fff;
+    border: none;
+    font-family: $pn-font;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 22px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 6px 16px rgba(31, 58, 68, 0.24);
+    }
+  }
 }
+

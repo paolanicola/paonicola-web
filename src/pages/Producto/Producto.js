@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import {
@@ -15,19 +15,29 @@ import {
   ChecklistGrid,
   IncludesList,
 } from './sections/LandingSections'
+import {
+  IncludesCards,
+  TestimonialsStrip,
+  FaqAccordion,
+  ClosingBand,
+  StickyBar,
+  CrossLink,
+} from './sections/LandingExtras'
 import PurchaseBlock from './sections/PurchaseBlock'
+import CompraDirecta from '../../components/CompraDirecta'
 import Kicker from '../../components/ui/Kicker'
 
-const GENERIC_PURCHASE = { cta: 'Agregar al carrito' }
+const GENERIC_PURCHASE = { cta: 'Comprar' }
 
-// Product page: flagship products render their full landing (designs
-// 12a/17a/21a); any other product falls back to a generic detail built
-// from the API fields only.
+// Product page (Tienda Rediseño): los productos insignia renderizan su
+// landing completa; el resto cae a un detalle genérico armado desde la API.
+// Toda compra abre el modal de compra directa — sin carrito.
 export default function Producto() {
   const { productId } = useParams()
   const dispatch = useDispatch()
   const product = useSelector(getCurrentProduct)
   const loading = useSelector(isLoadingProduct)
+  const [buying, setBuying] = useState(false)
 
   useEffect(() => {
     dispatch(loadProduct(productId))
@@ -38,6 +48,7 @@ export default function Producto() {
   }
 
   const landing = getLanding(product.name)
+  const openBuy = () => setBuying(true)
 
   return (
     <main className='producto'>
@@ -49,13 +60,32 @@ export default function Producto() {
 
       {landing ? (
         <>
-          <LandingHero landing={landing} product={product} />
+          <LandingHero landing={landing} product={product} onBuy={openBuy} />
           <SignalsBlock landing={landing} />
           <PhilosophyBand paragraphs={landing.philosophy} />
           <AfterPhilosophy paragraphs={landing.afterPhilosophy} />
           <ChecklistGrid checklist={landing.checklist} />
+          <IncludesCards includesCards={landing.includesCards} />
           <IncludesList includes={landing.includes} />
-          <PurchaseBlock product={product} purchase={landing.purchase} />
+          <CrossLink crossLink={landing.includes?.crossLink} />
+          <TestimonialsStrip testimonials={landing.testimonials} />
+          <FaqAccordion faqs={landing.faqs} />
+          <ClosingBand closing={landing.closing} product={product} onBuy={openBuy} />
+          {landing.purchase && (
+            <PurchaseBlock
+              product={product}
+              purchase={landing.purchase}
+              onBuy={openBuy}
+            />
+          )}
+          {landing.sticky && (
+            <StickyBar
+              product={product}
+              cta={landing.closing?.cta || landing.heroCta || 'Comprar'}
+              onBuy={openBuy}
+              hidden={buying}
+            />
+          )}
         </>
       ) : (
         <>
@@ -73,8 +103,16 @@ export default function Producto() {
               alt={product.name}
             />
           </section>
-          <PurchaseBlock product={product} purchase={GENERIC_PURCHASE} />
+          <PurchaseBlock
+            product={product}
+            purchase={GENERIC_PURCHASE}
+            onBuy={openBuy}
+          />
         </>
+      )}
+
+      {buying && (
+        <CompraDirecta product={product} onClose={() => setBuying(false)} />
       )}
     </main>
   )

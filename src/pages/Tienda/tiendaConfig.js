@@ -1,7 +1,6 @@
-// Copy + section layout for the redesigned Tienda (design Turno 11a).
-// Sections render in this order when the category has products; categories
-// not listed here fall back to a generic rows section, so new categories
-// created in the admin still show up.
+// Copy + layout de la Tienda rediseñada ("Tienda Rediseño.dc.html").
+// Las secciones se renderizan en este orden cuando la categoría tiene
+// productos; categorías nuevas del admin caen a una sección de filas genérica.
 
 export const TIENDA_COPY = {
   kicker: 'Tienda',
@@ -11,15 +10,43 @@ export const TIENDA_COPY = {
   loading: 'Cargando productos ...',
 }
 
+// Filtros del diseño (no son 1:1 con las categorías del admin).
+export const FILTERS = [
+  { label: 'Todo' },
+  { label: 'Programas', categories: ['Programa online'] },
+  { label: 'Kits', categories: ['Kits'] },
+  { label: 'Gratis', categories: ['Descargable gratuito'] },
+]
+
 export const SECTIONS = [
   {
     category: 'Programa online',
-    variant: 'featured',
-    badge: 'Más elegido',
-    cta: 'Agregar al carrito',
-    note: 'Después de comprar, coordinamos tu turno por WhatsApp',
+    variant: 'programas',
+    // tarjeta destacada = el producto con primer turno (Método 1:1)
+    featured: {
+      badge: 'Más elegido',
+      kicker: 'Programa 1 a 1 · 12 semanas',
+      tagline: 'La improvisación termina acá.',
+      detailCta: 'Conocer el programa',
+      buyCta: 'Empezar ahora',
+      note: 'Después de comprar, elegís tu primer turno acá mismo',
+    },
+    // banda navy = el resto de los programas (Grupal Regula)
+    band: {
+      kicker: 'Programa grupal · 4 semanas',
+      buyCta: 'Sumarme al grupal',
+      detailCta: 'Conocer más',
+    },
   },
   {
+    category: 'Kits',
+    variant: 'kitCards',
+    hint: 'acceso inmediato',
+    cta: 'Comprar',
+  },
+  {
+    // fuera de los filtros del diseño pero visible en "Todo": el upsell del
+    // portal manda acá a los pacientes que quieren seguir con el material
     category: 'Membresía',
     variant: 'membership',
     icon: '🗝️',
@@ -27,16 +54,12 @@ export const SECTIONS = [
     priceSuffix: '/mes',
   },
   {
-    category: 'Kits',
-    variant: 'rows',
-    hint: 'acceso inmediato',
-    cta: 'Agregar',
-  },
-  {
     category: 'Descargable gratuito',
     variant: 'downloads',
-    cta: 'Descargar',
+    kicker: 'Empezá gratis',
+    cta: 'Descargar gratis',
+    note: 'Descarga directa — sin checkout ni registro.',
   },
 ]
 
-export const GENERIC_SECTION = { variant: 'rows', cta: 'Agregar' }
+export const GENERIC_SECTION = { variant: 'rows', cta: 'Comprar' }
