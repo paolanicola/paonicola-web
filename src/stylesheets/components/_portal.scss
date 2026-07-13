@@ -773,3 +773,133 @@
     }
   }
 }
+
+/* ---------- Buscador (Fase D, barra de 8a/9a) ---------- */
+.portal__searchbar {
+  padding: 14px 22px 0;
+  @media (min-width: $pn-bp) {
+    padding: 0 56px;
+    margin-top: -46px; // pegado al topbar en desktop
+    max-width: 480px;
+  }
+}
+
+.portal-search {
+  position: relative;
+
+  &__input {
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid $pn-border;
+    border-radius: 24px;
+    padding: 12px 20px;
+    font-family: $pn-font;
+    font-size: 13px;
+    color: $pn-navy;
+    &::placeholder {
+      color: #b7bfbd;
+    }
+    &:focus {
+      outline: none;
+      border-color: $pn-mint;
+    }
+  }
+
+  &__results {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: $pn-offwhite;
+    border: 1px solid $pn-border;
+    border-radius: 16px;
+    box-shadow: 0 16px 40px rgba(31, 58, 68, 0.14);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    z-index: 40;
+    max-height: 340px;
+    overflow-y: auto;
+  }
+
+  &__empty {
+    padding: 12px 14px;
+    font-size: 13px;
+    color: $pn-gray;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: none;
+    border: 0;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-family: $pn-font;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      background: $pn-cream;
+    }
+
+    &--locked .portal-search__title {
+      color: #9a9488;
+    }
+  }
+
+  &__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: $pn-navy;
+  }
+
+  &__meta {
+    font-size: 12px;
+    color: $pn-gray-soft;
+  }
+
+  &__state {
+    font-size: 12px;
+    font-weight: 600;
+    color: $pn-mint;
+    white-space: nowrap;
+  }
+}
+
+/* ---------- Crear acceso (panel único centrado) ---------- */
+.ingresar__panel--solo {
+  grid-column: 1 / -1;
+  min-height: 60vh;
+}
+
+.ingresar__link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: $pn-mint-deep;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.ingresar__sent {
+  font-size: 13px;
+  color: $pn-mint-deep;
+  background: $pn-mint-soft;
+  border-radius: 10px;
+  padding: 10px 14px;
+}

@@ -39,6 +39,26 @@ test.describe('Producto landing pages', () => {
     ).toBeVisible()
   })
 
+  test('un producto sin landing cae al detalle genérico', async ({ page }) => {
+    // la Membresía no tiene landing propia → layout genérico con precio y CTA
+    const res = await page.request.get('http://localhost:3001/api/products')
+    const membresia = (await res.json()).find((p) =>
+      p.name.startsWith('Acceso a la biblioteca')
+    )
+    await page.goto(`/producto/${membresia.id}`)
+
+    await expect(
+      page.getByRole('heading', { name: 'Acceso a la biblioteca de material' })
+    ).toBeVisible()
+    await expect(page.getByTestId('purchase-block')).toBeVisible()
+    await expect(
+      page.getByTestId('purchase-block').getByText(/49\.999/)
+    ).toBeVisible()
+    await expect(
+      page.getByRole('button', { name: 'Agregar al carrito' })
+    ).toBeVisible()
+  })
+
   test('adding from the purchase block updates the cart flow', async ({ page }) => {
     await page.goto('/tienda')
     await page.getByRole('link', { name: /Kit Rendimiento/ }).first().click()

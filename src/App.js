@@ -17,6 +17,7 @@ import Home from './pages/Home/Home'
 import Tienda from './pages/Tienda'
 import Producto from './pages/Producto'
 import Ingresar from './pages/Ingresar'
+import CrearAcceso from './pages/CrearAcceso'
 import Portal from './pages/Portal'
 import PortalCategoria from './pages/PortalCategoria'
 import Changes from './pages/changes'
@@ -62,6 +63,7 @@ function App() {
             <Route path='tienda' element={<Tienda />} />
             <Route path='producto/:productId' element={<Producto />} />
             <Route path='ingresar' element={<Ingresar />} />
+            <Route path='crear-acceso' element={<CrearAcceso />} />
             <Route
               path='portal'
               element={

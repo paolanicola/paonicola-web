@@ -60,6 +60,34 @@ export const markViewed = createAsyncThunk(
   async (resourceId) => portalApi.markViewed(resourceId)
 )
 
+// Canjea el token del email por una contraseña nueva; devuelve sesión iniciada.
+export const createAccess = createAsyncThunk(
+  'portal/createAccess',
+  async ({ token, password }, { rejectWithValue }) => {
+    try {
+      const data = await portalApi.setPassword(token, password)
+      storeSession(data)
+      return data
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.error || 'No pudimos crear tu acceso. Probá de nuevo.'
+      )
+    }
+  }
+)
+
+export const searchLibrary = createAsyncThunk(
+  'portal/searchLibrary',
+  async (q, { dispatch, rejectWithValue }) => {
+    try {
+      return await portalApi.search(q)
+    } catch (error) {
+      if (error.response?.status === 401) dispatch(sessionExpired())
+      return rejectWithValue('No pudimos buscar.')
+    }
+  }
+)
+
 const initialState = {
   token: getToken(),
   patient: getStoredPatient(),
@@ -69,6 +97,10 @@ const initialState = {
   categoryLoading: false,
   loginError: null,
   loginPending: false,
+  accessError: null,
+  accessPending: false,
+  search: null,
+  searchPending: false,
 }
 
 const portalSlice = createSlice({
@@ -81,6 +113,10 @@ const portalSlice = createSlice({
       state.patient = null
       state.library = null
       state.category = null
+      state.search = null
+    },
+    clearSearch(state) {
+      state.search = null
     },
   },
   extraReducers: (builder) => {
@@ -125,6 +161,29 @@ const portalSlice = createSlice({
       .addCase(fetchCategory.rejected, (state) => {
         state.categoryLoading = false
       })
+      .addCase(createAccess.pending, (state) => {
+        state.accessPending = true
+        state.accessError = null
+      })
+      .addCase(createAccess.fulfilled, (state, action) => {
+        state.accessPending = false
+        state.token = action.payload.token
+        state.patient = action.payload.patient
+      })
+      .addCase(createAccess.rejected, (state, action) => {
+        state.accessPending = false
+        state.accessError = action.payload
+      })
+      .addCase(searchLibrary.pending, (state) => {
+        state.searchPending = true
+      })
+      .addCase(searchLibrary.fulfilled, (state, action) => {
+        state.searchPending = false
+        state.search = action.payload
+      })
+      .addCase(searchLibrary.rejected, (state) => {
+        state.searchPending = false
+      })
       .addCase(markViewed.fulfilled, (state, action) => {
         const id = action.payload.id
         const row = state.category?.unlocked?.find((r) => r.id === id)
@@ -136,7 +195,7 @@ const portalSlice = createSlice({
   },
 })
 
-export const { sessionExpired } = portalSlice.actions
+export const { sessionExpired, clearSearch } = portalSlice.actions
 
 export const isLoggedIn = (state) => Boolean(state.portal.token)
 export const getPatient = (state) => state.portal.patient

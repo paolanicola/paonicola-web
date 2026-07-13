@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login, isLoggedIn } from '../../features/portal/portalSlice'
 import PillButton from '../../components/ui/PillButton'
+import portalApi from '../../services/portalApi'
 import { whatsAppUrl } from '../../utils/utils'
 
 const BENEFITS = [
@@ -20,6 +21,7 @@ export default function Ingresar() {
   const { loginPending, loginError } = useSelector((state) => state.portal)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [resetState, setResetState] = useState(null) // null | 'need-email' | 'sent'
 
   useEffect(() => {
     if (logged) navigate('/portal', { replace: true })
@@ -28,6 +30,15 @@ export default function Ingresar() {
   const handleSubmit = (event) => {
     event.preventDefault()
     dispatch(login({ email, password }))
+  }
+
+  const handleForgot = async () => {
+    if (!email) return setResetState('need-email')
+    try {
+      await portalApi.requestReset(email)
+    } finally {
+      setResetState('sent')
+    }
   }
 
   return (
@@ -105,7 +116,24 @@ export default function Ingresar() {
           </PillButton>
 
           <p className='ingresar__help'>
-            ¿Olvidaste tu contraseña o todavía no tenés acceso?{' '}
+            ¿Olvidaste tu contraseña?{' '}
+            <button type='button' className='ingresar__link' onClick={handleForgot}>
+              Recuperar acceso
+            </button>
+          </p>
+          {resetState === 'need-email' && (
+            <p className='ingresar__error' role='alert'>
+              Escribí tu email arriba y tocá “Recuperar acceso”.
+            </p>
+          )}
+          {resetState === 'sent' && (
+            <p className='ingresar__sent' role='status'>
+              Si tu email está registrado, te mandamos un link para crear una
+              contraseña nueva. Revisá tu correo 💌
+            </p>
+          )}
+          <p className='ingresar__help'>
+            ¿Todavía no tenés acceso?{' '}
             <a href={whatsAppUrl} target='_blank' rel='noreferrer'>
               Escribime por WhatsApp
             </a>

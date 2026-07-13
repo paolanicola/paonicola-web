@@ -123,3 +123,35 @@ react-calendar {
     color: $pn-navy;
   }
 }
+
+// Botones del wizard (Siguiente / Atrás / Pagar) → pill navy del rediseño.
+// Doble selector: _cartTotal.scss se importa después y trae !important propios,
+// así que ganamos por especificidad, no por orden de import.
+.carrito-total-buttons .carrito-finalizar,
+.carrito-finalizar {
+  background: $pn-navy !important;
+  color: #fff !important;
+  border: 0;
+  border-radius: 26px;
+  font-family: $pn-font;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+
+  &:hover {
+    background: darken($pn-navy, 4%) !important;
+    color: #fff !important;
+  }
+
+  &.disabled {
+    background: $pn-navy !important;
+    border: 0 !important;
+    opacity: 0.4;
+  }
+}
+
+.carrito-total-buttons .carrito-finalizar-next,
+.carrito-finalizar-next {
+  background: transparent !important;
+  color: $pn-navy !important;
+  border: 1px solid $pn-navy !important;
+}

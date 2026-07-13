@@ -44,6 +44,12 @@ export const portalApi = {
     client.get(`/library/categories/${id}`).then((r) => r.data),
   markViewed: (resourceId) =>
     client.post(`/resources/${resourceId}/view`).then((r) => r.data),
+  search: (q) =>
+    client.get('/search', { params: { q } }).then((r) => r.data),
+  setPassword: (token, password) =>
+    client.post('/password', { token, password }).then((r) => r.data),
+  requestReset: (email) =>
+    client.post('/password/reset', { email }).then((r) => r.data),
 }
 
 export default portalApi

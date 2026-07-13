@@ -154,7 +154,7 @@ function FormPatientOrder({ withCalendar }) {
                   },
                   onChange: handleInputChange,
                   pattern: {
-                    value: /^[a-z ,.'-]+$/i,
+                    value: /^[a-záéíóúüñ ,.'-]+$/i,
                     message: 'Formato incorrecto, solo letras',
                   },
                 })}
@@ -181,7 +181,7 @@ function FormPatientOrder({ withCalendar }) {
                   },
                   onChange: handleInputChange,
                   pattern: {
-                    value: /^[a-z ,.'-]+$/i,
+                    value: /^[a-záéíóúüñ ,.'-]+$/i,
                     message: 'Formato incorrecto, solo letras',
                   },
                 })}

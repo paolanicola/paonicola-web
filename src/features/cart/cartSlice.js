@@ -8,6 +8,23 @@ const initialState = {
   cartTotalAmount: 0,
 }
 
+// Keeps totals consistent with cartItems. Called by every mutating reducer so
+// the header badge and summaries never lag behind (the legacy flow relied on
+// components dispatching getTotals from effects).
+// NOTE: the API serializes promos as active_promo / promo_price
+const recalcTotals = (state) => {
+  let total = 0
+  let quantity = 0
+  state.cartItems.forEach((cartItem) => {
+    const { price, active_promo, promo_price, cartQuantity } = cartItem
+    const unitPrice = active_promo && promo_price != null ? promo_price : price
+    total += unitPrice * cartQuantity
+    quantity += cartQuantity
+  })
+  state.cartTotalQuantity = quantity
+  state.cartTotalAmount = total
+}
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -24,6 +41,7 @@ const cartSlice = createSlice({
         state.cartItems.push(tempProduct)
       }
 
+      recalcTotals(state)
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
       localStorage.setItem(
         'lastProductAddedTimestamp',
@@ -35,12 +53,12 @@ const cartSlice = createSlice({
         (cartItem) => cartItem.id !== action.payload.id
       )
       state.cartItems = nextCartItems
+      recalcTotals(state)
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
     },
     deleteCartItems(state, action) {
       state.cartItems = []
-      state.cartTotalQuantity = 0
-      state.cartTotalAmount = 0
+      recalcTotals(state)
       localStorage.setItem('cartItems', state.cartItems)
     },
 
@@ -57,30 +75,12 @@ const cartSlice = createSlice({
         )
         state.cartItems = nextCartItems
       }
+      recalcTotals(state)
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
     },
 
     getTotals(state, action) {
-      let { total, quantity } = state.cartItems.reduce(
-        (cartTotal, cartItem) => {
-          // NOTE: the API serializes promos as active_promo / promo_price
-          const { price, active_promo, promo_price, cartQuantity } = cartItem
-          const unitPrice =
-            active_promo && promo_price != null ? promo_price : price
-          const itemTotal = unitPrice * cartQuantity
-          cartTotal.total += itemTotal
-          cartTotal.quantity += cartQuantity
-
-          return cartTotal
-        },
-        {
-          total: 0,
-          quantity: 0,
-        }
-      )
-
-      state.cartTotalQuantity = quantity
-      state.cartTotalAmount = total
+      recalcTotals(state)
     },
   },
 })

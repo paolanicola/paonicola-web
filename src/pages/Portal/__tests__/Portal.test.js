@@ -81,4 +81,22 @@ describe('Portal (8a/18a)', () => {
     await screen.findAllByTestId('portal-category')
     expect(screen.queryByText(/acceso a toda la biblioteca/)).not.toBeInTheDocument()
   })
+
+  it('renders mood chips only for existing categories, linking to them', async () => {
+    renderPortal()
+    await screen.findAllByTestId('portal-category')
+
+    // 'Hoy tengo ansiedad' → categoría Ansiedad (id 2), presente en la librería
+    const chip = screen.getByRole('link', { name: /Hoy tengo ansiedad/ })
+    expect(chip).toHaveAttribute('href', '/portal/categoria/2')
+
+    // atajos cuya categoría no existe en la librería no se muestran
+    expect(screen.queryByText('No tengo ideas para cocinar')).not.toBeInTheDocument()
+    expect(screen.queryByText('Necesito motivación')).not.toBeInTheDocument()
+  })
+
+  it('shows the daily phrase', async () => {
+    renderPortal()
+    expect(await screen.findByText('Frase del día')).toBeInTheDocument()
+  })
 })

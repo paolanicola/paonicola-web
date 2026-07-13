@@ -31,7 +31,7 @@ function HeaderTitle({ customTitle }) {
 
   // Redesigned pages bring their own header (design "Rediseño de página web"),
   // so the legacy encabezado band is suppressed there.
-  const REDESIGNED = ['home', 'tienda', 'producto', 'carrito', 'checkout', 'ingresar', 'portal']
+  const REDESIGNED = ['home', 'tienda', 'producto', 'carrito', 'checkout', 'ingresar', 'portal', 'crear-acceso']
 
   return (
     <>

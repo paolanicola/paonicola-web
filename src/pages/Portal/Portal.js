@@ -11,6 +11,7 @@ import {
 import Kicker from '../../components/ui/Kicker'
 import PillButton from '../../components/ui/PillButton'
 import { dailyPhrase, MOOD_SHORTCUTS } from './portalContent'
+import PortalSearch from './PortalSearch'
 
 // Portal del paciente (designs 8a full-access / 18a restricted).
 export default function Portal() {
@@ -52,6 +53,10 @@ export default function Portal() {
         <button type='button' className='portal__logout' onClick={handleLogout}>
           Cerrar sesión
         </button>
+      </div>
+
+      <div className='portal__searchbar'>
+        <PortalSearch />
       </div>
 
       <section className='portal__phrase' aria-label='Frase del día'>

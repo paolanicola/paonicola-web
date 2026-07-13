@@ -84,6 +84,31 @@ test.describe('Portal del paciente', () => {
     ).toBeVisible()
   })
 
+  test('los chips de ánimo llevan a la categoría correspondiente', async ({ page }, testInfo) => {
+    await login(page, testInfo)
+    await page.getByRole('link', { name: /Hoy tengo ansiedad/ }).click()
+    await expect(page.getByRole('heading', { name: 'Ansiedad' })).toBeVisible()
+    // para el paciente del kit, Ansiedad está toda bloqueada → solo upsell
+    await expect(page.getByTestId('portal-resource')).toHaveCount(0)
+    await expect(page.getByTestId('portal-resource-locked')).toHaveCount(5)
+  })
+
+  test('el buscador encuentra material propio y ajeno (Fase D)', async ({ page }, testInfo) => {
+    await login(page, testInfo)
+
+    const input = page.getByLabel('Buscar material')
+    await input.fill('Timing')
+    const results = page.getByTestId('search-results')
+    await expect(results.getByText('Mini guía de Timing Nutricional')).toBeVisible()
+    await expect(results.getByText(/Deporte/)).toBeVisible()
+
+    // material bloqueado aparece como upsell con candado
+    await input.fill('meriendas')
+    await expect(results.getByText('Guía de meriendas anti-ansiedad')).toBeVisible()
+    await expect(results.getByText(/se desbloquea con el Programa/)).toBeVisible()
+    await expect(results.getByText('🔒')).toBeVisible()
+  })
+
   test('logout vuelve al inicio y el header ofrece iniciar sesión', async ({ page }, testInfo) => {
     await login(page, testInfo)
     await page.getByRole('button', { name: 'Cerrar sesión' }).click()

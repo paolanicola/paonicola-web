@@ -72,4 +72,26 @@ describe('PortalCategoria (9a/19a)', () => {
     expect(await screen.findAllByTestId('portal-resource')).toHaveLength(2)
     expect(screen.queryByText('Incluido en tu compra')).not.toBeInTheDocument()
   })
+
+  it('filters rows by content type through the chips', async () => {
+    const { fireEvent } = require('@testing-library/react')
+    renderCategoria()
+    await screen.findAllByTestId('portal-resource')
+
+    // solo hay pdf/planilla/video → los chips presentes son Todos, Guías y Videos
+    expect(screen.queryByRole('button', { name: 'Ejercicios' })).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Guías / PDF' }))
+    expect(screen.getAllByTestId('portal-resource')).toHaveLength(1)
+    expect(screen.getByText('Mini guía de Timing Nutricional')).toBeInTheDocument()
+    // el video bloqueado también queda filtrado
+    expect(screen.queryByTestId('portal-resource-locked')).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Videos' }))
+    expect(screen.queryAllByTestId('portal-resource')).toHaveLength(0)
+    expect(screen.getAllByTestId('portal-resource-locked')).toHaveLength(1)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Todos' }))
+    expect(screen.getAllByTestId('portal-resource')).toHaveLength(2)
+  })
 })
