@@ -4,7 +4,7 @@ import TestimonialCard from '../ui/TestimonialCard'
 
 export default function Testimonials() {
   return (
-    <section className='home__testimonials' aria-labelledby='home-testimonials-title'>
+    <section id='testimonios' className='home__testimonials' aria-labelledby='home-testimonials-title'>
       <h2 id='home-testimonials-title' className='home__section-title'>
         Testimonios
       </h2>

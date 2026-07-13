@@ -7,7 +7,6 @@ import {
   Footer,
   Header,
   HeaderTitle,
-  SectionFooter,
 } from './components'
 import ConfirmSale from './components/ConfirmSale/ConfirmSale'
 import ScrollToTop from './components/ScrollToTop'
@@ -53,7 +52,7 @@ function App() {
                   pauseOnFocusLoss={false}
                   limit={3}
                 />
-                <HeaderTitle /> <Outlet /> <SectionFooter />
+                <HeaderTitle /> <Outlet />
                 <Footer />
               </div>
             }

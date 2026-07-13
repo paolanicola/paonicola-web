@@ -155,6 +155,12 @@ export default function Portal() {
           <Kicker>Biblioteca</Kicker>
           <h2 className='portal__subtitle'>Explorar por categoría</h2>
         </div>
+        {library.categories.length === 0 && (
+          <p className='portal__text' data-testid='portal-empty'>
+            Paola está preparando la biblioteca — muy pronto vas a ver acá tu
+            material. 🤍
+          </p>
+        )}
         <div className='portal__categories'>
           {library.categories.map((category) => (
             <Link

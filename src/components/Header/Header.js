@@ -9,11 +9,13 @@ import PillButton from '../ui/PillButton'
 import { whatsAppUrl } from '../../utils/utils'
 import { getPatient, isLoggedIn } from '../../features/portal/portalSlice'
 
+// Nav del rediseño (pedido de Pao 2026-07-13): "Sobre Mí" → ancla a
+// "Por qué acompaño así" del inicio; Testimonios → ancla del inicio;
+// fuera FAQ y Cambios Reales (las páginas siguen accesibles por el footer).
 const NAV_LINKS = [
   { label: 'Inicio', to: '/' },
-  { label: 'Sobre Mí', to: '/sobre-mi' },
-  { label: 'Cambios Reales', to: '/cambios-reales' },
-  { label: 'FAQ', to: '/faq' },
+  { label: 'Por qué acompaño así', to: '/#por-que-acompano', anchor: true },
+  { label: 'Testimonios', to: '/#testimonios', anchor: true },
   { label: 'Contacto', to: '/contacto' },
 ]
 
@@ -85,18 +87,24 @@ export default function Header() {
       </Link>
 
       <nav className='pn-header__nav' aria-label='principal'>
-        {NAV_LINKS.map((link) => (
-          <NavLink
-            key={link.to}
-            to={link.to}
-            end={link.to === '/'}
-            className={({ isActive }) =>
-              `pn-header__link${isActive ? ' pn-header__link--active' : ''}`
-            }
-          >
-            {link.label}
-          </NavLink>
-        ))}
+        {NAV_LINKS.map((link) =>
+          link.anchor ? (
+            <Link key={link.to} to={link.to} className='pn-header__link'>
+              {link.label}
+            </Link>
+          ) : (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.to === '/'}
+              className={({ isActive }) =>
+                `pn-header__link${isActive ? ' pn-header__link--active' : ''}`
+              }
+            >
+              {link.label}
+            </NavLink>
+          )
+        )}
       </nav>
 
       <div className='pn-header__actions'>
@@ -117,15 +125,14 @@ export default function Header() {
       <div className={`pn-header__drawer${drawerOpen ? ' pn-header__drawer--open' : ''}`}>
         <nav className='pn-header__drawer-nav' aria-label='menú móvil'>
           {NAV_LINKS.map((link) => (
-            <NavLink
+            <Link
               key={link.to}
               to={link.to}
-              end={link.to === '/'}
               className='pn-header__drawer-link'
               onClick={closeDrawer}
             >
               {link.label}
-            </NavLink>
+            </Link>
           ))}
         </nav>
         <div className='pn-header__drawer-foot'>

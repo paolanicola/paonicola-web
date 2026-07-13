@@ -95,6 +95,12 @@ describe('Portal (8a/18a)', () => {
     expect(screen.queryByText('Necesito motivación')).not.toBeInTheDocument()
   })
 
+  it('shows a friendly empty state while the library has no categories', async () => {
+    renderPortal({ ...LIBRARY, categories: [], recommended: null, last_viewed: null, overall: { viewed: 0, total: 0, percent: 0 } })
+    expect(await screen.findByTestId('portal-empty')).toHaveTextContent('preparando la biblioteca')
+    expect(screen.queryByText(/acceso a toda la biblioteca/)).not.toBeInTheDocument()
+  })
+
   it('shows the daily phrase', async () => {
     renderPortal()
     expect(await screen.findByText('Frase del día')).toBeInTheDocument()

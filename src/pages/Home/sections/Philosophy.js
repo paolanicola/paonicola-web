@@ -5,7 +5,7 @@ import RichText from '../../../components/ui/RichText'
 
 export default function Philosophy() {
   return (
-    <section className='home__philosophy' aria-labelledby='home-philosophy-title'>
+    <section id='por-que-acompano' className='home__philosophy' aria-labelledby='home-philosophy-title'>
       <div className='home__philosophy-inner'>
         <Kicker>{philosophy.kicker}</Kicker>
         <h2 id='home-philosophy-title' className='home__philosophy-title'>

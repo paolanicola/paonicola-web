@@ -10,8 +10,8 @@ test.describe('Navegación global', () => {
     const menu = page.locator('.pn-header__drawer--open')
     await expect(menu).toBeVisible()
 
-    await menu.getByRole('link', { name: 'FAQ' }).click()
-    await expect(page).toHaveURL(/\/faq$/)
+    await menu.getByRole('link', { name: 'Contacto' }).click()
+    await expect(page).toHaveURL(/\/contacto$/)
   })
 
   test('desktop: los links del nav están visibles y navegan', async ({ page, isMobile }) => {
@@ -35,6 +35,18 @@ test.describe('Navegación global', () => {
     await expect(page.getByText('Parece que esta página no existe')).toBeVisible()
     await page.getByRole('link', { name: /Ir a la página principal/ }).click()
     await expect(page).toHaveURL(/\/home$/)
+  })
+
+  test('las anclas del nav llevan a las secciones del inicio', async ({ page, isMobile }) => {
+    test.skip(Boolean(isMobile), 'nav expandido solo en desktop')
+
+    await page.goto('/contacto')
+    await page.locator('.pn-header__nav').getByRole('link', { name: 'Testimonios' }).click()
+    await expect(page).toHaveURL(/\/#testimonios$/)
+    await expect(page.locator('#testimonios')).toBeInViewport()
+
+    await page.locator('.pn-header__nav').getByRole('link', { name: 'Por qué acompaño así' }).click()
+    await expect(page.locator('#por-que-acompano')).toBeInViewport()
   })
 
   test('el wordmark del header lleva al inicio (design 6a)', async ({ page }) => {
