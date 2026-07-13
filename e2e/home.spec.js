@@ -27,11 +27,13 @@ test.describe('Home redesign', () => {
   })
 
   test('hero shows both CTAs pointing to the right routes', async ({ page }) => {
+    // scopeado al hero: el footer nuevo también tiene "Reservar consulta"
+    const hero = page.locator('.home__hero')
     await expect(
-      page.getByRole('link', { name: 'Reservar consulta' })
+      hero.getByRole('link', { name: 'Reservar consulta' })
     ).toHaveAttribute('href', '/tienda')
     await expect(
-      page.getByRole('link', { name: 'Hablar con Paola' })
+      hero.getByRole('link', { name: 'Hablar con Paola' })
     ).toHaveAttribute('href', '/contacto')
   })
 
@@ -60,7 +62,10 @@ test.describe('Home redesign', () => {
   })
 
   test('hero CTA navigates to the store', async ({ page }) => {
-    await page.getByRole('link', { name: 'Reservar consulta' }).click()
+    await page
+      .locator('.home__hero')
+      .getByRole('link', { name: 'Reservar consulta' })
+      .click()
     await expect(page).toHaveURL(/\/tienda$/)
   })
 })

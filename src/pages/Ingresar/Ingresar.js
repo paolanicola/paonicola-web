@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { login, isLoggedIn } from '../../features/portal/portalSlice'
 import PillButton from '../../components/ui/PillButton'
 import portalApi from '../../services/portalApi'
-import { whatsAppUrl } from '../../utils/utils'
+import { whatsAppLink } from '../../utils/utils'
 
 const BENEFITS = [
   'Tu plan personalizado',
@@ -134,7 +134,11 @@ export default function Ingresar() {
           )}
           <p className='ingresar__help'>
             ¿Todavía no tenés acceso?{' '}
-            <a href={whatsAppUrl} target='_blank' rel='noreferrer'>
+            <a
+              href={whatsAppLink('¡Hola Pao! Todavía no tengo acceso al portal de pacientes, ¿me ayudás a entrar?')}
+              target='_blank'
+              rel='noreferrer'
+            >
               Escribime por WhatsApp
             </a>
           </p>

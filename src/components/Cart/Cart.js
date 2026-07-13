@@ -8,7 +8,7 @@ import {
   getTotals,
 } from '../../features/cart/cartSlice'
 import { resetMethod } from '../../features/validators'
-import { formatNumber, whatsAppNumber } from '../../utils/utils'
+import { formatNumber, whatsAppLink } from '../../utils/utils'
 import ProductCart from '../ProductCart/ProductCart'
 
 // Carrito (design 7b): editorial list + summary card. All cart behavior
@@ -79,7 +79,7 @@ function Cart() {
             ¿Dudas antes de comprar?{' '}
             <a
               className='carrito__help-link'
-              href={`https://wa.me/${whatsAppNumber}`}
+              href={whatsAppLink('¡Hola Pao! Tengo una duda con mi compra en la tienda.')}
               target='_blank'
               rel='noreferrer'
             >

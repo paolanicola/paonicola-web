@@ -8,7 +8,7 @@ import { resetStep } from '../../features/stepsCheckout/stepsSlice'
 import {
   isoDateToSpanishString,
   formatNumber,
-  whatsAppUrl,
+  whatsAppLink,
   whatsAppNumber,
 } from '../../utils/utils'
 
@@ -84,7 +84,14 @@ const OrderSuccess = () => {
             <br />
             Titular: PAOLA VANESA, NICOLA — Mercado Pago
           </p>
-          <a className='gracias__whatsapp' href={whatsAppUrl}>
+          <a
+            className='gracias__whatsapp'
+            href={whatsAppLink(
+              `¡Hola Pao! Te envío el comprobante de mi pedido #${orderData.order_id}.`
+            )}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             Enviar comprobante · {whatsAppNumber}
           </a>
         </div>

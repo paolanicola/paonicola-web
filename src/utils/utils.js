@@ -66,7 +66,16 @@ export const getDisplayPaymentMethod = (paymentType) => {
   }
 }
 
-export const whatsAppUrl =
-  'https://api.whatsapp.com/send?phone=5492352404233&text=Hola%21%20Estoy%20buscando%20reservar%20un%20turno.&source=&data=&app_absent='
+// Links de WhatsApp con mensaje precargado según el contexto, para que Pao
+// reciba el chat ya encarrilado (pedido 2026-07-13).
+const WHATSAPP_PHONE = '5492352404233'
+
+export const whatsAppLink = (message) =>
+  `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`
+
+// mensaje genérico (header, footer, contacto)
+export const whatsAppUrl = whatsAppLink(
+  '¡Hola Pao! Vengo de la web y quiero hacerte una consulta.'
+)
 
 export const whatsAppNumber = '2352404233'

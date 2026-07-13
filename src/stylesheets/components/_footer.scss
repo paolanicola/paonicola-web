@@ -1,150 +1,210 @@
-.footer {
-  width: 100%;
-  text-align: center;
-  text-align: center;
-  padding-bottom: 10px;
-  background: $text-color;
-  color: white;
-  padding: 2rem 0 0;
-}
-.footer-container-top {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/*------------------------------------*\
+    # Footer — "Footer Rediseño.dc.html"
+    Marca + redes, columnas Sitio / Para vos y card CTA "¿Empezamos?".
+    Mobile: marca y CTA a lo ancho; tablet: CTA abajo; desktop: 4 columnas.
+\*------------------------------------*/
 
-  padding-right: 1.5rem;
-  padding-left: 1.5rem;
-}
-.footer-logo-container {
-  margin: 0;
-  font-size: 1.3rem;
-  font-weight: 300;
-  p {
-    //esto se debe arreglar
-    margin: 0;
-    font-size: 1.3rem;
-    font-weight: 300;
-    color: white;
-    text-align: center;
-  }
-}
+$footer-bg: #3a3335;
+$footer-card: #443b3d;
+$footer-line: #4a4143;
+$footer-border: #5c5254;
+$footer-muted: #b7a9ad;
+$footer-label: #8f8286;
+$footer-link: #cdbfc3;
 
-.footer-container-menu {
-  justify-content: center;
-  padding: 0.5rem;
-}
-.footer__link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  color: white;
-  font-weight: 300;
-  padding: 0.3rem;
-  &:hover,
-  &:focus {
-    opacity: 0.7;
+.pn-footer {
+  background: $footer-bg;
+  color: #f3eeec;
+  font-family: $pn-font;
+  padding: 40px 24px 24px;
+  @media (min-width: 700px) {
+    padding: 56px 40px 28px;
   }
-}
-.footer-menu-redes {
-  display: flex;
-  align-items: center;
+
   a {
-    padding: 1rem 0.5rem;
+    color: $footer-link;
+    text-decoration: none;
+
+    &:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
   }
-}
 
-.footer-container-botton {
-  padding-right: 1.5rem;
-  padding-left: 1.5rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background: #fff9f5;
-  text-align: center;
-  color: #666666;
-  font-weight: 300;
-}
-
-.footer-container-botton-left,
-.footer-container-botton-right {
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-  justify-content: center;
-  align-items: center;
-  margin-left: 3px;
-  .a {
-    font-weight: 700;
-    color: #333;
-    font-size: 1rem;
+  &__grid {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 20px;
+    align-items: start;
+    @media (min-width: 700px) {
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 40px;
+    }
+    @media (min-width: 1000px) {
+      grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+    }
   }
-}
 
-.footer-container-botton-left {
-  width: 50%;
-}
-
-.footer-container-botton-right {
-  width: 50%;
-}
-.rayo {
-}
-.felipe {
-}
-
-@media screen and (min-width: 768px) {
-  .footer-container-top {
-    justify-content: center;
-  }
-  .footer__link {
-    font-size: 1.1rem;
-  }
-  .footer-container-menu {
+  /* ---------- Marca ---------- */
+  &__brand {
+    grid-column: 1 / -1;
     display: flex;
-    ul {
-      display: flex;
-      align-items: center;
-      li {
+    flex-direction: column;
+    gap: 10px;
+    @media (min-width: 700px) {
+      grid-column: auto;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    svg {
+      width: 190px;
+      height: auto;
+      fill: #fff;
+    }
+  }
+
+  &__logo-sub {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: $footer-muted;
+    padding-left: 4px;
+  }
+
+  &__tagline {
+    margin: 6px 0 0;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: $footer-muted;
+    max-width: 300px;
+  }
+
+  &__socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+
+    a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid $footer-border;
+      display: grid;
+      place-items: center;
+      color: #e6dde0;
+
+      &:hover {
+        background: $footer-line;
+        color: #fff;
+        text-decoration: none;
+      }
+
+      svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
       }
     }
   }
 
-  .footer-container-botton-left,
-  .footer-container-botton-right {
-    flex-direction: row;
-    gap: 1rem;
-    .a {
-      font-size: 1.3rem;
-    }
-    p {
-      font-size: 1.3rem;
-    }
-  }
-}
-
-@media screen and (min-width: 968px) {
-  .footer-container-top {
-    width: 80%;
-    margin: auto;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .footer-container-botton {
+  /* ---------- Columnas de links ---------- */
+  &__group {
+    display: flex;
     flex-direction: column;
+    gap: 9px;
+  }
 
-    .footer-container-botton-left {
-      border-bottom: 1px solid $gray;
-      width: 9rem;
-      padding-bottom: 0.6rem;
+  &__group-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: $footer-label;
+    margin-bottom: 3px;
+  }
+
+  &__link {
+    font-size: 14px;
+  }
+
+  /* ---------- Card CTA ---------- */
+  &__cta {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: $footer-card;
+    border-radius: 14px;
+    padding: 20px 22px;
+    @media (min-width: 1000px) {
+      grid-column: auto;
+    }
+  }
+
+  &__cta-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  &__cta-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: $footer-muted;
+
+    a {
+      color: #e6dde0;
+      text-decoration: underline;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+  &__cta-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-self: stretch;
+    white-space: nowrap;
+    background: #fff;
+    color: $footer-bg !important;
+    font-size: 13.5px;
+    font-weight: 700;
+    padding: 11px 22px;
+    border-radius: 99px;
+
+    &:hover {
+      background: #f0e8ea;
+      text-decoration: none;
+      color: $footer-bg;
     }
 
-    h3 {
-      display: none;
+    @media (min-width: 700px) {
+      align-self: flex-start;
     }
+  }
+
+  /* ---------- Barra inferior ---------- */
+  &__bottom {
+    max-width: 1080px;
+    margin: 28px auto 0;
+    border-top: 1px solid $footer-line;
+    padding-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: $footer-label;
   }
 }

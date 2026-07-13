@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { createAccess, isLoggedIn } from '../../features/portal/portalSlice'
 import PillButton from '../../components/ui/PillButton'
 import Kicker from '../../components/ui/Kicker'
-import { whatsAppUrl } from '../../utils/utils'
+import { whatsAppLink } from '../../utils/utils'
 
 // Destino del email post-compra / recuperación (Fase D): el paciente elige su
 // contraseña y entra directo al portal.
@@ -97,7 +97,11 @@ export default function CrearAcceso() {
 
           <p className='ingresar__help'>
             ¿Problemas con el link?{' '}
-            <a href={whatsAppUrl} target='_blank' rel='noreferrer'>
+            <a
+              href={whatsAppLink('¡Hola Pao! Tengo problemas con el link para crear mi acceso al portal.')}
+              target='_blank'
+              rel='noreferrer'
+            >
               Escribime por WhatsApp
             </a>
           </p>
