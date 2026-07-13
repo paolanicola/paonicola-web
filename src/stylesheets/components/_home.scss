@@ -120,7 +120,8 @@ $home-bp: $pn-bp; // single desktop breakpoint
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: top;
+      // encuadre en el rostro: 'top' mostraba pared y cortaba la cara
+      object-position: center 30%;
       display: block;
     }
   }

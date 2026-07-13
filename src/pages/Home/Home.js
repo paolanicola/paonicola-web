@@ -11,9 +11,9 @@ export default function Home() {
   return (
     <main className='home'>
       <Hero />
+      <Philosophy />
       <Testimonials />
       <NotForYou />
-      <Philosophy />
       <ContactCta />
     </main>
   )
