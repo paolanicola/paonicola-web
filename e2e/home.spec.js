@@ -35,9 +35,13 @@ test.describe('Home redesign', () => {
     ).toHaveAttribute('href', '/contacto')
   })
 
-  test('renders the hero image and wellbeing badge', async ({ page }) => {
+  test('renders the hero image and the stats card (+12 / +1000)', async ({ page }) => {
     await expect(page.getByAltText(/Paola Nicola/)).toBeVisible()
-    await expect(page.locator('.home-wellbeing')).toBeVisible()
+    await expect(page.locator('.home-stats')).toBeVisible()
+    await expect(page.locator('.home-stats')).toContainText('+12')
+    await expect(page.locator('.home-stats')).toContainText('años de experiencia')
+    await expect(page.locator('.home-stats')).toContainText('+1000')
+    await expect(page.locator('.home-stats')).toContainText('pacientes')
   })
 
   test('renders exactly three testimonials', async ({ page }) => {

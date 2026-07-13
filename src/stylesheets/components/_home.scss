@@ -126,95 +126,56 @@ $home-bp: $pn-bp; // single desktop breakpoint
     }
   }
 
-  /* ---------- Wellbeing floating card ---------- */
-  .home-wellbeing {
+  /* ---------- Stats floating card (+12 / +1000, design 6a) ---------- */
+  .home-stats {
     position: absolute;
     bottom: -16px;
     right: 12px;
     background: #fff;
     border-radius: 14px;
-    padding: 14px 16px;
+    padding: 14px 18px;
     box-shadow: 0 12px 28px rgba(31, 58, 68, 0.18);
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 150px;
+    align-items: stretch;
     @media (min-width: $home-bp) {
       bottom: -20px;
       right: -20px;
       border-radius: 16px;
-      padding: 18px 20px;
-      width: 180px;
-      gap: 10px;
+      padding: 18px 22px;
     }
 
-    &__head {
+    &__item {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 2px;
+      padding: 0 14px;
       @media (min-width: $home-bp) {
-        gap: 10px;
+        padding: 0 18px;
+      }
+
+      + .home-stats__item {
+        border-left: 1px solid rgba(31, 58, 68, 0.12);
       }
     }
 
-    &__score {
-      background: $home-mint-soft;
-      color: $home-mint-deep;
-      font-size: 14px;
+    &__value {
+      font-size: 20px;
       font-weight: 800;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      color: $home-navy;
+      letter-spacing: -0.01em;
       @media (min-width: $home-bp) {
-        font-size: 16px;
-        width: 36px;
-        height: 36px;
+        font-size: 24px;
       }
     }
 
     &__label {
-      font-size: 11px;
-      font-weight: 700;
-      color: $home-navy;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: $home-mint-deep;
+      white-space: nowrap;
       @media (min-width: $home-bp) {
-        font-size: 12px;
-      }
-    }
-
-    &__bars {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      @media (min-width: $home-bp) {
-        gap: 6px;
-      }
-    }
-
-    &__track {
-      height: 5px;
-      border-radius: 3px;
-      @media (min-width: $home-bp) {
-        height: 6px;
-      }
-      &--mint {
-        background: $home-mint-soft;
-      }
-      &--rosa {
-        background: $home-rosa-soft;
-      }
-    }
-
-    &__fill {
-      height: 100%;
-      border-radius: 3px;
-      &--mint {
-        background: $home-mint;
-      }
-      &--rosa {
-        background: $home-rosa;
+        font-size: 11.5px;
       }
     }
   }
@@ -251,17 +212,36 @@ $home-bp: $pn-bp; // single desktop breakpoint
     background: $home-cream;
     border-radius: 16px;
     padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     @media (min-width: $home-bp) {
       padding: 26px;
+    }
+    &__mark {
+      font-family: $pn-font-serif;
+      font-size: 30px;
+      color: $pn-rosa;
+      line-height: 0.5;
+      margin-top: 8px;
     }
     &__quote {
       margin: 0;
       font-size: 13px;
       line-height: 1.55;
       color: $home-testimonial-text;
+      flex: 1;
       @media (min-width: $home-bp) {
         font-size: 14px;
         line-height: 1.6;
+      }
+
+      p {
+        margin: 0 0 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
     }
     &__author {

@@ -131,9 +131,9 @@ const LANDINGS = {
       kicker: 'Cambios reales',
       title: 'Lo que cuentan las que ya pasaron por el proceso',
       items: [
-        { quote: 'Cambié mi relación con la comida sin sacrificar lo que me gusta.', name: 'J. M.' },
-        { quote: 'Encontré un plan que se adapta a mi rutina de entrenamiento.', name: 'L. R.' },
-        { quote: 'Bajé de peso sin pasar hambre ni prohibiciones.', name: 'D. S.' },
+        { quote: 'Nunca sentí que era "una paciente más". Me sentí escuchada, contenida y acompañada durante todo el proceso. Y creo que eso fue una de las claves para poder sostener los cambios.', name: 'Julieta R.' },
+        { quote: 'No hablamos solamente de alimentación, también de qué te pasa y qué emociones aparecen. Sentí que por primera vez alguien miraba el panorama completo y no solo lo que había en mi plato.', name: 'Martín D.' },
+        { quote: 'Siento que no solo cambié hábitos, cambié mi manera de vivir la alimentación. Y eso, para mí, no tiene precio.', name: 'Sofía P.' },
       ],
     },
     faqs: [

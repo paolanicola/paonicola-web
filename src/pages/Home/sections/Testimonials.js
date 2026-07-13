@@ -10,7 +10,7 @@ export default function Testimonials() {
       </h2>
       <div className='home__testimonials-grid'>
         {testimonials.map((t) => (
-          <TestimonialCard key={t.id} quote={t.quote} author={t.author} />
+          <TestimonialCard key={t.id} paragraphs={t.paragraphs} author={t.author} />
         ))}
       </div>
     </section>

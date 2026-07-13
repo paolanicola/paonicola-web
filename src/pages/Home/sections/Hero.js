@@ -3,7 +3,7 @@ import { hero } from '../homeContent'
 import heroImg from '../../../assets/images/home/paola-hero.jpg'
 import RichText from '../../../components/ui/RichText'
 import PillButton from '../../../components/ui/PillButton'
-import WellbeingCard from '../ui/WellbeingCard'
+import StatsCard from '../ui/StatsCard'
 
 export default function Hero() {
   return (
@@ -28,7 +28,7 @@ export default function Hero() {
         <div className='home__hero-image'>
           <img src={heroImg} alt={hero.imageAlt} loading='eager' />
         </div>
-        <WellbeingCard {...hero.wellbeing} />
+        <StatsCard stats={hero.stats} />
       </div>
     </section>
   )

@@ -16,11 +16,13 @@ describe('Testimonials', () => {
     expect(screen.getAllByRole('figure')).toHaveLength(testimonials.length)
   })
 
-  it('renders each quote and author', () => {
-    testimonials.forEach(({ quote, author }) => {
-      expect(
-        screen.getByText(new RegExp(quote.slice(0, 20).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')))
-      ).toBeInTheDocument()
+  it('renders each testimonial paragraph and author', () => {
+    testimonials.forEach(({ paragraphs, author }) => {
+      paragraphs.forEach((paragraph) => {
+        expect(
+          screen.getByText(new RegExp(paragraph.slice(0, 25).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')))
+        ).toBeInTheDocument()
+      })
       expect(screen.getByText(new RegExp(author.replace(/\./g, '\\.')))).toBeInTheDocument()
     })
   })

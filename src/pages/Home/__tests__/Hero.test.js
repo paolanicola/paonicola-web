@@ -31,8 +31,11 @@ describe('Hero', () => {
     expect(screen.getByAltText(hero.imageAlt)).toBeInTheDocument()
   })
 
-  it('renders the wellbeing score', () => {
-    expect(screen.getByText(String(hero.wellbeing.score))).toBeInTheDocument()
+  it('renders the floating stats card (+12 / +1000, design 6a)', () => {
+    hero.stats.forEach(({ value, label }) => {
+      expect(screen.getByText(value)).toBeInTheDocument()
+      expect(screen.getByText(label)).toBeInTheDocument()
+    })
   })
 
   it('bolds the emphasized fragment in the intro', () => {

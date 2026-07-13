@@ -41,33 +41,38 @@ export const hero = {
     { label: 'Reservar consulta', to: '/tienda', variant: 'solid' },
     { label: 'Hablar con Paola', to: '/contacto', variant: 'outline' },
   ],
-  wellbeing: {
-    score: 92,
-    label: 'Bienestar',
-    bars: [
-      { width: 80, tone: 'mint' },
-      { width: 60, tone: 'rosa' },
-      { width: 70, tone: 'mint' },
-    ],
-  },
+  // card flotante sobre la foto (design 6a)
+  stats: [
+    { value: '+12', label: 'años de experiencia' },
+    { value: '+1000', label: 'pacientes' },
+  ],
   imageAlt: 'Paola Nicola, nutricionista',
 }
 
 export const testimonials = [
   {
-    id: 'jm',
-    quote: 'Cambié mi relación con la comida sin sacrificar lo que me gusta.',
-    author: 'J. M.',
+    id: 'julieta',
+    paragraphs: [
+      'Había pasado por varias nutricionistas y siempre era lo mismo: una hoja con indicaciones, un control al mes y sentir que tenía que arreglármelas sola. Con Pao fue completamente distinto.',
+      'Nunca sentí que era "una paciente más". Me sentí escuchada, contenida y acompañada durante todo el proceso. Y creo que eso fue una de las claves para poder sostener los cambios.',
+    ],
+    author: 'Julieta R.',
   },
   {
-    id: 'lr',
-    quote: 'Encontré un plan que se adapta a mi rutina de entrenamiento.',
-    author: 'L. R.',
+    id: 'martin',
+    paragraphs: [
+      'Lo que más me hizo decidirme fue que el programa fuera online. Con mis horarios de trabajo era imposible comprometerme con consultas presenciales y pensé que eso iba a ser un obstáculo. Al final fue todo lo contrario.',
+      'No hablamos solamente de alimentación, también de qué te pasa y qué emociones aparecen. Sentí que por primera vez alguien miraba el panorama completo y no solo lo que había en mi plato.',
+    ],
+    author: 'Martín D.',
   },
   {
-    id: 'ds',
-    quote: 'Bajé de peso sin pasar hambre ni prohibiciones.',
-    author: 'D. S.',
+    id: 'sofia',
+    paragraphs: [
+      'Llegué a Pao pensando que solo necesitaba aprender a comer mejor, pero el cambio fue mucho más profundo de lo que imaginaba. Aprendí a escucharme, a dejar de exigirme tanto y a entender qué había detrás de muchas de mis conductas con la comida.',
+      'Siento que no solo cambié hábitos, cambié mi manera de vivir la alimentación. Y eso, para mí, no tiene precio.',
+    ],
+    author: 'Sofía P.',
   },
 ]
 
