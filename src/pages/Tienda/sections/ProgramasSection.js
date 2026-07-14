@@ -3,15 +3,24 @@ import { Link } from 'react-router-dom'
 import Kicker from '../../../components/ui/Kicker'
 import PillButton from '../../../components/ui/PillButton'
 import ProductPrice from '../ui/ProductPrice'
+import ProductRow from '../ui/ProductRow'
 
 /**
- * Sección Programas del rediseño: el producto con primer turno (Método 1:1)
- * como tarjeta destacada con foto, y el resto (Programa Grupal) como banda
- * navy con cupos. Ambos compran directo (modal), sin carrito.
+ * Sección Programas: Pao elige desde su admin cómo se muestra cada producto
+ * (tienda_style): 'destacado' = tarjeta blanca con foto, 'banda' = banda navy.
+ * Textos de portada (badge/kicker/tagline) también vienen del producto, con
+ * fallbacks del diseño. Todo compra directo (modal), sin carrito.
  */
 export default function ProgramasSection({ section, products, onBuy }) {
-  const featured = products.find((p) => p.requires_appointment) || products[0]
-  const others = products.filter((p) => p.id !== featured?.id)
+  const featured =
+    products.find((p) => p.tienda_style === 'destacado') ||
+    products.find((p) => !p.tienda_style && p.requires_appointment)
+  const bands = products.filter(
+    (p) => p.id !== featured?.id && p.tienda_style === 'banda'
+  )
+  const rest = products.filter(
+    (p) => p.id !== featured?.id && !bands.some((b) => b.id === p.id)
+  )
 
   return (
     <section className='tienda__section' aria-label={section.category}>
@@ -22,13 +31,17 @@ export default function ProgramasSection({ section, products, onBuy }) {
           </Link>
           <div className='tienda-featured__body'>
             <div className='tienda-featured__badges'>
-              <span className='tienda-featured__badge'>{section.featured.badge}</span>
-              <Kicker>{section.featured.kicker}</Kicker>
+              <span className='tienda-featured__badge'>
+                {featured.tienda_badge || section.featured.badge}
+              </span>
+              <Kicker>{featured.tienda_kicker || section.featured.kicker}</Kicker>
             </div>
             <Link to={`/producto/${featured.id}`} className='tienda-featured__name'>
               {featured.name}
             </Link>
-            <p className='tienda-featured__tagline'>{section.featured.tagline}</p>
+            {featured.tienda_tagline && (
+              <p className='tienda-featured__tagline'>{featured.tienda_tagline}</p>
+            )}
             <p className='tienda-featured__desc'>{featured.description}</p>
             <div className='tienda-featured__price'>
               <ProductPrice product={featured} size='lg' />
@@ -46,15 +59,19 @@ export default function ProgramasSection({ section, products, onBuy }) {
                 {section.featured.buyCta}
               </PillButton>
             </div>
-            <span className='tienda-featured__note'>{section.featured.note}</span>
+            {featured.requires_appointment && (
+              <span className='tienda-featured__note'>{section.featured.note}</span>
+            )}
           </div>
         </article>
       )}
 
-      {others.map((product) => (
+      {bands.map((product) => (
         <article key={product.id} className='tienda-grupal' data-testid='tienda-grupal'>
           <div className='tienda-grupal__info'>
-            <span className='tienda-grupal__kicker'>{section.band.kicker}</span>
+            <span className='tienda-grupal__kicker'>
+              {product.tienda_kicker || section.band.kicker}
+            </span>
             <Link to={`/producto/${product.id}`} className='tienda-grupal__name'>
               {product.name}
             </Link>
@@ -75,7 +92,7 @@ export default function ProgramasSection({ section, products, onBuy }) {
                 className='tienda-grupal__cta'
                 onClick={() => onBuy(product)}
               >
-                {section.band.buyCta}
+                {product.landing?.heroCta || section.band.buyCta}
               </button>
               <Link to={`/producto/${product.id}`} className='tienda-grupal__more'>
                 {section.band.detailCta}
@@ -84,6 +101,19 @@ export default function ProgramasSection({ section, products, onBuy }) {
           </div>
         </article>
       ))}
+
+      {rest.length > 0 && (
+        <div className='tienda__rows'>
+          {rest.map((product) => (
+            <ProductRow
+              key={product.id}
+              product={product}
+              cta='Comprar'
+              onAdd={onBuy}
+            />
+          ))}
+        </div>
+      )}
     </section>
   )
 }

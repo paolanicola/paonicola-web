@@ -110,6 +110,16 @@
     margin: 12px 0 0;
   }
 
+  // las descripciones se escriben en el admin con saltos de línea y listas
+  // (✅/🔥): respetarlos tal cual en vez de colapsar todo en un párrafo
+  .tienda-featured__desc,
+  .tienda-grupal__desc,
+  .tienda-kit__desc,
+  .tienda-row__desc,
+  .tienda-membership__desc {
+    white-space: pre-line;
+  }
+
   /* ---------- Featured program card (Tienda Rediseño: blanca) ---------- */
   .tienda-featured {
     position: relative;

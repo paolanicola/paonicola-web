@@ -32,9 +32,11 @@ export const SECTIONS = [
       note: 'Después de comprar, elegís tu primer turno acá mismo',
     },
     // banda navy = el resto de los programas (Grupal Regula)
+    // el texto del botón sale del heroCta de la landing del producto;
+    // esto es solo el fallback si no tiene página personalizada
     band: {
       kicker: 'Programa grupal · 4 semanas',
-      buyCta: 'Sumarme al grupal',
+      buyCta: 'Empezar ahora',
       detailCta: 'Conocer más',
     },
   },

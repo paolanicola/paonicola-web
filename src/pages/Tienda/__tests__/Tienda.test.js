@@ -24,6 +24,10 @@ const PRODUCTS = [
     stock: 50,
     category: 'Programa online',
     requires_appointment: true,
+    tienda_style: 'destacado',
+    tienda_badge: 'Más elegido',
+    tienda_kicker: 'Programa 1 a 1 · 12 semanas',
+    tienda_tagline: 'La improvisación termina acá.',
     thumbnail: '/img/tienda/metodo-regula.png',
   },
   {
@@ -38,6 +42,9 @@ const PRODUCTS = [
     stock: 12,
     category: 'Programa online',
     requires_appointment: false,
+    tienda_style: 'banda',
+    tienda_kicker: 'Programa grupal · 4 semanas',
+    landing: { heroCta: 'Sumarme al grupal' },
     thumbnail: '/img/tienda/grupal.png',
   },
   {
@@ -178,6 +185,35 @@ describe('Tienda (Tienda Rediseño)', () => {
     expect(screen.getByTestId('compra-directa')).toBeInTheDocument()
     expect(screen.getByText('Elegí tu primer turno')).toBeInTheDocument()
     expect(screen.getByText('Paso 1 de 2')).toBeInTheDocument()
+  })
+
+  it('respeta el estilo elegido en el admin (banda para el 1:1, destacado para el grupal)', () => {
+    const swapped = PRODUCTS.map((p) => {
+      if (p.id === 1) return { ...p, tienda_style: 'banda' }
+      if (p.id === 5) return { ...p, tienda_style: 'destacado' }
+      return p
+    })
+    const store = configureStore({
+      reducer: { products: productsReducer, cart: cartReducer, step: stepReducer },
+      preloadedState: {
+        products: {
+          allProducts: swapped, productsAvailable: swapped, currentProduct: null,
+          filterCategory: '', orderProducts: '', loading: false, loadingProduct: false,
+          loadSuccess: true, success: true, failed: false,
+        },
+        cart: { cartItems: [], cartTotalQuantity: 0, cartTotalAmount: 0 },
+      },
+    })
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Tienda />
+        </MemoryRouter>
+      </Provider>
+    )
+    // la banda navy ahora es el Método 1:1 y la tarjeta blanca el grupal
+    expect(screen.getByTestId('tienda-grupal')).toHaveTextContent('Método Regula')
+    expect(screen.getByTestId('tienda-featured')).toHaveTextContent('Programa Grupal Regula')
   })
 
   it('never adds to the legacy cart', () => {

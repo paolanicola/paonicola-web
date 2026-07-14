@@ -673,5 +673,9 @@
       box-shadow: 0 6px 16px rgba(31, 58, 68, 0.24);
     }
   }
-}
 
+  // descripción del admin con saltos de línea (detalle genérico)
+  &__tagline {
+    white-space: pre-line;
+  }
+}

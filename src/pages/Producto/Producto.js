@@ -47,7 +47,7 @@ export default function Producto() {
     return <div className='producto__status'>Cargando producto ...</div>
   }
 
-  const landing = getLanding(product.name)
+  const landing = getLanding(product)
   const openBuy = () => setBuying(true)
 
   return (

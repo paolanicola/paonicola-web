@@ -42,6 +42,44 @@ function renderProducto(currentProduct) {
   return store
 }
 
+// landing como la arma el backend (ProductLanding#payload) — editable por Pao
+const METODO_LANDING = {
+  kicker: 'Programa 1 a 1 · 12 semanas',
+  headline:
+    '¿Sentís que hacés un esfuerzo constante por comer mejor, pero igual volvés a los mismos patrones?',
+  heroBadge: 'Cupos limitados',
+  heroCta: 'Empezar Método Regula',
+  heroNote: 'Elegís fecha y hora de tu primer encuentro al comprar',
+  signalsIntro: 'Te suena…',
+  signals: ['Empezás con ganas y te cuesta sostener los hábitos.'],
+  philosophy: [
+    { text: 'El problema no es la falta de voluntad.', lead: true },
+    { text: 'Por eso creé Método Regula.', lead: true },
+  ],
+  afterPhilosophy: [{ text: 'No se trata de seguir un plan perfecto.' }],
+  includesCards: {
+    title: 'Qué incluye',
+    items: [
+      {
+        title: 'Plan de alimentación personalizado',
+        detail: 'Armado sobre tu vida real: horarios, gustos, entrenamiento y objetivos.',
+      },
+    ],
+  },
+  testimonials: {
+    kicker: 'Cambios reales',
+    title: 'Lo que cuentan las que ya pasaron por el proceso',
+    items: [{ quote: 'Me sentí escuchada.', name: 'Julieta R.' }],
+  },
+  faqs: [{ q: '¿Cómo son los encuentros?', a: 'Videollamadas individuales.' }],
+  closing: {
+    badge: 'Cupos limitados',
+    title: '12 semanas para dejar de empezar de nuevo cada lunes.',
+    cta: 'Empezar Método Regula',
+  },
+  sticky: true,
+}
+
 const METODO = {
   id: 1,
   name: 'Método Regula — programa 1 a 1 de 12 semanas',
@@ -54,6 +92,7 @@ const METODO = {
   category: 'Programa online',
   requires_appointment: true,
   thumbnail: '/img/tienda/metodo-regula.png',
+  landing: METODO_LANDING,
 }
 
 const GRUPAL = {
@@ -68,10 +107,40 @@ const GRUPAL = {
   category: 'Programa online',
   requires_appointment: false,
   thumbnail: '/img/tienda/grupal.png',
+  landing: {
+    kicker: 'Programa grupal · 4 semanas',
+    headline:
+      'Dejá de vivir en piloto automático, picoteando por ansiedad, agotada y empezando de nuevo cada lunes.',
+    heroBadge: 'Precio especial primera edición',
+    heroCta: 'Sumarme al grupal',
+    philosophy: [
+      { text: 'Porque muchas veces el problema no es la comida.', lead: true },
+      { text: 'Es todo lo que pasa alrededor de la comida.', lead: true, accent: true },
+    ],
+    checklist: {
+      title: 'Este programa es para vos si…',
+      navy: false,
+      items: ['Sentís que el estrés influye en cómo comés.'],
+    },
+    includes: {
+      title: 'Qué incluye',
+      items: [{ icon: '✓', text: '4 encuentros grupales en vivo' }],
+      crossLink: {
+        text: '¿Buscás acompañamiento individual y a tu medida?',
+        cta: 'Conocé el Método Regula 1:1 →',
+      },
+    },
+    closing: {
+      title: 'No necesitás más información. Necesitás aprender a sostener lo que ya sabés.',
+      cta: 'Sumarme al grupal',
+    },
+    sticky: false,
+  },
 }
 
 const GENERIC = {
   id: 9,
+  landing: null,
   name: 'Consulta de seguimiento',
   description: 'Una consulta de control.',
   important_note: null,
