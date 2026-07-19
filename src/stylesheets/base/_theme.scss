@@ -91,6 +91,10 @@ $pn-bp: 900px; // single desktop breakpoint across redesigned pages
     font-size: 12px;
     padding: 9px 18px;
     border-radius: 18px;
+    // 32px en touch: por debajo del mínimo tocable (44px)
+    @media (pointer: coarse) {
+      min-height: 44px;
+    }
     @media (min-width: $pn-bp) {
       font-size: 12px;
       padding: 9px 18px;
@@ -142,6 +146,14 @@ $pn-bp: 900px; // single desktop breakpoint across redesigned pages
   cursor: pointer;
   line-height: 1;
   transition: background 0.15s ease, color 0.15s ease;
+
+  // en touch el chip queda de 33px: por debajo del mínimo tocable (44px)
+  @media (pointer: coarse) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+  }
 
   &--active {
     background: $pn-navy;

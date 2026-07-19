@@ -203,6 +203,33 @@ describe('Producto (Tienda Rediseño)', () => {
     expect(screen.getByText(/15\.000/)).toBeInTheDocument()
   })
 
+  // Regresión: la API manda el molde vacío en vez de null para los productos
+  // sin página propia, y eso dejaba /producto/147 y /producto/114 sin precio ni
+  // botón de compra en producción (2026-07-19).
+  it('falls back to the generic detail when the landing is an empty stub', () => {
+    renderProducto({
+      ...GENERIC,
+      id: 147,
+      name: 'Guía de Compras Saludables',
+      landing: { kicker: '', headline: '', sticky: false },
+    })
+    expect(
+      screen.getByRole('heading', { name: 'Guía de Compras Saludables' })
+    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Comprar' })).toBeInTheDocument()
+    expect(screen.getByText(/15\.000/)).toBeInTheDocument()
+  })
+
+  it('keeps the landing when the admin only filled the headline', () => {
+    renderProducto({
+      ...GENERIC,
+      landing: { kicker: '', headline: 'Una headline de verdad', sticky: false },
+    })
+    expect(
+      screen.getByRole('heading', { name: 'Una headline de verdad' })
+    ).toBeInTheDocument()
+  })
+
   it('opens the direct-buy modal with calendar for the 1:1', () => {
     renderProducto(METODO)
     fireEvent.click(screen.getByTestId('hero-buy'))
