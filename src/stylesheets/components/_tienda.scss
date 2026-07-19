@@ -239,6 +239,24 @@
       padding: 38px 44px;
     }
 
+    &__media {
+      display: block;
+      flex-shrink: 0;
+      border-radius: 14px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        display: block;
+        @media (min-width: $pn-bp) {
+          width: 200px;
+          aspect-ratio: 1;
+        }
+      }
+    }
+
     &__info {
       display: flex;
       flex-direction: column;
@@ -349,6 +367,21 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    &__media {
+      // full-bleed sobre el padding de la tarjeta
+      margin: -24px -28px 6px;
+      display: block;
+      overflow: hidden;
+      border-radius: 16px 16px 0 0;
+
+      img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        display: block;
+      }
+    }
 
     &__promo {
       align-self: flex-start;

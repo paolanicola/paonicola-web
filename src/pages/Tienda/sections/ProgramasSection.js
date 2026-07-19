@@ -68,6 +68,9 @@ export default function ProgramasSection({ section, products, onBuy }) {
 
       {bands.map((product) => (
         <article key={product.id} className='tienda-grupal' data-testid='tienda-grupal'>
+          <Link to={`/producto/${product.id}`} className='tienda-grupal__media'>
+            <img src={product.thumbnail} alt={product.name} loading='lazy' />
+          </Link>
           <div className='tienda-grupal__info'>
             <span className='tienda-grupal__kicker'>
               {product.tienda_kicker || section.band.kicker}

@@ -14,6 +14,9 @@ export default function KitCardsSection({ section, products, onBuy }) {
       <div className='tienda-kits'>
         {products.map((product) => (
           <article key={product.id} className='tienda-kit' data-testid='tienda-kit'>
+            <Link to={`/producto/${product.id}`} className='tienda-kit__media'>
+              <img src={product.thumbnail} alt={product.name} loading='lazy' />
+            </Link>
             {product.active_promo && product.promo_price != null && (
               <span className='tienda-kit__promo'>Promo</span>
             )}
