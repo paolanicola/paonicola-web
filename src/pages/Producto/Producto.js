@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import {
   getCurrentProduct,
+  hasProductFailed,
   isLoadingProduct,
   loadProduct,
 } from '../../features/products'
@@ -24,6 +25,7 @@ import {
   CrossLink,
 } from './sections/LandingExtras'
 import PurchaseBlock from './sections/PurchaseBlock'
+import ProductoSkeleton from './sections/ProductoSkeleton'
 import CompraDirecta from '../../components/CompraDirecta'
 import Kicker from '../../components/ui/Kicker'
 
@@ -37,14 +39,40 @@ export default function Producto() {
   const dispatch = useDispatch()
   const product = useSelector(getCurrentProduct)
   const loading = useSelector(isLoadingProduct)
+  const failed = useSelector(hasProductFailed)
   const [buying, setBuying] = useState(false)
 
   useEffect(() => {
     dispatch(loadProduct(productId))
   }, [dispatch, productId])
 
+  // sin el chequeo de `failed` un 404 o un timeout dejaba la página en
+  // "Cargando producto ..." para siempre
+  if (failed) {
+    return (
+      <main className='producto'>
+        <nav className='producto__breadcrumb' aria-label='breadcrumb'>
+          <Link to='/tienda'>Tienda</Link>
+        </nav>
+        <div className='producto__status' role='alert'>
+          <p>No encontramos este producto.</p>
+          <Link to='/tienda' className='pn-pill pn-pill--outline pn-pill--sm'>
+            Volver a la tienda
+          </Link>
+        </div>
+      </main>
+    )
+  }
+
   if (loading || !product) {
-    return <div className='producto__status'>Cargando producto ...</div>
+    return (
+      <main className='producto'>
+        <nav className='producto__breadcrumb' aria-label='breadcrumb'>
+          <Link to='/tienda'>Tienda</Link>
+        </nav>
+        <ProductoSkeleton />
+      </main>
+    )
   }
 
   const landing = getLanding(product)

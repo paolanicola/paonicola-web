@@ -8,6 +8,7 @@ export const TIENDA_COPY = {
   subtitle: 'Desde un primer contacto gratuito hasta el acompañamiento completo.',
   allFilter: 'Todo',
   loading: 'Cargando productos ...',
+  empty: 'No hay productos en esta categoría por ahora.',
 }
 
 // Filtros del diseño (no son 1:1 con las categorías del admin).

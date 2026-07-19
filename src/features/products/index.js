@@ -27,6 +27,7 @@ const initialState = {
   loadSuccess: false,
   success: false,
   failed: false,
+  productFailed: false,
 }
 
 const productSlice = createSlice({
@@ -37,11 +38,15 @@ const productSlice = createSlice({
       state.loading = true
       state.success = false
       state.loadSuccess = false
+      // sin esto un fetch fallido dejaba la tienda en el mensaje de error para
+      // siempre: el reintento traía los productos pero `failed` seguía en true
+      state.failed = false
     },
     [productsReceived]: (state, action) => {
       state.loading = false
       state.loadSuccess = true
       state.success = true
+      state.failed = false
       state.allProducts = [...action.payload]
       state.productsAvailable = [...action.payload]
     },
@@ -54,16 +59,19 @@ const productSlice = createSlice({
     [productRequested]: (state) => {
       state.loadingProduct = true
       state.currentProduct = null // ← Limpia el producto anterior
+      state.productFailed = false
     },
     [productReceived]: (state, action) => {
-      console.log('📦 productReceived payload:', action.payload) // ← Debug
       state.loadingProduct = false
       state.currentProduct = action.payload
+      state.productFailed = false
     },
     [productRequestFailed]: (state, action) => {
-      console.error('❌ productRequestFailed:', action.payload) // ← Debug
       state.loadingProduct = false
       state.currentProduct = null
+      // sin esto la página quedaba en "Cargando producto ..." para siempre
+      // ante un 404 o un timeout
+      state.productFailed = true
     },
     [filterByCategory]: (state, action) => {
       state.filterCategory = action.payload
@@ -118,7 +126,6 @@ const productRequestFailedAction = productSlice.actions[productRequestFailed]
 const productReceivedAction = productSlice.actions[productReceived]
 
 export const loadProducts = () => (dispatch, getState) => {
-  console.log('🔄 loadProducts dispatched') // ← Debug
   dispatch(
     apiCallBegan({
       url: `${process.env.REACT_APP_API_BASE_URL}/products`,
@@ -130,7 +137,6 @@ export const loadProducts = () => (dispatch, getState) => {
 }
 
 export const loadProduct = (productId) => (dispatch, getState) => {
-  console.log('🔄 loadProduct dispatched for ID:', productId) // ← Debug
   dispatch(
     apiCallBegan({
       url: `${process.env.REACT_APP_API_BASE_URL}/products/${productId}`,
@@ -151,6 +157,8 @@ export const getProductsAvailables = (state) => {
 export const getCurrentProduct = (state) => state.products.currentProduct
 
 export const isLoadingProduct = (state) => state.products.loadingProduct
+
+export const hasProductFailed = (state) => state.products.productFailed
 
 export const getCategories = (state) =>
   Object.values(

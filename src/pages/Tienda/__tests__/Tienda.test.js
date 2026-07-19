@@ -89,8 +89,16 @@ const PRODUCTS = [
   },
 ]
 
-function renderTienda(products = PRODUCTS) {
+function renderTienda(products = PRODUCTS, overrides = {}) {
+  // el store real corre el middleware de API; acá sólo anotamos las acciones
+  // para poder afirmar que se pidió el catálogo de nuevo
+  const recorded = []
+  const recorder = () => (next) => (action) => {
+    recorded.push(action)
+    return next(action)
+  }
   const store = configureStore({
+    middleware: (getDefault) => getDefault().concat(recorder),
     reducer: { products: productsReducer, cart: cartReducer, step: stepReducer },
     preloadedState: {
       products: {
@@ -104,6 +112,8 @@ function renderTienda(products = PRODUCTS) {
         loadSuccess: true,
         success: true,
         failed: false,
+        productFailed: false,
+        ...overrides,
       },
       cart: { cartItems: [], cartTotalQuantity: 0, cartTotalAmount: 0 },
     },
@@ -115,6 +125,7 @@ function renderTienda(products = PRODUCTS) {
       </MemoryRouter>
     </Provider>
   )
+  store.recorded = recorded
   return store
 }
 
@@ -269,6 +280,48 @@ describe('Tienda (Tienda Rediseño)', () => {
       .find((el) => el.textContent.includes('Taller de cocina'))
     expect(row).toBeDefined()
     expect(row.querySelector('img')).toBeInTheDocument()
+  })
+
+  it('muestra el skeleton mientras carga, con el header ya puesto', () => {
+    renderTienda([], { loading: true, loadSuccess: false, success: false })
+    expect(screen.getByTestId('tienda-skeleton')).toBeInTheDocument()
+    // header y chips quedan para que la página no colapse de alto
+    expect(
+      screen.getByRole('heading', { name: 'Elegí cómo empezar' })
+    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Kits' })).toBeDisabled()
+  })
+
+  // `loading` arranca en false: el primer paint mostraba una tienda vacía
+  it('muestra el skeleton en el primer paint, antes de que arranque el fetch', () => {
+    renderTienda([], { loading: false, loadSuccess: false, success: false })
+    expect(screen.getByTestId('tienda-skeleton')).toBeInTheDocument()
+  })
+
+  it('muestra el error con botón de reintento', () => {
+    const store = renderTienda([], {
+      loading: false,
+      loadSuccess: false,
+      success: false,
+      failed: true,
+    })
+    expect(screen.getByRole('alert')).toHaveTextContent(/Contactarse al/)
+    expect(screen.queryByTestId('tienda-skeleton')).not.toBeInTheDocument()
+
+    // reintentar vuelve a pedir el catálogo (el reducer limpia `failed` en
+    // productsRequested — cubierto en features/products/index.test.js)
+    store.recorded.length = 0
+    fireEvent.click(screen.getByRole('button', { name: 'Reintentar' }))
+    const calls = store.recorded.filter((a) => a.type === 'api/callBegan')
+    expect(calls).toHaveLength(1)
+    expect(calls[0].payload.url).toMatch(/\/products$/)
+  })
+
+  it('avisa cuando no hay productos en vez de dejar la página vacía', () => {
+    renderTienda([])
+    expect(
+      screen.getByText('No hay productos en esta categoría por ahora.')
+    ).toBeInTheDocument()
   })
 
   it('cerrar el modal de compra devuelve a la tienda', () => {

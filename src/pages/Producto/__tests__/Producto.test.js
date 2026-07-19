@@ -11,7 +11,7 @@ import stepReducer from '../../../features/stepsCheckout/stepsSlice'
 
 jest.mock('axios')
 
-function renderProducto(currentProduct) {
+function renderProducto(currentProduct, overrides = {}) {
   const store = configureStore({
     reducer: { products: productsReducer, cart: cartReducer, step: stepReducer },
     preloadedState: {
@@ -26,13 +26,15 @@ function renderProducto(currentProduct) {
         loadSuccess: true,
         success: true,
         failed: false,
+        productFailed: false,
+        ...overrides,
       },
       cart: { cartItems: [], cartTotalQuantity: 0, cartTotalAmount: 0 },
     },
   })
   render(
     <Provider store={store}>
-      <MemoryRouter initialEntries={[`/producto/${currentProduct.id}`]}>
+      <MemoryRouter initialEntries={[`/producto/${currentProduct?.id ?? 1}`]}>
         <Routes>
           <Route path='/producto/:productId' element={<Producto />} />
         </Routes>
@@ -201,6 +203,24 @@ describe('Producto (Tienda Rediseño)', () => {
     expect(screen.getByText(GENERIC.description)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Comprar' })).toBeInTheDocument()
     expect(screen.getByText(/15\.000/)).toBeInTheDocument()
+  })
+
+  it('muestra el skeleton mientras carga, no una línea de texto suelta', () => {
+    renderProducto(null, { loadingProduct: true })
+    expect(screen.getByTestId('producto-skeleton')).toBeInTheDocument()
+    // el breadcrumb queda para que la página no colapse de alto
+    expect(screen.getByRole('link', { name: 'Tienda' })).toBeInTheDocument()
+  })
+
+  // Regresión: un 404 o un timeout dejaba "Cargando producto ..." infinito
+  it('muestra un estado de error cuando el producto no existe', () => {
+    renderProducto(null, { productFailed: true })
+    expect(screen.getByRole('alert')).toHaveTextContent('No encontramos este producto')
+    expect(screen.getByRole('link', { name: 'Volver a la tienda' })).toHaveAttribute(
+      'href',
+      '/tienda'
+    )
+    expect(screen.queryByTestId('producto-skeleton')).not.toBeInTheDocument()
   })
 
   // Regresión: la API manda el molde vacío en vez de null para los productos

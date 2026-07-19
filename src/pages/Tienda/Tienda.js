@@ -10,6 +10,7 @@ import ProgramasSection from './sections/ProgramasSection'
 import KitCardsSection from './sections/KitCardsSection'
 import MembershipSection from './sections/MembershipSection'
 import RowsSection from './sections/RowsSection'
+import TiendaSkeleton from './sections/TiendaSkeleton'
 
 const SECTION_COMPONENTS = {
   programas: ProgramasSection,
@@ -25,7 +26,7 @@ export default function Tienda() {
   const dispatch = useDispatch()
   const [activeFilter, setActiveFilter] = useState(TIENDA_COPY.allFilter)
   const [buyProduct, setBuyProduct] = useState(null)
-  const { allProducts, loading, failed } = useSelector(getAllProducts)
+  const { allProducts, loading, failed, loadSuccess } = useSelector(getAllProducts)
 
   useEffect(() => {
     dispatch(loadProducts())
@@ -61,16 +62,9 @@ export default function Tienda() {
     ? sections.filter((s) => activeCategories.has(s.category))
     : sections
 
-  if (loading) {
-    return <div className='tienda__status'>{TIENDA_COPY.loading}</div>
-  }
-  if (failed) {
-    return (
-      <p className='tienda__status'>
-        {messages.genericErrorMessage}. Contactarse al {whatsAppNumber}
-      </p>
-    )
-  }
+  // `loading` arranca en false: sin el `!loadSuccess` el primer paint (antes de
+  // que corra el efecto) mostraba una tienda vacía por un frame
+  const isLoading = loading || (!loadSuccess && !failed)
 
   return (
     <main className='tienda'>
@@ -87,6 +81,7 @@ export default function Tienda() {
             type='button'
             className={`pn-chip${label === activeFilter ? ' pn-chip--active' : ''}`}
             aria-pressed={label === activeFilter}
+            disabled={isLoading || failed}
             onClick={() => setActiveFilter(label)}
           >
             {label}
@@ -94,18 +89,41 @@ export default function Tienda() {
         ))}
       </div>
 
-      {visibleSections.map((section) => {
-        const Section = SECTION_COMPONENTS[section.variant] || RowsSection
-        return (
-          <Section
-            key={section.category}
-            section={section}
-            products={byCategory[section.category]}
-            onBuy={setBuyProduct}
-            onAdd={setBuyProduct}
-          />
-        )
-      })}
+      {isLoading && <TiendaSkeleton />}
+
+      {failed && (
+        <div className='tienda__status' role='alert'>
+          <p>
+            {messages.genericErrorMessage}. Contactarse al {whatsAppNumber}
+          </p>
+          <button
+            type='button'
+            className='pn-pill pn-pill--outline pn-pill--sm'
+            onClick={() => dispatch(loadProducts())}
+          >
+            Reintentar
+          </button>
+        </div>
+      )}
+
+      {!isLoading &&
+        !failed &&
+        visibleSections.map((section) => {
+          const Section = SECTION_COMPONENTS[section.variant] || RowsSection
+          return (
+            <Section
+              key={section.category}
+              section={section}
+              products={byCategory[section.category]}
+              onBuy={setBuyProduct}
+              onAdd={setBuyProduct}
+            />
+          )
+        })}
+
+      {!isLoading && !failed && visibleSections.length === 0 && (
+        <p className='tienda__status'>{TIENDA_COPY.empty}</p>
+      )}
 
       {buyProduct && (
         <CompraDirecta product={buyProduct} onClose={() => setBuyProduct(null)} />

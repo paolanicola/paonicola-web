@@ -162,3 +162,71 @@ $pn-bp: 900px; // single desktop breakpoint across redesigned pages
     font-weight: 600;
   }
 }
+
+// Bloques de carga (skeletons). Ver components/ui/Skeleton.js
+.pn-skeleton {
+  display: block;
+  background: linear-gradient(
+    90deg,
+    rgba(31, 58, 68, 0.06) 25%,
+    rgba(31, 58, 68, 0.12) 37%,
+    rgba(31, 58, 68, 0.06) 63%
+  );
+  background-size: 400% 100%;
+  animation: pn-skeleton-shimmer 1.4s ease infinite;
+  flex-shrink: 0;
+}
+
+// sobre superficies oscuras (la banda navy del grupal) el gris no se ve:
+// hay que invertir el gradiente
+.pn-skeleton--on-dark {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.09) 25%,
+    rgba(255, 255, 255, 0.18) 37%,
+    rgba(255, 255, 255, 0.09) 63%
+  );
+  background-size: 400% 100%;
+}
+
+// contenedor de un estado de carga a página completa: garantiza que el
+// contenido llene el fold para que el footer no suba al medio de la pantalla
+.pn-skeleton-page {
+  display: block;
+  min-height: 70vh;
+}
+
+.pn-skeleton-text {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+@keyframes pn-skeleton-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+// respetar a quien pidió menos movimiento: el bloque queda fijo
+@media (prefers-reduced-motion: reduce) {
+  .pn-skeleton {
+    animation: none;
+  }
+}
+
+// Texto solo para lectores de pantalla
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
