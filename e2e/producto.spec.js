@@ -37,7 +37,8 @@ test.describe('Producto landing pages (Tienda Rediseño)', () => {
 
   test('Programa Grupal Regula: landing con checklist y link cruzado al 1:1', async ({ page }) => {
     await page.goto('/tienda')
-    await page.getByRole('link', { name: 'Programa Grupal Regula' }).click()
+    // la banda tiene dos links al mismo producto (la foto y el título)
+    await page.getByRole('link', { name: 'Programa Grupal Regula' }).first().click()
 
     await expect(
       page.getByRole('heading', { name: /piloto automático/ })

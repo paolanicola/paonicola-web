@@ -1,11 +1,16 @@
 // @ts-check
 const { test, expect } = require('@playwright/test')
 const fs = require('fs')
+const path = require('path')
 
 // Fase D: crear acceso post-compra, membresía vencida y buscador.
 test.describe.configure({ mode: 'serial' })
 
-const TOKEN_DIR = '/Users/feliarana/Projects/paolanicola/tmp'
+// Los tokens los escribe db/seeds/dev_portal.rb en el tmp/ del backend.
+// Por defecto se asume el repo `paolanicola` al lado de este; con el backend
+// en otro lado, exportar E2E_TOKEN_DIR.
+const TOKEN_DIR =
+  process.env.E2E_TOKEN_DIR || path.resolve(__dirname, '../../paolanicola/tmp')
 
 test.describe('Acceso al portal (Fase D)', () => {
   /** @param {import('@playwright/test').TestInfo} testInfo */
