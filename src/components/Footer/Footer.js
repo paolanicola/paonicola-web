@@ -87,7 +87,7 @@ export default function Footer() {
               rel='noopener noreferrer'
             >
               escribime por WhatsApp
-            </a>.
+            </a>
           </p>
           <Link to='/tienda' className='pn-footer__cta-btn'>
             Reservar consulta

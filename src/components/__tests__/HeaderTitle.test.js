@@ -23,17 +23,27 @@ function renderAt(path) {
 }
 
 describe('HeaderTitle', () => {
-  it.each(['/', '/tienda', '/producto/1', '/carrito', '/checkout', '/portal', '/ingresar'])(
-    'suppresses the legacy band on redesigned route %s',
-    (path) => {
-      renderAt(path)
-      expect(screen.queryByRole('heading')).not.toBeInTheDocument()
-    }
-  )
+  it.each([
+    '/',
+    '/tienda',
+    '/producto/1',
+    '/carrito',
+    '/checkout',
+    '/portal',
+    '/ingresar',
+    '/contacto',
+    '/faq',
+  ])('suppresses the legacy band on redesigned route %s', (path) => {
+    renderAt(path)
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+  })
 
   it('still shows the band on legacy routes', () => {
-    renderAt('/faq')
-    expect(screen.getByRole('heading', { name: 'FAQ' })).toBeInTheDocument()
+    // cambios-reales sigue sin rediseñar
+    renderAt('/cambios-reales')
+    expect(
+      screen.getByRole('heading', { name: 'Cambios Reales' })
+    ).toBeInTheDocument()
   })
 
   it('formats multi-word slugs', () => {
