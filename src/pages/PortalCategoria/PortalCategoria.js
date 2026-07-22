@@ -6,6 +6,7 @@ import {
   getCategory,
   markViewed,
 } from '../../features/portal/portalSlice'
+import { openResourceFile } from '../../features/portal/resourceUrl'
 import Kicker from '../../components/ui/Kicker'
 import PillButton from '../../components/ui/PillButton'
 import { TYPE_ICONS } from '../Portal/portalContent'
@@ -53,7 +54,7 @@ export default function PortalCategoria() {
 
   const openResource = (resource) => {
     dispatch(markViewed(resource.id))
-    if (resource.file_url) window.open(resource.file_url, '_blank', 'noopener')
+    openResourceFile(resource.file_url)
   }
 
   return (

@@ -8,6 +8,7 @@ import {
   logout,
   markViewed,
 } from '../../features/portal/portalSlice'
+import { openResourceFile } from '../../features/portal/resourceUrl'
 import Kicker from '../../components/ui/Kicker'
 import PillButton from '../../components/ui/PillButton'
 import { dailyPhrase, MOOD_SHORTCUTS } from './portalContent'
@@ -34,7 +35,7 @@ export default function Portal() {
 
   const openResource = (resource) => {
     dispatch(markViewed(resource.id))
-    if (resource.file_url) window.open(resource.file_url, '_blank', 'noopener')
+    openResourceFile(resource.file_url)
   }
 
   if (loading || !library) {

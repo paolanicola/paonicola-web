@@ -6,6 +6,7 @@ import {
   markViewed,
   searchLibrary,
 } from '../../features/portal/portalSlice'
+import { openResourceFile } from '../../features/portal/resourceUrl'
 import { TYPE_ICONS } from './portalContent'
 
 // Buscador de material (barra de los diseños 8a/9a) con debounce.
@@ -29,7 +30,7 @@ export default function PortalSearch() {
 
   const openResource = (resource) => {
     dispatch(markViewed(resource.id))
-    if (resource.file_url) window.open(resource.file_url, '_blank', 'noopener')
+    openResourceFile(resource.file_url)
   }
 
   const hasResults =
