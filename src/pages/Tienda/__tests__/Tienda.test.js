@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, within } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
@@ -15,43 +15,27 @@ const PRODUCTS = [
   {
     id: 1,
     name: 'Método Regula — programa 1 a 1 de 12 semanas',
-    description: 'Acompañamiento personalizado de 12 semanas.',
-    important_note: 'pago único',
+    description: 'Consulta inicial, plan personalizado y seguimiento mensual.',
+    important_note: '',
     price: 499000,
+    price_usd: 350,
+    installments_count: 3,
+    installment_price: 185000,
+    installment_price_usd: 125,
     active_promo: false,
     promo_price: null,
     download_url: null,
     stock: 50,
     category: 'Programa online',
     requires_appointment: true,
-    tienda_style: 'destacado',
     tienda_badge: 'Más elegido',
-    tienda_kicker: 'Programa 1 a 1 · 12 semanas',
-    tienda_tagline: 'La improvisación termina acá.',
     thumbnail: '/img/tienda/metodo-regula.png',
-  },
-  {
-    id: 5,
-    name: 'Programa Grupal Regula',
-    description: 'Regulá tu alimentación, tu estrés y tu energía en 4 semanas.',
-    important_note: 'Precio especial primera edición',
-    price: 99000,
-    active_promo: false,
-    promo_price: null,
-    download_url: null,
-    stock: 12,
-    category: 'Programa online',
-    requires_appointment: false,
-    tienda_style: 'banda',
-    tienda_kicker: 'Programa grupal · 4 semanas',
-    landing: { heroCta: 'Sumarme al grupal' },
-    thumbnail: '/img/tienda/grupal.png',
   },
   {
     id: 2,
     name: 'Acceso a la biblioteca de material',
     description: 'Incluida sin cargo mientras seas paciente activa.',
-    important_note: 'o USD 50/mes si residís en el exterior',
+    important_note: 'o USD 50/mes desde el exterior',
     price: 49999,
     active_promo: false,
     promo_price: null,
@@ -76,6 +60,19 @@ const PRODUCTS = [
   },
   {
     id: 4,
+    name: 'Reset intestinal — guía de 21 días',
+    description: 'Seis etapas para bajar la hinchazón.',
+    price: 32000,
+    active_promo: true,
+    promo_price: 26000,
+    download_url: null,
+    stock: 999,
+    category: 'PDF descargable',
+    requires_appointment: false,
+    thumbnail: '/img/tienda/reset-intestinal.png',
+  },
+  {
+    id: 5,
     name: 'Compras saludables e inteligentes',
     description: 'Guía para elegir mejor en el supermercado',
     price: 0,
@@ -129,167 +126,193 @@ function renderTienda(products = PRODUCTS, overrides = {}) {
   return store
 }
 
-describe('Tienda (Tienda Rediseño)', () => {
+const cardNamed = (text) =>
+  screen.getAllByTestId('tienda-card').find((el) => el.textContent.includes(text))
+
+describe('Tienda (grilla de tarjetas)', () => {
   beforeEach(() => {
     axios.get.mockResolvedValue({ data: [] })
   })
 
-  it('renders header and the design sections', () => {
+  it('renders the header and one card per product', () => {
     renderTienda()
     expect(
       screen.getByRole('heading', { name: 'Elegí cómo empezar' })
     ).toBeInTheDocument()
-    expect(screen.getByTestId('tienda-featured')).toBeInTheDocument()
-    expect(screen.getByTestId('tienda-grupal')).toBeInTheDocument()
-    expect(screen.getByTestId('tienda-membership')).toBeInTheDocument()
-    expect(screen.getAllByTestId('tienda-kit')).toHaveLength(1)
-    expect(screen.getAllByTestId('tienda-row')).toHaveLength(1) // descargable
+    expect(screen.getAllByTestId('tienda-card')).toHaveLength(PRODUCTS.length)
   })
 
-  // Regresión: los kits y la banda grupal se renderizaban sin <img>, así que en
-  // la tienda sólo se veía la foto del destacado (bug reportado 2026-07-19).
-  it('renders the thumbnail on every card of every section', () => {
-    renderTienda()
-    const withImage = [
-      ['tienda-featured', '/img/tienda/metodo-regula.png'],
-      ['tienda-grupal', '/img/tienda/grupal.png'],
-      ['tienda-row', '/img/tienda/compras.png'],
-    ]
-    withImage.forEach(([testId, src]) => {
-      const img = screen.getByTestId(testId).querySelector('img')
-      expect(img).toHaveAttribute('src', src)
-      expect(img).toHaveAttribute('alt', expect.stringMatching(/\S/))
-    })
-    const kitImg = screen.getAllByTestId('tienda-kit')[0].querySelector('img')
-    expect(kitImg).toHaveAttribute('src', '/img/tienda/kit-rendimiento.png')
-    expect(kitImg).toHaveAttribute('alt', 'Kit Rendimiento Inteligente')
+  it('orders the grid by the design category order, not the API order', () => {
+    // la API devuelve el descargable primero; el diseño lo quiere último
+    renderTienda([PRODUCTS[4], PRODUCTS[2], PRODUCTS[0]])
+    const names = screen
+      .getAllByTestId('tienda-card')
+      .map((el) => el.querySelector('.tienda-card__name').textContent)
+    expect(names).toEqual([
+      'Método Regula — programa 1 a 1 de 12 semanas',
+      'Kit Rendimiento Inteligente',
+      'Compras saludables e inteligentes',
+    ])
   })
 
-  it('links the card image to the product detail', () => {
+  it('builds the filter chips from the real catalog categories', () => {
     renderTienda()
-    const kitLink = screen.getAllByTestId('tienda-kit')[0].querySelector('a img')
-      ?.parentElement
-    expect(kitLink).toHaveAttribute('href', '/producto/3')
-    const grupalLink = screen.getByTestId('tienda-grupal').querySelector('a img')
-      ?.parentElement
-    expect(grupalLink).toHaveAttribute('href', '/producto/5')
+    const chips = screen
+      .getByRole('group', { name: 'Filtrar por categoría' })
+      .querySelectorAll('button')
+    expect([...chips].map((c) => c.textContent)).toEqual([
+      'Todo',
+      'Programa online',
+      'Membresía',
+      'Kits',
+      'PDF descargable',
+      'Descargable gratuito',
+    ])
   })
 
-  it('lazy-loads the below-the-fold card images', () => {
+  it('filters the grid by category', () => {
     renderTienda()
-    const kitImg = screen.getAllByTestId('tienda-kit')[0].querySelector('img')
-    expect(kitImg).toHaveAttribute('loading', 'lazy')
+    fireEvent.click(screen.getByRole('button', { name: 'Kits' }))
+    expect(screen.getAllByTestId('tienda-card')).toHaveLength(1)
+    expect(cardNamed('Kit Rendimiento Inteligente')).toBeDefined()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Todo' }))
+    expect(screen.getAllByTestId('tienda-card')).toHaveLength(PRODUCTS.length)
   })
 
-  it('shows the payment note and cupos on programas', () => {
-    renderTienda()
-    expect(screen.getByText('pago único')).toBeInTheDocument()
-    expect(screen.getByText('Quedan 12 cupos')).toBeInTheDocument()
+  it('shows a chip for a category the admin invented, at the end', () => {
+    renderTienda([...PRODUCTS, { ...PRODUCTS[2], id: 9, name: 'Taller de cocina', category: 'Talleres' }])
+    const chips = [
+      ...screen
+        .getByRole('group', { name: 'Filtrar por categoría' })
+        .querySelectorAll('button'),
+    ].map((c) => c.textContent)
+    expect(chips[chips.length - 1]).toBe('Talleres')
+    expect(cardNamed('Taller de cocina')).toBeDefined()
   })
 
-  it('shows promo strikethrough pricing on kits', () => {
+  it('renders the thumbnail and links image and title to the detail page', () => {
     renderTienda()
-    expect(screen.getByText('$ 48.000')).toBeInTheDocument() // original
-    expect(screen.getByText(/39\.990/)).toBeInTheDocument() // promo
+    const card = cardNamed('Kit Rendimiento Inteligente')
+    const img = card.querySelector('img')
+    expect(img).toHaveAttribute('src', '/img/tienda/kit-rendimiento.png')
+    expect(img).toHaveAttribute('alt', 'Kit Rendimiento Inteligente')
+    expect(img).toHaveAttribute('loading', 'lazy')
+    expect(img.closest('a')).toHaveAttribute('href', '/producto/3')
+    expect(card.querySelector('.tienda-card__name')).toHaveAttribute(
+      'href',
+      '/producto/3'
+    )
+  })
+
+  it('shows the badge Pao set in the admin', () => {
+    renderTienda()
+    expect(
+      within(cardNamed('Método Regula')).getByText('Más elegido')
+    ).toBeInTheDocument()
+  })
+
+  it('replaces the photo with the key block on the membership card', () => {
+    renderTienda()
+    const card = cardNamed('Acceso a la biblioteca')
+    expect(card.querySelector('.tienda-card__icon')).toHaveTextContent('🗝️')
+    expect(card.querySelector('img')).toBeNull()
+    expect(within(card).getByText('/mes')).toBeInTheDocument()
+    expect(within(card).getByText('mensual')).toBeInTheDocument()
+  })
+
+  it('shows promo strikethrough pricing', () => {
+    renderTienda()
+    const card = cardNamed('Kit Rendimiento Inteligente')
+    expect(within(card).getByText('$ 48.000')).toHaveClass('tienda-price__original')
+    expect(within(card).getByText(/39\.990/)).toBeInTheDocument()
   })
 
   it('renders a direct download link for free downloadables', () => {
     renderTienda()
-    const link = screen.getByRole('link', { name: 'Descargar gratis' })
+    const card = cardNamed('Compras saludables')
+    expect(within(card).getByText('Gratis')).toBeInTheDocument()
+    const link = within(card).getByRole('link', { name: 'Descargar' })
     expect(link).toHaveAttribute('href', '/descargables/compras-saludables.pdf')
   })
 
-  it('filters sections through the design chips', () => {
+  it('crops the vertical guide covers from the top', () => {
     renderTienda()
-    fireEvent.click(screen.getByRole('button', { name: 'Kits' }))
-    expect(screen.queryByTestId('tienda-featured')).not.toBeInTheDocument()
-    expect(screen.queryByTestId('tienda-membership')).not.toBeInTheDocument()
-    expect(screen.getAllByTestId('tienda-kit')).toHaveLength(1)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Programas' }))
-    expect(screen.getByTestId('tienda-featured')).toBeInTheDocument()
-    expect(screen.getByTestId('tienda-grupal')).toBeInTheDocument()
-
-    fireEvent.click(screen.getByRole('button', { name: 'Gratis' }))
-    expect(screen.getAllByTestId('tienda-row')).toHaveLength(1)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Todo' }))
-    expect(screen.getByTestId('tienda-membership')).toBeInTheDocument()
+    expect(
+      cardNamed('Compras saludables').querySelector('.tienda-card__media--top')
+    ).toBeInTheDocument()
+    expect(
+      cardNamed('Kit Rendimiento').querySelector('.tienda-card__media--top')
+    ).toBeNull()
   })
 
-  it('opens the direct-buy modal from a kit (paso 2, sin calendario)', () => {
-    renderTienda()
-    fireEvent.click(screen.getByRole('button', { name: 'Comprar' }))
+  describe('selector de región', () => {
+    it('only appears on products with a USD price', () => {
+      renderTienda()
+      expect(
+        within(cardNamed('Método Regula')).getByRole('button', { name: 'Argentina' })
+      ).toBeInTheDocument()
+      expect(
+        within(cardNamed('Kit Rendimiento')).queryByRole('button', { name: 'Argentina' })
+      ).toBeNull()
+    })
+
+    it('starts on Argentina and switches the price and installments', () => {
+      renderTienda()
+      const card = cardNamed('Método Regula')
+      expect(within(card).getByRole('button', { name: 'Argentina' })).toHaveAttribute(
+        'aria-pressed',
+        'true'
+      )
+      expect(within(card).getByText('$ 499.000')).toBeInTheDocument()
+      expect(within(card).getByText('o 3 cuotas de $ 185.000')).toBeInTheDocument()
+
+      fireEvent.click(within(card).getByRole('button', { name: 'Exterior' }))
+      expect(within(card).getByText('USD 350')).toBeInTheDocument()
+      expect(within(card).getByText('o 3 cuotas de USD 125')).toBeInTheDocument()
+    })
+  })
+
+  it('opens the direct-buy modal instead of touching the cart', () => {
+    const store = renderTienda()
+    fireEvent.click(
+      within(cardNamed('Kit Rendimiento Inteligente')).getByRole('button', {
+        name: 'Agregar',
+      })
+    )
     expect(screen.getByTestId('compra-directa')).toBeInTheDocument()
     expect(screen.getByText('Compra directa · sin carrito')).toBeInTheDocument()
-    expect(screen.getByTestId('cd-pay')).toBeDisabled() // sin datos aún
+    expect(store.getState().cart.cartItems).toHaveLength(0)
   })
 
   it('opens the calendar step for the 1:1 program', () => {
     renderTienda()
-    fireEvent.click(screen.getByRole('button', { name: 'Empezar ahora' }))
-    expect(screen.getByTestId('compra-directa')).toBeInTheDocument()
+    fireEvent.click(
+      within(cardNamed('Método Regula')).getByRole('button', { name: 'Agregar' })
+    )
     expect(screen.getByText('Elegí tu primer turno')).toBeInTheDocument()
     expect(screen.getByText('Paso 1 de 2')).toBeInTheDocument()
   })
 
-  it('respeta el estilo elegido en el admin (banda para el 1:1, destacado para el grupal)', () => {
-    renderTienda(
-      PRODUCTS.map((p) => {
-        if (p.id === 1) return { ...p, tienda_style: 'banda' }
-        if (p.id === 5) return { ...p, tienda_style: 'destacado' }
-        return p
+  it('cerrar el modal de compra devuelve a la tienda', () => {
+    renderTienda()
+    fireEvent.click(
+      within(cardNamed('Kit Rendimiento Inteligente')).getByRole('button', {
+        name: 'Agregar',
       })
     )
-    // la banda navy ahora es el Método 1:1 y la tarjeta blanca el grupal
-    expect(screen.getByTestId('tienda-grupal')).toHaveTextContent('Método Regula')
-    expect(screen.getByTestId('tienda-featured')).toHaveTextContent('Programa Grupal Regula')
-  })
-
-  it('sin tienda_style, destaca el programa con primer turno', () => {
-    // fallback de ProgramasSection para catálogos viejos del admin
-    renderTienda(PRODUCTS.map(({ tienda_style, ...p }) => p))
-    expect(screen.getByTestId('tienda-featured')).toHaveTextContent('Método Regula')
-    expect(screen.queryByTestId('tienda-grupal')).not.toBeInTheDocument()
-  })
-
-  it('los programas que no son destacado ni banda caen a filas con foto', () => {
-    const extra = {
-      ...PRODUCTS[1],
-      id: 9,
-      name: 'Programa Express',
-      tienda_style: null,
-      requires_appointment: false,
-      thumbnail: '/img/tienda/express.png',
-    }
-    renderTienda([...PRODUCTS, extra])
-    const row = screen
-      .getAllByTestId('tienda-row')
-      .find((el) => el.textContent.includes('Programa Express'))
-    expect(row).toBeDefined()
-    expect(row.querySelector('img')).toHaveAttribute('src', '/img/tienda/express.png')
-  })
-
-  it('una categoría desconocida del admin se muestra como filas genéricas', () => {
-    renderTienda([
-      ...PRODUCTS,
-      { ...PRODUCTS[3], id: 10, name: 'Taller de cocina', category: 'Talleres' },
-    ])
-    const row = screen
-      .getAllByTestId('tienda-row')
-      .find((el) => el.textContent.includes('Taller de cocina'))
-    expect(row).toBeDefined()
-    expect(row.querySelector('img')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Cancelar' }))
+    expect(screen.queryByTestId('compra-directa')).not.toBeInTheDocument()
+    expect(screen.getAllByTestId('tienda-card')).toHaveLength(PRODUCTS.length)
   })
 
   it('muestra el skeleton mientras carga, con el header ya puesto', () => {
     renderTienda([], { loading: true, loadSuccess: false, success: false })
     expect(screen.getByTestId('tienda-skeleton')).toBeInTheDocument()
-    // header y chips quedan para que la página no colapse de alto
     expect(
       screen.getByRole('heading', { name: 'Elegí cómo empezar' })
     ).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Kits' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Todo' })).toBeDisabled()
   })
 
   // `loading` arranca en false: el primer paint mostraba una tienda vacía
@@ -308,8 +331,6 @@ describe('Tienda (Tienda Rediseño)', () => {
     expect(screen.getByRole('alert')).toHaveTextContent(/Contactarse al/)
     expect(screen.queryByTestId('tienda-skeleton')).not.toBeInTheDocument()
 
-    // reintentar vuelve a pedir el catálogo (el reducer limpia `failed` en
-    // productsRequested — cubierto en features/products/index.test.js)
     store.recorded.length = 0
     fireEvent.click(screen.getByRole('button', { name: 'Reintentar' }))
     const calls = store.recorded.filter((a) => a.type === 'api/callBegan')
@@ -324,18 +345,20 @@ describe('Tienda (Tienda Rediseño)', () => {
     ).toBeInTheDocument()
   })
 
-  it('cerrar el modal de compra devuelve a la tienda', () => {
-    renderTienda()
-    fireEvent.click(screen.getAllByRole('button', { name: 'Comprar' })[0])
-    expect(screen.getByTestId('compra-directa')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'Cancelar' }))
-    expect(screen.queryByTestId('compra-directa')).not.toBeInTheDocument()
-    expect(screen.getAllByTestId('tienda-kit')).toHaveLength(1)
-  })
-
-  it('never adds to the legacy cart', () => {
-    const store = renderTienda()
-    fireEvent.click(screen.getAllByRole('button', { name: 'Comprar' })[0])
-    expect(store.getState().cart.cartItems).toHaveLength(0)
+  // el producto sin precio cargado en el admin rompía el render de la tienda
+  it('no explota con un producto sin precio', () => {
+    renderTienda([
+      {
+        ...PRODUCTS[2],
+        id: 8,
+        name: 'Sin precio',
+        price: null,
+        active_promo: false,
+        promo_price: null,
+      },
+    ])
+    const card = cardNamed('Sin precio')
+    expect(card).toBeDefined()
+    expect(card.querySelector('.tienda-price')).toBeNull()
   })
 })

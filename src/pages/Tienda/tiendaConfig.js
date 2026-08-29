@@ -1,68 +1,48 @@
-// Copy + layout de la Tienda rediseñada ("Tienda Rediseño.dc.html").
-// Las secciones se renderizan en este orden cuando la categoría tiene
-// productos; categorías nuevas del admin caen a una sección de filas genérica.
+// Copy + layout de la Tienda ("Handoff: Tienda Online").
+// Una sola grilla uniforme: todas las tarjetas iguales, el catálogo completo
+// de una mirada. Lo que varía por categoría vive acá.
 
 export const TIENDA_COPY = {
   kicker: 'Tienda',
   title: 'Elegí cómo empezar',
   subtitle: 'Desde un primer contacto gratuito hasta el acompañamiento completo.',
   allFilter: 'Todo',
-  loading: 'Cargando productos ...',
   empty: 'No hay productos en esta categoría por ahora.',
+  free: 'Gratis',
+  regionAr: 'Argentina',
+  regionEx: 'Exterior',
 }
 
-// Filtros del diseño (no son 1:1 con las categorías del admin).
-export const FILTERS = [
-  { label: 'Todo' },
-  { label: 'Programas', categories: ['Programa online'] },
-  { label: 'Kits', categories: ['Kits'] },
-  { label: 'Gratis', categories: ['Descargable gratuito'] },
+// Orden de las categorías en la grilla y en los chips. Las que Pao cree nuevas
+// en el admin no rompen nada: caen al final con los valores de DEFAULT_CATEGORY.
+export const CATEGORY_ORDER = [
+  'Programa online',
+  'Membresía',
+  'Kits',
+  'PDF descargable',
+  'Descargable gratuito',
 ]
 
-export const SECTIONS = [
-  {
-    category: 'Programa online',
-    variant: 'programas',
-    // tarjeta destacada = el producto con primer turno (Método 1:1)
-    featured: {
-      badge: 'Más elegido',
-      kicker: 'Programa 1 a 1 · 12 semanas',
-      tagline: 'La improvisación termina acá.',
-      detailCta: 'Conocer el programa',
-      buyCta: 'Empezar ahora',
-      note: 'Después de comprar, elegís tu primer turno acá mismo',
-    },
-    // banda navy = el resto de los programas (Grupal Regula)
-    // el texto del botón sale del heroCta de la landing del producto;
-    // esto es solo el fallback si no tiene página personalizada
-    band: {
-      kicker: 'Programa grupal · 4 semanas',
-      buyCta: 'Empezar ahora',
-      detailCta: 'Conocer más',
-    },
-  },
-  {
-    category: 'Kits',
-    variant: 'kitCards',
-    hint: 'acceso inmediato',
-    cta: 'Comprar',
-  },
-  {
-    // fuera de los filtros del diseño pero visible en "Todo": el upsell del
-    // portal manda acá a los pacientes que quieren seguir con el material
-    category: 'Membresía',
-    variant: 'membership',
-    icon: '🗝️',
-    cta: 'Continuar',
-    priceSuffix: '/mes',
-  },
-  {
-    category: 'Descargable gratuito',
-    variant: 'downloads',
-    kicker: 'Empezá gratis',
-    cta: 'Descargar gratis',
-    note: 'Descarga directa — sin checkout ni registro.',
-  },
-]
+// Metadata de tarjeta por categoría. `note` es la etiqueta gris al lado de la
+// categoría; `icon` reemplaza la foto por un bloque de color (Membresía);
+// `coverTop` recorta la foto desde arriba — las tapas de guías son verticales y
+// centrarlas a 170px de alto les come el título.
+export const CATEGORY_META = {
+  'Programa online': { cta: 'Agregar' },
+  Membresía: { cta: 'Continuar', note: 'mensual', icon: '🗝️', priceSuffix: '/mes' },
+  Kits: { cta: 'Agregar', note: 'acceso inmediato' },
+  'PDF descargable': { cta: 'Agregar', note: 'acceso inmediato', coverTop: true },
+  'Descargable gratuito': { cta: 'Descargar', coverTop: true },
+}
 
-export const GENERIC_SECTION = { variant: 'rows', cta: 'Comprar' }
+export const DEFAULT_CATEGORY = { cta: 'Agregar' }
+
+export const categoryMeta = (category) =>
+  CATEGORY_META[category] || DEFAULT_CATEGORY
+
+// Categorías presentes en el catálogo, en el orden del diseño primero.
+export const orderedCategories = (categories) => {
+  const known = CATEGORY_ORDER.filter((c) => categories.includes(c))
+  const extras = categories.filter((c) => !CATEGORY_ORDER.includes(c))
+  return [...known, ...extras]
+}

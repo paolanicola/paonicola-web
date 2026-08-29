@@ -5,26 +5,17 @@ import CompraDirecta from '../../components/CompraDirecta'
 import { getAllProducts, loadProducts } from '../../features/products'
 import { whatsAppNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
-import { TIENDA_COPY, FILTERS, SECTIONS, GENERIC_SECTION } from './tiendaConfig'
-import ProgramasSection from './sections/ProgramasSection'
-import KitCardsSection from './sections/KitCardsSection'
-import MembershipSection from './sections/MembershipSection'
-import RowsSection from './sections/RowsSection'
+import { TIENDA_COPY, CATEGORY_ORDER, orderedCategories } from './tiendaConfig'
+import ProductCard from './ui/ProductCard'
 import TiendaSkeleton from './sections/TiendaSkeleton'
 
-const SECTION_COMPONENTS = {
-  programas: ProgramasSection,
-  kitCards: KitCardsSection,
-  membership: MembershipSection,
-  rows: RowsSection,
-  downloads: RowsSection,
-}
-
-// Container (Tienda Rediseño): carga el catálogo, lo agrupa por categoría y
-// renderiza una sección por categoría. Compra directa vía modal — sin carrito.
+// Container: carga el catálogo y lo muestra en una grilla uniforme — todas las
+// tarjetas iguales, todo el catálogo de una mirada. Los chips filtran por la
+// categoría real del producto. Compra directa vía modal — sin carrito.
 export default function Tienda() {
   const dispatch = useDispatch()
   const [activeFilter, setActiveFilter] = useState(TIENDA_COPY.allFilter)
+  const [region, setRegion] = useState('ar')
   const [buyProduct, setBuyProduct] = useState(null)
   const { allProducts, loading, failed, loadSuccess } = useSelector(getAllProducts)
 
@@ -32,39 +23,32 @@ export default function Tienda() {
     dispatch(loadProducts())
   }, [dispatch])
 
-  // { 'Programa online': [..], 'Kits': [..], ... } — insertion order preserved
-  const byCategory = useMemo(
-    () =>
-      allProducts.reduce((groups, product) => {
-        ;(groups[product.category] = groups[product.category] || []).push(product)
-        return groups
-      }, {}),
+  // Categorías del catálogo en el orden del diseño; las que Pao cree nuevas en
+  // el admin aparecen al final en vez de quedar invisibles.
+  const categories = useMemo(
+    () => orderedCategories([...new Set(allProducts.map((p) => p.category))]),
     [allProducts]
   )
 
-  // Secciones configuradas primero (orden del diseño), después cualquier
-  // categoría extra del admin como filas genéricas (solo visibles en "Todo").
-  const sections = useMemo(() => {
-    const configured = SECTIONS.filter((s) => byCategory[s.category]?.length)
-    const known = new Set(SECTIONS.map((s) => s.category))
-    const extras = Object.keys(byCategory)
-      .filter((category) => !known.has(category))
-      .map((category) => ({ ...GENERIC_SECTION, category }))
-    return [...configured, ...extras]
-  }, [byCategory])
-
-  const activeCategories = useMemo(() => {
-    const filter = FILTERS.find((f) => f.label === activeFilter)
-    return filter?.categories ? new Set(filter.categories) : null
-  }, [activeFilter])
-
-  const visibleSections = activeCategories
-    ? sections.filter((s) => activeCategories.has(s.category))
-    : sections
+  const products = useMemo(() => {
+    const rank = new Map(categories.map((category, i) => [category, i]))
+    const visible =
+      activeFilter === TIENDA_COPY.allFilter
+        ? allProducts
+        : allProducts.filter((p) => p.category === activeFilter)
+    // sort estable: dentro de la categoría se respeta el orden de la API
+    return [...visible].sort(
+      (a, b) => rank.get(a.category) - rank.get(b.category)
+    )
+  }, [allProducts, activeFilter, categories])
 
   // `loading` arranca en false: sin el `!loadSuccess` el primer paint (antes de
   // que corra el efecto) mostraba una tienda vacía por un frame
   const isLoading = loading || (!loadSuccess && !failed)
+
+  // Mientras carga todavía no hay categorías: sin este fallback la fila de
+  // chips colapsa a "Todo" y da un salto de layout cuando llega el catálogo.
+  const chipCategories = isLoading ? CATEGORY_ORDER : categories
 
   return (
     <main className='tienda'>
@@ -75,7 +59,7 @@ export default function Tienda() {
       </header>
 
       <div className='tienda__filters' role='group' aria-label='Filtrar por categoría'>
-        {FILTERS.map(({ label }) => (
+        {[TIENDA_COPY.allFilter, ...chipCategories].map((label) => (
           <button
             key={label}
             type='button'
@@ -106,22 +90,21 @@ export default function Tienda() {
         </div>
       )}
 
-      {!isLoading &&
-        !failed &&
-        visibleSections.map((section) => {
-          const Section = SECTION_COMPONENTS[section.variant] || RowsSection
-          return (
-            <Section
-              key={section.category}
-              section={section}
-              products={byCategory[section.category]}
+      {!isLoading && !failed && products.length > 0 && (
+        <div className='tienda__grid'>
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              region={region}
+              onRegion={setRegion}
               onBuy={setBuyProduct}
-              onAdd={setBuyProduct}
             />
-          )
-        })}
+          ))}
+        </div>
+      )}
 
-      {!isLoading && !failed && visibleSections.length === 0 && (
+      {!isLoading && !failed && products.length === 0 && (
         <p className='tienda__status'>{TIENDA_COPY.empty}</p>
       )}
 

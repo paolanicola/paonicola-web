@@ -2,9 +2,13 @@
 const { test, expect } = require('@playwright/test')
 
 // Corre contra el catálogo dev sembrado (db/seeds/dev_store_catalog.rb):
-// Método Regula (1:1, con primer turno), Programa Grupal Regula, Membresía,
-// 2 Kits y 2 descargables gratuitos. Tienda Rediseño: compra directa, sin carrito.
-test.describe('Tienda rediseñada', () => {
+// Método Regula (1:1, con primer turno y precio por región), Programa Grupal,
+// Membresía, 2 Kits y 2 descargables gratuitos.
+// Handoff de la tienda: una sola grilla de tarjetas iguales. Compra directa,
+// sin carrito.
+const card = (page, name) => page.getByTestId('tienda-card').filter({ hasText: name })
+
+test.describe('Tienda — grilla de tarjetas', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/tienda')
     await expect(
@@ -12,71 +16,93 @@ test.describe('Tienda rediseñada', () => {
     ).toBeVisible()
   })
 
-  test('renderiza las secciones del diseño', async ({ page }) => {
-    await expect(page.getByTestId('tienda-featured')).toBeVisible()
-    await expect(page.getByTestId('tienda-grupal')).toBeVisible()
-    await expect(page.getByTestId('tienda-membership')).toBeVisible()
-    await expect(page.getByTestId('tienda-kit')).toHaveCount(2)
-    await expect(page.getByTestId('tienda-row')).toHaveCount(2) // descargables
+  test('muestra todo el catálogo en tarjetas iguales', async ({ page }) => {
+    await expect(page.getByTestId('tienda-card')).toHaveCount(7)
+  })
+
+  test('los precios y los botones quedan alineados a la misma altura', async ({ page }) => {
+    // align-items:stretch + margin-top:auto en la fila de precio: es la clave
+    // del diseño y lo que se rompe si alguien toca el layout de la tarjeta
+    const buys = page.locator('.tienda-card__buy')
+    await expect(buys.first()).toBeVisible()
+    const tops = await buys.evaluateAll((rows) =>
+      rows.map((r) => Math.round(r.getBoundingClientRect().top))
+    )
+    // las tarjetas de una misma fila de la grilla comparten el borde superior
+    const firstRow = tops.slice(0, 3)
+    expect(new Set(firstRow).size).toBe(1)
   })
 
   test('el Método muestra precio, badge y nota de turno', async ({ page }) => {
-    const featured = page.getByTestId('tienda-featured')
-    await expect(featured.getByText(/499\.000/)).toBeVisible()
-    await expect(featured.getByText('Más elegido')).toBeVisible()
-    await expect(featured.getByText('pago único')).toBeVisible()
-    await expect(featured.getByText(/elegís tu primer turno/i)).toBeVisible()
-    // Pao 2026-07-12: low ticket, sin cuotas
-    await expect(featured.getByText(/cuotas/)).toHaveCount(0)
+    const metodo = card(page, 'Método Regula')
+    await expect(metodo.getByText(/499\.000/)).toBeVisible()
+    await expect(metodo.getByText('Más elegido')).toBeVisible()
   })
 
-  test('la banda del grupal muestra cupos y precio', async ({ page }) => {
-    const grupal = page.getByTestId('tienda-grupal')
-    await expect(grupal.getByText(/99\.000/)).toBeVisible()
-    await expect(grupal.getByText(/Quedan \d+ cupos/)).toBeVisible()
-    await expect(grupal.getByRole('button', { name: 'Sumarme al grupal' })).toBeVisible()
+  test('el selector de región cambia precio y cuotas', async ({ page }) => {
+    const metodo = card(page, 'Método Regula')
+    await expect(metodo.getByRole('button', { name: 'Argentina' })).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    )
+    await expect(metodo.getByText('o 3 cuotas de $ 185.000')).toBeVisible()
+
+    await metodo.getByRole('button', { name: 'Exterior' }).click()
+    await expect(metodo.getByText('USD 350')).toBeVisible()
+    await expect(metodo.getByText('o 3 cuotas de USD 125')).toBeVisible()
+
+    await metodo.getByRole('button', { name: 'Argentina' }).click()
+    await expect(metodo.getByText(/499\.000/)).toBeVisible()
   })
 
-  test('los kits muestran precios nuevos sin promo tachada', async ({ page }) => {
-    const kits = page.getByTestId('tienda-kit')
-    await expect(kits.filter({ hasText: 'Rendimiento' }).getByText(/39\.990/)).toBeVisible()
-    await expect(kits.filter({ hasText: '7 días' }).getByText(/27\.990/)).toBeVisible()
+  test('solo el Método ofrece el selector de región', async ({ page }) => {
+    await expect(
+      card(page, 'Kit Regula').getByRole('button', { name: 'Argentina' })
+    ).toHaveCount(0)
   })
 
-  test('los descargables gratis tienen link directo (sin checkout)', async ({ page }) => {
-    const links = page.getByRole('link', { name: 'Descargar gratis' })
+  test('la membresía muestra el bloque 🗝️ en vez de foto', async ({ page }) => {
+    const membresia = card(page, 'Acceso a la biblioteca')
+    await expect(membresia.locator('.tienda-card__icon')).toBeVisible()
+    await expect(membresia.locator('img')).toHaveCount(0)
+    await expect(membresia.getByText('/mes')).toBeVisible()
+    await expect(membresia.getByRole('button', { name: 'Continuar' })).toBeVisible()
+  })
+
+  test('los kits muestran sus precios', async ({ page }) => {
+    await expect(card(page, 'Rendimiento').getByText(/39\.990/)).toBeVisible()
+    await expect(card(page, '7 días').getByText(/27\.990/)).toBeVisible()
+  })
+
+  test('los descargables gratis dicen Gratis y bajan el archivo directo', async ({ page }) => {
+    const links = page.getByRole('link', { name: 'Descargar' })
     await expect(links).toHaveCount(2)
+    await expect(page.getByText('Gratis').first()).toBeVisible()
+
     const href = await links.first().getAttribute('href')
     expect(href).toMatch(/\/descargables\/.+\.(pdf|png)/)
     // el archivo existe de verdad (servido por el frontend)
     const res = await page.request.get(href || '')
     expect(res.status()).toBe(200)
-    await expect(page.getByText('Descarga directa — sin checkout ni registro.')).toBeVisible()
   })
 
-  test('los chips filtran por Programas / Kits / Gratis', async ({ page }) => {
-    await page.getByRole('button', { name: 'Kits', exact: true }).click()
-    await expect(page.getByTestId('tienda-featured')).toHaveCount(0)
-    await expect(page.getByTestId('tienda-membership')).toHaveCount(0)
-    await expect(page.getByTestId('tienda-kit')).toHaveCount(2)
+  test('los chips salen de las categorías reales y filtran la grilla', async ({ page }) => {
+    const chips = page.getByRole('group', { name: 'Filtrar por categoría' })
+    await expect(chips.getByRole('button', { name: 'Todo', exact: true })).toBeVisible()
 
-    await page.getByRole('button', { name: 'Programas', exact: true }).click()
-    await expect(page.getByTestId('tienda-featured')).toBeVisible()
-    await expect(page.getByTestId('tienda-grupal')).toBeVisible()
+    await chips.getByRole('button', { name: 'Kits', exact: true }).click()
+    await expect(page.getByTestId('tienda-card')).toHaveCount(2)
+    await expect(card(page, 'Método Regula')).toHaveCount(0)
 
-    await page.getByRole('button', { name: 'Gratis', exact: true }).click()
-    await expect(page.getByTestId('tienda-row')).toHaveCount(2)
+    await chips.getByRole('button', { name: 'Membresía', exact: true }).click()
+    await expect(page.getByTestId('tienda-card')).toHaveCount(1)
 
-    await page.getByRole('button', { name: 'Todo', exact: true }).click()
-    await expect(page.getByTestId('tienda-membership')).toBeVisible()
+    await chips.getByRole('button', { name: 'Todo', exact: true }).click()
+    await expect(page.getByTestId('tienda-card')).toHaveCount(7)
   })
 
-  test('Comprar un kit abre el modal directo en el paso de pago', async ({ page }) => {
-    await page
-      .getByTestId('tienda-kit')
-      .filter({ hasText: '7 días' })
-      .getByRole('button', { name: 'Comprar' })
-      .click()
+  test('Agregar un kit abre el modal directo en el paso de pago', async ({ page }) => {
+    await card(page, '7 días').getByRole('button', { name: 'Agregar' }).click()
     const modal = page.getByTestId('compra-directa')
     await expect(modal).toBeVisible()
     await expect(modal.getByText('Compra directa · sin carrito')).toBeVisible()
@@ -86,8 +112,8 @@ test.describe('Tienda rediseñada', () => {
     await expect(modal).toHaveCount(0)
   })
 
-  test('Empezar ahora (1:1) abre el calendario con días disponibles reales', async ({ page }) => {
-    await page.getByRole('button', { name: 'Empezar ahora' }).click()
+  test('Agregar el 1:1 abre el calendario con días disponibles reales', async ({ page }) => {
+    await card(page, 'Método Regula').getByRole('button', { name: 'Agregar' }).click()
     const modal = page.getByTestId('compra-directa')
     await expect(modal.getByText('Elegí tu primer turno')).toBeVisible()
     await expect(modal.getByText('Paso 1 de 2')).toBeVisible()
@@ -95,14 +121,15 @@ test.describe('Tienda rediseñada', () => {
     await expect(modal.getByTestId('cd-day').first()).toBeVisible()
   })
 
+  test('la tarjeta linkea al detalle del producto', async ({ page }) => {
+    await card(page, 'Rendimiento').locator('.tienda-card__name').click()
+    await expect(page).toHaveURL(/\/producto\/\d+$/)
+  })
+
   test('el header ya no suma al carrito desde la tienda', async ({ page }) => {
     const badge = page.locator('.nro-carrito')
     await expect(badge).toHaveText('0')
-    await page
-      .getByTestId('tienda-kit')
-      .first()
-      .getByRole('button', { name: 'Comprar' })
-      .click()
+    await card(page, 'Rendimiento').getByRole('button', { name: 'Agregar' }).click()
     await expect(page.getByTestId('compra-directa')).toBeVisible()
     await expect(badge).toHaveText('0')
   })

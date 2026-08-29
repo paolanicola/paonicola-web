@@ -109,11 +109,11 @@ async function stubCatalog(page, products = PRODUCTS) {
 
 /** Todas las tarjetas que deben mostrar foto, con su testid y el nombre esperado. */
 const CARDS_WITH_IMAGE = [
-  { testId: 'tienda-featured', name: 'Método Regula' },
-  { testId: 'tienda-grupal', name: 'PROGRAMA GRUPAL REGULA' },
-  { testId: 'tienda-kit', name: 'KIT RENDIMIENTO INTELIGENTE' },
-  { testId: 'tienda-kit', name: 'KIT REGULA' },
-  { testId: 'tienda-row', name: 'Guía de Compras Saludables' },
+  { testId: 'tienda-card', name: 'Método Regula' },
+  { testId: 'tienda-card', name: 'PROGRAMA GRUPAL REGULA' },
+  { testId: 'tienda-card', name: 'KIT RENDIMIENTO INTELIGENTE' },
+  { testId: 'tienda-card', name: 'KIT REGULA' },
+  { testId: 'tienda-card', name: 'Guía de Compras Saludables' },
 ]
 
 test.describe('Tienda — fotos de producto', () => {
@@ -137,19 +137,18 @@ test.describe('Tienda — fotos de producto', () => {
   }
 
   test('ninguna tarjeta del catálogo queda sin foto', async ({ page }) => {
-    // guardia genérica: si mañana se agrega otra sección sin <img>, esto falla
-    for (const testId of ['tienda-featured', 'tienda-grupal', 'tienda-kit', 'tienda-row']) {
-      const cards = page.getByTestId(testId)
-      const count = await cards.count()
-      expect(count).toBeGreaterThan(0)
-      for (let i = 0; i < count; i++) {
-        await expect(cards.nth(i).locator('img')).toHaveCount(1)
-      }
+    // guardia genérica: si mañana una tarjeta se queda sin <img>, esto falla.
+    // (la membresía usa el bloque 🗝️ y no está en este catálogo de prueba)
+    const cards = page.getByTestId('tienda-card')
+    const count = await cards.count()
+    expect(count).toBeGreaterThan(0)
+    for (let i = 0; i < count; i++) {
+      await expect(cards.nth(i).locator('img')).toHaveCount(1)
     }
   })
 
   test('la foto linkea al detalle del producto', async ({ page }) => {
-    const kit = page.getByTestId('tienda-kit').filter({ hasText: 'KIT REGULA' })
+    const kit = page.getByTestId('tienda-card').filter({ hasText: 'KIT REGULA' })
     await kit.locator('a:has(img)').click()
     await expect(page).toHaveURL(/\/producto\/4$/)
   })
@@ -160,7 +159,7 @@ test.describe('Tienda — fotos de producto', () => {
       if (req.resourceType() === 'image') failed.push(req.url())
     })
     await page.reload()
-    await expect(page.getByTestId('tienda-kit').first()).toBeVisible()
+    await expect(page.getByTestId('tienda-card').first()).toBeVisible()
     const broken = await page.evaluate(() =>
       [...document.images]
         .filter((img) => img.complete && img.naturalWidth === 0)
@@ -192,9 +191,7 @@ test.describe('Tienda — layout mobile', () => {
     const overflowing = await page.evaluate(() => {
       const out = []
       document
-        .querySelectorAll(
-          '[data-testid="tienda-kit"], [data-testid="tienda-grupal"], [data-testid="tienda-featured"], [data-testid="tienda-row"]'
-        )
+        .querySelectorAll('[data-testid="tienda-card"]')
         .forEach((card) => {
           const cb = card.getBoundingClientRect()
           card.querySelectorAll('img').forEach((img) => {
@@ -210,8 +207,8 @@ test.describe('Tienda — layout mobile', () => {
     expect(overflowing, `fotos fuera de la tarjeta: ${overflowing.join(', ')}`).toEqual([])
   })
 
-  test('la foto del kit ocupa el ancho de la tarjeta (full-bleed)', async ({ page }) => {
-    const kit = page.getByTestId('tienda-kit').first()
+  test('la foto respeta el padding de la tarjeta y mide 170px de alto', async ({ page }) => {
+    const kit = page.getByTestId('tienda-card').first()
     const { cardWidth, imgWidth, imgHeight } = await kit.evaluate((card) => {
       const img = card.querySelector('img')
       return {
@@ -220,10 +217,10 @@ test.describe('Tienda — layout mobile', () => {
         imgHeight: img.getBoundingClientRect().height,
       }
     })
-    // full-bleed: la foto rompe el padding de 28px y llega borde a borde
-    expect(Math.abs(imgWidth - cardWidth)).toBeLessThanOrEqual(2)
-    // cuadrada: aspect-ratio 1 aplicado (no colapsada por el flex column)
-    expect(Math.abs(imgHeight - imgWidth)).toBeLessThanOrEqual(2)
+    // la foto va dentro de los 22px de padding a cada lado (más 1px de borde)
+    expect(Math.abs(imgWidth - (cardWidth - 46))).toBeLessThanOrEqual(2)
+    // alto fijo del diseño: es lo que alinea las tarjetas entre sí
+    expect(Math.abs(imgHeight - 170)).toBeLessThanOrEqual(2)
   })
 
   test('las fotos no comen la pantalla: cada tarjeta entra en el viewport', async ({
@@ -232,7 +229,7 @@ test.describe('Tienda — layout mobile', () => {
     const vh = page.viewportSize().height
     const tall = await page.evaluate(
       (limit) =>
-        [...document.querySelectorAll('[data-testid="tienda-kit"]')]
+        [...document.querySelectorAll('[data-testid="tienda-card"]')]
           .filter((c) => c.getBoundingClientRect().height > limit)
           .map((c) => c.querySelector('img')?.alt || '?'),
       vh
@@ -245,8 +242,7 @@ test.describe('Tienda — layout mobile', () => {
       const out = []
       document
         .querySelectorAll(
-          '.tienda-kit__cta, .tienda-grupal__cta, .tienda-grupal__more, ' +
-            '.tienda__filters button, .tienda-row__action, .tienda-featured__ctas > *'
+          '.tienda-card__action, .tienda-card__region, .tienda__filters button'
         )
         .forEach((el) => {
           const r = el.getBoundingClientRect()
@@ -258,9 +254,9 @@ test.describe('Tienda — layout mobile', () => {
   })
 
   test('las fotos reservan espacio: sin layout shift al cargar', async ({ page }) => {
-    // aspect-ratio en CSS evita el salto; si se saca, la altura arranca en 0
+    // el alto fijo de 170px en CSS evita el salto; si se saca, arranca en 0
     const heights = await page.evaluate(() =>
-      [...document.querySelectorAll('[data-testid="tienda-kit"] img')].map(
+      [...document.querySelectorAll('[data-testid="tienda-card"] img')].map(
         (img) => img.getBoundingClientRect().height
       )
     )
@@ -279,10 +275,13 @@ test.describe('Tienda — catálogo degradado', () => {
     )
     await page.goto('/tienda')
     await expect(page.getByRole('heading', { name: 'Elegí cómo empezar' })).toBeVisible()
-    await expect(page.getByTestId('tienda-kit')).toHaveCount(2)
+    const kits = page
+      .getByTestId('tienda-card')
+      .filter({ hasText: 'KIT' })
+    await expect(kits).toHaveCount(2)
     // la tarjeta sigue comprable aunque no haya foto
     await expect(
-      page.getByTestId('tienda-kit').first().getByRole('button', { name: 'Comprar' })
+      kits.first().getByRole('button', { name: 'Agregar' })
     ).toBeVisible()
     expect(errors).toEqual([])
   })

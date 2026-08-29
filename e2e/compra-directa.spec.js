@@ -49,9 +49,9 @@ test.describe('Compra directa', () => {
 
     await page.goto('/tienda')
     await page
-      .getByTestId('tienda-kit')
+      .getByTestId('tienda-card')
       .filter({ hasText: '7 días' })
-      .getByRole('button', { name: 'Comprar' })
+      .getByRole('button', { name: 'Agregar' })
       .click()
 
     const modal = page.getByTestId('compra-directa')
@@ -92,7 +92,11 @@ test.describe('Compra directa', () => {
     })
 
     await page.goto('/tienda')
-    await page.getByRole('button', { name: 'Empezar ahora' }).click()
+    await page
+      .getByTestId('tienda-card')
+      .filter({ hasText: 'Método Regula' })
+      .getByRole('button', { name: 'Agregar' })
+      .click()
 
     const modal = page.getByTestId('compra-directa')
     // paso 1: elegir día y horario reales (seeds de horarios libres)

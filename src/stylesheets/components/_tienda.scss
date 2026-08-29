@@ -1,7 +1,13 @@
 /*------------------------------------*\
-    # Tienda — "Rediseño de página web" (design Turno 11a)
-    Mobile-first; desktop rows kick in at $pn-bp.
+    # Tienda — "Handoff: Tienda Online"
+    Grilla uniforme de tarjetas. 3 columnas en desktop, 2 desde 700px, 1 abajo.
 \*------------------------------------*/
+
+// tokens propios de la tienda que no están en el tema compartido
+$tienda-card-border: #efe2e4;
+$tienda-strike: #b7bfbd;
+$tienda-membership-bg: #f3ecf7;
+$tienda-region-bg: #f3ecee;
 
 .tienda {
   background: $pn-cream;
@@ -9,7 +15,7 @@
   color: $pn-navy;
   padding-bottom: 48px;
   @media (min-width: $pn-bp) {
-    padding-bottom: 70px;
+    padding-bottom: 60px;
   }
 
   h1,
@@ -84,501 +90,119 @@
     }
   }
 
-  /* ---------- Sections ---------- */
-  &__section {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    padding: 0 22px 40px;
-    @media (min-width: $pn-bp) {
-      padding: 0 56px 44px;
-    }
-  }
-
-  &__section-head {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-
-  &__section-hint {
-    font-size: 12px;
-    color: $pn-gray-soft;
-  }
-
-  &__rows {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__section-note {
-    font-size: 12px;
-    color: $pn-gray-soft;
-    margin: 12px 0 0;
-  }
-
-  // las descripciones se escriben en el admin con saltos de línea y listas
-  // (✅/🔥): respetarlos tal cual en vez de colapsar todo en un párrafo
-  .tienda-featured__desc,
-  .tienda-grupal__desc,
-  .tienda-kit__desc,
-  .tienda-row__desc,
-  .tienda-membership__desc {
-    white-space: pre-line;
-  }
-
-  /* ---------- Featured program card (Tienda Rediseño: blanca) ---------- */
-  .tienda-featured {
-    position: relative;
-    background: $pn-offwhite;
-    border: 1px solid $pn-border;
-    border-radius: 20px;
-    overflow: hidden;
+  /* ---------- Grilla ---------- */
+  &__grid {
     display: grid;
     grid-template-columns: 1fr;
-    @media (min-width: $pn-bp) {
-      grid-template-columns: 440px 1fr;
-    }
+    // align-items:stretch + margin-top:auto en la fila de precio: es lo que
+    // mantiene precios y botones a la misma altura con descripciones desiguales
+    align-items: stretch;
+    gap: 24px;
+    padding: 0 22px 48px;
 
-    &__media img,
-    &__media .pn-skeleton {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      display: block;
-      @media (min-width: $pn-bp) {
-        height: 100%;
-        min-height: 340px;
-      }
+    @media (min-width: 700px) {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0 32px 56px;
     }
-
-    &__body {
-      padding: 26px 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      justify-content: center;
-      @media (min-width: $pn-bp) {
-        padding: 38px 44px;
-      }
+    @media (min-width: 1100px) {
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0 56px 60px;
     }
+  }
 
-    &__badges {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+  /* ---------- Tarjeta de producto ---------- */
+  .tienda-card {
+    position: relative;
+    background: $pn-offwhite;
+    border: 1px solid $tienda-card-border;
+    border-radius: 22px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+      box-shadow: 0 10px 26px rgba(31, 58, 68, 0.09);
+      transform: translateY(-2px);
     }
 
     &__badge {
-      background: $pn-rosa-soft;
-      color: $pn-rosa-deep;
-      font-size: 12px;
+      position: absolute;
+      top: 34px;
+      right: 34px;
+      background: $pn-mint;
+      color: #fff;
+      font-size: 11px;
       font-weight: 700;
-      padding: 6px 16px;
-      border-radius: 14px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    &__name {
-      font-family: $pn-font-serif;
-      font-size: 24px;
-      font-weight: 600;
-      color: $pn-navy;
-      @media (min-width: $pn-bp) {
-        font-size: 28px;
-      }
-    }
-
-    &__tagline {
-      font-size: 15px;
-      font-weight: 700;
-      color: $pn-rosa-deep;
-      margin: 0;
-    }
-
-    &__desc {
-      font-size: 15px;
-      line-height: 1.7;
-      color: $pn-body;
-      margin: 0;
-    }
-
-    &__price {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      margin-top: 6px;
-    }
-
-    &__installments {
-      font-size: 13px;
-      color: $pn-gray;
-    }
-
-    &__ctas {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-      margin-top: 4px;
-    }
-
-    &__note {
-      font-size: 12px;
-      color: $pn-gray-soft;
-    }
-  }
-
-  /* ---------- Banda navy Programa Grupal ---------- */
-  .tienda-grupal {
-    background: $pn-navy;
-    border-radius: 20px;
-    padding: 26px 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    margin-top: 24px;
-    @media (min-width: $pn-bp) {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding: 38px 44px;
+      padding: 5px 12px;
+      border-radius: 12px;
     }
 
     &__media {
-      display: block;
-      flex-shrink: 0;
-      border-radius: 14px;
-      overflow: hidden;
-
-      img,
-      .pn-skeleton {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-        display: block;
-        @media (min-width: $pn-bp) {
-          width: 200px;
-          aspect-ratio: 1;
-        }
-      }
-    }
-
-    &__info {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      // sin esto el nombre largo del admin empuja la banda y desborda:
-      // min-width:auto usa la palabra más larga como piso
-      @media (min-width: $pn-bp) {
-        flex: 1;
-        min-width: 0;
-      }
-    }
-
-    &__kicker {
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      color: $pn-mint-bright;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    &__name {
-      font-family: $pn-font-serif;
-      font-size: 22px;
-      font-weight: 600;
-      color: #fff;
-
-      &:hover {
-        color: $pn-mint-bright;
-      }
-    }
-
-    &__desc {
-      font-size: 14px;
-      line-height: 1.7;
-      color: $pn-navy-muted;
-      max-width: 520px;
-      margin: 0;
-    }
-
-    &__buy {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-      flex-shrink: 0;
-      @media (min-width: $pn-bp) {
-        align-items: flex-end;
-      }
-    }
-
-    &__price {
-      font-size: 26px;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    &__cupos {
-      font-size: 12px;
-      color: $pn-mint-bright;
-      font-weight: 700;
-    }
-
-    &__ctas {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    &__cta {
-      background: #fff;
-      color: $pn-navy;
-      border: none;
-      font-family: $pn-font;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 13px 24px;
-      border-radius: 24px;
-      cursor: pointer;
-
-      &:hover {
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-        transform: translateY(-1px);
-      }
-    }
-
-    &__more {
-      background: transparent;
-      color: $pn-mint-bright;
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: underline;
-
-      // link pelado: 16px de alto, muy chico para tocar
-      @media (pointer: coarse) {
-        display: inline-flex;
-        align-items: center;
-        min-height: 44px;
-        padding: 0 6px;
-      }
-
-      &:hover {
-        color: #fff;
-      }
-    }
-  }
-
-  /* ---------- Kits en tarjetas ---------- */
-  .tienda-kits {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    @media (min-width: $pn-bp) {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  .tienda-kit {
-    background: $pn-offwhite;
-    border: 1px solid $pn-border;
-    border-radius: 16px;
-    padding: 24px 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    // recorta la foto full-bleed con el radio real de la tarjeta (sin esto
-    // el radio de 16px del media queda por fuera del interior de 15px y deja
-    // una medialuna de fondo en las esquinas de arriba)
-    overflow: hidden;
-
-    &__media {
-      // full-bleed sobre el padding de la tarjeta
-      margin: -24px -28px 6px;
       display: block;
 
       // el skeleton comparte la caja de la foto para que no salte al cargar
       img,
       .pn-skeleton {
         width: 100%;
-        aspect-ratio: 1;
+        height: 170px;
         object-fit: cover;
+        border-radius: 14px;
         display: block;
       }
-    }
 
-    &__promo {
-      align-self: flex-start;
-      background: $pn-mint-soft;
-      color: $pn-mint-deep;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 12px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    &__name {
-      font-family: $pn-font-serif;
-      font-size: 19px;
-      font-weight: 600;
-      color: $pn-navy;
-
-      &:hover {
-        color: $pn-mint-deep;
+      // las portadas verticales (guías, descargables) se recortan desde arriba
+      // o el encuadre a 170px se come el título de la tapa
+      &--top img {
+        object-position: top;
       }
     }
 
-    &__desc {
-      font-size: 14px;
-      line-height: 1.6;
-      color: $pn-body;
-      flex: 1;
-      margin: 0;
-    }
-
-    &__buy {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 6px;
-      gap: 12px;
-    }
-
-    &__cta {
-      background: transparent;
-      color: $pn-navy;
-      border: 1px solid $pn-navy;
-      font-family: $pn-font;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 10px 20px;
-      border-radius: 20px;
-      cursor: pointer;
-
-      // 40px en touch: por debajo del mínimo tocable
-      @media (pointer: coarse) {
-        min-height: 44px;
-      }
-
-      &:hover {
-        background: rgba(31, 58, 68, 0.06);
-      }
-    }
-  }
-
-  /* ---------- Membership card ---------- */
-  .tienda-membership {
-    background: $pn-offwhite;
-    border-radius: 16px;
-    padding: 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    @media (min-width: $pn-bp) {
-      flex-direction: row;
-      align-items: center;
-      gap: 20px;
-    }
-
+    // Membresía: bloque de color con emoji en lugar de foto
     &__icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 12px;
-      background: #f3ecf7;
+      width: 100%;
+      height: 170px;
+      border-radius: 14px;
+      background: $tienda-membership-bg;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
-      flex-shrink: 0;
+      font-size: 48px;
     }
 
-    &__info {
-      flex: 1;
+    &__text {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
+    }
+
+    &__labels {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    &__category {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: $pn-mint;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    &__note {
+      font-size: 11px;
+      color: $pn-gray-soft;
     }
 
     &__name {
       font-size: 17px;
       font-weight: 700;
       color: $pn-navy;
-      @media (min-width: $pn-bp) {
-        font-size: 19px;
-      }
-    }
+      line-height: 1.35;
 
-    &__desc {
-      font-size: 14px;
-      line-height: 1.5;
-      color: $pn-gray;
-      max-width: 560px;
-    }
-
-    &__buy {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-      @media (min-width: $pn-bp) {
-        align-items: flex-end;
-        white-space: nowrap;
-      }
-    }
-
-    &__note {
-      font-size: 12px;
-      color: $pn-gray;
-    }
-  }
-
-  /* ---------- Product rows (kits / descargables / generic) ---------- */
-  .tienda-row {
-    display: grid;
-    grid-template-columns: 72px 1fr;
-    grid-template-areas:
-      'media info'
-      'media buy';
-    gap: 10px 20px;
-    align-items: center;
-    padding: 20px 4px;
-    border-bottom: 1px solid $pn-border;
-    @media (min-width: $pn-bp) {
-      display: flex;
-      gap: 20px;
-    }
-
-    &__media {
-      grid-area: media;
-      img {
-        width: 72px;
-        height: 72px;
-        object-fit: cover;
-        border-radius: 12px;
-        display: block;
-      }
-    }
-
-    &__info {
-      grid-area: info;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    &__name {
-      font-size: 15px;
-      font-weight: 700;
-      color: $pn-navy;
-      @media (min-width: $pn-bp) {
-        font-size: 16px;
-      }
       &:hover {
         color: $pn-mint-deep;
       }
@@ -586,28 +210,68 @@
 
     &__desc {
       font-size: 13px;
+      line-height: 1.55;
       color: $pn-gray;
+      // las descripciones se escriben en el admin con saltos de línea y listas
+      // (✅/🔥): respetarlos tal cual en vez de colapsar todo en un párrafo
+      white-space: pre-line;
+    }
+
+    /* selector Argentina / Exterior */
+    &__regions {
+      display: flex;
+      gap: 6px;
+    }
+
+    &__region {
+      font-family: $pn-font;
+      background: $tienda-region-bg;
+      color: $pn-gray;
+      border: none;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      line-height: 1;
+      transition: background 0.15s ease, color 0.15s ease;
+
+      // 23px de alto: por debajo del mínimo tocable
+      @media (pointer: coarse) {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+      }
+
+      &--active {
+        background: $pn-mint;
+        color: #fff;
+      }
+    }
+
+    /* fila de precio + acción */
+    &__buy {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid $pn-line;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
 
     &__action {
       white-space: nowrap;
+      padding: 10px 20px;
     }
 
-    // price + action share the second row on mobile
-    .tienda-price,
-    &__action {
-      grid-area: buy;
-      justify-self: start;
-    }
+    // en la tarjeta el precio va a la izquierda de la fila, no alineado a la
+    // derecha como en el detalle de producto
     .tienda-price {
-      margin-right: auto;
+      align-items: flex-start;
+      min-width: 0;
     }
-    &__action {
-      justify-self: end;
-      @media (min-width: $pn-bp) {
-        justify-self: auto;
-      }
-    }
+
   }
 
   /* ---------- Prices ---------- */
@@ -622,8 +286,8 @@
     }
 
     &__original {
-      font-size: 12px;
-      color: #b7bfbd;
+      font-size: 11px;
+      color: $tienda-strike;
       text-decoration: line-through;
     }
 
@@ -633,10 +297,36 @@
       color: $pn-navy;
     }
 
+    &__free {
+      font-family: $pn-font-serif;
+      font-weight: 600;
+      color: $pn-mint;
+    }
+
     &__suffix {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       color: $pn-gray;
+    }
+
+    // "o 3 cuotas de $185.000"
+    &__installments {
+      font-size: 11px;
+      color: $pn-mint;
+      white-space: normal;
+    }
+
+    // segunda línea genérica (important_note del admin)
+    &__note {
+      font-size: 11px;
+      color: $pn-gray;
+      white-space: normal;
+    }
+
+    // tamaño de la tarjeta de la grilla
+    &--card .tienda-price__current,
+    &--card .tienda-price__free {
+      font-size: 21px;
     }
 
     &--sm .tienda-price__current {

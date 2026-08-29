@@ -91,7 +91,7 @@ test.describe('Tienda — estado de carga', () => {
     await expect(page.getByTestId('tienda-skeleton')).toBeVisible()
     release()
     await expect(page.getByTestId('tienda-skeleton')).toHaveCount(0)
-    await expect(page.getByTestId('tienda-featured')).toBeVisible()
+    await expect(page.getByTestId('tienda-card').first()).toBeVisible()
   })
 })
 
@@ -115,7 +115,7 @@ test.describe('Tienda — estado de error', () => {
     // del mensaje de error aunque la API respondiera bien
     shouldFail = false
     await page.getByRole('button', { name: 'Reintentar' }).click()
-    await expect(page.getByTestId('tienda-featured')).toBeVisible()
+    await expect(page.getByTestId('tienda-card').first()).toBeVisible()
     await expect(page.getByRole('alert')).toHaveCount(0)
   })
 })
