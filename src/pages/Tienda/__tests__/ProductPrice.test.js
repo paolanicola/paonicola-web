@@ -27,6 +27,26 @@ describe('ProductPrice', () => {
     expect(screen.getByText('$ 48.000')).toBeInTheDocument()
   })
 
+  it('renders nothing when the product has no price loaded', () => {
+    const { container } = render(<ProductPrice product={{ ...BASE, price: null }} />)
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  it('still shows the promo price when the base price is missing', () => {
+    const { container } = render(
+      <ProductPrice
+        product={{ ...BASE, price: null, active_promo: true, promo_price: 39990 }}
+      />
+    )
+    expect(screen.getByText(/39\.990/)).toBeInTheDocument()
+    expect(container.querySelector('.tienda-price__original')).toBeNull()
+  })
+
+  it('keeps free products at $ 0', () => {
+    render(<ProductPrice product={{ ...BASE, price: 0 }} />)
+    expect(screen.getByText('$ 0')).toBeInTheDocument()
+  })
+
   it('appends the suffix (membresía /mes)', () => {
     render(<ProductPrice product={{ ...BASE, price: 49999 }} suffix='/mes' />)
     expect(screen.getByText('/mes')).toBeInTheDocument()

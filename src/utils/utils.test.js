@@ -10,6 +10,12 @@ describe('formatNumber', () => {
     expect(formatNumber(39990)).toBe('39.990')
     expect(formatNumber(0)).toBe('0')
   })
+
+  it('returns an empty string for missing or non-numeric values', () => {
+    expect(formatNumber(null)).toBe('')
+    expect(formatNumber(undefined)).toBe('')
+    expect(formatNumber(NaN)).toBe('')
+  })
 })
 
 describe('countProductInCart', () => {

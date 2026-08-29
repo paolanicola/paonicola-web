@@ -1,4 +1,8 @@
-export const formatNumber = (number) => number.toLocaleString('es-ES')
+// Los precios llegan de la API y pueden faltar (producto sin precio cargado
+// en el admin) o salir NaN de una multiplicación: sin la guarda,
+// `null.toLocaleString` tumbaba el render de toda la Tienda.
+export const formatNumber = (number) =>
+  Number.isFinite(number) ? number.toLocaleString('es-ES') : ''
 
 export const countProductInCart = (productId, cart) => {
   const product = cart.cartItems.find((item) => item.id === productId)
