@@ -393,6 +393,105 @@
     max-width: 220px;
   }
 
+  /* ---------- Opciones de pago (cuotas vs. pago único destacado) ---------- */
+  &__plans {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    align-items: stretch;
+    margin-top: 6px;
+    @media (min-width: $pn-bp) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__plan {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: $pn-offwhite;
+    border: 1px solid $pn-border;
+    border-radius: 16px;
+    padding: 22px 22px 20px;
+
+    &--featured {
+      border: 2px solid $pn-navy;
+      padding: 21px 21px 19px;
+    }
+  }
+
+  &__plan-tag {
+    position: absolute;
+    top: -12px;
+    right: 16px;
+    background: $pn-navy;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  &__plan-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: $pn-muted;
+  }
+
+  &__plan-amount {
+    font-family: $pn-font-serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.15;
+    color: $pn-navy;
+    white-space: nowrap;
+    @media (min-width: $pn-bp) {
+      font-size: 34px;
+    }
+  }
+
+  &__plan-note {
+    font-size: 12px;
+    color: $pn-gray;
+  }
+
+  &__plan-savings {
+    font-size: 12px;
+    font-weight: 700;
+    color: $pn-mint-deep;
+  }
+
+  &__plan-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 14px;
+    background: $pn-navy;
+    color: #fff;
+    border: 1px solid $pn-navy;
+    font-family: $pn-font;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 15px 26px;
+    border-radius: 26px;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 8px 20px rgba(31, 58, 68, 0.24);
+      transform: translateY(-1px);
+    }
+
+    &--outline {
+      background: transparent;
+      color: $pn-navy;
+    }
+  }
+
   &__navy-p--accent {
     color: $pn-mint-bright !important;
   }
@@ -587,6 +686,16 @@
     align-items: baseline;
     gap: 8px;
 
+    // igual que en el sticky: sin esto los spans de .tienda-price quedan
+    // inline y pegados cuando el producto tiene cuotas
+    .tienda-price {
+      display: inline-flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
     .tienda-price__current {
       color: #fff;
     }
@@ -652,6 +761,20 @@
     align-items: baseline;
     flex-wrap: wrap;
     gap: 10px;
+
+    // los estilos base de .tienda-price viven scopeados en .tienda: acá los
+    // spans quedaban inline y pegados ("$ 599.000o 3 cuotas de $ 240.000")
+    .tienda-price {
+      display: inline-flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tienda-price__installments {
+      font-size: 12px;
+      color: $pn-gray;
+    }
   }
 
   &__sticky-name {

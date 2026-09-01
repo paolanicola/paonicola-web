@@ -97,6 +97,16 @@ const METODO = {
   landing: METODO_LANDING,
 }
 
+// El 1:1 con las cuotas cargadas en el admin (Productos → cuotas): el hero
+// pasa del precio único a las dos opciones de pago.
+const METODO_CUOTAS = {
+  ...METODO,
+  important_note: '',
+  price: 599000,
+  installments_count: 3,
+  installment_price: 240000,
+}
+
 const GRUPAL = {
   id: 5,
   name: 'Programa Grupal Regula',
@@ -181,6 +191,44 @@ describe('Producto (Tienda Rediseño)', () => {
     // hero CTA + sticky
     expect(screen.getByTestId('hero-buy')).toHaveTextContent('Empezar Método Regula')
     expect(screen.getByTestId('producto-sticky')).toBeInTheDocument()
+  })
+
+  it('renders both payment options when the 1:1 has installments loaded', () => {
+    renderProducto(METODO_CUOTAS)
+    // cuotas: número grande + moneda aclarada una sola vez
+    expect(screen.getByText('3 pagos de')).toBeInTheDocument()
+    expect(screen.getByText('$240.000')).toBeInTheDocument()
+    expect(
+      screen.getAllByText('Precios en pesos argentinos (ARS)')
+    ).toHaveLength(1)
+    // pago único destacado con etiqueta y leyenda de ahorro
+    expect(screen.getByText('Pago único de')).toBeInTheDocument()
+    expect(screen.getByText('$599.000')).toBeInTheDocument()
+    expect(screen.getByText('Recomendada')).toBeInTheDocument()
+    expect(screen.getByText('Ahorrás $121.000')).toBeInTheDocument()
+    // un botón por opción, badge y nota de turno siguen presentes
+    expect(screen.getByTestId('hero-buy-installments')).toHaveTextContent(
+      'Empezar Método Regula'
+    )
+    expect(screen.getByTestId('hero-buy')).toHaveTextContent('Empezar Método Regula')
+    expect(screen.getAllByText('Cupos limitados').length).toBeGreaterThan(0)
+    expect(
+      screen.getByText('Elegís fecha y hora de tu primer encuentro al comprar')
+    ).toBeInTheDocument()
+  })
+
+  it('opens the same direct-buy flow from the installments button', () => {
+    renderProducto(METODO_CUOTAS)
+    fireEvent.click(screen.getByTestId('hero-buy-installments'))
+    expect(screen.getByTestId('compra-directa')).toBeInTheDocument()
+    expect(screen.getByText('Elegí tu primer turno')).toBeInTheDocument()
+  })
+
+  it('keeps the single hero price when no installments are loaded', () => {
+    renderProducto(METODO)
+    expect(screen.queryByText('Recomendada')).not.toBeInTheDocument()
+    expect(screen.queryByText(/pagos de/)).not.toBeInTheDocument()
+    expect(screen.getByTestId('hero-buy')).toBeInTheDocument()
   })
 
   it('renders the grupal landing with checklist and cross link', () => {
