@@ -1,4 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "corepack enable && yarn install --immutable"
+  "installCommand": "corepack yarn install --immutable",
+  "buildCommand": "corepack yarn run build"
 }
