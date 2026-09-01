@@ -3,9 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import Kicker from '../../components/ui/Kicker'
 import CompraDirecta from '../../components/CompraDirecta'
 import { getAllProducts, loadProducts } from '../../features/products'
-import { whatsAppNumber } from '../../utils/utils'
+import { whatsAppLink, whatsAppNumber } from '../../utils/utils'
 import { messages } from '../../utils/messages'
-import { TIENDA_COPY, CATEGORY_ORDER, orderedCategories } from './tiendaConfig'
+import {
+  TIENDA_COPY,
+  CATEGORY_ORDER,
+  orderedCategories,
+  exteriorWhatsAppMessage,
+} from './tiendaConfig'
 import ProductCard from './ui/ProductCard'
 import TiendaSkeleton from './sections/TiendaSkeleton'
 
@@ -41,6 +46,18 @@ export default function Tienda() {
       (a, b) => rank.get(a.category) - rank.get(b.category)
     )
   }, [allProducts, activeFilter, categories])
+
+  // Con región Exterior no hay checkout — Mercado Pago solo acepta pagadores
+  // argentinos — así que el CTA abre WhatsApp con el pedido armado y el pago se
+  // coordina en el chat. Solo para productos con precio USD: la región es
+  // estado global, pero los productos sin USD ni muestran el selector.
+  const handleBuy = (product) => {
+    if (region === 'ex' && product.price_usd != null) {
+      window.open(whatsAppLink(exteriorWhatsAppMessage(product)), '_blank', 'noopener')
+      return
+    }
+    setBuyProduct(product)
+  }
 
   // `loading` arranca en false: sin el `!loadSuccess` el primer paint (antes de
   // que corra el efecto) mostraba una tienda vacía por un frame
@@ -98,7 +115,7 @@ export default function Tienda() {
               product={product}
               region={region}
               onRegion={setRegion}
-              onBuy={setBuyProduct}
+              onBuy={handleBuy}
             />
           ))}
         </div>

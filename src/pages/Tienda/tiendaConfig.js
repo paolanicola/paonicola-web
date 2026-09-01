@@ -11,7 +11,14 @@ export const TIENDA_COPY = {
   free: 'Gratis',
   regionAr: 'Argentina',
   regionEx: 'Exterior',
+  ctaExterior: 'Comprar por WhatsApp',
 }
+
+// Desde el exterior no hay checkout (Mercado Pago solo acepta pagadores
+// argentinos): la compra se coordina por WhatsApp y Pao manda el link de pago
+// que corresponda (transferencia, PayPal).
+export const exteriorWhatsAppMessage = (product) =>
+  `¡Hola Pao! Quiero empezar ${product.name} desde el exterior. ¿Cómo coordinamos el pago?`
 
 // Orden de las categorías en la grilla y en los chips. Las que Pao cree nuevas
 // en el admin no rompen nada: caen al final con los valores de DEFAULT_CATEGORY.

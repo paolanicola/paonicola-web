@@ -102,7 +102,7 @@ export default function ProductCard({ product, region, onRegion, onBuy }) {
             onClick={() => onBuy(product)}
             className='tienda-card__action'
           >
-            {meta.cta}
+            {hasRegions && region === 'ex' ? TIENDA_COPY.ctaExterior : meta.cta}
           </PillButton>
         )}
       </div>

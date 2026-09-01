@@ -271,6 +271,45 @@ describe('Tienda (grilla de tarjetas)', () => {
       expect(within(card).getByText('USD 350')).toBeInTheDocument()
       expect(within(card).getByText('o 3 cuotas de USD 125')).toBeInTheDocument()
     })
+
+    // Mercado Pago solo acepta pagadores argentinos: desde el exterior la
+    // compra se coordina por WhatsApp, no por checkout.
+    it('con región Exterior el CTA abre WhatsApp en vez del checkout', () => {
+      const open = jest.spyOn(window, 'open').mockImplementation(() => null)
+      renderTienda()
+      const card = cardNamed('Método Regula')
+      fireEvent.click(within(card).getByRole('button', { name: 'Exterior' }))
+
+      const cta = within(card).getByRole('button', { name: 'Comprar por WhatsApp' })
+      fireEvent.click(cta)
+
+      expect(open).toHaveBeenCalledTimes(1)
+      const [url, target] = open.mock.calls[0]
+      expect(url).toContain('https://wa.me/')
+      expect(url).toContain(encodeURIComponent('desde el exterior'))
+      expect(url).toContain(encodeURIComponent('Método Regula'))
+      expect(target).toBe('_blank')
+      expect(screen.queryByTestId('compra-directa')).toBeNull()
+      open.mockRestore()
+    })
+
+    it('la región Exterior no desvía a WhatsApp los productos sin precio USD', () => {
+      const open = jest.spyOn(window, 'open').mockImplementation(() => null)
+      renderTienda()
+      // la región es estado global: se activa Exterior desde el 1:1…
+      fireEvent.click(
+        within(cardNamed('Método Regula')).getByRole('button', { name: 'Exterior' })
+      )
+      // …pero el kit no tiene USD (ni selector): sigue al checkout de siempre
+      fireEvent.click(
+        within(cardNamed('Kit Rendimiento Inteligente')).getByRole('button', {
+          name: 'Agregar',
+        })
+      )
+      expect(open).not.toHaveBeenCalled()
+      expect(screen.getByTestId('compra-directa')).toBeInTheDocument()
+      open.mockRestore()
+    })
   })
 
   it('opens the direct-buy modal instead of touching the cart', () => {
